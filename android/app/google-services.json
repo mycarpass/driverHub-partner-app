@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "555320798074",
+    "project_id": "driverhub-partners-sandbox",
+    "storage_bucket": "driverhub-partners-sandbox.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:555320798074:android:57a787aa6500aadf76c4c3",
+        "android_client_info": {
+          "package_name": "com.example.driver_hub_partner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAm39SN5ePhLE3G71TkJTfm7-7EqhWz7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

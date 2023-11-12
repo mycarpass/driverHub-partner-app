@@ -1,0 +1,54 @@
+{
+	// Place your driver_hub workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	"DH bottom sheet": {
+		"prefix": "dhbottom",
+		"body": [
+			"showModalBottomSheet(",
+			"        context: context,",
+			"        isScrollControlled: true,",
+			"        builder: (context) => ClipRRect(",
+			"        borderRadius: BorderRadius.circular(12),",
+			"            child: const FractionallySizedBox(",
+			"            heightFactor: 0.9,",
+			"            child: $1,",
+			"     ),",
+			"  ),",
+			"),"
+		],
+		"description": "Cria uma chamada de bottom sheet"
+	},
+	"DH Presenter": {
+		"prefix": "dhpresenter",
+		"body": [
+			"import 'package:driver_hub/building_blocks/state_management_package/presenter/dh_state.dart';",
+			"import 'package:flutter_bloc/flutter_bloc.dart';",
+			"class $1 extends Cubit<DHState> {",
+			"  $1() : super(DHInitialState());",
+			"}"
+		],
+		"description": "Cria uma presenter"
+	},
+	"DH State": {
+		"prefix": "dhstate",
+		"body": [
+			"class $1 extends DHState {",
+		    "@override",
+			"List<Object?> get props => [];",
+			"}"
+		],
+		"description": "Cria um state"
+	}
+	
+}
+
+
+
+
+
+
+
