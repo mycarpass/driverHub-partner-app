@@ -47,6 +47,10 @@ dependencies:
     git:
       url: https://github.com/mycarpass/dh_http_client
       ref: main
+  dh_notification:
+    git:
+      url: https://github.com/mycarpass/dh_notification_package
+      ref: main
   dh_ui_kit:
     git:
       url: https://github.com/mycarpass/dh_ui_kit

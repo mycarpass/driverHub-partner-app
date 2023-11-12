@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:dh_notification/notification_module.dart';
 // import 'config/firebase_options.dart';
 import 'package:dh_cache_manager/cache_manager_module.dart';
 
@@ -24,6 +25,7 @@ List<DHModule> moduleList = [
   WelcomeModule(),
   LoginModule(),
   UiKitModule(),
+  NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 
 void main() async {

@@ -189,6 +189,15 @@ packages:
       url: "https://github.com/mycarpass/dh_navigation"
     source: git
     version: "1.0.0"
+  dh_notification:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "52cebb88870fd3d62d9d1de0e70bd8fe64d843b4"
+      url: "https://github.com/mycarpass/dh_notification_package"
+    source: git
+    version: "0.0.1"
   dh_state_management:
     dependency: "direct main"
     description:
@@ -451,6 +460,14 @@ packages:
       url: "https://dart.cloudsmith.io/n26-brasil/building-blocks-dart/"
     source: hosted
     version: "1.0.2"
+  onesignal_flutter:
+    dependency: transitive
+    description:
+      name: onesignal_flutter
+      sha256: "6be8ce195ac167466e202c8370ccdfe36e94375d3d4c3a0bb8fed7f121a3629f"
+      url: "https://dart.cloudsmith.io/n26-brasil/building-blocks-dart/"
+    source: hosted
+    version: "5.0.0"
   path:
     dependency: transitive
     description:
