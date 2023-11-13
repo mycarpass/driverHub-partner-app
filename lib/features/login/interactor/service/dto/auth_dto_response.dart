@@ -1,10 +1,9 @@
 class AuthDtoResponse {
   final String token;
-  final bool isOnboarded;
 
-  AuthDtoResponse(this.token, this.isOnboarded);
+  AuthDtoResponse(this.token);
 
   static AuthDtoResponse fromJson(Map<String, dynamic> json) {
-    return AuthDtoResponse(json["access_token"], json["onboarded"]);
+    return AuthDtoResponse(json["access_token"]);
   }
 }

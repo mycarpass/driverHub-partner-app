@@ -4,6 +4,7 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
+import 'package:driver_hub_partner/features/home/router/home_router.dart';
 import 'package:driver_hub_partner/features/login/presenter/login_presenter.dart';
 import 'package:driver_hub_partner/features/login/presenter/login_state.dart';
 import 'package:driver_hub_partner/features/login/router/login_routes.dart';
@@ -33,9 +34,8 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(16),
                 child: BlocConsumer<LoginPresenter, DHState>(
                   listener: (context, state) => state is LoginSuccessState
-                      ?
-                      //Home Navigation
-                      DoNothingAction()
+                      ? Navigator.pushNamedAndRemoveUntil(
+                          context, HomeRoutes.home, (route) => false)
                       : state is DHErrorState
                           ? DHSnackBar().showSnackBar(
                               "Oops..",

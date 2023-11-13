@@ -1,6 +1,5 @@
 import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
 import 'package:dh_cache_manager/interactor/keys/auth_keys/auth_keys.dart';
-import 'package:dh_cache_manager/interactor/keys/onboarding_keys/onboarding_keys.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:driver_hub_partner/features/login/entities/auth_entity.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/auth_service.dart';
@@ -21,7 +20,6 @@ class AuthInteractor {
       AuthDtoResponse authReponse =
           await _authService.auth(AuthDto.fromEntity(authEntity));
       _dhCacheManager.setString(AuthTokenKey(), authReponse.token);
-      _dhCacheManager.setBool(OnboardingViewKey(), authReponse.isOnboarded);
     } catch (e) {
       rethrow;
     }

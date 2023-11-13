@@ -7,7 +7,9 @@ import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_ui_kit/ui_kit_module.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/config/enviroment_variables.dart';
+import 'package:driver_hub_partner/features/home/home_module.dart';
 import 'package:driver_hub_partner/features/login/login_module.dart';
+import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
 import 'package:driver_hub_partner/features/welcome/welcome_module.dart';
 import 'package:driver_hub_partner/firebase_options.dart';
 import 'package:flutter/foundation.dart';
@@ -25,6 +27,8 @@ List<DHModule> moduleList = [
   WelcomeModule(),
   LoginModule(),
   UiKitModule(),
+  HomeModule(),
+  SchedulesModule(),
   NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 
@@ -71,7 +75,7 @@ class AppEntryPoint extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DriverHub',
+      title: 'DriverHub Parceiros',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

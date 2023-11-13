@@ -63,6 +63,8 @@ dependencies:
     git:
       url: https://github.com/mycarpass/dh_state_management
       ref: main
+  url_launcher: ^6.1.13
+  
 
 
   # The following adds the Cupertino Icons font to your application.

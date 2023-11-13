@@ -1,7 +1,4 @@
-import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
-import 'package:dh_cache_manager/interactor/keys/onboarding_keys/onboarding_keys.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
-import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/login/entities/auth_entity.dart';
 import 'package:driver_hub_partner/features/login/interactor/auth_interactor.dart';
@@ -14,7 +11,7 @@ import 'login_state.dart';
 class LoginPresenter extends Cubit<DHState> {
   LoginPresenter() : super(LoginInitialState());
 
-  final _cacheManager = DHInjector.instance.get<DHCacheManager>();
+  //final _cacheManager = DHInjector.instance.get<DHCacheManager>();
 
   ///GETTERS AND SETTERS
   var _email = "";
@@ -63,6 +60,7 @@ class LoginPresenter extends Cubit<DHState> {
     try {
       emit(LoginLoadingState());
       await _authInteractor.authenticate(_email, _password);
+      emit(LoginSuccessState());
     } catch (e) {
       emit(DHErrorState());
     }

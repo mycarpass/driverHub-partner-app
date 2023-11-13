@@ -3,6 +3,7 @@ import 'package:dh_cache_manager/interactor/keys/auth_keys/auth_keys.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/home/router/home_router.dart';
 import 'package:driver_hub_partner/features/welcome/presenter/welcome_state.dart';
 import 'package:driver_hub_partner/features/welcome/router/welcome_routes.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +33,10 @@ class WelcomePresenter extends Cubit<DHState> {
       //     CupertinoPageRoute(
       //       builder: (context) => Scaffold(),
       //     ));
-      //HOME navigation
+      Navigator.pushNamedAndRemoveUntil(
+          NavigationService.navigatorKey.currentContext!,
+          HomeRoutes.home,
+          (route) => false);
     } else {
       Navigator.pushNamedAndRemoveUntil(
           NavigationService.navigatorKey.currentContext!,

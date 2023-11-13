@@ -4,6 +4,7 @@ import 'package:driver_hub_partner/features/login/router/login_routes.dart';
 import 'package:driver_hub_partner/features/welcome/view/resources/welcome_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
@@ -18,26 +19,38 @@ class WelcomeView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SvgPicture.asset(
-                "lib/assets/images/LogoWhite.svg",
+                "lib/assets/images/LogoWhiteForPartners.svg",
+                height: 60,
               ),
               const SizedBox(
                 height: 12,
               ),
-              const Text('Cuidar do seu carro nunca foi tão fácil')
-                  .body_regular(
-                      style:
-                          const TextStyle(color: AppColor.textTertiaryColor)),
+              const Text('Uma nova experiência aos seus clientes').body_regular(
+                  style: const TextStyle(color: AppColor.textTertiaryColor)),
               const SizedBox(
                 height: 106,
               ),
               ElevatedButton(
                 key: WelcomeKeys.signUpButtonKey,
-                onPressed: () {},
+                onPressed: () async {
+                  Uri uri = Uri(
+                    host: "forms.gle",
+                    scheme: "https",
+                    path: "TPgAKd8akiwRjNEK7",
+                  );
+                  if (!await launchUrl(
+                    uri,
+                    mode: LaunchMode.externalApplication,
+                  )) {
+                    throw Exception('Could not launch $uri');
+                  }
+                },
                 // Navigator.pushNamed(context, SignUpRoutes.name),
+
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Começar"),
+                    Text("Quero ser parceiro"),
                   ],
                 ),
               ),
@@ -48,7 +61,7 @@ class WelcomeView extends StatelessWidget {
                   key: WelcomeKeys.alreadyhasAnAccountKey,
                   onPressed: () =>
                       Navigator.of(context).pushNamed(LoginRoutes.login),
-                  child: const Text("Ja tenho uma conta").label2_bold(
+                  child: const Text("Já sou parceiro").label2_bold(
                       style: const TextStyle(color: AppColor.accentColor))),
               const SizedBox(
                 height: 24,

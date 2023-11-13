@@ -12,7 +12,7 @@ class RestAuthService implements AuthService {
   @override
   Future<AuthDtoResponse> auth(AuthDto authDto) async {
     var response =
-        await _httpClient.post("/login/users", body: authDto.toMap());
+        await _httpClient.post("/login/partners", body: authDto.toMap());
 
     return AuthDtoResponse.fromJson(response.data);
   }
