@@ -13,18 +13,29 @@ class HomeBodyLoading extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 24,
+              height: 4,
             ),
             DHSkeleton(
               child: Container(
                 decoration: const BoxDecoration(
                     color: AppColor.blackColor,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
-                height: 100,
+                height: 60,
               ),
             ),
             const SizedBox(
-              height: 24,
+              height: 16,
+            ),
+            DHSkeleton(
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: AppColor.blackColor,
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                height: 180,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
             ),
             DHSkeleton(
               child: Container(

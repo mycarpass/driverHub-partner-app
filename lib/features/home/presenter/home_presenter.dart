@@ -29,7 +29,7 @@ class HomePresenter extends Cubit<DHState> {
 
   void changeVisible() {
     isVisible = !isVisible;
-    emit(VisibleIsChanged());
+    emit(VisibleIsChanged(isVisible));
     //  emit(DHSuccessState());
   }
 

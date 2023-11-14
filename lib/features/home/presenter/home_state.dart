@@ -11,4 +11,11 @@ class HomeLoaded extends DHSuccessState {
   HomeLoaded(this.homeResponseDto);
 }
 
-class VisibleIsChanged extends HomeState {}
+class VisibleIsChanged extends HomeState {
+  final bool isVisible;
+
+  VisibleIsChanged(this.isVisible);
+
+  @override
+  List<Object?> get props => [isVisible];
+}

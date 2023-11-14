@@ -4,6 +4,7 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
+import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
@@ -22,7 +23,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    var presenter = context.read<HomePresenter>()..load();
+    var presenter = context.read<HomePresenter>();
     return DHPullToRefresh(
       onRefresh: context.read<HomePresenter>().load,
       key: UniqueKey(),
@@ -77,7 +78,7 @@ class _HomeViewState extends State<HomeView> {
                                                   ? Icons
                                                       .visibility_off_outlined
                                                   : Icons.visibility_outlined
-                                              : Icons.visibility_outlined,
+                                              : Icons.visibility_off_outlined,
                                           size: 20,
                                           color: AppColor.iconSecondaryColor,
                                         ))),
@@ -100,20 +101,23 @@ class _HomeViewState extends State<HomeView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text("R\$ 10,00").title1_bold(),
+                                  !presenter.isVisible
+                                      ? Container(
+                                          margin: const EdgeInsets.only(top: 4),
+                                          decoration: const BoxDecoration(
+                                              color: AppColor.iconPrimaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8))),
+                                          height: 32,
+                                          width: 140,
+                                        )
+                                      : const Text("R\$ 120,00").title1_bold(),
                                 ],
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
                               Row(children: [
-                                // const Icon(
-                                //   CustomIcons.dhUp,
-                                //   color: AppColor.whiteColor,
-                                // ),
-                                // const SizedBox(
-                                //   width: 8,
-                                // ),
                                 const Text("Total recebido").body_regular(),
                                 const Expanded(child: SizedBox.shrink()),
                               ]),
@@ -121,10 +125,20 @@ class _HomeViewState extends State<HomeView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text("R\$ 10,00").title2_bold(
-                                      style: TextStyle(
-                                          color: AppColor.accentColor
-                                              .withOpacity(0.85))),
+                                  !presenter.isVisible
+                                      ? Container(
+                                          margin: const EdgeInsets.only(top: 4),
+                                          decoration: const BoxDecoration(
+                                              color: AppColor.iconPrimaryColor,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8))),
+                                          height: 24,
+                                          width: 120,
+                                        )
+                                      : const Text("R\$ 10,00").title2_bold(
+                                          style: TextStyle(
+                                              color: AppColor.accentColor
+                                                  .withOpacity(0.85))),
                                 ],
                               )
                             ],
