@@ -9,6 +9,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/config/enviroment_variables.dart';
 import 'package:driver_hub_partner/features/home/home_module.dart';
 import 'package:driver_hub_partner/features/login/login_module.dart';
+import 'package:driver_hub_partner/features/profile/profile_module.dart';
 import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
 import 'package:driver_hub_partner/features/welcome/welcome_module.dart';
 import 'package:driver_hub_partner/firebase_options.dart';
@@ -29,6 +30,7 @@ List<DHModule> moduleList = [
   UiKitModule(),
   HomeModule(),
   SchedulesModule(),
+  ProfileModule(),
   NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 

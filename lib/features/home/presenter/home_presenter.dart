@@ -37,7 +37,7 @@ class HomePresenter extends Cubit<DHState> {
     try {
       emit(DHLoadingState());
       homeResponseDto = await _homeInteractor.getHomeInfo();
-      emit(DHSuccessState());
+      emit(HomeLoaded(homeResponseDto));
     } catch (e) {
       emit(DHErrorState());
     }

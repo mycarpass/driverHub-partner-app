@@ -2,6 +2,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/tabs/tabs_icon_widget.dart';
+import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/schedules_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,6 +87,13 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget> {
                 selectedTab: _index,
                 onClick: changeTab,
               ),
+              TabIconWidget(
+                icon: CustomIcons.dhUser,
+                text: "Conta",
+                indexOfTab: 2,
+                selectedTab: _index,
+                onClick: changeTab,
+              ),
             ],
           ),
         ),
@@ -93,7 +101,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget> {
       body: SafeArea(
         child: IndexedStack(
           index: _index,
-          children: const [HomeView(), SchedulesView()],
+          children: const [HomeView(), SchedulesView(), HomeProfileView()],
         ),
       ),
     );
