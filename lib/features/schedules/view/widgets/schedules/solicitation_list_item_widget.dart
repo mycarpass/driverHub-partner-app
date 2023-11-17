@@ -1,6 +1,8 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/schedules_response_dto.dart';
+import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
+import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
 import 'package:flutter/material.dart';
 
 class SolicitationListItemWidget extends StatelessWidget {
@@ -17,15 +19,12 @@ class SolicitationListItemWidget extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
-      onPressed: null,
-      // () => Navigator.pushNamed(
-      //   context,
-      //   SolicitationRoutes.details,
-      //   arguments: SoliciatationsDetailsParam(
-      //     solicitationDataDto,
-      //     context.read<ScheduleSolicitationPresenter>().load,
-      //   ),
-      // ),
+      onPressed: () => Navigator.pushNamed(
+        context,
+        SchedulesRoutes.scheduleDetail,
+        arguments:
+            ScheduleDetailParams(scheduleId: solicitationDataDto.scheduleId),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         child: Row(

@@ -2,4 +2,5 @@ import 'package:driver_hub_partner/features/home/interactor/service/dto/schedule
 
 abstract class SchedulesService {
   Future<SchedulesResponseDto> getSchedules();
+  Future<dynamic> getScheduleDetail(int scheduleId);
 }

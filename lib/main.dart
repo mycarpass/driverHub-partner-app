@@ -11,6 +11,7 @@ import 'package:driver_hub_partner/features/home/home_module.dart';
 import 'package:driver_hub_partner/features/login/login_module.dart';
 import 'package:driver_hub_partner/features/profile/profile_module.dart';
 import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
+import 'package:driver_hub_partner/features/tappay/tap_pay_module.dart';
 import 'package:driver_hub_partner/features/welcome/welcome_module.dart';
 import 'package:driver_hub_partner/firebase_options.dart';
 import 'package:flutter/foundation.dart';

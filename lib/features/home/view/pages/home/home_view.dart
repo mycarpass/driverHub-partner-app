@@ -9,6 +9,7 @@ import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/loading/home_body_loading.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
+import 'package:driver_hub_partner/features/tappay/router/tap_pay_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,8 +70,9 @@ class _HomeViewState extends State<HomeView> {
                                 BlocBuilder<HomePresenter, DHState>(
                                     builder: (context, state) => IconButton(
                                         padding: EdgeInsets.zero,
-                                        onPressed: () =>
-                                            presenter.changeVisible(),
+                                        onPressed: () {
+                                          presenter.changeVisible();
+                                        },
                                         icon: Icon(
                                           state is VisibleIsChanged
                                               ? presenter.isVisible

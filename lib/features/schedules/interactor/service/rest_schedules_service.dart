@@ -17,4 +17,15 @@ class RestSchedulesService implements SchedulesService {
       rethrow;
     }
   }
+
+  @override
+  Future<dynamic> getScheduleDetail(int scheduleId) async {
+    try {
+      Response response = await _httpClient.get("/schedules/$scheduleId");
+
+      return ScheduleDataDto.fromJson(response.data["data"]);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

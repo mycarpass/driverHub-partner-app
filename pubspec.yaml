@@ -65,6 +65,9 @@ dependencies:
       ref: main
   url_launcher: ^6.1.13
   in_app_review: ^2.0.8
+  mek_stripe_terminal: ^3.1.2
+  permission_handler: ^11.0.1
+  
   
 
 

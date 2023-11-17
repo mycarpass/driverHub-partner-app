@@ -65,7 +65,7 @@ class DefaultFirebaseOptionsProd {
     storageBucket: 'driverhub-prod.appspot.com',
     iosClientId:
         '1025235382131-9l6duftjntbf94g3pg7hjp4jmm5e8hea.apps.googleusercontent.com',
-    iosBundleId: 'com.driverHub.app',
+    iosBundleId: 'com.example.driverHubPartner',
   );
 }
 
@@ -127,6 +127,6 @@ class DefaultFirebaseOptionsSandbox {
     storageBucket: 'driverhub-sandbox.appspot.com',
     iosClientId:
         '63850475790-derpteljnvl01a6sitidf7di6c5mpnbb.apps.googleusercontent.com',
-    iosBundleId: 'com.driverHub.app',
+    iosBundleId: 'com.example.driverHubPartner',
   );
 }

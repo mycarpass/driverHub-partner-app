@@ -13,4 +13,12 @@ class SchedulesInteractor {
       rethrow;
     }
   }
+
+  Future<dynamic> getScheduleDetail(int scheduleId) async {
+    try {
+      return await _schedulesService.getScheduleDetail(scheduleId);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

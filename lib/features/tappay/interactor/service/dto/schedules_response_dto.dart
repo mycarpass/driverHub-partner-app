@@ -118,32 +118,6 @@ class ScheduleDataDto {
     }
   }
 
-  List<ScheduleTimeSuggestionDto> getTimeSuggestions() {
-    List<ScheduleTimeSuggestionDto> suggestions = [];
-    for (var time in timeSuggestions) {
-      if (!time.byPartner) {
-        suggestions.add(time);
-      }
-    }
-    return suggestions;
-  }
-
-  ScheduleTimeSuggestionDto fetchInitialTimeSuggestion() {
-    for (var time in timeSuggestions) {
-      if (time.isSelected) {
-        return time;
-      }
-    }
-
-    for (var timeNotSelected in timeSuggestions) {
-      if (!timeNotSelected.byPartner) {
-        return timeNotSelected;
-      }
-    }
-
-    return timeSuggestions.first;
-  }
-
   ScheduleStatus _getStatus(String status) {
     switch (status) {
       case "PENDING":
@@ -178,11 +152,11 @@ class ScheduleDataDto {
       case "IN_PROGRESS":
         return "Em andamento";
       case "DONE":
-        return "Concluído";
+        return "Serviço concluído";
       case "CANCELLED":
-        return "Cancelado";
+        return "Serviço cancelado";
       case "REFUSED":
-        return "Recusado";
+        return "Serviço recusado";
       case "EXPIRED":
         return "Confirmação expirada";
       case "PAYMENT_PENDING":
@@ -215,39 +189,6 @@ class ScheduleDataDto {
     return status == ScheduleStatus.waitingToWork ||
         status == ScheduleStatus.inProgress ||
         status == ScheduleStatus.finished;
-  }
-
-  bool canTalkWithClient() {
-    return status == ScheduleStatus.pending ||
-        status == ScheduleStatus.waitingToWork ||
-        status == ScheduleStatus.inProgress;
-  }
-
-  bool serviceIsNotAccepted() {
-    return status == ScheduleStatus.pending;
-  }
-
-  bool waitingClient() {
-    return status == ScheduleStatus.newHourSuggested;
-  }
-
-  bool isNotShowAction() {
-    return status == ScheduleStatus.newHourSuggested ||
-        status == ScheduleStatus.paymentPending ||
-        status == ScheduleStatus.finished;
-  }
-
-  String actionText() {
-    switch (status) {
-      case ScheduleStatus.pending:
-        return "Aceitar";
-      case ScheduleStatus.waitingToWork:
-        return "Iniciar serviço";
-      case ScheduleStatus.inProgress:
-        return "Finalizar serviço";
-      default:
-        return "";
-    }
   }
 
   String getSelectecHour() {
