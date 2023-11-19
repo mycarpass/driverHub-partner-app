@@ -4,10 +4,11 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
+import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_presenter.dart';
+import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
-import 'package:driver_hub_partner/features/tappay/interactor/service/dto/enum/schedule_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,9 +31,26 @@ class ScheduleDetailView extends StatelessWidget {
           var presenter = builderContext.read<ScheduleDetailPresenter>();
           return Scaffold(
             appBar: AppBar().backButton(),
-            body: BlocBuilder<ScheduleDetailPresenter, DHState>(
-                builder: (context, state) {
-              return state is DHLoadingState
+            body: BlocConsumer<ScheduleDetailPresenter, DHState>(
+                listener: (context, state) {
+              if (state is ScheduleAcceptedSuccess) {
+                DHSnackBar().showSnackBar(
+                    "Sucesso!",
+                    "Agendamento foi aceito com sucesso!",
+                    DHSnackBarType.success);
+              } else if (state is ScheduleStartedSuccess) {
+                DHSnackBar().showSnackBar(
+                    "Sucesso!",
+                    "Agendamento foi iniciado com sucesso!",
+                    DHSnackBarType.success);
+              } else if (state is ScheduleFinishedSuccess) {
+                DHSnackBar().showSnackBar(
+                    "Sucesso!",
+                    "Agendamento foi finalizado com sucesso!",
+                    DHSnackBarType.success);
+              }
+            }, builder: (context, state) {
+              return state is ScheduleLoadingBody
                   ? SchedulesBodyLoading()
                   : state is DHErrorState
                       ? Container()
@@ -320,8 +338,8 @@ class ScheduleDetailView extends StatelessWidget {
                                                                               8,
                                                                               4),
                                                                           decoration: BoxDecoration(
-                                                                              color: presenter.timeSuggestionSelected?.id == timeSuggestions[index].id ? AppColor.accentColor.withOpacity(0.45) : AppColor.backgroundTransparent,
-                                                                              border: Border.all(color: presenter.timeSuggestionSelected?.id == timeSuggestions[index].id ? AppColor.accentColor : AppColor.textTertiaryColor),
+                                                                              color: presenter.timeSuggestionSelected.id == timeSuggestions[index].id ? AppColor.accentColor.withOpacity(0.45) : AppColor.backgroundTransparent,
+                                                                              border: Border.all(color: presenter.timeSuggestionSelected.id == timeSuggestions[index].id ? AppColor.accentColor : AppColor.textTertiaryColor),
                                                                               borderRadius: BorderRadius.all(Radius.circular(8))),
                                                                           child: Text(
                                                                             timeSuggestions[index].time,
@@ -442,7 +460,7 @@ class ScheduleDetailView extends StatelessWidget {
             }),
             bottomNavigationBar: BlocBuilder<ScheduleDetailPresenter, DHState>(
               builder: (context, state) {
-                return state is DHLoadingState || state is DHErrorState
+                return state is ScheduleLoadingBody
                     ? SizedBox.shrink()
                     : !presenter.scheduleDataDto.isNotShowAction()
                         ? Padding(
@@ -497,13 +515,35 @@ class ScheduleDetailView extends StatelessWidget {
                                             )
                                           : SizedBox.shrink(),
                                       ElevatedButton(
-                                        onPressed: null,
+                                        onPressed: () {
+                                          String code = "";
+                                          presenter.action(code);
+                                        },
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Text(presenter.scheduleDataDto
-                                                .actionText()),
+                                            BlocBuilder<ScheduleDetailPresenter,
+                                                DHState>(
+                                              builder: (context, state) {
+                                                if (state
+                                                    is ScheduleLoadingButton) {
+                                                  return const SizedBox(
+                                                    height: 20,
+                                                    width: 20,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: AppColor
+                                                          .backgroundColor,
+                                                    ),
+                                                  );
+                                                }
+                                                return Text(
+                                                  presenter.scheduleDataDto
+                                                      .actionText(),
+                                                );
+                                              },
+                                            ),
                                           ],
                                         ),
                                       ),

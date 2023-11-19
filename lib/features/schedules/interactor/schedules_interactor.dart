@@ -21,4 +21,29 @@ class SchedulesInteractor {
       rethrow;
     }
   }
+
+  Future<dynamic> acceptSchedule(
+      int scheduleId, ScheduleTimeSuggestionDto timeSuggestion) async {
+    try {
+      return await _schedulesService.acceptSchedule(scheduleId, timeSuggestion);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> startSchedule(int scheduleId) async {
+    try {
+      return await _schedulesService.startSchedule(scheduleId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> finishSchedule(int scheduleId, String code) async {
+    try {
+      return await _schedulesService.finishSchedule(scheduleId, code);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

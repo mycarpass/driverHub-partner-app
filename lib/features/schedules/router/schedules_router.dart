@@ -1,5 +1,4 @@
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../view/pages/home/schedule_detail_view.dart';

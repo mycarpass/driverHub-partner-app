@@ -12,3 +12,13 @@ class ScheduleTimeSelected extends DHSuccessState {
   @override
   List<Object> get props => [timeSuggestionDto];
 }
+
+class ScheduleLoadingBody extends DHLoadingState {}
+
+class ScheduleLoadingButton extends DHLoadingState {}
+
+class ScheduleAcceptedSuccess extends DHSuccessState {}
+
+class ScheduleStartedSuccess extends DHSuccessState {}
+
+class ScheduleFinishedSuccess extends DHSuccessState {}
