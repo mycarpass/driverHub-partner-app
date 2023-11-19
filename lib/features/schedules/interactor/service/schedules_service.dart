@@ -1,4 +1,5 @@
-import 'package:driver_hub_partner/features/home/interactor/service/dto/schedules_response_dto.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 
 abstract class SchedulesService {
   Future<SchedulesResponseDto> getSchedules();
@@ -7,4 +8,6 @@ abstract class SchedulesService {
       int scheduleId, ScheduleTimeSuggestionDto timeSuggestion);
   Future<dynamic> startSchedule(int scheduleId);
   Future<dynamic> finishSchedule(int scheduleId, String code);
+  Future<dynamic> suggestNewHoursSchedule(
+      int scheduleId, RequestNewHoursSuggest request);
 }

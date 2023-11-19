@@ -30,7 +30,9 @@ class ScheduleDetailView extends StatelessWidget {
         builder: (builderContext) {
           var presenter = builderContext.read<ScheduleDetailPresenter>();
           return Scaffold(
-            appBar: AppBar().backButton(),
+            appBar: AppBar().backButton(onPressed: () {
+              Navigator.pop(context, 1);
+            }),
             body: BlocConsumer<ScheduleDetailPresenter, DHState>(
                 listener: (context, state) {
               if (state is ScheduleAcceptedSuccess) {
@@ -48,415 +50,404 @@ class ScheduleDetailView extends StatelessWidget {
                     "Sucesso!",
                     "Agendamento foi finalizado com sucesso!",
                     DHSnackBarType.success);
+              } else if (state is ScheduleSuggestedSuccess) {
+                DHSnackBar().showSnackBar(
+                    "Sucesso!",
+                    "Uma sugestão de um novo horário foi enviado com sucesso!",
+                    DHSnackBarType.success);
+              } else if (state is DHErrorState) {
+                DHSnackBar().showSnackBar(
+                    "Ops!",
+                    "Um erro inesperado aconteceu, tente novamente mais tarde.",
+                    DHSnackBarType.error);
               }
             }, builder: (context, state) {
               return state is ScheduleLoadingBody
                   ? SchedulesBodyLoading()
-                  : state is DHErrorState
-                      ? Container()
-                      : SingleChildScrollView(
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24),
-                              child: Column(
+                  : SingleChildScrollView(
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 20,
+                                          width: 20,
+                                          decoration: BoxDecoration(
+                                              color: presenter.scheduleDataDto
+                                                  .fetchTagColor(),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(24))),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              presenter.scheduleDataDto
+                                                  .statusFriendly,
+                                              overflow: TextOverflow.ellipsis,
+                                            ).label1_bold(
+                                                style: TextStyle(fontSize: 15)),
+                                            SizedBox(
+                                              height: 2,
+                                            ),
+                                            Text('Criado em ${presenter.scheduleDataDto.scheduleDate}')
+                                                .caption1_regular(
+                                                    style: TextStyle(
+                                                        color: AppColor
+                                                            .textSecondaryColor))
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Row(children: [
+                                      Container(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              8, 4, 8, 4),
+                                          decoration: BoxDecoration(
+                                              color: AppColor.backgroundColor,
+                                              border: Border.all(
+                                                  width: 0.5,
+                                                  color: AppColor.accentColor),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(8))),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(!presenter.scheduleDataDto
+                                                            .delivery
+                                                        ? "À domicílio"
+                                                        : "Cliente irá levar")
+                                                    .caption2_regular()
+                                              ]))
+                                    ])
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Divider(),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Text('Cliente').caption1_regular(
+                                        style: TextStyle(
+                                            color:
+                                                AppColor.textSecondaryColor)),
                                     SizedBox(
-                                      height: 20,
+                                      height: 8,
+                                    ),
+                                    Text(presenter.scheduleDataDto.client.name)
+                                        .label1_bold(),
+                                    presenter.scheduleDataDto
+                                            .canTalkWithClient()
+                                        ? Row(
+                                            children: [
+                                              Text('Precisa falar com o cliente?')
+                                                  .caption1_regular(
+                                                      style: TextStyle(
+                                                          color: AppColor
+                                                              .textSecondaryColor)),
+                                              TextButton(
+                                                  style: ButtonStyle(
+                                                      tapTargetSize:
+                                                          MaterialTapTargetSize
+                                                              .shrinkWrap,
+                                                      shape: MaterialStateProperty
+                                                          .all(
+                                                              RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      )),
+                                                      elevation:
+                                                          MaterialStatePropertyAll(
+                                                              0),
+                                                      padding:
+                                                          MaterialStatePropertyAll(
+                                                              EdgeInsets.only(
+                                                                  left: 4))),
+                                                  onPressed: () async {
+                                                    Uri uri = Uri(
+                                                      host: "wa.me",
+                                                      scheme: "https",
+                                                      path:
+                                                          "55${presenter.scheduleDataDto.client.phone.replaceAll("(", "").replaceAll(")", "").replaceAll(" ", "").replaceAll("-", "")}",
+                                                    );
+                                                    if (!await launchUrl(
+                                                      uri,
+                                                      mode: LaunchMode
+                                                          .externalApplication,
+                                                    )) {
+                                                      throw Exception(
+                                                          'Could not launch $uri');
+                                                    }
+                                                  },
+                                                  child: Text('Clique aqui')
+                                                      .body_regular())
+                                            ],
+                                          )
+                                        : SizedBox(
+                                            height: 8,
+                                          ),
+                                  ],
+                                ),
+                                Divider(),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Data do serviço').caption1_regular(
+                                        style: TextStyle(
+                                            color:
+                                                AppColor.textSecondaryColor)),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(presenter.scheduleDataDto.scheduleDate)
+                                        .body_bold(),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    presenter.scheduleDataDto
+                                            .canShowSelectedHour()
+                                        ? TextButton(
+                                            style: ButtonStyle(
+                                                tapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                                shape: MaterialStateProperty.all(
+                                                    RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                )),
+                                                padding: MaterialStatePropertyAll(
+                                                    EdgeInsets.only(
+                                                        bottom: 8))),
+                                            onPressed: null,
+                                            child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    8, 4, 8, 4),
+                                                decoration: BoxDecoration(
+                                                    color: AppColor.accentColor
+                                                        .withOpacity(0.45),
+                                                    border: Border.all(
+                                                        color: AppColor
+                                                            .accentColor),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(8))),
+                                                child: Text(
+                                                  presenter.scheduleDataDto
+                                                      .getSelectecHour(),
+                                                  textAlign: TextAlign.center,
+                                                ).label2_regular()))
+                                        : presenter.scheduleDataDto.waitingClient()
+                                            ? Padding(padding: EdgeInsets.only(bottom: 12), child: Text('Aguardando cliente escolher novo horário').body_regular())
+                                            : SizedBox(
+                                                height: 48,
+                                                child: ListView.separated(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  padding: EdgeInsets.zero,
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  itemCount: presenter
+                                                      .scheduleDataDto
+                                                      .getTimeSuggestions()
+                                                      .length,
+                                                  separatorBuilder:
+                                                      (context, index) =>
+                                                          SizedBox(
+                                                    width: 12,
+                                                  ),
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    var timeSuggestions =
+                                                        presenter
+                                                            .scheduleDataDto
+                                                            .getTimeSuggestions();
+                                                    return Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          TextButton(
+                                                              style:
+                                                                  ButtonStyle(
+                                                                      tapTargetSize: MaterialTapTargetSize
+                                                                          .shrinkWrap,
+                                                                      shape: MaterialStateProperty.all(
+                                                                          RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8),
+                                                                      )),
+                                                                      padding: MaterialStatePropertyAll(
+                                                                          EdgeInsets
+                                                                              .zero)),
+                                                              onPressed: () {
+                                                                presenter.selectTimeSuggestion(
+                                                                    timeSuggestions[
+                                                                        index]);
+                                                              },
+                                                              child: Container(
+                                                                  padding:
+                                                                      EdgeInsets.fromLTRB(
+                                                                          8,
+                                                                          4,
+                                                                          8,
+                                                                          4),
+                                                                  decoration: BoxDecoration(
+                                                                      color: presenter.timeSuggestionSelected.id == timeSuggestions[index].id
+                                                                          ? AppColor.accentColor.withOpacity(
+                                                                              0.45)
+                                                                          : AppColor
+                                                                              .backgroundTransparent,
+                                                                      border: Border.all(
+                                                                          color: presenter.timeSuggestionSelected.id == timeSuggestions[index].id
+                                                                              ? AppColor.accentColor
+                                                                              : AppColor.textTertiaryColor),
+                                                                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                                                                  child: Text(
+                                                                    timeSuggestions[
+                                                                            index]
+                                                                        .time,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ).label2_regular())),
+                                                        ]);
+                                                  },
+                                                )),
+                                  ],
+                                ),
+                                Divider(),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Veículo do cliente').caption1_regular(
+                                        style: TextStyle(
+                                            color:
+                                                AppColor.textSecondaryColor)),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(presenter.scheduleDataDto.vehicle
+                                                ?.nickname ??
+                                            "")
+                                        .body_bold(),
+                                    SizedBox(
+                                      height: 4,
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 20,
-                                              width: 20,
-                                              decoration: BoxDecoration(
-                                                  color: presenter
-                                                      .scheduleDataDto
-                                                      .fetchTagColor(),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(24))),
-                                            ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  presenter.scheduleDataDto
-                                                      .statusFriendly,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ).label1_bold(
-                                                    style: TextStyle(
-                                                        fontSize: 15)),
-                                                SizedBox(
-                                                  height: 2,
-                                                ),
-                                                Text('Criado em ${presenter.scheduleDataDto.scheduleDate}')
-                                                    .caption1_regular(
-                                                        style: TextStyle(
-                                                            color: AppColor
-                                                                .textSecondaryColor))
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        Row(children: [
-                                          Container(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      8, 4, 8, 4),
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      AppColor.backgroundColor,
-                                                  border: Border.all(
-                                                      width: 0.5,
-                                                      color:
-                                                          AppColor.accentColor),
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(8))),
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(!presenter
-                                                                .scheduleDataDto
-                                                                .delivery
-                                                            ? "À domicílio"
-                                                            : "Cliente irá levar")
-                                                        .caption2_regular()
-                                                  ]))
-                                        ])
+                                        Text("${presenter.scheduleDataDto.vehicle?.color ?? ""} - ${presenter.scheduleDataDto.vehicle?.plate ?? ""}")
+                                            .body_regular(
+                                                style: TextStyle(
+                                                    color: AppColor
+                                                        .textSecondaryColor)),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Divider(),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Cliente').caption1_regular(
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Divider(),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Serviços escolhidos')
+                                        .caption1_regular(
                                             style: TextStyle(
                                                 color: AppColor
                                                     .textSecondaryColor)),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(presenter
-                                                .scheduleDataDto.client.name)
-                                            .label1_bold(),
-                                        presenter.scheduleDataDto
-                                                .canTalkWithClient()
-                                            ? Row(
-                                                children: [
-                                                  Text('Precisa falar com o cliente?')
-                                                      .caption1_regular(
-                                                          style: TextStyle(
-                                                              color: AppColor
-                                                                  .textSecondaryColor)),
-                                                  TextButton(
-                                                      style: ButtonStyle(
-                                                          tapTargetSize:
-                                                              MaterialTapTargetSize
-                                                                  .shrinkWrap,
-                                                          shape: MaterialStateProperty
-                                                              .all(
-                                                                  RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                          )),
-                                                          elevation:
-                                                              MaterialStatePropertyAll(
-                                                                  0),
-                                                          padding:
-                                                              MaterialStatePropertyAll(
-                                                                  EdgeInsets.only(
-                                                                      left:
-                                                                          4))),
-                                                      onPressed: () async {
-                                                        Uri uri = Uri(
-                                                          host: "wa.me",
-                                                          scheme: "https",
-                                                          path:
-                                                              "55${presenter.scheduleDataDto.client.phone.replaceAll("(", "").replaceAll(")", "").replaceAll(" ", "").replaceAll("-", "")}",
-                                                        );
-                                                        if (!await launchUrl(
-                                                          uri,
-                                                          mode: LaunchMode
-                                                              .externalApplication,
-                                                        )) {
-                                                          throw Exception(
-                                                              'Could not launch $uri');
-                                                        }
-                                                      },
-                                                      child: Text('Clique aqui')
-                                                          .body_regular())
-                                                ],
-                                              )
-                                            : SizedBox(
-                                                height: 8,
-                                              ),
-                                      ],
-                                    ),
-                                    Divider(),
                                     SizedBox(
-                                      height: 12,
+                                      height: 8,
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Data do serviço')
-                                            .caption1_regular(
-                                                style: TextStyle(
-                                                    color: AppColor
-                                                        .textSecondaryColor)),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(presenter
-                                                .scheduleDataDto.scheduleDate)
-                                            .body_bold(),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        presenter.scheduleDataDto
-                                                .canShowSelectedHour()
-                                            ? TextButton(
-                                                style: ButtonStyle(
-                                                    tapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
-                                                    shape: MaterialStateProperty.all(
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    )),
-                                                    padding:
-                                                        MaterialStatePropertyAll(
-                                                            EdgeInsets.only(
-                                                                bottom: 8))),
-                                                onPressed: null,
-                                                child: Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        8, 4, 8, 4),
-                                                    decoration: BoxDecoration(
-                                                        color: AppColor.accentColor
-                                                            .withOpacity(0.45),
-                                                        border: Border.all(
-                                                            color: AppColor
-                                                                .accentColor),
-                                                        borderRadius:
-                                                            BorderRadius.all(Radius.circular(8))),
-                                                    child: Text(
-                                                      presenter.scheduleDataDto
-                                                          .getSelectecHour(),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ).label2_regular()))
-                                            : presenter.scheduleDataDto.waitingClient()
-                                                ? Padding(padding: EdgeInsets.only(bottom: 12), child: Text('Aguardando cliente escolher novo horário').body_regular())
-                                                : SizedBox(
-                                                    height: 48,
-                                                    child: ListView.separated(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      padding: EdgeInsets.zero,
-                                                      shrinkWrap: true,
-                                                      physics:
-                                                          NeverScrollableScrollPhysics(),
-                                                      itemCount: presenter
-                                                          .scheduleDataDto
-                                                          .getTimeSuggestions()
-                                                          .length,
-                                                      separatorBuilder:
-                                                          (context, index) =>
-                                                              SizedBox(
-                                                        width: 12,
-                                                      ),
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        var timeSuggestions =
-                                                            presenter
-                                                                .scheduleDataDto
-                                                                .getTimeSuggestions();
-                                                        return Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              TextButton(
-                                                                  style:
-                                                                      ButtonStyle(
-                                                                          tapTargetSize: MaterialTapTargetSize
-                                                                              .shrinkWrap,
-                                                                          shape: MaterialStateProperty.all(
-                                                                              RoundedRectangleBorder(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8),
-                                                                          )),
-                                                                          padding: MaterialStatePropertyAll(EdgeInsets
-                                                                              .zero)),
-                                                                  onPressed:
-                                                                      () {
-                                                                    presenter.selectTimeSuggestion(
-                                                                        timeSuggestions[
-                                                                            index]);
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                          padding: EdgeInsets.fromLTRB(
-                                                                              8,
-                                                                              4,
-                                                                              8,
-                                                                              4),
-                                                                          decoration: BoxDecoration(
-                                                                              color: presenter.timeSuggestionSelected.id == timeSuggestions[index].id ? AppColor.accentColor.withOpacity(0.45) : AppColor.backgroundTransparent,
-                                                                              border: Border.all(color: presenter.timeSuggestionSelected.id == timeSuggestions[index].id ? AppColor.accentColor : AppColor.textTertiaryColor),
-                                                                              borderRadius: BorderRadius.all(Radius.circular(8))),
-                                                                          child: Text(
-                                                                            timeSuggestions[index].time,
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                          ).label2_regular())),
-                                                            ]);
-                                                      },
-                                                    )),
-                                      ],
-                                    ),
-                                    Divider(),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Veículo do cliente')
-                                            .caption1_regular(
-                                                style: TextStyle(
-                                                    color: AppColor
-                                                        .textSecondaryColor)),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        Text(presenter.scheduleDataDto.vehicle
-                                                    ?.nickname ??
-                                                "")
-                                            .body_bold(),
-                                        SizedBox(
-                                          height: 4,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text("${presenter.scheduleDataDto.vehicle?.color ?? ""} - ${presenter.scheduleDataDto.vehicle?.plate ?? ""}")
-                                                .body_regular(
-                                                    style: TextStyle(
-                                                        color: AppColor
-                                                            .textSecondaryColor)),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Divider(),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Serviços escolhidos')
-                                            .caption1_regular(
-                                                style: TextStyle(
-                                                    color: AppColor
-                                                        .textSecondaryColor)),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount: presenter.scheduleDataDto
-                                              .selectedServices.items.length,
-                                          itemBuilder: (context, index) {
-                                            String includesString = '';
-                                            List<dynamic> listIncluded =
-                                                presenter
-                                                    .scheduleDataDto
-                                                    .selectedServices
-                                                    .items[index]
-                                                    .includedServices;
+                                    ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: presenter.scheduleDataDto
+                                          .selectedServices.items.length,
+                                      itemBuilder: (context, index) {
+                                        String includesString = '';
+                                        List<dynamic> listIncluded = presenter
+                                            .scheduleDataDto
+                                            .selectedServices
+                                            .items[index]
+                                            .includedServices;
 
-                                            if (listIncluded.isNotEmpty) {
-                                              includesString = "Adicionais: ";
-                                              for (var includedService
-                                                  in listIncluded) {
-                                                if (includedService ==
-                                                    listIncluded.last) {
-                                                  includesString +=
-                                                      includedService;
-                                                } else {
-                                                  includesString +=
-                                                      includedService + ", ";
-                                                }
-                                              }
+                                        if (listIncluded.isNotEmpty) {
+                                          includesString = "Adicionais: ";
+                                          for (var includedService
+                                              in listIncluded) {
+                                            if (includedService ==
+                                                listIncluded.last) {
+                                              includesString += includedService;
+                                            } else {
+                                              includesString +=
+                                                  includedService + ", ";
                                             }
-                                            return Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text("${presenter.scheduleDataDto.selectedServices.items[index].service} ")
-                                                      .body_bold(),
-                                                  includesString != ""
-                                                      ? Text(includesString)
-                                                          .body_regular()
-                                                      : SizedBox.shrink()
-                                                ]);
-                                          },
-                                        ),
-                                      ],
+                                          }
+                                        }
+                                        return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text("${presenter.scheduleDataDto.selectedServices.items[index].service} ")
+                                                  .body_bold(),
+                                              includesString != ""
+                                                  ? Text(includesString)
+                                                      .body_regular()
+                                                  : SizedBox.shrink()
+                                            ]);
+                                      },
                                     ),
-                                    SizedBox(
-                                      height: 12,
-                                    ),
-                                  ])));
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                              ])));
             }),
             bottomNavigationBar: BlocBuilder<ScheduleDetailPresenter, DHState>(
               builder: (context, state) {
@@ -503,7 +494,11 @@ class ScheduleDetailView extends StatelessWidget {
                                                         elevation:
                                                             MaterialStatePropertyAll(
                                                                 0)),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      presenter
+                                                          .openSuggestNewDate(
+                                                              context);
+                                                    },
                                                     child: Text(
                                                       "Sugerir novos horários",
                                                       textAlign: TextAlign.left,
@@ -515,10 +510,12 @@ class ScheduleDetailView extends StatelessWidget {
                                             )
                                           : SizedBox.shrink(),
                                       ElevatedButton(
-                                        onPressed: () {
-                                          String code = "";
-                                          presenter.action(code);
-                                        },
+                                        onPressed:
+                                            state is ScheduleLoadingButton
+                                                ? null
+                                                : () {
+                                                    presenter.action(context);
+                                                  },
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,

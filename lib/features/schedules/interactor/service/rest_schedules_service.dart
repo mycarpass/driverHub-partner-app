@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_http_client/interactor/service/fz_http_client.dart';
 import 'package:dio/dio.dart';
-import 'package:driver_hub_partner/features/home/interactor/service/dto/schedules_response_dto.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/schedules_service.dart';
 
 class RestSchedulesService implements SchedulesService {
@@ -35,10 +36,6 @@ class RestSchedulesService implements SchedulesService {
   Future<dynamic> acceptSchedule(
       int scheduleId, ScheduleTimeSuggestionDto timeSuggestion) async {
     try {
-      // Timer(
-      //   const Duration(seconds: 3),
-      //   () => false,
-      // );
       Response response = await _httpClient.put(
           "/partner/accept-schedule/$scheduleId",
           body: {'time_suggestion_id': timeSuggestion.id});
@@ -65,7 +62,21 @@ class RestSchedulesService implements SchedulesService {
   Future<dynamic> finishSchedule(int scheduleId, String code) async {
     try {
       Response response = await _httpClient
-          .put("/partner/finish-schedule/$scheduleId", body: {'code': "8372"});
+          .put("/partner/finish-schedule/$scheduleId", body: {'code': code});
+
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future suggestNewHoursSchedule(
+      int scheduleId, RequestNewHoursSuggest request) async {
+    try {
+      Response response = await _httpClient.post(
+          "/partner/send-new-date-time-suggestion/$scheduleId",
+          body: request.toJson());
 
       return response.data;
     } catch (e) {
