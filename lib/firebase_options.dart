@@ -47,29 +47,28 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDYfOddphQ_rObfPt2AWSlPi7pZ1uYsq14',
-    appId: '1:555320798074:web:a69e454443676cc376c4c3',
-    messagingSenderId: '555320798074',
-    projectId: 'driverhub-partners-sandbox',
-    authDomain: 'driverhub-partners-sandbox.firebaseapp.com',
-    storageBucket: 'driverhub-partners-sandbox.appspot.com',
-    measurementId: 'G-X1E0TLEP5V',
+    apiKey: 'AIzaSyBzVXitX3i5kyZUYKzJkFQ50wnZSlwelJY',
+    appId: '1:962919884438:web:0fb8af14e9151b48e704b7',
+    messagingSenderId: '962919884438',
+    projectId: 'driverhub-partners-prod',
+    authDomain: 'driverhub-partners-prod.firebaseapp.com',
+    storageBucket: 'driverhub-partners-prod.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBAm39SN5ePhLE3G71TkJTfm7-7EqhWz7o',
-    appId: '1:555320798074:android:57a787aa6500aadf76c4c3',
-    messagingSenderId: '555320798074',
-    projectId: 'driverhub-partners-sandbox',
-    storageBucket: 'driverhub-partners-sandbox.appspot.com',
+    apiKey: 'AIzaSyDVkwzglFWeNM52HgiKf8njj6WEA9VWr04',
+    appId: '1:962919884438:android:3cfbd71414a1c102e704b7',
+    messagingSenderId: '962919884438',
+    projectId: 'driverhub-partners-prod',
+    storageBucket: 'driverhub-partners-prod.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC85aAOHz2T8ze91vWj4sXolXQ86oF3YPg',
-    appId: '1:555320798074:ios:54b0edefac0daa1f76c4c3',
-    messagingSenderId: '555320798074',
-    projectId: 'driverhub-partners-sandbox',
-    storageBucket: 'driverhub-partners-sandbox.appspot.com',
-    iosBundleId: 'com.example.driverHubPartner',
+    apiKey: 'AIzaSyC9UI259dv9UBi-b8Rb1RMX3Web93GmQG4',
+    appId: '1:962919884438:ios:06f5461adde7160fe704b7',
+    messagingSenderId: '962919884438',
+    projectId: 'driverhub-partners-prod',
+    storageBucket: 'driverhub-partners-prod.appspot.com',
+    iosBundleId: 'com.driverHubPartner.app',
   );
 }

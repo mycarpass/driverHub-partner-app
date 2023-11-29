@@ -54,13 +54,6 @@ void main() async {
   }
 
   runApp(const AppEntryPoint());
-
-  // OneSignal.Debug.setLogLevel(OSLogLevel.debug);
-
-  // OneSignal.Debug.setAlertLevel(OSLogLevel.none);
-  // OneSignal.consentRequired(false);
-
-  // OneSignal.initialize(DHEnvs.oneSignalToken);
 }
 
 class AppEntryPoint extends StatelessWidget {
