@@ -11,11 +11,15 @@ class HomeLoaded extends DHSuccessState {
   HomeLoaded(this.homeResponseDto);
 }
 
-class VisibleIsChanged extends HomeState {
+class FinancialLoadingState extends DHState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FinancialLoadadedState extends DHState {
   final bool isVisible;
 
-  VisibleIsChanged(this.isVisible);
-
+  FinancialLoadadedState({required this.isVisible});
   @override
   List<Object?> get props => [isVisible];
 }

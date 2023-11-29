@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.driverHubPartner</string>
+	<string>com.driverHubPartner.app</string>
 	<key>PROJECT_ID</key>
 	<string>driverhub-partners-sandbox</string>
 	<key>STORAGE_BUCKET</key>

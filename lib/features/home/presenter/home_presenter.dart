@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/home/interactor/home_interactor.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/financial_info_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +17,14 @@ class HomePresenter extends Cubit<DHState> {
       DHInjector.instance.get<HomeInteractor>();
 
   HomeResponseDto homeResponseDto = HomeResponseDto();
+
+  late FinancialInfoDto financialInfoDto;
+
   bool isVisible = true;
 
   Future<void> load() async {
     await _getHomeInfo();
+    await _getFinancialInfo();
     _configurePush();
   }
 
@@ -32,7 +37,7 @@ class HomePresenter extends Cubit<DHState> {
 
   void changeVisible() {
     isVisible = !isVisible;
-    emit(VisibleIsChanged(isVisible));
+    emit(FinancialLoadadedState(isVisible: isVisible));
     //  emit(DHSuccessState());
   }
 
@@ -41,6 +46,16 @@ class HomePresenter extends Cubit<DHState> {
       emit(DHLoadingState());
       homeResponseDto = await _homeInteractor.getHomeInfo();
       emit(HomeLoaded(homeResponseDto));
+    } catch (e) {
+      emit(DHErrorState());
+    }
+  }
+
+  Future _getFinancialInfo() async {
+    try {
+      emit(FinancialLoadingState());
+      financialInfoDto = await _homeInteractor.getFinancialInfo();
+      emit(FinancialLoadadedState(isVisible: true));
     } catch (e) {
       emit(DHErrorState());
     }
