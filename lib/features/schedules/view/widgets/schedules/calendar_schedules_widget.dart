@@ -35,9 +35,6 @@ class _CalendarScheduledBodyWidgetState
             CalendarWidget(
                 events: presenter.mapListFiltered,
                 onSelectedDay: (selectedDay, eventsList) {
-                  print(selectedDay.day);
-                  print(eventsList.length);
-
                   Navigator.pushNamed(context, SchedulesRoutes.scheduleList,
                       arguments: {
                         'schedules': eventsList.isEmpty

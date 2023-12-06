@@ -3,6 +3,7 @@
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
 import 'package:driver_hub_partner/features/customers/presenter/customers_presenter.dart';
+import 'package:driver_hub_partner/features/customers/view/pages/home/customers_list_widget.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customers_error_widget.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/loading/customers_body_loading.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
@@ -35,7 +36,7 @@ class _CustomersViewState extends State<CustomersView>
             key: UniqueKey(),
             child: BlocBuilder<CustomersPresenter, DHState>(
               builder: (context, state) {
-                //var presenter = context.read<CustomersPresenter>();
+                var presenter = context.read<CustomersPresenter>();
                 return Stack(
                   children: [
                     if (state is DHLoadingState) ...[
@@ -63,7 +64,14 @@ class _CustomersViewState extends State<CustomersView>
                           Text("Todos"),
                           Text("Assinantes"),
                         ],
-                        views: [Container(), Container()],
+                        views: [
+                          CustomersListBodyWidget(
+                            customers: presenter.customersResponseDto.customers,
+                          ),
+                          CustomersListBodyWidget(
+                            customers: presenter.subscribers,
+                          ),
+                        ],
                       ),
                     ]
                   ],

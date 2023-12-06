@@ -21,6 +21,8 @@ class CustomerDto {
   late CustomerStatus status;
   late String name;
   late String phone;
+  late bool isSubscribed;
+  late String? spentValue;
   late String? email;
   late String? plate;
   late VehicleDto? vehicle;
@@ -30,7 +32,9 @@ class CustomerDto {
       required this.status,
       required this.name,
       required this.phone,
+      required this.isSubscribed,
       this.email,
+      this.spentValue,
       this.vehicle,
       this.plate});
 
@@ -41,6 +45,8 @@ class CustomerDto {
     phone = json['phone'];
     email = json['email'];
     plate = json['plate'];
+    isSubscribed = json['is_subscribed'];
+    spentValue = json['spent_value'];
     vehicle = VehicleDto.fromJson(json["vehicle"]);
   }
 
@@ -53,5 +59,18 @@ class CustomerDto {
       default:
         return CustomerStatus.notVerified;
     }
+  }
+
+  String getInitialsName() {
+    String firstLetter = name.trim().substring(0, 1).toUpperCase();
+    String secondLetter = "";
+    List<String> nameSplitted = name.trim().split(" ");
+    if (nameSplitted.length >= 2) {
+      String secondNameSplitted = nameSplitted[nameSplitted.length - 1];
+      secondLetter = secondNameSplitted.substring(0, 1).toUpperCase();
+    } else {
+      secondLetter = name.trim().substring(1, 2).toUpperCase();
+    }
+    return "$firstLetter$secondLetter";
   }
 }
