@@ -1,0 +1,4 @@
+enum CustomerStatus {
+  verified,
+  notVerified,
+}

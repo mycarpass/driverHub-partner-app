@@ -7,9 +7,11 @@ import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_ui_kit/ui_kit_module.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/config/enviroment_variables.dart';
+import 'package:driver_hub_partner/features/customers/customers_module.dart';
 import 'package:driver_hub_partner/features/home/home_module.dart';
 import 'package:driver_hub_partner/features/login/login_module.dart';
 import 'package:driver_hub_partner/features/profile/profile_module.dart';
+import 'package:driver_hub_partner/features/sales/sales_module.dart';
 import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
 import 'package:driver_hub_partner/features/tappay/tap_pay_module.dart';
 import 'package:driver_hub_partner/features/welcome/welcome_module.dart';
@@ -32,6 +34,8 @@ List<DHModule> moduleList = [
   HomeModule(),
   SchedulesModule(),
   ProfileModule(),
+  CustomersModule(),
+  SalesModule(),
   NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 

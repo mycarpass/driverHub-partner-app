@@ -24,6 +24,7 @@ class _HomeViewState extends State<HomeView>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var presenter = context.read<HomePresenter>();
     return DHPullToRefresh(
       onRefresh: context.read<HomePresenter>().load,

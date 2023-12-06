@@ -1,8 +1,10 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:driver_hub_partner/features/customers/view/pages/home/customers_view.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/tabs/tabs_icon_widget.dart';
 import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
+import 'package:driver_hub_partner/features/sales/view/pages/home/sales_view.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/schedules_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,16 +152,12 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
           padding: const EdgeInsets.only(top: 24),
           child: TabBarView(
             controller: tabController,
-            children: [
+            children: const [
               HomeView(),
               SchedulesView(),
+              SalesView(),
+              CustomersView(),
               HomeProfileView(),
-              Container(
-                child: Text("oi"),
-              ),
-              Container(
-                child: Text("oi"),
-              ),
             ],
           ),
         )

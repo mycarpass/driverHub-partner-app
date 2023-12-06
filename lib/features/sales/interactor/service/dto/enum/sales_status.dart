@@ -1,0 +1,4 @@
+enum SalesStatus {
+  verified,
+  notVerified,
+}

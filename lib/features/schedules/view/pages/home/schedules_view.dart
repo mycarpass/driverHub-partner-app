@@ -1,9 +1,9 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:dh_state_management/dh_state.dart';
-import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/calendar_schedules_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/schedules_list_widget.dart';
@@ -104,48 +104,4 @@ class _SchedulesViewState extends State<SchedulesView>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class TabViewHeader extends StatelessWidget {
-  const TabViewHeader({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.onPressed,
-  });
-  final String title;
-  final String subtitle;
-  final Function onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title).title1_bold(),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(subtitle).body_regular()
-          ],
-        ),
-        TextButton(
-          onPressed: () => onPressed(),
-          child: const Row(
-            children: [
-              Icon(Icons.add_outlined),
-              SizedBox(
-                width: 8,
-              ),
-              Text("Novo"),
-            ],
-          ),
-        )
-      ],
-    );
-  }
 }

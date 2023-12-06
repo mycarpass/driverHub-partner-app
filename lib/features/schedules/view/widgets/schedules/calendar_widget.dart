@@ -81,10 +81,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           if (events.isNotEmpty) {
             return Container(
                 transform: Matrix4.translationValues(8, -2, 0),
-                padding: const EdgeInsets.all(4),
+                padding: const EdgeInsets.all(5),
                 decoration: const BoxDecoration(
                     color: AppColor.supportColor, shape: BoxShape.circle),
-                child: Text(events.length.toString()).caption2_bold(
+                child: Text(
+                  events.length.toString(),
+                  textAlign: TextAlign.center,
+                ).caption1_bold(
                     style: const TextStyle(color: AppColor.backgroundColor)));
           }
           return null;

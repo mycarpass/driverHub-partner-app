@@ -1,0 +1,16 @@
+import 'package:driver_hub_partner/features/customers/interactor/service/customers_service.dart';
+import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
+
+class CustomersInteractor {
+  final CustomersService _customersService;
+
+  CustomersInteractor(this._customersService);
+
+  Future<CustomersResponseDto> getCustomers() async {
+    try {
+      return await _customersService.getCustomers();
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
