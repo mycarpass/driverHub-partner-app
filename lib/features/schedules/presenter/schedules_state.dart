@@ -10,3 +10,11 @@ class SchedulesLoaded extends DHSuccessState {
 
   SchedulesLoaded(this.schedulesResponseDto);
 }
+
+class FilteredListState extends DHState {
+  final List<ScheduleDataDto> schedules;
+
+  FilteredListState({required this.schedules});
+  @override
+  List<Object?> get props => [schedules];
+}

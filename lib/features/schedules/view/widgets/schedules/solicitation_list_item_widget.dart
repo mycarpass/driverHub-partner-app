@@ -31,11 +31,14 @@ class SolicitationListItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
+              radius: 24,
               backgroundColor: AppColor.backgroundTertiary,
               child: Text(
-                solicitationDataDto.client.getInitialsName(),
+                solicitationDataDto.canShowSelectedHour()
+                    ? solicitationDataDto.getSelectecHour()
+                    : "??:??",
                 overflow: TextOverflow.ellipsis,
-              ).label1_regular(),
+              ).caption1_bold(),
             ),
             const SizedBox(
               width: 24,
@@ -49,30 +52,30 @@ class SolicitationListItemWidget extends StatelessWidget {
                   Text(solicitationDataDto.client.getFirstAndLastName())
                       .body_bold(),
                   const SizedBox(
-                    height: 4,
+                    height: 8,
                   ),
                   Text(solicitationDataDto.vehicle?.nickname ??
                           "Veículo não cadastrado")
                       .body_regular(),
 
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    children: [
-                      Text(solicitationDataDto.scheduleDate).body_bold(
-                        style: TextStyle(
-                            color: AppColor.textPrimaryColor.withOpacity(0.8)),
-                      ),
-                      solicitationDataDto.canShowSelectedHour()
-                          ? Text(" - ${solicitationDataDto.getSelectecHour()}")
-                              .body_bold(
-                                  style: TextStyle(
-                                      color: AppColor.textPrimaryColor
-                                          .withOpacity(0.8)))
-                          : const SizedBox.shrink()
-                    ],
-                  ),
+                  // const SizedBox(
+                  //   height: 4,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     Text(solicitationDataDto.scheduleDate).body_bold(
+                  //       style: TextStyle(
+                  //           color: AppColor.textPrimaryColor.withOpacity(0.8)),
+                  //     ),
+                  //     solicitationDataDto.canShowSelectedHour()
+                  //         ? Text(" - ${solicitationDataDto.getSelectecHour()}")
+                  //             .body_bold(
+                  //                 style: TextStyle(
+                  //                     color: AppColor.textPrimaryColor
+                  //                         .withOpacity(0.8)))
+                  //         : const SizedBox.shrink()
+                  //   ],
+                  // ),
                   const SizedBox(
                     height: 8,
                   ),

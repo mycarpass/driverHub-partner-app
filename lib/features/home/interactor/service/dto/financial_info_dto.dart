@@ -19,9 +19,10 @@ class Data {
 
     if (json['transactions'] != null) {
       transactions = <Transactions>[];
-      json['transactions'].forEach((v) {
-        transactions!.add(Transactions.fromJson(v));
-      });
+
+      for (var element in json['transactions']) {
+        transactions!.add(Transactions.fromJson(element));
+      }
     }
   }
 }
@@ -42,8 +43,12 @@ class AccountInfo {
     balanceAvailableForWithdraw = json['balance_available_for_withdraw'] != null
         ? MoneyValue(removeBrl(json['balance_available_for_withdraw']))
         : MoneyValue("0,0");
-    volumeThisMonth = MoneyValue(removeBrl(json['volume_this_month']));
-    volumeLastMonth = MoneyValue(removeBrl(json['volume_last_month']));
+    volumeThisMonth = json['volume_this_month'] != null
+        ? MoneyValue(removeBrl(json['volume_this_month']))
+        : MoneyValue("0,0");
+    volumeLastMonth = json['volume_last_month'] != null
+        ? MoneyValue(removeBrl(json['volume_last_month']))
+        : MoneyValue("0,0");
     totalActiveSubscriptions = json['total_active_subscriptions'];
   }
 
@@ -51,8 +56,11 @@ class AccountInfo {
     if (value.contains("BRL")) {
       return value.split(" ")[0];
     }
+    if (value.contains(" ")) {
+      return value.split(" ")[1];
+    }
 
-    return value.split(" ")[1];
+    return value;
   }
 }
 

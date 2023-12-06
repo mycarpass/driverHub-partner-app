@@ -13,9 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dh_ui_kit/view/widgets/alerts/dh_alert_dialog.dart';
 
-class HomeProfileView extends StatelessWidget {
+class HomeProfileView extends StatefulWidget {
   const HomeProfileView({super.key});
 
+  @override
+  State<HomeProfileView> createState() => _HomeProfileViewState();
+}
+
+class _HomeProfileViewState extends State<HomeProfileView>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -259,4 +265,7 @@ class HomeProfileView extends StatelessWidget {
       }),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

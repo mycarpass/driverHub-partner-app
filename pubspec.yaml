@@ -71,7 +71,7 @@ dependencies:
   mask_text_input_formatter: ^2.5.0
   easy_date_timeline: ^1.0.2
   chips_choice: ^3.0.1
-  
+  uni_links: ^0.5.1
 
 
   # The following adds the Cupertino Icons font to your application.

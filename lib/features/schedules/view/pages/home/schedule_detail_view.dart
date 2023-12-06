@@ -232,8 +232,9 @@ class ScheduleDetailView extends StatelessWidget {
                                     SizedBox(
                                       height: 8,
                                     ),
-                                    Text(presenter.scheduleDataDto.scheduleDate)
-                                        .body_bold(),
+                                    Text(
+                                      presenter.scheduleDataDto.scheduleDate,
+                                    ).body_bold(),
                                     SizedBox(
                                       height: 8,
                                     ),

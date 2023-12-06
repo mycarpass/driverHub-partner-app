@@ -2,17 +2,14 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
-import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
-import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/financial_movimentations_card.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/loading/home_body_loading.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
-import 'package:driver_hub_partner/features/tappay/router/tap_pay_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +20,8 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     var presenter = context.read<HomePresenter>();
@@ -91,6 +89,9 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class WalletCardWidget extends StatelessWidget {

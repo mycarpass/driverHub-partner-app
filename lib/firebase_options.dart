@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,29 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBzVXitX3i5kyZUYKzJkFQ50wnZSlwelJY',
-    appId: '1:962919884438:web:0fb8af14e9151b48e704b7',
-    messagingSenderId: '962919884438',
-    projectId: 'driverhub-partners-prod',
-    authDomain: 'driverhub-partners-prod.firebaseapp.com',
-    storageBucket: 'driverhub-partners-prod.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDVkwzglFWeNM52HgiKf8njj6WEA9VWr04',
-    appId: '1:962919884438:android:3cfbd71414a1c102e704b7',
-    messagingSenderId: '962919884438',
-    projectId: 'driverhub-partners-prod',
-    storageBucket: 'driverhub-partners-prod.appspot.com',
+    apiKey: 'AIzaSyBAm39SN5ePhLE3G71TkJTfm7-7EqhWz7o',
+    appId: '1:555320798074:android:57a787aa6500aadf76c4c3',
+    messagingSenderId: '555320798074',
+    projectId: 'driverhub-partners-sandbox',
+    storageBucket: 'driverhub-partners-sandbox.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC9UI259dv9UBi-b8Rb1RMX3Web93GmQG4',
-    appId: '1:962919884438:ios:06f5461adde7160fe704b7',
-    messagingSenderId: '962919884438',
-    projectId: 'driverhub-partners-prod',
-    storageBucket: 'driverhub-partners-prod.appspot.com',
+    apiKey: 'AIzaSyC85aAOHz2T8ze91vWj4sXolXQ86oF3YPg',
+    appId: '1:555320798074:ios:fda259c0dc845d4e76c4c3',
+    messagingSenderId: '555320798074',
+    projectId: 'driverhub-partners-sandbox',
+    storageBucket: 'driverhub-partners-sandbox.appspot.com',
     iosBundleId: 'com.driverHubPartner.app',
   );
 }

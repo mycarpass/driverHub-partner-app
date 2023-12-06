@@ -1,6 +1,7 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enum/schedule_status.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SchedulesResponseDto {
   SchedulesData data = SchedulesData();
@@ -24,7 +25,12 @@ class SchedulesData {
     schedulesDone = [];
     for (var schedule in json['data']) {
       ScheduleDataDto sch = ScheduleDataDto.fromJson(schedule);
-      schedules.add(sch);
+
+      if (sch.status != ScheduleStatus.canceled &&
+          sch.status != ScheduleStatus.expired &&
+          sch.status != ScheduleStatus.refused) {
+        schedules.add(sch);
+      }
       if (sch.status == ScheduleStatus.pending ||
           sch.status == ScheduleStatus.paymentPending ||
           sch.status == ScheduleStatus.newHourSuggested) {
@@ -37,6 +43,19 @@ class SchedulesData {
       }
     }
   }
+
+  List<ScheduleDataDto> filterByDate(DateTime date) {
+    var _list = schedules
+        .where(
+          (element) =>
+              element.scheduleDateTime.month == date.month &&
+              element.scheduleDateTime.year == date.year,
+        )
+        .toList();
+
+    return _list;
+  }
+
   SchedulesData();
 }
 
@@ -51,6 +70,7 @@ class ScheduleDataDto {
   late String totalAmountPayable;
   late String paymentType;
   late String scheduleDate;
+  late DateTime scheduleDateTime;
   late List<ScheduleTimeSuggestionDto> timeSuggestions;
   late ScheduleSelectedServicesDto selectedServices;
   late ClientScheduleDto client;
@@ -86,6 +106,7 @@ class ScheduleDataDto {
     totalAmountPayable = json['total_amount_payable'];
     paymentType = json['payment_type'];
     scheduleDate = json['scheduled_date'];
+    scheduleDateTime = DateFormat('dd/MM/yyyy').parse(json['scheduled_date']);
     timeSuggestions = [];
     for (var time in json['time_suggestions']) {
       timeSuggestions.add(ScheduleTimeSuggestionDto.fromJson(time));

@@ -1,11 +1,16 @@
 import 'dart:io';
 
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
+import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/home/interactor/home_interactor.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/financial_info_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
+import 'package:driver_hub_partner/features/home/view/resources/home_deeplinks.dart';
+import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
+import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,9 +22,8 @@ class HomePresenter extends Cubit<DHState> {
       DHInjector.instance.get<HomeInteractor>();
 
   HomeResponseDto homeResponseDto = HomeResponseDto();
-
   late FinancialInfoDto financialInfoDto;
-
+  String? deepLink;
   bool isVisible = true;
 
   Future<void> load() async {
@@ -46,6 +50,9 @@ class HomePresenter extends Cubit<DHState> {
       emit(DHLoadingState());
       homeResponseDto = await _homeInteractor.getHomeInfo();
       emit(HomeLoaded(homeResponseDto));
+      if (deepLink != null) {
+        openDeepLink(deepLink!);
+      }
     } catch (e) {
       emit(DHErrorState());
     }
@@ -75,6 +82,15 @@ class HomePresenter extends Cubit<DHState> {
       final result = await permission.request();
       if (result == PermissionStatus.denied ||
           result == PermissionStatus.permanentlyDenied) return;
+    }
+  }
+
+  void openDeepLink(String dlink) {
+    if (dlink.contains(HomeDeepLinks.schedules)) {
+      String scheduleId = dlink.replaceAll(HomeDeepLinks.schedules, "");
+      Navigator.pushNamed(NavigationService.navigatorKey.currentContext!,
+          SchedulesRoutes.scheduleDetail,
+          arguments: ScheduleDetailParams(scheduleId: int.parse(scheduleId)));
     }
   }
 }
