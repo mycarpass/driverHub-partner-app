@@ -5,7 +5,7 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/month/month_swiper_widget.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/calendar_schedules_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/schedules_list_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/schedules_error_widget.dart';
 import 'package:flutter/material.dart';
@@ -68,17 +68,22 @@ class _SchedulesViewState extends State<SchedulesView>
                           Text("Lista"),
                         ],
                         views: [
-                          BlocBuilder<SchedulesPresenter, DHState>(
-                              builder: (context, state) {
-                            return SingleChildScrollView(
-                              child: MonthSwiperWidget(
-                                selectedMonth: presenter.selectedMonth,
-                                onChanged: (_) {
-                                  presenter.filterListByDate(_);
-                                },
-                              ),
-                            );
-                          }),
+                          CalendarScheduledBodyWidget(
+                            schedules:
+                                presenter.schedulesResponseDto.data.schedules,
+                          ),
+
+                          // BlocBuilder<SchedulesPresenter, DHState>(
+                          //     builder: (context, state) {
+                          //   return SingleChildScrollView(
+                          //     child: MonthSwiperWidget(
+                          //       selectedMonth: presenter.selectedMonth,
+                          //       onChanged: (_) {
+                          //         presenter.filterListByDate(_);
+                          //       },
+                          //     ),
+                          //   );
+                          // }),
                           SingleChildScrollView(
                               child: ScheduledListBodyWidget(
                             schedules:

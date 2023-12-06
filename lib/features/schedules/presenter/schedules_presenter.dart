@@ -15,6 +15,7 @@ class SchedulesPresenter extends Cubit<DHState> {
 
   List<ScheduleDataDto> filteredList = [];
   DateTime selectedMonth = DateTime.now();
+  Map<DateTime, List<dynamic>> mapListFiltered = {};
 
   Future<void> load() async {
     await _getSchedules();
@@ -33,14 +34,27 @@ class SchedulesPresenter extends Cubit<DHState> {
     }
   }
 
-  void filterListByDate(DateTime dateTime) {
+  Future<void> filterListByDate(DateTime dateTime) async {
     selectedMonth = dateTime;
-    filteredList = [];
     filteredList = schedulesResponseDto.data.filterByDate(dateTime);
+    await mapFromFilteredList();
     emit(
-      FilteredListState(
-        schedules: filteredList,
-      ),
+      FilteredListState(schedules: filteredList, map: mapListFiltered),
     );
+  }
+
+  Future<void> mapFromFilteredList() async {
+    Map<DateTime, List<dynamic>> map = {};
+
+    for (var i = 0; i <= 30; i++) {
+      var listFilter = filteredList
+          .where((element) => element.scheduleDateTime.day == i + 1)
+          .toList();
+      if (listFilter.isNotEmpty) {
+        map[listFilter.first.scheduleDateTime] = listFilter;
+      }
+    }
+
+    mapListFiltered = map;
   }
 }

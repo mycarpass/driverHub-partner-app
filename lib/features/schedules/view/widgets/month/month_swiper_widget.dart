@@ -23,6 +23,7 @@ class _MonthSwiperWidgetState extends State<MonthSwiperWidget> {
     setState(() {
       widget.selectedMonth = _value;
     });
+    widget.onChanged(widget.selectedMonth);
   }
 
   String _formatDate(DateTime _value) {
@@ -42,7 +43,6 @@ class _MonthSwiperWidgetState extends State<MonthSwiperWidget> {
                 ),
               ),
             );
-            widget.onChanged(widget.selectedMonth);
           },
           icon: const Icon(
             Icons.arrow_back_ios,
@@ -50,7 +50,7 @@ class _MonthSwiperWidgetState extends State<MonthSwiperWidget> {
         ),
         Text(
           _formatDate(widget.selectedMonth),
-        ).body_regular(),
+        ).body_bold(),
         IconButton(
           onPressed: () {
             _changeMonth(
@@ -60,7 +60,6 @@ class _MonthSwiperWidgetState extends State<MonthSwiperWidget> {
                 ),
               ),
             );
-            widget.onChanged(widget.selectedMonth);
           },
           icon: const Icon(
             Icons.arrow_forward_ios,

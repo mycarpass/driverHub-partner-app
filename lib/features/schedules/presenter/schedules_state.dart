@@ -13,8 +13,8 @@ class SchedulesLoaded extends DHSuccessState {
 
 class FilteredListState extends DHState {
   final List<ScheduleDataDto> schedules;
-
-  FilteredListState({required this.schedules});
+  final Map<DateTime, List<dynamic>> map;
+  FilteredListState({required this.schedules, required this.map});
   @override
-  List<Object?> get props => [schedules];
+  List<Object?> get props => [schedules, map];
 }
