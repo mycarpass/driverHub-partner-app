@@ -7,7 +7,7 @@ class CustomersResponseDto {
   CustomersResponseDto.fromJson(Map<String, dynamic> json) {
     customers = [];
 
-    for (var customer in json['customers']) {
+    for (var customer in json['data']) {
       CustomerDto custmr = CustomerDto.fromJson(customer);
       customers.add(custmr);
     }
@@ -39,15 +39,15 @@ class CustomerDto {
       this.plate});
 
   CustomerDto.fromJson(Map<String, dynamic> json) {
-    customerId = json['customer_id'];
-    status = _getStatus(json['status']);
+    customerId = json['customerId'];
+    status = _getStatus(json['status'] ?? "NOT_VERIFIED");
     name = json['name'];
     phone = json['phone'];
     email = json['email'];
-    plate = json['plate'];
-    isSubscribed = json['is_subscribed'];
-    spentValue = json['spent_value'];
-    vehicle = VehicleDto.fromJson(json["vehicle"]);
+    plate = json['car_licence_plate'];
+    isSubscribed = json['isSubscribed'];
+    spentValue = json['totalSpent'];
+    //  vehicle = VehicleDto.fromJson(json["vehicle"]);
   }
 
   CustomerStatus _getStatus(String status) {

@@ -20,39 +20,7 @@ class CustomersPresenter extends Cubit<DHState> {
   Future _getCustomers() async {
     try {
       emit(DHLoadingState());
-      // customersResponseDto = await _customersInteractor.getCustomers();
-      customersResponseDto = CustomersResponseDto();
-
-      CustomerDto customerDto1 = CustomerDto(
-          customerId: 1,
-          status: CustomerStatus.notVerified,
-          isSubscribed: false,
-          name: "Carlos Henrique",
-          phone: "(34) 99199-2313");
-      CustomerDto customerDto2 = CustomerDto(
-          customerId: 2,
-          status: CustomerStatus.verified,
-          isSubscribed: true,
-          name: "Rafael Zanin",
-          phone: "(34) 99199-8372");
-      CustomerDto customerDto3 = CustomerDto(
-          customerId: 3,
-          status: CustomerStatus.notVerified,
-          isSubscribed: false,
-          name: "Carlos Henrique",
-          phone: "(34) 21323-2313");
-      CustomerDto customerDto4 = CustomerDto(
-          customerId: 4,
-          status: CustomerStatus.notVerified,
-          isSubscribed: false,
-          name: "Carlos Henrique",
-          phone: "(34) 21111-2343");
-      List<CustomerDto> customers = [];
-      customers.add(customerDto1);
-      customers.add(customerDto2);
-      customers.add(customerDto3);
-      customers.add(customerDto4);
-      customersResponseDto.customers = customers;
+      customersResponseDto = await _customersInteractor.getCustomers();
       _filterSubscribers();
       emit(DHSuccessState());
     } catch (e) {

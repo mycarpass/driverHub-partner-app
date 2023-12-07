@@ -4,6 +4,7 @@ import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_http_client/interactor/service/fz_http_client.dart';
 import 'package:dio/dio.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/customers_service.dart';
+import 'package:driver_hub_partner/features/customers/interactor/service/dto/customer_register_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 
 class RestCustomerService implements CustomersService {
@@ -12,9 +13,20 @@ class RestCustomerService implements CustomersService {
   @override
   Future<CustomersResponseDto> getCustomers() async {
     try {
-      Response response = await _httpClient.get("/customers");
+      Response response = await _httpClient.get("/partner/leads");
 
       return CustomersResponseDto.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> registerCustomer(CustomerRegisterDto customerRegisterDto) async {
+    try {
+      Response response = await _httpClient.post("/partner/leads/",
+          body: customerRegisterDto.toJson());
+      return response.data;
     } catch (e) {
       rethrow;
     }

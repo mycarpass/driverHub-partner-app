@@ -1,4 +1,5 @@
 import 'package:driver_hub_partner/features/customers/interactor/service/customers_service.dart';
+import 'package:driver_hub_partner/features/customers/interactor/service/dto/customer_register_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 
 class CustomersInteractor {
@@ -12,5 +13,9 @@ class CustomersInteractor {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> registerCustomer(CustomerRegisterDto customerRegisterDto) async {
+    await _customersService.registerCustomer(customerRegisterDto);
   }
 }

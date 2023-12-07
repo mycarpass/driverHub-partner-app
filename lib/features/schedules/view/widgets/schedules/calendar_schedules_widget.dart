@@ -33,44 +33,48 @@ class _CalendarScheduledBodyWidgetState
                   await presenter.filterListByDate(_);
                 }),
             CalendarWidget(
-                events: presenter.mapListFiltered,
-                onSelectedDay: (selectedDay, eventsList) {
-                  Navigator.pushNamed(context, SchedulesRoutes.scheduleList,
-                      arguments: {
-                        'schedules': eventsList.isEmpty
-                            ? null
-                            : eventsList as List<ScheduleDataDto>,
-                        'day': selectedDay
-                      });
+              events: presenter.mapListFiltered,
+              onSelectedDay: (selectedDay, eventsList) {
+                Navigator.pushNamed(
+                  context,
+                  SchedulesRoutes.scheduleList,
+                  arguments: {
+                    'schedules': eventsList.isEmpty
+                        ? null
+                        : eventsList as List<ScheduleDataDto>,
+                    'day': selectedDay
+                  },
+                );
 
-                  // showModalBottomSheet<String>(
-                  //     context: context,
-                  //     builder: (BuildContext context) {
-                  //       return BlocProvider.value(
-                  //           value: presenter,
-                  //           child: ScheduledListView(
-                  //               schedules: eventsList.isEmpty
-                  //                   ? []
-                  //                   : eventsList as List<ScheduleDataDto>));
-                  //       // return ContactInfoSheetWidget(
-                  //       //   onTapButton: () {
-                  //       //     Uri uri = Uri(
-                  //       //         host: "api.whatsapp.com",
-                  //       //         scheme: "https",
-                  //       //         path: "send",
-                  //       //         queryParameters: {
-                  //       //           "phone": "+5534984044391",
-                  //       //           "text":
-                  //       //               "[Fale conosco - DriverHub]: Gostaria de falar sobre..."
-                  //       //         });
-                  //       //     presenter.openUrl(uri);
-                  //       //   },
-                  //     });
-                },
-                firstDay: DateTime(presenter.selectedMonth.year,
-                    presenter.selectedMonth.month, 1),
-                lastDay: DateTime(presenter.selectedMonth.year,
-                    presenter.selectedMonth.month + 1, 0))
+                // showModalBottomSheet<String>(
+                //     context: context,
+                //     builder: (BuildContext context) {
+                //       return BlocProvider.value(
+                //           value: presenter,
+                //           child: ScheduledListView(
+                //               schedules: eventsList.isEmpty
+                //                   ? []
+                //                   : eventsList as List<ScheduleDataDto>));
+                //       // return ContactInfoSheetWidget(
+                //       //   onTapButton: () {
+                //       //     Uri uri = Uri(
+                //       //         host: "api.whatsapp.com",
+                //       //         scheme: "https",
+                //       //         path: "send",
+                //       //         queryParameters: {
+                //       //           "phone": "+5534984044391",
+                //       //           "text":
+                //       //               "[Fale conosco - DriverHub]: Gostaria de falar sobre..."
+                //       //         });
+                //       //     presenter.openUrl(uri);
+                //       //   },
+                //     });
+              },
+              firstDay: DateTime(presenter.selectedMonth.year,
+                  presenter.selectedMonth.month, 1),
+              lastDay: DateTime(presenter.selectedMonth.year,
+                  presenter.selectedMonth.month + 1, 0),
+            )
           ]);
         }));
   }
