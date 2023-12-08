@@ -3,6 +3,7 @@ import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_notification/notification_package.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
+import 'package:driver_hub_partner/features/home/router/home_router.dart';
 import 'package:driver_hub_partner/features/sign_up/entities/customer/prospect_entity.dart';
 import 'package:driver_hub_partner/features/sign_up/interactor/customer/create_customer_interactor.dart';
 import 'package:driver_hub_partner/features/sign_up/interactor/customer/exceptions/email_already_registered.dart';
@@ -231,12 +232,6 @@ class SignUpPresenter extends Cubit<DHState> {
       }
     }
     return false;
-    // var errorText = prospectEntity.validatePropertyByStep(step);
-    // if (errorText == null) {
-    //   emit(DHSuccessState());
-    //   return true;
-    // }
-    //emit(InputValidationErrorState(errorText));
   }
 
   backStep() {
@@ -248,10 +243,10 @@ class SignUpPresenter extends Cubit<DHState> {
   }
 
   goOnboarding() {
-    // Navigator.pushNamedAndRemoveUntil(
-    //     NavigationService.navigatorKey.currentContext!,
-    //     OnboardingRoutes.onboardingApp,
-    //     (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        NavigationService.navigatorKey.currentContext!,
+        HomeRoutes.home,
+        (route) => false);
   }
 
   bool _validateEmailCodeLength() {

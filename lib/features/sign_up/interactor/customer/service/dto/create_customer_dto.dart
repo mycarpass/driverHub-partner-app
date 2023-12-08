@@ -25,7 +25,7 @@ class CreateCustomerDto {
       "establishment": establishment,
       "email": email,
       "password": password,
-      "password_confirmation": password,
+      // "password_confirmation": password,
       "phone": phone,
       "name": personName,
       "cpf": cpf,

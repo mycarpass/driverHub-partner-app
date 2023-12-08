@@ -14,8 +14,9 @@ class SignUpSuccessView extends StatelessWidget {
         body: SafeArea(
           child: DHSuccessFeedbackLayout(
             buttonTitle: 'Continuar',
-            description: 'Parabéns! Sua conta foi criada com sucesso',
-            title: 'Sua conta foi criada',
+            description:
+                'Parabéns! Sua conta de parceiro foi criada com sucesso',
+            title: 'Agora você é um parceiro DriverHub',
             svgImage: 'lib/assets/images/AccountCreatedSuccess.svg',
             onPressed: () => presenter.goOnboarding(),
           ),

@@ -1,5 +1,4 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
-import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/financial_info_dto.dart';
 import 'package:flutter/material.dart';

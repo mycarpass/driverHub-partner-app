@@ -73,6 +73,8 @@ dependencies:
   chips_choice: ^3.0.1
   uni_links: ^0.5.1
   table_calendar: ^3.0.9
+  animated_custom_dropdown: ^2.0.0
+  custom_radio_grouped_button: ^2.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

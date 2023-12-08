@@ -107,7 +107,7 @@ class CustomerRegisterBottomSheet extends StatelessWidget {
                                 )
                             : DHSnackBar().showSnackBar(
                                 "Ops...",
-                                "Preencha pelo nemos o nome e o telefone",
+                                "Preencha o nome e o telefone",
                                 DHSnackBarType.error),
                     child: state is DHLoadingState
                         ? const SizedBox(

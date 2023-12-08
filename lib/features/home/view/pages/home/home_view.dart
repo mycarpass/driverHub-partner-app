@@ -1,12 +1,14 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:dh_state_management/dh_state.dart';
-import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
+import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/financial_movimentations_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/onboarding_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/wallet_card.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/loading/home_body_loading.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
@@ -26,6 +28,7 @@ class _HomeViewState extends State<HomeView>
   Widget build(BuildContext context) {
     super.build(context);
     var presenter = context.read<HomePresenter>();
+    var onboardingPresenter = context.read<OnboardingPresenter>();
     return DHPullToRefresh(
       onRefresh: context.read<HomePresenter>().load,
       key: UniqueKey(),
@@ -50,6 +53,12 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
+                        !onboardingPresenter.isAllCompletedOnboarding(
+                                presenter.homeResponseDto.data.partnerData)
+                            ? BlocProvider.value(
+                                value: onboardingPresenter,
+                                child: const OnboardingCardWidget())
+                            : const SizedBox.shrink(),
                         state is FinancialLoadadedState
                             ? WalletCardWidget(presenter: presenter)
                             : Padding(
@@ -93,145 +102,4 @@ class _HomeViewState extends State<HomeView>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class WalletCardWidget extends StatelessWidget {
-  const WalletCardWidget({
-    super.key,
-    required this.presenter,
-  });
-
-  final HomePresenter presenter;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: AppColor.backgroundTransparent,
-      elevation: 0,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 8, 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(children: [
-              const Icon(
-                Icons.wallet,
-                color: AppColor.iconSecondaryColor,
-                size: 20,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              const Text("Carteira").body_bold(),
-              const Expanded(child: SizedBox.shrink()),
-              BlocBuilder<HomePresenter, DHState>(
-                builder: (context, state) => IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    presenter.changeVisible();
-                  },
-                  icon: Icon(
-                    presenter.isVisible
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    size: 20,
-                    color: AppColor.iconSecondaryColor,
-                  ),
-                ),
-              ),
-            ]),
-            const SizedBox(
-              height: 0,
-            ),
-            Row(children: [
-              const Text("À receber").body_regular(),
-              const Expanded(child: SizedBox.shrink()),
-            ]),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                !presenter.isVisible
-                    ? Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                            color: AppColor.iconPrimaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        height: 32,
-                        width: 140,
-                      )
-                    : Text(presenter.financialInfoDto.data.accountInfo
-                            .receivableBalance.priceInReal)
-                        .title1_bold(),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: [
-                const Text("Total recebido este mês").body_regular(),
-                const Expanded(child: SizedBox.shrink()),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                !presenter.isVisible
-                    ? Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                          color: AppColor.iconPrimaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        height: 24,
-                        width: 120,
-                      )
-                    : Text(presenter.financialInfoDto.data.accountInfo
-                            .volumeThisMonth.priceInReal)
-                        .title2_bold(
-                        style: TextStyle(
-                          color: AppColor.accentColor.withOpacity(
-                            0.85,
-                          ),
-                        ),
-                      ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: [
-                const Text("Total de assinantes").body_regular(),
-                const Expanded(child: SizedBox.shrink()),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                !presenter.isVisible
-                    ? Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                            color: AppColor.iconPrimaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        height: 24,
-                        width: 60,
-                      )
-                    : Text(
-                        presenter.financialInfoDto.data.accountInfo
-                            .totalActiveSubscriptions
-                            .toString(),
-                      ).title2_bold(),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

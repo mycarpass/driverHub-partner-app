@@ -24,6 +24,8 @@ class PartnerDataDto {
   late String thumbBackground;
   late String document;
   late AddressDto address;
+  late BankAccountDto? bankAccount;
+  late bool isAnyServiceRegistered;
 
   PartnerDataDto(
       {required this.name, required this.email, required this.isPremium});
@@ -36,6 +38,10 @@ class PartnerDataDto {
     thumbBackground = json["thumb_background"];
     document = json["document"];
     address = AddressDto.fromJson(json["address"]);
+    bankAccount = json["bank_account"] != null
+        ? BankAccountDto.fromJson(json["bank_account"])
+        : null;
+    isAnyServiceRegistered = json["isAnyServiceRegistered"] ?? false;
   }
 }
 
@@ -89,5 +95,45 @@ class AddressDto {
     lon = json['lon'];
     rawMainAddress = json['raw_main_address'];
     rawSecondaryAddress = json['raw_secondary_address'];
+  }
+}
+
+class BankAccountDto {
+  late String id;
+  String? agency;
+  String? account;
+  String? bank;
+  String? bankCode;
+  String? typeAccount;
+  String? typePerson;
+
+  BankAccountDto(
+      {required this.id,
+      this.agency,
+      this.account,
+      this.bank,
+      this.bankCode,
+      this.typeAccount,
+      this.typePerson});
+
+  BankAccountDto.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    agency = json['agency'];
+    account = json['account'];
+    bank = json['bank'];
+    bankCode = json['bankCode'];
+    typeAccount = json['typeAccount'];
+    typePerson = json['typePerson'];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "agency": agency,
+      "account": account,
+      "bank": bank,
+      "bank_code": bankCode,
+      "type_account": typeAccount ?? "CC",
+      "type_person": typePerson ?? "PF",
+    };
   }
 }
