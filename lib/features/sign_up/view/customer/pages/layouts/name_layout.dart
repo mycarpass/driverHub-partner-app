@@ -14,8 +14,8 @@ class NameLayout extends LayoutInputBase {
   NameLayout({super.key});
 
   final MaskTextInputFormatter formatterCNPJ = MaskTextInputFormatter(
-      mask: "###.###.###/####-##",
-      initialText: "000.000.000/0001-00",
+      mask: "##.###.###/####-##",
+      //initialText: "00.000.000/0000-00",
       filter: {"#": RegExp('[0-9]')});
 
   final MaskTextInputFormatter formatterPhone = MaskTextInputFormatter(
@@ -42,8 +42,8 @@ class NameLayout extends LayoutInputBase {
               title: "ESTABELECIMENTO",
               hint: "Nome do estabelecimento",
               textError:
-                  state is InputValidationErrorState ? state.errorText : "",
-              textErrorVisible: state is InputValidationErrorState,
+                  state is EstablishmentFieldErrorState ? state.errorText : "",
+              textErrorVisible: state is EstablishmentFieldErrorState,
               icon: (Icons.home_work),
               onChanged: (establishment) {
                 context.read<SignUpPresenter>().establishment = establishment;
@@ -55,9 +55,8 @@ class NameLayout extends LayoutInputBase {
               title: "CNPJ (OPCIONAL)",
               hint: "00.000.000/0001-00",
               keyboardType: TextInputType.number,
-              textError:
-                  state is InputValidationErrorState ? state.errorText : "",
-              textErrorVisible: state is InputValidationErrorState,
+              textError: state is CNPJFieldErrorState ? state.errorText : "",
+              textErrorVisible: state is CNPJFieldErrorState,
               icon: (Icons.numbers_rounded),
               formatters: [formatterCNPJ],
               onChanged: (cnpj) {
@@ -69,9 +68,8 @@ class NameLayout extends LayoutInputBase {
               hint: "(00) 00000-0000",
               keyboardType: TextInputType.number,
               icon: (Icons.phone_android_outlined),
-              textError:
-                  state is InputValidationErrorState ? state.errorText : "",
-              textErrorVisible: state is InputValidationErrorState,
+              textError: state is PhoneFieldErrorState ? state.errorText : "",
+              textErrorVisible: state is PhoneFieldErrorState,
               controller: TextEditingController(
                   text: context.read<SignUpPresenter>().phone),
               formatters: [formatterPhone],
@@ -92,7 +90,7 @@ class NameLayout extends LayoutInputBase {
   }
 
   @override
-  SignUpStep get step => SignUpStep.name;
+  SignUpStep get step => SignUpStep.partnerData;
 
   @override
   void action(BuildContext context) {

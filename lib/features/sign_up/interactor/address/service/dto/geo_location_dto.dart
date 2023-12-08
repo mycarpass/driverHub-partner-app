@@ -4,12 +4,14 @@ class GeoLocationResponseDto {
   final String description;
   final String placeId;
   final String reference;
+  String? number;
 
   GeoLocationResponseDto(
       {required this.title,
       required this.description,
       required this.placeId,
-      required this.reference});
+      required this.reference,
+      this.number});
 
   static List<GeoLocationResponseDto> fromJson(dynamic listAddress) {
     List<GeoLocationResponseDto> addressList = [];
@@ -31,6 +33,7 @@ class GeoLocationResponseDto {
       "description": description,
       "reference": reference,
       "placeId": placeId,
+      "number": number ?? ""
     };
   }
 }

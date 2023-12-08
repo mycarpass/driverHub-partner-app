@@ -25,32 +25,69 @@ class InputValidationErrorState extends DHState {
   List<Object> get props => [errorText];
 }
 
-// class NameFieldErrorState extends DHState {
-//   final String errorText;
+class EstablishmentFieldErrorState extends DHState {
+  final String errorText;
 
-//   NameFieldErrorState(this.errorText);
+  EstablishmentFieldErrorState(this.errorText);
 
-//   @override
-//   List<Object> get props => [errorText];
-// }
+  @override
+  List<Object> get props => [errorText];
+}
 
-// class EmailFieldErrorState extends DHState {
-//   final String errorText;
+class CNPJFieldErrorState extends DHState {
+  final String errorText;
 
-//   EmailFieldErrorState(this.errorText);
+  CNPJFieldErrorState(this.errorText);
 
-//   @override
-//   List<Object> get props => [errorText];
-// }
+  @override
+  List<Object> get props => [errorText];
+}
 
-// class PhoneFieldErrorState extends DHState {
-//   final String errorText;
+class PhoneFieldErrorState extends DHState {
+  final String errorText;
 
-//   PhoneFieldErrorState(this.errorText);
+  PhoneFieldErrorState(this.errorText);
 
-//   @override
-//   List<Object> get props => [errorText];
-// }
+  @override
+  List<Object> get props => [errorText];
+}
+
+class NameErrorState extends DHState {
+  final String errorText;
+
+  NameErrorState(this.errorText);
+
+  @override
+  List<Object> get props => [errorText];
+}
+
+class CPFErrorState extends DHState {
+  final String errorText;
+
+  CPFErrorState(this.errorText);
+
+  @override
+  List<Object> get props => [errorText];
+}
+
+class AddressNumberErrorState extends DHState {
+  final String errorText;
+
+  AddressNumberErrorState(this.errorText);
+
+  @override
+  List<Object> get props => [errorText];
+}
+
+class AddressErrorState extends DHState {
+  final String errorText;
+
+  AddressErrorState(this.errorText);
+
+  @override
+  List<Object> get props => [errorText];
+}
+
 
 // class PasswordFieldErrorState extends DHState {
 //   final String errorText;

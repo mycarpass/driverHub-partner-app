@@ -15,7 +15,7 @@ class ProspectEntity {
   ProspectEntity(this.establishment, this.email, this.password, this.phone,
       this.cpf, this.personName);
 
-  bool validateName() {
+  bool validateEstablishment() {
     return establishment.length > 3;
   }
 
@@ -36,26 +36,42 @@ class ProspectEntity {
   }
 
   bool validateCPF() {
-    return cpf.isNotEmpty && cpf.length == 15;
+    return cpf.isNotEmpty && cpf.length == 14;
   }
 
-  String? validatePropertyByStep(SignUpStep step) {
-    switch (step) {
-      case SignUpStep.email:
+  bool validateCNPJ() {
+    return cnpj == null || cnpj == "" || cnpj?.length == 18;
+  }
+
+  bool validateAddressNumber() {
+    return address?.number != null && address?.number != "";
+  }
+
+  String? validatePropertyByField(SignUpFields field) {
+    switch (field) {
+      case SignUpFields.email:
         return validateEmail() ? null : "E-mail inválido";
-      case SignUpStep.name:
-        return validateName()
+      case SignUpFields.establishment:
+        return validateEstablishment()
             ? null
             : "Informe o nome do estabelecimento corretamente";
-      case SignUpStep.phone:
+      case SignUpFields.phone:
         return validatePhone() ? null : "Telefone inválido";
-      case SignUpStep.password:
+      case SignUpFields.password:
         return validatePassword()
             ? null
             : "Senha deve ter pelo menos 6 caracteres";
 
-      case SignUpStep.personName:
+      case SignUpFields.name:
         return validatePersonName() ? null : "Digite seu nome completo";
+      case SignUpFields.cnpj:
+        return validateCNPJ() ? null : "Digite seu CNPJ corretamente";
+      case SignUpFields.cpf:
+        return validateCPF() ? null : "Digite seu CPF corretamente";
+      case SignUpFields.addressNumber:
+        return validateAddressNumber()
+            ? null
+            : "Digite o número do endereço ou informe S/N";
 
       default:
         return null;

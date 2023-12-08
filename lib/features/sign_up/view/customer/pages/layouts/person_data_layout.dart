@@ -15,9 +15,7 @@ class PersonNameLayout extends LayoutInputBase {
   final String? text;
 
   final MaskTextInputFormatter formatter = MaskTextInputFormatter(
-      mask: "###.###.###-##",
-      initialText: "000.000.000-00",
-      filter: {"#": RegExp('[0-9]')});
+      mask: "###.###.###-##", filter: {"#": RegExp('[0-9]')});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +36,8 @@ class PersonNameLayout extends LayoutInputBase {
                 hint: "Ex: João Silva Oliveira",
                 keyboardType: TextInputType.text,
                 icon: (Icons.person),
-                textError:
-                    state is InputValidationErrorState ? state.errorText : "",
-                textErrorVisible: state is InputValidationErrorState,
+                textError: state is NameErrorState ? state.errorText : "",
+                textErrorVisible: state is NameErrorState,
                 controller: TextEditingController(
                     text: context.read<SignUpPresenter>().personName),
                 onChanged: (personName) {
@@ -52,9 +49,8 @@ class PersonNameLayout extends LayoutInputBase {
                 hint: "00.000.000-00",
                 keyboardType: TextInputType.number,
                 icon: (Icons.numbers_outlined),
-                textError:
-                    state is InputValidationErrorState ? state.errorText : "",
-                textErrorVisible: state is InputValidationErrorState,
+                textError: state is CPFErrorState ? state.errorText : "",
+                textErrorVisible: state is CPFErrorState,
                 controller: TextEditingController(
                     text: context.read<SignUpPresenter>().cpf),
                 formatters: [formatter],
@@ -70,7 +66,7 @@ class PersonNameLayout extends LayoutInputBase {
   }
 
   @override
-  SignUpStep get step => SignUpStep.personName;
+  SignUpStep get step => SignUpStep.personData;
 
   @override
   void action(BuildContext context) {

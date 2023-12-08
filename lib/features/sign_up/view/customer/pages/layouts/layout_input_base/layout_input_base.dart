@@ -8,4 +8,16 @@ abstract class LayoutInputBase extends StatelessWidget {
   void action(BuildContext context);
 }
 
-enum SignUpStep { name, email, emailCode, phone, password, gender, personName }
+enum SignUpStep { partnerData, email, emailCode, address, password, personData }
+
+enum SignUpFields {
+  establishment,
+  cnpj,
+  phone,
+  name,
+  cpf,
+  addressNumber,
+  email,
+  confirmEmail,
+  password
+}

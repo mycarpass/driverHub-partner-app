@@ -34,6 +34,15 @@ class SignUpPresenter extends Cubit<DHState> {
     prospectEntity.establishment = _establishment;
   }
 
+  var _addressNumber = "";
+
+  String get addressNumber => _addressNumber;
+
+  set addressNumber(String newNumber) {
+    _addressNumber = newNumber;
+    prospectEntity.establishment = _addressNumber;
+  }
+
   var _email = "";
 
   String get email => _email;
@@ -170,13 +179,64 @@ class SignUpPresenter extends Cubit<DHState> {
     if (step == SignUpStep.emailCode && !_validateEmailCodeLength()) {
       return false;
     }
-    var errorText = prospectEntity.validatePropertyByStep(step);
-    if (errorText == null) {
-      emit(DHSuccessState());
-      return true;
+
+    if (step == SignUpStep.partnerData) {
+      String? errorEstablishment =
+          prospectEntity.validatePropertyByField(SignUpFields.establishment);
+      String? errorCNPJ =
+          prospectEntity.validatePropertyByField(SignUpFields.cnpj);
+      String? errorPhone =
+          prospectEntity.validatePropertyByField(SignUpFields.phone);
+      if (errorEstablishment != null) {
+        emit(EstablishmentFieldErrorState(errorEstablishment));
+      } else if (errorCNPJ != null) {
+        emit(CNPJFieldErrorState(errorCNPJ));
+      } else if (errorPhone != null) {
+        emit(PhoneFieldErrorState(errorPhone));
+      } else {
+        emit(DHSuccessState());
+        return true;
+      }
     }
-    emit(InputValidationErrorState(errorText));
+
+    if (step == SignUpStep.personData) {
+      String? errorPersonName =
+          prospectEntity.validatePropertyByField(SignUpFields.name);
+      String? errorCPF =
+          prospectEntity.validatePropertyByField(SignUpFields.cpf);
+
+      if (errorPersonName != null) {
+        emit(NameErrorState(errorPersonName));
+      } else if (errorCPF != null) {
+        emit(CPFErrorState(errorCPF));
+      } else {
+        emit(DHSuccessState());
+        return true;
+      }
+    }
+
+    if (step == SignUpStep.address) {
+      if (prospectEntity.address == null) {
+        emit(AddressErrorState("Informe um endereço para continuar"));
+      }
+
+      String? errorAddressNumber =
+          prospectEntity.validatePropertyByField(SignUpFields.addressNumber);
+
+      if (errorAddressNumber != null) {
+        emit(AddressNumberErrorState(errorAddressNumber));
+      } else {
+        emit(DHSuccessState());
+        return true;
+      }
+    }
     return false;
+    // var errorText = prospectEntity.validatePropertyByStep(step);
+    // if (errorText == null) {
+    //   emit(DHSuccessState());
+    //   return true;
+    // }
+    //emit(InputValidationErrorState(errorText));
   }
 
   backStep() {
