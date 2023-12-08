@@ -20,10 +20,8 @@ class AddressLayout extends LayoutInputBase {
 
   final String? text;
 
-  final MaskTextInputFormatter formatter = MaskTextInputFormatter(
-      mask: "#####-###",
-      initialText: "00000-000",
-      filter: {"#": RegExp('[0-9]')});
+  final MaskTextInputFormatter formatter =
+      MaskTextInputFormatter(mask: "#####-###", filter: {"#": RegExp('[0-9]')});
   final TextEditingController complementController =
       TextEditingController(text: '');
   final TextEditingController addressController =
@@ -170,44 +168,65 @@ class AddressLayout extends LayoutInputBase {
                                         description: presenter
                                                 .addressSelected?.description ??
                                             ""),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: BlocBuilder<SignUpPresenter,
-                                                  DHState>(
-                                              builder: (context, state) =>
-                                                  DHTextField(
-                                                    hint: "Informe o número",
-                                                    title: "Número",
-                                                    icon: Icons
-                                                        .onetwothree_rounded,
-                                                    textError: state
-                                                            is AddressNumberErrorState
-                                                        ? state.errorText
-                                                        : "",
-                                                    textErrorVisible: state
-                                                        is AddressNumberErrorState,
-                                                    onChanged: (addressNumber) {
-                                                      signUpPresenter
+                                    BlocBuilder<SignUpPresenter, DHState>(
+                                        builder: (context, state) => Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                DHTextField(
+                                                  hint: "00000-000",
+                                                  title: "CEP",
+                                                  formatters: [formatter],
+                                                  icon: Icons
+                                                      .location_city_outlined,
+                                                  textError:
+                                                      state is CepErrorState
+                                                          ? state.errorText
+                                                          : "",
+                                                  textErrorVisible:
+                                                      state is CepErrorState,
+                                                  onChanged: (cepNumber) {
+                                                    signUpPresenter
+                                                        .prospectEntity
+                                                        .address
+                                                        ?.cep = cepNumber;
+                                                  },
+                                                  controller:
+                                                      TextEditingController(
+                                                          text: signUpPresenter
                                                               .prospectEntity
                                                               .address
-                                                              ?.number =
-                                                          addressNumber;
-                                                    },
-                                                    controller:
-                                                        TextEditingController(
-                                                            text: signUpPresenter
-                                                                .prospectEntity
-                                                                .address
-                                                                ?.number),
-                                                  )),
-                                        ),
-                                      ],
-                                    ),
+                                                              ?.cep),
+                                                ),
+                                                DHTextField(
+                                                  hint: "Informe o número",
+                                                  title: "Número",
+                                                  icon:
+                                                      Icons.onetwothree_rounded,
+                                                  textError: state
+                                                          is AddressNumberErrorState
+                                                      ? state.errorText
+                                                      : "",
+                                                  textErrorVisible: state
+                                                      is AddressNumberErrorState,
+                                                  onChanged: (addressNumber) {
+                                                    signUpPresenter
+                                                            .prospectEntity
+                                                            .address
+                                                            ?.number =
+                                                        addressNumber;
+                                                  },
+                                                  controller:
+                                                      TextEditingController(
+                                                          text: signUpPresenter
+                                                              .prospectEntity
+                                                              .address
+                                                              ?.number),
+                                                ),
+                                              ],
+                                            )),
                                   ],
                                 )
                               : const SizedBox.shrink(),

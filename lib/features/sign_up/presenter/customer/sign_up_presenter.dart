@@ -224,8 +224,13 @@ class SignUpPresenter extends Cubit<DHState> {
       String? errorAddressNumber =
           prospectEntity.validatePropertyByField(SignUpFields.addressNumber);
 
+      String? errorCep =
+          prospectEntity.validatePropertyByField(SignUpFields.cep);
+
       if (errorAddressNumber != null) {
         emit(AddressNumberErrorState(errorAddressNumber));
+      } else if (errorCep != null) {
+        emit(CepErrorState(errorCep));
       } else {
         emit(DHSuccessState());
         return true;

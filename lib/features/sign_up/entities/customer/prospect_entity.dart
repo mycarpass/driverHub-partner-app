@@ -44,7 +44,15 @@ class ProspectEntity {
   }
 
   bool validateAddressNumber() {
-    return address?.number != null && address?.number != "";
+    return address?.number != null &&
+        address?.number != "" &&
+        address!.number!.isNotEmpty;
+  }
+
+  bool valdiateCep() {
+    return address?.cep != null &&
+        address?.number != "" &&
+        address?.cep?.length == 9;
   }
 
   String? validatePropertyByField(SignUpFields field) {
@@ -72,6 +80,8 @@ class ProspectEntity {
         return validateAddressNumber()
             ? null
             : "Digite o número do endereço ou informe S/N";
+      case SignUpFields.cep:
+        return valdiateCep() ? null : "Digite o CEP corretamente";
 
       default:
         return null;

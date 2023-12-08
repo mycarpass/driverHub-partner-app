@@ -75,7 +75,7 @@ class CustomerItemWidget extends StatelessWidget {
                         const SizedBox(
                           width: 4,
                         ),
-                        Text("Gastou ${customerDto.spentValue ?? "0,00"}")
+                        Text("Gastou ${customerDto.spentValue ?? "R\$ 0,00"}")
                             .caption1_regular()
                       ],
                     ),

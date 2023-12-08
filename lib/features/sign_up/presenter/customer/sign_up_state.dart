@@ -79,6 +79,15 @@ class AddressNumberErrorState extends DHState {
   List<Object> get props => [errorText];
 }
 
+class CepErrorState extends DHState {
+  final String errorText;
+
+  CepErrorState(this.errorText);
+
+  @override
+  List<Object> get props => [errorText];
+}
+
 class AddressErrorState extends DHState {
   final String errorText;
 

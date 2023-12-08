@@ -5,13 +5,15 @@ class GeoLocationResponseDto {
   final String placeId;
   final String reference;
   String? number;
+  String? cep;
 
   GeoLocationResponseDto(
       {required this.title,
       required this.description,
       required this.placeId,
       required this.reference,
-      this.number});
+      this.number,
+      this.cep});
 
   static List<GeoLocationResponseDto> fromJson(dynamic listAddress) {
     List<GeoLocationResponseDto> addressList = [];
@@ -33,7 +35,8 @@ class GeoLocationResponseDto {
       "description": description,
       "reference": reference,
       "placeId": placeId,
-      "number": number ?? ""
+      "number": number ?? "",
+      "cep": cep ?? ""
     };
   }
 }

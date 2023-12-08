@@ -17,6 +17,7 @@ enum SignUpFields {
   name,
   cpf,
   addressNumber,
+  cep,
   email,
   confirmEmail,
   password
