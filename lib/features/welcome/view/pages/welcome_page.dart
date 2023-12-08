@@ -1,6 +1,7 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/login/router/login_routes.dart';
+import 'package:driver_hub_partner/features/sign_up/router/sign_up_router.dart';
 import 'package:driver_hub_partner/features/welcome/view/resources/welcome_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,20 +34,19 @@ class WelcomeView extends StatelessWidget {
               ElevatedButton(
                 key: WelcomeKeys.signUpButtonKey,
                 onPressed: () async {
-                  Uri uri = Uri(
-                    host: "forms.gle",
-                    scheme: "https",
-                    path: "TPgAKd8akiwRjNEK7",
-                  );
-                  if (!await launchUrl(
-                    uri,
-                    mode: LaunchMode.externalApplication,
-                  )) {
-                    throw Exception('Could not launch $uri');
-                  }
+                  //   Uri uri = Uri(
+                  //     host: "forms.gle",
+                  //     scheme: "https",
+                  //     path: "TPgAKd8akiwRjNEK7",
+                  //   );
+                  //   if (!await launchUrl(
+                  //     uri,
+                  //     mode: LaunchMode.externalApplication,
+                  //   )) {
+                  //     throw Exception('Could not launch $uri');
+                  //   }\
+                  Navigator.pushNamed(context, SignUpRoutes.name);
                 },
-                // Navigator.pushNamed(context, SignUpRoutes.name),
-
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

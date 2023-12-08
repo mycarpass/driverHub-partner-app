@@ -13,6 +13,7 @@ import 'package:driver_hub_partner/features/login/login_module.dart';
 import 'package:driver_hub_partner/features/profile/profile_module.dart';
 import 'package:driver_hub_partner/features/sales/sales_module.dart';
 import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
+import 'package:driver_hub_partner/features/sign_up/sign_up_module.dart';
 import 'package:driver_hub_partner/features/tappay/tap_pay_module.dart';
 import 'package:driver_hub_partner/features/welcome/welcome_module.dart';
 import 'package:driver_hub_partner/firebase_options.dart';
@@ -36,6 +37,7 @@ List<DHModule> moduleList = [
   ProfileModule(),
   CustomersModule(),
   SalesModule(),
+  SignUpModule(),
   NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 
