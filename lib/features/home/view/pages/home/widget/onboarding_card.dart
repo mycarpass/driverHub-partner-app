@@ -4,6 +4,8 @@ import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/bottomsheets/bank_account_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/bottomsheets/logo_register_bottom_sheet.dart';
+import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
+import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/service_register_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -146,7 +148,23 @@ class OnboardingCardWidget extends StatelessWidget {
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             padding:
                                 MaterialStatePropertyAll(EdgeInsets.all(8))),
-                        onPressed: () {},
+                        onPressed: () async {
+                          bool? isServiceRegistered =
+                              await showModalBottomSheet<bool?>(
+                            context: context,
+                            showDragHandle: true,
+                            isScrollControlled: true,
+                            builder: (_) => BlocProvider(
+                                create: (context) =>
+                                    ServicesRegisterPresenter()..load(),
+                                child: ServiceRegisterBottomSheet()),
+                          );
+                          if (isServiceRegistered != null &&
+                              isServiceRegistered) {
+                            // ignore: use_build_context_synchronously
+                            context.read<HomePresenter>().load();
+                          }
+                        },
                         child: const Text("Cadastrar").body_regular(
                             style:
                                 const TextStyle(color: AppColor.accentColor)))

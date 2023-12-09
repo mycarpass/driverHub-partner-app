@@ -18,10 +18,7 @@ class RestOnboardingService implements OnboardingService {
                 filename: 'background.jpeg')
             : null,
       });
-      //   dynamic response = await Dio().post('/info', data: formData);
-      // var multipartLogo = await MultipartFile.fromFile(
-      //     logoAccountDto.pathLogo ?? "",
-      //     filename: 'thumb.jpeg');
+
       dynamic response =
           await _httpClient.post("/partner/update/$partnerId", body: formData);
       return response.data;

@@ -5,6 +5,7 @@ import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart'
 import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
 import 'package:driver_hub_partner/features/sales/view/pages/home/sales_view.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/schedules_view.dart';
+import 'package:driver_hub_partner/features/services/view/pages/home/services_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,7 +32,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     context.read<HomePresenter>().load();
 
     tabController = TabController(
-      length: 5,
+      length: 6,
       vsync: this,
     );
     super.initState();
@@ -84,6 +85,10 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
                   TabBarWidget(
                     icon: Icons.group_outlined,
                     title: "Clientes",
+                  ),
+                  TabBarWidget(
+                    icon: Icons.miscellaneous_services,
+                    title: "Serviços",
                   ),
                   TabBarWidget(
                     icon: Icons.account_box_outlined,
@@ -155,6 +160,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
               SchedulesView(),
               SalesView(),
               CustomersView(),
+              ServicesView(),
               HomeProfileView(),
             ],
           ),

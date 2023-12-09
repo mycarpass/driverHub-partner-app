@@ -3,7 +3,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
-import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/cutomer_register_presenter.dart';
+import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dh_ui_kit/view/widgets/input/uppercase_formatter.dart';

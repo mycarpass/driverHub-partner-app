@@ -13,6 +13,7 @@ import 'package:driver_hub_partner/features/login/login_module.dart';
 import 'package:driver_hub_partner/features/profile/profile_module.dart';
 import 'package:driver_hub_partner/features/sales/sales_module.dart';
 import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
+import 'package:driver_hub_partner/features/services/services_module.dart';
 import 'package:driver_hub_partner/features/sign_up/sign_up_module.dart';
 import 'package:driver_hub_partner/features/tappay/tap_pay_module.dart';
 import 'package:driver_hub_partner/features/welcome/welcome_module.dart';
@@ -38,6 +39,7 @@ List<DHModule> moduleList = [
   CustomersModule(),
   SalesModule(),
   SignUpModule(),
+  ServicesModule(),
   NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 
