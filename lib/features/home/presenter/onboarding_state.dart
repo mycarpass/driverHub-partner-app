@@ -12,3 +12,27 @@ class BankSelected extends DHState {
   @override
   List<Object?> get props => [bankEntity];
 }
+
+class ChangedTypePersonState extends DHState {
+  final String typePerson;
+
+  ChangedTypePersonState({required this.typePerson});
+  @override
+  List<Object?> get props => [typePerson];
+}
+
+class LogoImageInputed extends DHState {
+  final String path;
+
+  LogoImageInputed({required this.path});
+  @override
+  List<Object?> get props => [path];
+}
+
+class BackgroundImageInputed extends DHState {
+  final String path;
+
+  BackgroundImageInputed({required this.path});
+  @override
+  List<Object?> get props => [path];
+}

@@ -1,3 +1,4 @@
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
@@ -158,6 +159,7 @@ class AddressLayout extends LayoutInputBase {
                               })
                           : presenter.addressSelected != null
                               ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AddressListItemCell(
                                         showChevron: false,
@@ -168,6 +170,48 @@ class AddressLayout extends LayoutInputBase {
                                         description: presenter
                                                 .addressSelected?.description ??
                                             ""),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    const Text('O atendimento acontece no')
+                                        .body_bold(),
+                                    CustomRadioButton(
+                                      elevation: 0,
+                                      absoluteZeroSpacing: true,
+                                      unSelectedColor: AppColor.backgroundColor,
+                                      buttonLables: const [
+                                        'Estabelecimento',
+                                        'A domicílio',
+                                        'Em ambos',
+                                      ],
+                                      buttonValues: const [
+                                        "in_establishment",
+                                        "in_home",
+                                        "both",
+                                      ],
+                                      buttonTextStyle: const ButtonTextStyle(
+                                          selectedColor:
+                                              AppColor.backgroundColor,
+                                          unSelectedColor:
+                                              AppColor.textSecondaryColor,
+                                          textStyle: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'CircularStd')),
+                                      radioButtonValue: (value) {
+                                        signUpPresenter
+                                            .prospectEntity.serviceType = value;
+                                      },
+                                      defaultSelected: "in_establishment",
+                                      height: 60,
+                                      unSelectedBorderColor:
+                                          AppColor.borderColor,
+                                      margin: const EdgeInsets.all(8),
+                                      enableShape: true,
+                                      shapeRadius: 16,
+                                      autoWidth: true,
+                                      radius: 16,
+                                      selectedColor: AppColor.accentColor,
+                                    ),
                                     BlocBuilder<SignUpPresenter, DHState>(
                                         builder: (context, state) => Column(
                                               mainAxisAlignment:

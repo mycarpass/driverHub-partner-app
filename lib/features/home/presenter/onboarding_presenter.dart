@@ -2,9 +2,11 @@ import 'package:dh_dependency_injection/dh_dependency_injection.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/home/interactor/onboarding_interactor.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/logo_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/entities/bank_entity.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OnboardingPresenter extends Cubit<DHState> {
   OnboardingPresenter() : super(DHInitialState());
@@ -16,6 +18,8 @@ class OnboardingPresenter extends Cubit<DHState> {
 
   BankEntity? bankEntitySelected;
   BankAccountDto bankAccountDto = BankAccountDto(id: "");
+
+  LogoAccountDto logoAccountDto = LogoAccountDto();
 
   bool isAllCompletedOnboarding(PartnerDataDto partnerData) {
     partnerDataDto = partnerData;
@@ -29,7 +33,7 @@ class OnboardingPresenter extends Cubit<DHState> {
   }
 
   bool isBankAccountOnboardingCompleted() {
-    return partnerDataDto.bankAccount != null;
+    return partnerDataDto.isBankAccountCreated;
   }
 
   bool isServiceOnboardingCompleted() {
@@ -41,6 +45,34 @@ class OnboardingPresenter extends Cubit<DHState> {
     bankAccountDto.bank = bank.name;
     bankAccountDto.bankCode = bank.code;
     emit(BankSelected(bankEntity: bank));
+  }
+
+  void changeTypePerson(String typePerson) {
+    bankAccountDto.typePerson = typePerson;
+    emit(ChangedTypePersonState(typePerson: typePerson));
+  }
+
+  void inputLogo(XFile? image) {
+    logoAccountDto.pathLogo = image?.path;
+    logoAccountDto.imageLogoFile = image;
+    emit(LogoImageInputed(path: image?.path ?? ""));
+  }
+
+  void inputBackground(XFile? image) {
+    logoAccountDto.pathBackground = image?.path;
+    logoAccountDto.imageBackgroundFile = image;
+    emit(BackgroundImageInputed(path: image?.path ?? ""));
+  }
+
+  Future<void> sendImageLogo() async {
+    try {
+      emit(DHLoadingState());
+      await _onboardingInteractor.sendLogo(
+          logoAccountDto, partnerDataDto.id.toString());
+      emit(DHSuccessState());
+    } catch (e) {
+      emit(DHErrorState(error: e.toString()));
+    }
   }
 
   List<BankEntity> banksList = const [

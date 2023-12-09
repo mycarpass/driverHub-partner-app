@@ -17,31 +17,37 @@ class HomeData {
 }
 
 class PartnerDataDto {
+  late int id;
   late String name;
   late String email;
   late bool isPremium;
   late String thumb;
   late String thumbBackground;
   late String document;
+  late String? cnpj;
   late AddressDto address;
   late BankAccountDto? bankAccount;
   late bool isAnyServiceRegistered;
+  late bool isBankAccountCreated;
 
   PartnerDataDto(
       {required this.name, required this.email, required this.isPremium});
 
   PartnerDataDto.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    id = json['id'];
     email = json['email'];
     isPremium = json['is_premium'];
     thumb = json["thumb"];
     thumbBackground = json["thumb_background"];
     document = json["document"];
+    cnpj = json["cnpj"];
     address = AddressDto.fromJson(json["address"]);
     bankAccount = json["bank_account"] != null
         ? BankAccountDto.fromJson(json["bank_account"])
         : null;
     isAnyServiceRegistered = json["isAnyServiceRegistered"] ?? false;
+    isBankAccountCreated = json["is_bank_account_created"] ?? false;
   }
 }
 
@@ -106,6 +112,7 @@ class BankAccountDto {
   String? bankCode;
   String? typeAccount;
   String? typePerson;
+  String? cnpj;
 
   BankAccountDto(
       {required this.id,
@@ -114,7 +121,8 @@ class BankAccountDto {
       this.bank,
       this.bankCode,
       this.typeAccount,
-      this.typePerson});
+      this.typePerson,
+      this.cnpj});
 
   BankAccountDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -124,6 +132,7 @@ class BankAccountDto {
     bankCode = json['bankCode'];
     typeAccount = json['typeAccount'];
     typePerson = json['typePerson'];
+    cnpj = json['cnpj'];
   }
 
   Map<String, dynamic> toJson() {
@@ -134,6 +143,7 @@ class BankAccountDto {
       "bank_code": bankCode,
       "type_account": typeAccount ?? "CC",
       "type_person": typePerson ?? "PF",
+      "cnpj": cnpj
     };
   }
 }

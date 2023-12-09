@@ -10,10 +10,11 @@ class ProspectEntity {
   String cpf;
   String? cnpj;
   String personName;
+  String serviceType;
   GeoLocationResponseDto? address;
 
   ProspectEntity(this.establishment, this.email, this.password, this.phone,
-      this.cpf, this.personName);
+      this.cpf, this.personName, this.serviceType);
 
   bool validateEstablishment() {
     return establishment.length > 3;

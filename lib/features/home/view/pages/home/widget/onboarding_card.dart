@@ -70,7 +70,14 @@ class OnboardingCardWidget extends StatelessWidget {
                             isScrollControlled: true,
                             builder: (_) => BlocProvider.value(
                                 value: presenter,
-                                child: BankAccountRegisterBottomSheet()),
+                                child: BankAccountRegisterBottomSheet(
+                                  accountCNPJ: context
+                                      .read<HomePresenter>()
+                                      .homeResponseDto
+                                      .data
+                                      .partnerData
+                                      .cnpj,
+                                )),
                           );
                           if (isBankAccountRegistered != null &&
                               isBankAccountRegistered) {
@@ -109,7 +116,7 @@ class OnboardingCardWidget extends StatelessWidget {
                             isScrollControlled: true,
                             builder: (_) => BlocProvider.value(
                                 value: presenter,
-                                child: const LogoRegisterBottomSheet()),
+                                child: LogoRegisterBottomSheet()),
                           );
                           if (isLogoRegistered != null && isLogoRegistered) {
                             // ignore: use_build_context_synchronously

@@ -14,11 +14,19 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 // ignore: must_be_immutable
 class BankAccountRegisterBottomSheet extends StatelessWidget {
   BankAccountRegisterBottomSheet({
+    this.accountCNPJ,
     super.key,
   });
 
   TextEditingController agencyController = TextEditingController();
   TextEditingController accountController = TextEditingController();
+
+  final String? accountCNPJ;
+
+  final MaskTextInputFormatter formatterCNPJ = MaskTextInputFormatter(
+      mask: "##.###.###/####-##",
+      //initialText: "00.000.000/0000-00",
+      filter: {"#": RegExp('[0-9]')});
 
   FocusNode searchFocusNode = FocusNode();
   FocusNode textFieldFocusNode = FocusNode();
@@ -98,7 +106,9 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                 title: "Agência",
                                 icon: Icons.onetwothree,
                                 keyboardType: TextInputType.text,
-                                onChanged: (_) {},
+                                onChanged: (_) {
+                                  agencyController.text = _;
+                                },
                                 formatters: [
                                   MaskTextInputFormatter(
                                     mask: presenter
@@ -123,7 +133,9 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                 keyboardType:
                                     const TextInputType.numberWithOptions(
                                         signed: true),
-                                onChanged: (_) {},
+                                onChanged: (_) {
+                                  accountController.text = _;
+                                },
                                 controller: accountController,
                               ))
                         ],
@@ -181,7 +193,7 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                     textStyle:
                         TextStyle(fontSize: 16, fontFamily: 'CircularStd')),
                 radioButtonValue: (value) {
-                  presenter.bankAccountDto.typePerson = value;
+                  presenter.changeTypePerson(value);
                   print(value);
                 },
                 defaultSelected: "PF",
@@ -194,6 +206,22 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                 radius: 16,
                 selectedColor: AppColor.accentColor,
               ),
+              BlocBuilder<OnboardingPresenter, DHState>(
+                  builder: (context, state) =>
+                      presenter.bankAccountDto.typePerson == "PJ" &&
+                              accountCNPJ == null
+                          ? DHTextField(
+                              //controller: cnpjController,
+                              title: "CNPJ",
+                              hint: "00.000.000/0001-00",
+                              keyboardType: TextInputType.number,
+                              icon: (Icons.numbers_rounded),
+                              formatters: [formatterCNPJ],
+                              onChanged: (cnpj) {
+                                presenter.bankAccountDto.cnpj = cnpj;
+                              },
+                            )
+                          : const SizedBox.shrink()),
               const SizedBox(
                 height: 36,
               ),
@@ -213,6 +241,9 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                     onPressed: state is DHLoadingState
                         ? () {}
                         : () {
+                            print(agencyController.text);
+                            print(accountController.text);
+                            print(presenter.bankEntitySelected);
                             if (agencyController.text.isNotEmpty &&
                                 agencyController.text.length >= 3 &&
                                 accountController.text.isNotEmpty &&
@@ -222,6 +253,20 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                   agencyController.text;
                               presenter.bankAccountDto.account =
                                   accountController.text;
+
+                              if (accountCNPJ == null &&
+                                  presenter.bankAccountDto.typePerson == "PJ" &&
+                                  (presenter.bankAccountDto.cnpj == null ||
+                                      presenter.bankAccountDto.cnpj == "" ||
+                                      presenter.bankAccountDto.cnpj!.length !=
+                                          18)) {
+                                DHSnackBar().showSnackBar(
+                                    "Ops...",
+                                    "Preencha corretamente o CNPJ, para podermos cadastrar sua conta bancária!",
+                                    DHSnackBarType.error);
+                              } else {
+                                // SUCESSO CHAMAR SERVIÇ
+                              }
                             } else {
                               DHSnackBar().showSnackBar(
                                   "Ops...",

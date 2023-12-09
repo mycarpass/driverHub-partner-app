@@ -75,11 +75,13 @@ dependencies:
   table_calendar: ^3.0.9
   animated_custom_dropdown: ^2.0.0
   custom_radio_grouped_button: ^2.2.1
+  image_picker: ^1.0.4
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  
 
 dev_dependencies:
   flutter_test:

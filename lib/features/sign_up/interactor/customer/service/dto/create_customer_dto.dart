@@ -8,6 +8,7 @@ class CreateCustomerDto {
   final String personName;
   final String cpf;
   final String? cnpj;
+  final String serviceType;
   final GeoLocationResponseDto? address;
 
   CreateCustomerDto(
@@ -17,6 +18,7 @@ class CreateCustomerDto {
       required this.phone,
       required this.cpf,
       required this.personName,
+      required this.serviceType,
       this.cnpj,
       this.address});
 
@@ -25,7 +27,7 @@ class CreateCustomerDto {
       "establishment": establishment,
       "email": email,
       "password": password,
-      // "password_confirmation": password,
+      "service_type": serviceType,
       "phone": phone,
       "name": personName,
       "cpf": cpf,

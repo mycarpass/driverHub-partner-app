@@ -26,6 +26,7 @@ class CreateCustomerInteractor {
             personName: prospectEntity.personName,
             cpf: prospectEntity.cpf,
             cnpj: prospectEntity.cnpj,
+            serviceType: prospectEntity.serviceType,
             address: prospectEntity.address),
       );
       _dhCacheManager.setString(AuthTokenKey(), response.token);

@@ -143,7 +143,8 @@ class SignUpPresenter extends Cubit<DHState> {
     }
   }
 
-  var prospectEntity = ProspectEntity("", "", "", "", "", "");
+  var prospectEntity =
+      ProspectEntity("", "", "", "", "", "", "in_establishment");
 
   void createAccount() async {
     try {
