@@ -67,8 +67,17 @@ class OnboardingPresenter extends Cubit<DHState> {
   Future<void> sendImageLogo() async {
     try {
       emit(DHLoadingState());
-      await _onboardingInteractor.sendLogo(
-          logoAccountDto, partnerDataDto.id.toString());
+      await _onboardingInteractor.sendLogo(logoAccountDto);
+      emit(DHSuccessState());
+    } catch (e) {
+      emit(DHErrorState(error: e.toString()));
+    }
+  }
+
+  Future<void> saveBankAccount() async {
+    try {
+      emit(DHLoadingState());
+      await _onboardingInteractor.saveBankAccount(bankAccountDto);
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState(error: e.toString()));

@@ -31,7 +31,7 @@ class CreateCustomerDto {
       "phone": phone,
       "name": personName,
       "cpf": cpf,
-      "cnpj": cnpj,
+      "cnpj": cnpj ?? "",
       "address": address?.toJson()
     };
   }

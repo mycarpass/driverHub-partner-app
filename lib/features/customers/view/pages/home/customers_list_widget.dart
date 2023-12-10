@@ -31,7 +31,7 @@ class _CustomersListBodyWidgetState extends State<CustomersListBodyWidget> {
                 widget.customers.isEmpty
                     ? const Center(
                         child: EmptyStateList(
-                        text: 'Nenhum cliente cadastrado.',
+                        text: 'Nenhum cliente encontrado \nainda por aqui :|',
                       ))
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),

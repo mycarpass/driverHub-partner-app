@@ -12,9 +12,6 @@ class CustomersBodyLoading extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const SizedBox(
-              height: 24,
-            ),
             DHSkeleton(
               child: Container(
                 decoration: const BoxDecoration(

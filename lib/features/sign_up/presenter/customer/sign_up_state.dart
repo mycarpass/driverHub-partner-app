@@ -61,6 +61,15 @@ class NameErrorState extends DHState {
   List<Object> get props => [errorText];
 }
 
+class EmailErrorText extends DHState {
+  final String errorText;
+
+  EmailErrorText(this.errorText);
+
+  @override
+  List<Object> get props => [errorText];
+}
+
 class CPFErrorState extends DHState {
   final String errorText;
 
@@ -97,12 +106,11 @@ class AddressErrorState extends DHState {
   List<Object> get props => [errorText];
 }
 
+class PasswordFieldErrorState extends DHState {
+  final String errorText;
 
-// class PasswordFieldErrorState extends DHState {
-//   final String errorText;
+  PasswordFieldErrorState(this.errorText);
 
-//   PasswordFieldErrorState(this.errorText);
-
-//   @override
-//   List<Object> get props => [errorText];
-// }
+  @override
+  List<Object> get props => [errorText];
+}

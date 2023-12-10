@@ -185,9 +185,9 @@ class AddressLayout extends LayoutInputBase {
                                         'Em ambos',
                                       ],
                                       buttonValues: const [
-                                        "in_establishment",
-                                        "in_home",
-                                        "both",
+                                        "ON_SITE",
+                                        "DELIVERY",
+                                        "BOTH",
                                       ],
                                       buttonTextStyle: const ButtonTextStyle(
                                           selectedColor:
@@ -201,7 +201,7 @@ class AddressLayout extends LayoutInputBase {
                                         signUpPresenter
                                             .prospectEntity.serviceType = value;
                                       },
-                                      defaultSelected: "in_establishment",
+                                      defaultSelected: "ON_SITE",
                                       height: 60,
                                       unSelectedBorderColor:
                                           AppColor.borderColor,

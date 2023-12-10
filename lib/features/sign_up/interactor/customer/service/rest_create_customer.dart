@@ -10,8 +10,8 @@ class RestCreateCustomerService implements CreateCustomerService {
   @override
   Future<CreateCustomerReponseDto> create(CreateCustomerDto customerDto) async {
     try {
-      var response =
-          await httpClient.post("/register", body: customerDto.toJson());
+      var response = await httpClient.post("/partners/register/v2",
+          body: customerDto.toJson());
 
       return CreateCustomerReponseDto.fromJson(response.data);
     } catch (e) {

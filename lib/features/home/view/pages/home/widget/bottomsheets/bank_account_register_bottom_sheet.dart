@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
@@ -233,6 +234,11 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                       "Parabéns!",
                       "Conta bancária cadastrada com sucesso",
                       DHSnackBarType.success);
+                } else if (state is DHErrorState) {
+                  DHSnackBar().showSnackBar(
+                      "Atenção!",
+                      "Não foi possível cadastrar a conta bancária, verifique os dados e tente novamente.",
+                      DHSnackBarType.error);
                 }
               }, builder: (context, state) {
                 return SizedBox(
@@ -241,9 +247,6 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                     onPressed: state is DHLoadingState
                         ? () {}
                         : () {
-                            print(agencyController.text);
-                            print(accountController.text);
-                            print(presenter.bankEntitySelected);
                             if (agencyController.text.isNotEmpty &&
                                 agencyController.text.length >= 3 &&
                                 accountController.text.isNotEmpty &&
@@ -258,14 +261,21 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                   presenter.bankAccountDto.typePerson == "PJ" &&
                                   (presenter.bankAccountDto.cnpj == null ||
                                       presenter.bankAccountDto.cnpj == "" ||
-                                      presenter.bankAccountDto.cnpj!.length !=
-                                          18)) {
+                                      !CNPJValidator.isValid(
+                                          presenter.bankAccountDto.cnpj))) {
                                 DHSnackBar().showSnackBar(
                                     "Ops...",
                                     "Preencha corretamente o CNPJ, para podermos cadastrar sua conta bancária!",
                                     DHSnackBarType.error);
                               } else {
                                 // SUCESSO CHAMAR SERVIÇ
+                                if (presenter.bankAccountDto.typePerson ==
+                                    "PJ") {
+                                  presenter.bankAccountDto.cnpj = accountCNPJ ??
+                                      presenter.bankAccountDto.cnpj;
+                                }
+
+                                presenter.saveBankAccount();
                               }
                             } else {
                               DHSnackBar().showSnackBar(

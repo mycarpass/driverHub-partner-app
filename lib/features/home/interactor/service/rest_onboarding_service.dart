@@ -1,5 +1,6 @@
 import 'package:dh_dependency_injection/dh_dependency_injection.dart';
 import 'package:dh_http_client/interactor/service/fz_http_client.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/logo_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/onboarding_service.dart';
 import 'package:dio/dio.dart';
@@ -8,7 +9,7 @@ class RestOnboardingService implements OnboardingService {
   final _httpClient = DHInjector.instance.get<DHHttpClient>();
 
   @override
-  Future<void> sendLogo(LogoAccountDto logoAccountDto, String partnerId) async {
+  Future<void> sendLogo(LogoAccountDto logoAccountDto) async {
     try {
       var formData = FormData.fromMap({
         "thumb": await MultipartFile.fromFile(logoAccountDto.pathLogo ?? "",
@@ -20,7 +21,18 @@ class RestOnboardingService implements OnboardingService {
       });
 
       dynamic response =
-          await _httpClient.post("/partner/update/$partnerId", body: formData);
+          await _httpClient.post("/partner/self/update", body: formData);
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> saveBankAccount(BankAccountDto bankAccountDto) async {
+    try {
+      dynamic response = await _httpClient.post("/partner/bank-account",
+          body: bankAccountDto.toJson());
       return response.data;
     } catch (e) {
       rethrow;

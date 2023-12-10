@@ -30,9 +30,8 @@ class PasswordLayout extends LayoutInputBase {
             controller: TextEditingController(
                 text: context.read<SignUpPresenter>().password),
             icon: (Icons.lock_outline),
-            textError:
-                state is InputValidationErrorState ? state.errorText : "",
-            textErrorVisible: state is InputValidationErrorState,
+            textError: state is PasswordFieldErrorState ? state.errorText : "",
+            textErrorVisible: state is PasswordFieldErrorState,
             obscureText: true,
             onChanged: (password) {
               context.read<SignUpPresenter>().password = password;

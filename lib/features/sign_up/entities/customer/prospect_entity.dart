@@ -1,3 +1,5 @@
+import 'package:cpf_cnpj_validator/cnpj_validator.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:dh_ui_kit/view/extensions/string_extension.dart';
 import 'package:driver_hub_partner/features/sign_up/interactor/address/service/dto/geo_location_dto.dart';
 import 'package:driver_hub_partner/features/sign_up/view/customer/pages/layouts/layout_input_base/layout_input_base.dart';
@@ -37,11 +39,11 @@ class ProspectEntity {
   }
 
   bool validateCPF() {
-    return cpf.isNotEmpty && cpf.length == 14;
+    return CPFValidator.isValid(cpf);
   }
 
   bool validateCNPJ() {
-    return cnpj == null || cnpj == "" || cnpj?.length == 18;
+    return cnpj == null || cnpj == "" || CNPJValidator.isValid(cnpj);
   }
 
   bool validateAddressNumber() {

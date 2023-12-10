@@ -143,8 +143,7 @@ class SignUpPresenter extends Cubit<DHState> {
     }
   }
 
-  var prospectEntity =
-      ProspectEntity("", "", "", "", "", "", "in_establishment");
+  var prospectEntity = ProspectEntity("", "", "", "", "", "", "ON_SITE");
 
   void createAccount() async {
     try {
@@ -178,8 +177,13 @@ class SignUpPresenter extends Cubit<DHState> {
   }
 
   bool validate(SignUpStep step) {
-    if (step == SignUpStep.emailCode && !_validateEmailCodeLength()) {
-      return false;
+    if (step == SignUpStep.emailCode) {
+      if (!_validateEmailCodeLength()) {
+        return false;
+      } else {
+        emit(DHSuccessState());
+        return true;
+      }
     }
 
     if (step == SignUpStep.partnerData) {
@@ -237,6 +241,29 @@ class SignUpPresenter extends Cubit<DHState> {
         return true;
       }
     }
+
+    if (step == SignUpStep.email) {
+      String? errorEmail =
+          prospectEntity.validatePropertyByField(SignUpFields.email);
+      if (errorEmail != null) {
+        emit(EmailErrorText(errorEmail));
+      } else {
+        emit(DHSuccessState());
+        return true;
+      }
+    }
+
+    if (step == SignUpStep.password) {
+      String? errorPassword =
+          prospectEntity.validatePropertyByField(SignUpFields.password);
+      if (errorPassword != null) {
+        emit(PasswordFieldErrorState(errorPassword));
+      } else {
+        emit(DHSuccessState());
+        return true;
+      }
+    }
+
     return false;
   }
 

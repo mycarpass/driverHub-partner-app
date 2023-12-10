@@ -76,6 +76,7 @@ dependencies:
   animated_custom_dropdown: ^2.0.0
   custom_radio_grouped_button: ^2.2.1
   image_picker: ^1.0.4
+  cpf_cnpj_validator: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

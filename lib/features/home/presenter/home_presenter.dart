@@ -28,8 +28,7 @@ class HomePresenter extends Cubit<DHState> {
 
   Future<void> load() async {
     await _getHomeInfo();
-    await _getFinancialInfo();
-    _configurePush();
+    // await _getFinancialInfo();
   }
 
   void _configurePush() {
@@ -50,6 +49,7 @@ class HomePresenter extends Cubit<DHState> {
       emit(DHLoadingState());
       homeResponseDto = await _homeInteractor.getHomeInfo();
       emit(HomeLoaded(homeResponseDto));
+      _configurePush();
       if (deepLink != null) {
         openDeepLink(deepLink!);
       }
@@ -61,8 +61,8 @@ class HomePresenter extends Cubit<DHState> {
   Future _getFinancialInfo() async {
     try {
       emit(FinancialLoadingState());
-      financialInfoDto = await _homeInteractor.getFinancialInfo();
-      emit(FinancialLoadadedState(isVisible: true));
+      //financialInfoDto = await _homeInteractor.getFinancialInfo();
+      // emit(FinancialLoadadedState(isVisible: true));
     } catch (e) {
       emit(DHErrorState());
     }

@@ -25,7 +25,7 @@ class PartnerDataDto {
   late String thumbBackground;
   late String document;
   late String? cnpj;
-  late AddressDto address;
+  late AddressDto? address;
   late BankAccountDto? bankAccount;
   late bool isAnyServiceRegistered;
   late bool isBankAccountCreated;
@@ -42,7 +42,8 @@ class PartnerDataDto {
     thumbBackground = json["thumb_background"];
     document = json["document"];
     cnpj = json["cnpj"];
-    address = AddressDto.fromJson(json["address"]);
+    address =
+        json["address"] != null ? AddressDto.fromJson(json["address"]) : null;
     bankAccount = json["bank_account"] != null
         ? BankAccountDto.fromJson(json["bank_account"])
         : null;
@@ -96,11 +97,11 @@ class AddressDto {
     complement = json['complement'];
     city = json['city'];
     state = json['state'];
-    country = json['country'];
+    country = json['country'] ?? "Brasil";
     lat = json['lat'];
     lon = json['lon'];
     rawMainAddress = json['raw_main_address'];
-    rawSecondaryAddress = json['raw_secondary_address'];
+    rawSecondaryAddress = json['raw_secondary_address'] ?? "";
   }
 }
 

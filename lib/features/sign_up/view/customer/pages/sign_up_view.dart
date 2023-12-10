@@ -57,7 +57,7 @@ class SignUpView extends StatelessWidget {
                         DHSnackBar().showSnackBar(
                             "Ops..",
                             state.error ??
-                                "O código não corresponde ao enviado",
+                                "Ocorreu um erro ao tentar se cadastrar, tente novamente mais tarde.",
                             DHSnackBarType.error);
                       }
                     },

@@ -34,9 +34,8 @@ class EmailLayout extends LayoutInputBase {
             hint: "email@host.com",
             icon: (Icons.email_outlined),
             controller: TextEditingController(text: presenter.email),
-            textError:
-                state is InputValidationErrorState ? state.errorText : "",
-            textErrorVisible: state is InputValidationErrorState,
+            textError: state is EmailErrorText ? state.errorText : "",
+            textErrorVisible: state is EmailErrorText,
             onChanged: (email) {
               presenter.email = email;
             },
