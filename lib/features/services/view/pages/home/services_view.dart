@@ -47,7 +47,7 @@ class _ServicesViewState extends State<ServicesView>
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, top: 0, bottom: 12, right: 20),
+                            left: 20, top: 20, bottom: 12, right: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -88,7 +88,7 @@ class _ServicesViewState extends State<ServicesView>
                       // Dias de pós-vendas (Opcional)
 
                       DHContainedTabBar(
-                        marginTop: 80,
+                        marginTop: 92,
                         tabTexts: const [
                           Text("Todos"),
                           Text("Visível para clientes"),

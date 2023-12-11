@@ -1,5 +1,6 @@
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
+import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/tabs/customer_home_tabs_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,10 @@ abstract class HomeRoutesMap {
             ),
             BlocProvider<OnboardingPresenter>(
               create: (BuildContext context) => OnboardingPresenter(),
+            ),
+            BlocProvider<SubscriptionPresenter>(
+              create: (BuildContext context) =>
+                  SubscriptionPresenter()..start(),
             ),
           ],
           child: const CustomerHomeTabsWidget(),

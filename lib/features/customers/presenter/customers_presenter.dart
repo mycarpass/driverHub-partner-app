@@ -2,7 +2,6 @@ import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/customers/interactor/customers_interactor.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
-import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomersPresenter extends Cubit<DHState> {

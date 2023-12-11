@@ -31,6 +31,7 @@ class _HomeViewState extends State<HomeView>
     super.build(context);
     var presenter = context.read<HomePresenter>();
     var onboardingPresenter = context.read<OnboardingPresenter>();
+    var subscribePresenter = context.read<SubscriptionPresenter>();
     return DHPullToRefresh(
       onRefresh: context.read<HomePresenter>().load,
       key: UniqueKey(),
@@ -45,7 +46,7 @@ class _HomeViewState extends State<HomeView>
               ] else ...[
                 Padding(
                     padding: const EdgeInsets.only(
-                        left: 20, top: 0, bottom: 12, right: 20),
+                        left: 20, top: 20, bottom: 12, right: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +56,7 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
-                        !presenter.isSubscribed
+                        !subscribePresenter.isSubscribed
                             ? BlocProvider(
                                 create: (context) => SubscriptionPresenter(),
                                 child: SubscriptionHomeCard(

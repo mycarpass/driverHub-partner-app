@@ -2,6 +2,7 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
+import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
@@ -28,6 +29,9 @@ class _SchedulesViewState extends State<SchedulesView>
       providers: [
         BlocProvider<SchedulesPresenter>(
           create: (BuildContext context) => SchedulesPresenter()..load(),
+        ),
+        BlocProvider<SubscriptionPresenter>(
+          create: (BuildContext context) => SubscriptionPresenter()..start(),
         )
       ],
       child: Builder(
@@ -48,12 +52,24 @@ class _SchedulesViewState extends State<SchedulesView>
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, top: 0, bottom: 12, right: 20),
+                            left: 20, top: 20, bottom: 12, right: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TabViewHeader(
-                              onPressed: () {},
+                              onPressed: () {
+                                // NO MERGE - ALTERAR DONOTHINGACTION POR CHAMADA DE TELA DE CADASTRAR AGENDAMENTO
+                                !context
+                                        .read<SubscriptionPresenter>()
+                                        .isSubscribed
+                                    ? context
+                                        .read<SubscriptionPresenter>()
+                                        .openPayWall(context)
+                                    : DoNothingAction();
+                              },
+                              addButtonIsVisible: context
+                                  .read<SubscriptionPresenter>()
+                                  .isSubscribed,
                               title: "Agenda",
                               subtitle:
                                   "${presenter.filteredList.length} agendamentos esse mês",
@@ -62,7 +78,7 @@ class _SchedulesViewState extends State<SchedulesView>
                         ),
                       ),
                       DHContainedTabBar(
-                        marginTop: 80,
+                        marginTop: 92,
                         tabTexts: const [
                           Text("Calendário"),
                           Text("Lista"),

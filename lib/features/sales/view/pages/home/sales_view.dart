@@ -1,9 +1,8 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:dh_state_management/dh_state.dart';
-import 'package:dh_ui_kit/view/consts/colors.dart';
-import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscriptions/subscription_ended_widget.dart';
 import 'package:driver_hub_partner/features/sales/presenter/sales_presenter.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/loading/sales_body_loading.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/sales_error_widget.dart';
@@ -47,7 +46,7 @@ class _SalesViewState extends State<SalesView>
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, top: 0, bottom: 12, right: 20),
+                            left: 20, top: 20, bottom: 12, right: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -60,11 +59,12 @@ class _SalesViewState extends State<SalesView>
                         ),
                       ),
                       DHContainedTabBar(
-                        marginTop: 80,
+                        marginTop: 92,
                         tabTexts: const [Text("Calendário"), Text("Lista")],
                         views: [Container(), Container()],
                       ),
-                    ]
+                    ],
+                    const SubscriptionEndedWidget()
                   ],
                 );
               },

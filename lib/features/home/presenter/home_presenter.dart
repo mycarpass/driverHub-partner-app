@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_state_management/dh_state.dart';
@@ -9,7 +7,6 @@ import 'package:driver_hub_partner/features/home/interactor/home_interactor.dart
 import 'package:driver_hub_partner/features/home/interactor/service/dto/financial_info_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
-import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/resources/home_deeplinks.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
 import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
@@ -25,14 +22,10 @@ class HomePresenter extends Cubit<DHState> {
   final HomeInteractor _homeInteractor =
       DHInjector.instance.get<HomeInteractor>();
 
-  final DHCacheManager _dhCacheManager =
-      DHInjector.instance.get<DHCacheManager>();
-
   HomeResponseDto homeResponseDto = HomeResponseDto();
   late FinancialInfoDto financialInfoDto;
   String? deepLink;
   bool isVisible = true;
-  bool isSubscribed = false;
 
   Future<void> load() async {
     await _getHomeInfo();
@@ -65,19 +58,6 @@ class HomePresenter extends Cubit<DHState> {
     await Purchases.setOnesignalID(DHEnvs.oneSignalToken);
   }
 
-  Future<void> _verifySubscribe() async {
-    bool isSub = await _dhCacheManager.getBool(SubscriptionTokenKey()) ?? false;
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    bool containsActiveSubscription =
-        customerInfo.activeSubscriptions.isNotEmpty;
-    if (isSub != containsActiveSubscription) {
-      _dhCacheManager.setBool(
-          SubscriptionTokenKey(), containsActiveSubscription);
-      isSub = containsActiveSubscription;
-    }
-    isSubscribed = isSub;
-  }
-
   void changeVisible() {
     isVisible = !isVisible;
     emit(FinancialLoadadedState(isVisible: isVisible));
@@ -91,7 +71,7 @@ class HomePresenter extends Cubit<DHState> {
       emit(HomeLoaded(homeResponseDto));
       await _configureRevenueCat();
       _configurePush();
-      await _verifySubscribe();
+
       if (deepLink != null) {
         openDeepLink(deepLink!);
       }

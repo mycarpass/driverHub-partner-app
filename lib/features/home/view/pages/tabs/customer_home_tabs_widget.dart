@@ -51,119 +51,116 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.backgroundColor,
-        appBar: AppBar(
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(50),
-              child: TabBar(
-                controller: tabController,
-                isScrollable: true,
-                indicatorColor: AppColor.accentColor,
-                padding: const EdgeInsets.only(left: 16),
-                tabs: const [
-                  TabBarWidget(
-                    icon: Icons.home_outlined,
-                    title: "Home",
-                  ),
-                  TabBarWidget(
-                    icon: Icons.calendar_month_outlined,
-                    title: "Agenda",
-                  ),
-                  TabBarWidget(
-                    icon: Icons.monetization_on_outlined,
-                    title: "Vendas",
-                  ),
-                  TabBarWidget(
-                    icon: Icons.group_outlined,
-                    title: "Clientes",
-                  ),
-                  TabBarWidget(
-                    icon: Icons.miscellaneous_services,
-                    title: "Serviços",
-                  ),
-                  TabBarWidget(
-                    icon: Icons.account_box_outlined,
-                    title: "Perfil",
-                  ),
-                ],
-              )),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          leadingWidth: double.infinity,
-          leading: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SvgPicture.asset(
-                    "lib/assets/images/LogoBlack.svg",
-                    height: 24,
-                  ),
-                ],
-              )),
-          actions: null,
-        ),
-        // bottomNavigationBar: Container(
-        //   decoration: const BoxDecoration(
-        //     color: AppColor.backgroundColor,
-        //     border:
-        //         Border(top: BorderSide(color: AppColor.borderColor, width: 1)),
-        //   ),
-        //   padding: const EdgeInsets.symmetric(horizontal: 42),
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(bottom: 40.0, top: 8.0),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //       crossAxisAlignment: CrossAxisAlignment.start,
-        //       children: [
-        //         TabIconWidget(
-        //           icon: CustomIcons.dhGarage,
-        //           text: "Home",
-        //           indexOfTab: 0,
-        //           selectedTab: _index,
-        //           onClick: changeTab,
-        //         ),
-        //         TabIconWidget(
-        //           icon: CustomIcons.dhCalendarCheck,
-        //           text: "Agendamentos",
-        //           indexOfTab: 1,
-        //           selectedTab: _index,
-        //           onClick: changeTab,
-        //         ),
-        //         TabIconWidget(
-        //           icon: CustomIcons.dhUser,
-        //           text: "Conta",
-        //           indexOfTab: 2,
-        //           selectedTab: _index,
-        //           onClick: changeTab,
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 24),
-          child: TabBarView(
-            controller: tabController,
-            children: const [
-              HomeView(),
-              SchedulesView(),
-              SalesView(),
-              CustomersView(),
-              ServicesView(),
-              HomeProfileView(),
-            ],
-          ),
-        )
+      backgroundColor: AppColor.backgroundColor,
+      appBar: AppBar(
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: TabBar(
+              controller: tabController,
+              isScrollable: true,
+              indicatorColor: AppColor.accentColor,
+              padding: const EdgeInsets.only(left: 16),
+              tabs: const [
+                TabBarWidget(
+                  icon: Icons.home_outlined,
+                  title: "Home",
+                ),
+                TabBarWidget(
+                  icon: Icons.calendar_month_outlined,
+                  title: "Agenda",
+                ),
+                TabBarWidget(
+                  icon: Icons.monetization_on_outlined,
+                  title: "Vendas",
+                ),
+                TabBarWidget(
+                  icon: Icons.group_outlined,
+                  title: "Clientes",
+                ),
+                TabBarWidget(
+                  icon: Icons.miscellaneous_services,
+                  title: "Serviços",
+                ),
+                TabBarWidget(
+                  icon: Icons.account_box_outlined,
+                  title: "Perfil",
+                ),
+              ],
+            )),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        leadingWidth: double.infinity,
+        leading: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SvgPicture.asset(
+                  "lib/assets/images/LogoBlack.svg",
+                  height: 24,
+                ),
+              ],
+            )),
+        actions: null,
+      ),
+      // bottomNavigationBar: Container(
+      //   decoration: const BoxDecoration(
+      //     color: AppColor.backgroundColor,
+      //     border:
+      //         Border(top: BorderSide(color: AppColor.borderColor, width: 1)),
+      //   ),
+      //   padding: const EdgeInsets.symmetric(horizontal: 42),
+      //   child: Padding(
+      //     padding: const EdgeInsets.only(bottom: 40.0, top: 8.0),
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         TabIconWidget(
+      //           icon: CustomIcons.dhGarage,
+      //           text: "Home",
+      //           indexOfTab: 0,
+      //           selectedTab: _index,
+      //           onClick: changeTab,
+      //         ),
+      //         TabIconWidget(
+      //           icon: CustomIcons.dhCalendarCheck,
+      //           text: "Agendamentos",
+      //           indexOfTab: 1,
+      //           selectedTab: _index,
+      //           onClick: changeTab,
+      //         ),
+      //         TabIconWidget(
+      //           icon: CustomIcons.dhUser,
+      //           text: "Conta",
+      //           indexOfTab: 2,
+      //           selectedTab: _index,
+      //           onClick: changeTab,
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      body: TabBarView(
+        controller: tabController,
+        children: const [
+          HomeView(),
+          SchedulesView(),
+          SalesView(),
+          CustomersView(),
+          ServicesView(),
+          HomeProfileView(),
+        ],
+      ),
 
-        //     SafeArea(
-        //   child: IndexedStack(
-        //     index: _index,
-        //     children: const [HomeView(), SchedulesView(), HomeProfileView()],
-        //   ),
-        // ),
-        );
+      //     SafeArea(
+      //   child: IndexedStack(
+      //     index: _index,
+      //     children: const [HomeView(), SchedulesView(), HomeProfileView()],
+      //   ),
+      // ),
+    );
   }
 }
 

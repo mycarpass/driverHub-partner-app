@@ -7,6 +7,7 @@ import 'package:driver_hub_partner/features/customers/view/pages/home/customers_
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customers_error_widget.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/loading/customers_body_loading.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscriptions/subscription_ended_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,7 @@ class _CustomersViewState extends State<CustomersView>
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, top: 0, bottom: 12, right: 20),
+                            left: 20, top: 20, bottom: 12, right: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -74,7 +75,7 @@ class _CustomersViewState extends State<CustomersView>
                         ),
                       ),
                       DHContainedTabBar(
-                        marginTop: 80,
+                        marginTop: 92,
                         tabTexts: const [
                           Text("Todos"),
                           Text("Assinantes"),
@@ -90,7 +91,8 @@ class _CustomersViewState extends State<CustomersView>
                           )),
                         ],
                       ),
-                    ]
+                      const SubscriptionEndedWidget()
+                    ],
                   ],
                 );
               },

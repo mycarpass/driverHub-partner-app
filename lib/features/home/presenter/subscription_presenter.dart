@@ -1,22 +1,54 @@
+import 'dart:io';
+
 import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
 import 'package:dh_cache_manager/interactor/keys/auth_keys/auth_keys.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
-import 'package:driver_hub_partner/features/home/interactor/subscription_interactor.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_state.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/bottomsheets/subscription_intro_bottom_sheet.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class SubscriptionPresenter extends Cubit<DHState> {
   SubscriptionPresenter() : super(DHInitialState());
 
-  final SubscriptionInteractor _subscriptionInteractor =
-      DHInjector.instance.get<SubscriptionInteractor>();
-
   final DHCacheManager _dhCacheManager =
       DHInjector.instance.get<DHCacheManager>();
 
+  List<StoreProduct> storeProducts = [];
   int indexPlanSelected = 0;
+  bool isSubscribed = false;
+
+  void start() async {
+    await _verifySubscribe();
+    _loadProducts();
+  }
+
+  Future _loadProducts() async {
+    storeProducts = await Purchases.getProducts(
+        Platform.isAndroid
+            ? [
+                'android_monthly_partners:android-monthly-partners-plan',
+                'android_monthly_partners:android-yearly-partners-plan'
+              ]
+            : ['ios_monthly_partners', 'ios_yearly_partners'],
+        productCategory: ProductCategory.subscription);
+    storeProducts.sort((a, b) => a.price.compareTo(b.price));
+  }
+
+  Future<bool?> openPayWall(BuildContext context) async {
+    return await showModalBottomSheet<bool?>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (_) => BlocProvider.value(
+          value: this,
+          child: SubscriptionIntroBottomSheet(
+            storeProducts: storeProducts,
+          )),
+    );
+  }
 
   Future<void> selectPlan(int indexPlan) async {
     indexPlanSelected = indexPlan;
@@ -31,13 +63,24 @@ class SubscriptionPresenter extends Cubit<DHState> {
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       if (customerInfo.activeSubscriptions.isNotEmpty) {
         _dhCacheManager.setBool(SubscriptionTokenKey(), true);
-        print('tem assinatura');
       } else {
         _dhCacheManager.setBool(SubscriptionTokenKey(), false);
-        print('nao tem assinatura');
       }
     });
     await Purchases.purchaseStoreProduct(product);
+  }
+
+  Future<void> _verifySubscribe() async {
+    bool isSub = await _dhCacheManager.getBool(SubscriptionTokenKey()) ?? false;
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+    bool containsActiveSubscription =
+        customerInfo.activeSubscriptions.isNotEmpty;
+    if (isSub != containsActiveSubscription) {
+      _dhCacheManager.setBool(
+          SubscriptionTokenKey(), containsActiveSubscription);
+      isSub = containsActiveSubscription;
+    }
+    isSubscribed = isSub;
   }
 }
 
