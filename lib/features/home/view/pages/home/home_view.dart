@@ -55,7 +55,7 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
-                        presenter.isSubscribed
+                        !presenter.isSubscribed
                             ? BlocProvider(
                                 create: (context) => SubscriptionPresenter(),
                                 child: SubscriptionHomeCard(
