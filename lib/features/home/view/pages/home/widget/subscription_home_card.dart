@@ -30,7 +30,10 @@ class _SubscriptionHomeCardState extends State<SubscriptionHomeCard> {
 
     storeProducts = await Purchases.getProducts(
         Platform.isAndroid
-            ? ['android_monthly_partners', 'android_yearly_partners']
+            ? [
+                'android_monthly_partners:android-monthly-partners-plan',
+                'android_monthly_partners:android-yearly-partners-plan'
+              ]
             : ['ios_monthly_partners', 'ios_yearly_partners'],
         productCategory: ProductCategory.subscription);
     storeProducts.sort((a, b) => a.price.compareTo(b.price));
