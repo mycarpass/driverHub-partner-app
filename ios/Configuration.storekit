@@ -1,0 +1,79 @@
+{
+  "identifier" : "EB6C0C5A",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6473333187",
+    "_developerTeamID" : "LU3AY7N3V4",
+    "_lastSynchronizedDate" : 723959326.62648499
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21421735",
+      "localizations" : [
+
+      ],
+      "name" : "Parceiros",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "119.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6474105926",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Assinatura anual para parceiros DriverHub",
+              "displayName" : "Anual - Parceiros DriverHub",
+              "locale" : "pt_BR"
+            }
+          ],
+          "productID" : "ios_yearly_partners",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Anual - DriverHub Parceiros",
+          "subscriptionGroupID" : "21421735",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "11.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6474105796",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Assinatura mensal para parceiros DriverHub",
+              "displayName" : "Mensal - DriverHub Parceiros",
+              "locale" : "pt_BR"
+            }
+          ],
+          "productID" : "ios_monthly_partners",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Mensal - DriverHub Parceiros",
+          "subscriptionGroupID" : "21421735",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

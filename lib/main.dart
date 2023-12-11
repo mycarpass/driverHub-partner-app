@@ -1,11 +1,10 @@
 // ignore_for_file: unused_import
 
 import 'package:dh_http_client/http_client_module.dart';
-import 'package:dh_ui_kit/view/themes/main_theme.dart';
 import 'package:dh_dependency_injection/dh_module_builder.dart';
 import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_ui_kit/ui_kit_module.dart';
-import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:dh_ui_kit/view/themes/main_theme.dart';
 import 'package:driver_hub_partner/config/enviroment_variables.dart';
 import 'package:driver_hub_partner/features/customers/customers_module.dart';
 import 'package:driver_hub_partner/features/home/home_module.dart';

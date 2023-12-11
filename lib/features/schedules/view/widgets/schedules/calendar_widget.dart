@@ -80,10 +80,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         markerBuilder: (context, day, events) {
           if (events.isNotEmpty) {
             return Container(
-                transform: Matrix4.translationValues(8, -2, 0),
-                padding: const EdgeInsets.all(5),
+                transform: Matrix4.translationValues(8, -3, 0),
+                padding: const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
-                    color: AppColor.supportColor, shape: BoxShape.circle),
+                    color: AppColor.accentColor, shape: BoxShape.circle),
                 child: Text(
                   events.length.toString(),
                   textAlign: TextAlign.center,

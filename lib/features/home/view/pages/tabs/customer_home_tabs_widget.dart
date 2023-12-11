@@ -1,3 +1,5 @@
+// import 'package:driver_hub_partner/config/colors.dart';
+import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/customers/view/pages/home/customers_view.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
@@ -106,7 +108,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset(
-                    "lib/assets/images/LogoWhite.svg",
+                    "lib/assets/images/LogoBlack.svg",
                     height: 24,
                   ),
                 ],
@@ -191,11 +193,17 @@ class TabBarWidget extends StatelessWidget {
     return Tab(
       child: Row(
         children: [
-          Icon(icon),
+          Icon(
+            icon,
+            color: AppColor.iconPrimaryColor,
+          ),
           const SizedBox(
             width: 8,
           ),
-          Text(title)
+          Text(
+            title,
+          ).body_regular(
+              style: const TextStyle(color: AppColor.textSecondaryColor))
         ],
       ),
     );

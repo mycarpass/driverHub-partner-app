@@ -5,6 +5,9 @@ import 'package:driver_hub_partner/features/home/interactor/onboarding_interacto
 import 'package:driver_hub_partner/features/home/interactor/service/onboarding_service.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/rest_get_home_info.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/rest_onboarding_service.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/rest_subscription_service.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/subscription_service.dart';
+import 'package:driver_hub_partner/features/home/interactor/subscription_interactor.dart';
 import 'package:driver_hub_partner/features/home/router/home_router.dart';
 import 'package:flutter/widgets.dart';
 
@@ -25,5 +28,11 @@ class HomeModule implements DHModule {
 
     DHInjector.instance.registerFactory<OnboardingInteractor>(
         () => OnboardingInteractor(RestOnboardingService()));
+
+    DHInjector.instance
+        .registerFactory<SubscriptionService>(() => RestSubscriptionService());
+
+    DHInjector.instance.registerFactory<SubscriptionInteractor>(
+        () => SubscriptionInteractor(RestSubscriptionService()));
   }
 }

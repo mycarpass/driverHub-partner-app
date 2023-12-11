@@ -6,20 +6,20 @@ import 'package:flutter/widgets.dart';
 class EmptyStateList extends StatelessWidget {
   const EmptyStateList({
     required this.text,
+    this.padding,
     super.key,
   });
 
   final String text;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+        padding:
+            padding ?? const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
         child: Column(
           children: [
-            const SizedBox(
-              height: 48,
-            ),
             const Icon(
               CustomIcons.dhCanceled,
               size: 48,

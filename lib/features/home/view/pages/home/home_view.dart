@@ -6,8 +6,10 @@ import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
+import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/financial_movimentations_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/onboarding_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscription_home_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/wallet_card.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/loading/home_body_loading.dart';
@@ -53,14 +55,26 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
+                        !presenter.isSubscribed
+                            ? BlocProvider(
+                                create: (context) => SubscriptionPresenter(),
+                                child: SubscriptionHomeCard(
+                                  daysTrialLeft: presenter.homeResponseDto.data
+                                      .partnerData.daysTrialLeft,
+                                ))
+                            : const SizedBox.shrink(),
                         !onboardingPresenter.isAllCompletedOnboarding(
                                 presenter.homeResponseDto.data.partnerData)
                             ? BlocProvider.value(
                                 value: onboardingPresenter,
-                                child: const OnboardingCardWidget())
+                                child: Container(
+                                    margin: const EdgeInsets.only(bottom: 4),
+                                    child: const OnboardingCardWidget()))
                             : const SizedBox.shrink(),
                         state is FinancialLoadadedState
-                            ? WalletCardWidget(presenter: presenter)
+                            ? Container(
+                                margin: const EdgeInsets.only(bottom: 4),
+                                child: WalletCardWidget(presenter: presenter))
                             : Padding(
                                 padding: const EdgeInsets.only(bottom: 16.0),
                                 child: DHSkeleton(

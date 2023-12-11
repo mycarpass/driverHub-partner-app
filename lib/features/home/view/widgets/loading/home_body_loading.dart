@@ -18,7 +18,7 @@ class HomeBodyLoading extends StatelessWidget {
             DHSkeleton(
               child: Container(
                 decoration: const BoxDecoration(
-                    color: AppColor.blackColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 height: 60,
               ),
@@ -29,7 +29,7 @@ class HomeBodyLoading extends StatelessWidget {
             DHSkeleton(
               child: Container(
                 decoration: const BoxDecoration(
-                    color: AppColor.blackColor,
+                    color: AppColor.whiteColor,
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 height: 180,
               ),
@@ -43,7 +43,7 @@ class HomeBodyLoading extends StatelessWidget {
                 height: 500,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             )

@@ -61,6 +61,7 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                   defaultSelected: "Lavada",
                   height: 60,
                   unSelectedBorderColor: AppColor.borderColor,
+                  selectedBorderColor: AppColor.borderColor,
                   margin: const EdgeInsets.all(8),
                   enableShape: true,
                   shapeRadius: 16,
@@ -162,10 +163,10 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                               controller: TextEditingController(
                                   text: presenter.serviceEntity.description ??
                                       ""),
-                              cursorColor: AppColor.whiteColor,
+                              cursorColor: AppColor.iconPrimaryColor,
                               showCursor: true,
                               style: const TextStyle(
-                                  color: AppColor.whiteColor,
+                                  color: AppColor.textPrimaryColor,
                                   fontFamily: 'CircularStd'),
                               smartDashesType: SmartDashesType.disabled,
                               decoration: const InputDecoration.collapsed(

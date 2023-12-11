@@ -66,7 +66,7 @@ class WalletCardWidget extends StatelessWidget {
                     ? Container(
                         margin: const EdgeInsets.only(top: 4),
                         decoration: const BoxDecoration(
-                            color: AppColor.iconPrimaryColor,
+                            color: AppColor.backgroundSecondary,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         height: 32,
                         width: 140,
@@ -85,6 +85,9 @@ class WalletCardWidget extends StatelessWidget {
                 const Expanded(child: SizedBox.shrink()),
               ],
             ),
+            const SizedBox(
+              height: 4,
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +96,7 @@ class WalletCardWidget extends StatelessWidget {
                     ? Container(
                         margin: const EdgeInsets.only(top: 4),
                         decoration: const BoxDecoration(
-                          color: AppColor.iconPrimaryColor,
+                          color: AppColor.backgroundSecondary,
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         height: 24,
@@ -102,11 +105,7 @@ class WalletCardWidget extends StatelessWidget {
                     : Text(presenter.financialInfoDto.data.accountInfo
                             .volumeThisMonth.priceInReal)
                         .title2_bold(
-                        style: TextStyle(
-                          color: AppColor.accentColor.withOpacity(
-                            0.85,
-                          ),
-                        ),
+                        style: const TextStyle(color: AppColor.accentColor),
                       ),
               ],
             ),

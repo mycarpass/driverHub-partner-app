@@ -10,6 +10,8 @@ class ListProfileCardRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: AppColor.backgroundTransparent,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: ListView.separated(

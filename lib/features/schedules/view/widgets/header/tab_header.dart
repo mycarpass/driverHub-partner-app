@@ -1,3 +1,4 @@
+import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -33,13 +34,18 @@ class TabViewHeader extends StatelessWidget {
         ),
         TextButton(
           onPressed: () => onPressed(),
-          child: const Row(
+          child: Row(
             children: [
-              Icon(Icons.add_outlined),
-              SizedBox(
+              const Icon(
+                Icons.add_outlined,
+                color: AppColor.accentColor,
+                size: 24,
+              ),
+              const SizedBox(
                 width: 8,
               ),
-              Text("Novo"),
+              const Text("Novo").label1_bold(
+                  style: const TextStyle(color: AppColor.accentColor)),
             ],
           ),
         )

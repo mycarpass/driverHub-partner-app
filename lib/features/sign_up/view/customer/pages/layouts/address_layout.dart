@@ -205,6 +205,7 @@ class AddressLayout extends LayoutInputBase {
                                       height: 60,
                                       unSelectedBorderColor:
                                           AppColor.borderColor,
+                                      selectedBorderColor: AppColor.borderColor,
                                       margin: const EdgeInsets.all(8),
                                       enableShape: true,
                                       shapeRadius: 16,

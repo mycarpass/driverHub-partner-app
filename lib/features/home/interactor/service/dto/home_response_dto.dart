@@ -24,11 +24,14 @@ class PartnerDataDto {
   late String thumb;
   late String thumbBackground;
   late String document;
+  late String phone;
   late String? cnpj;
   late AddressDto? address;
   late BankAccountDto? bankAccount;
   late bool isAnyServiceRegistered;
   late bool isBankAccountCreated;
+  late bool isSubscribed;
+  late int daysTrialLeft;
 
   PartnerDataDto(
       {required this.name, required this.email, required this.isPremium});
@@ -38,6 +41,7 @@ class PartnerDataDto {
     id = json['id'];
     email = json['email'];
     isPremium = json['is_premium'];
+    phone = json['phone'];
     thumb = json["thumb"];
     thumbBackground = json["thumb_background"];
     document = json["document"];
@@ -49,6 +53,8 @@ class PartnerDataDto {
         : null;
     isAnyServiceRegistered = json["isAnyServiceRegistered"] ?? false;
     isBankAccountCreated = json["is_bank_account_created"] ?? false;
+    isSubscribed = json["is_subscribed"] ?? false;
+    daysTrialLeft = json["days_trial_left"] ?? 0;
   }
 }
 

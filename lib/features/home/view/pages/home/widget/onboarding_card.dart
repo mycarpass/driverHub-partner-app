@@ -51,13 +51,15 @@ class OnboardingCardWidget extends StatelessWidget {
                 ? Row(children: [
                     const Icon(
                       Icons.warning,
-                      size: 16,
+                      size: 20,
                       color: AppColor.warningColor,
                     ),
                     const SizedBox(
                       width: 8,
                     ),
-                    const Text("Conta bancária").body_regular(),
+                    const Text("Conta bancária").body_regular(
+                        style: const TextStyle(
+                            color: AppColor.textSecondaryColor)),
                     const Expanded(child: SizedBox.shrink()),
                     TextButton(
                         style: const ButtonStyle(
@@ -87,7 +89,7 @@ class OnboardingCardWidget extends StatelessWidget {
                             context.read<HomePresenter>().load();
                           }
                         },
-                        child: const Text("Cadastrar").body_regular(
+                        child: const Text("Cadastrar").body_bold(
                             style:
                                 const TextStyle(color: AppColor.accentColor)))
                   ])
@@ -97,13 +99,15 @@ class OnboardingCardWidget extends StatelessWidget {
                 ? Row(children: [
                     const Icon(
                       Icons.warning,
-                      size: 16,
+                      size: 20,
                       color: AppColor.warningColor,
                     ),
                     const SizedBox(
                       width: 8,
                     ),
-                    const Text("Logomarca").body_regular(),
+                    const Text("Logomarca").body_regular(
+                        style: const TextStyle(
+                            color: AppColor.textSecondaryColor)),
                     const Expanded(child: SizedBox.shrink()),
                     TextButton(
                         style: const ButtonStyle(
@@ -125,7 +129,7 @@ class OnboardingCardWidget extends StatelessWidget {
                             context.read<HomePresenter>().load();
                           }
                         },
-                        child: const Text("Cadastrar").body_regular(
+                        child: const Text("Cadastrar").body_bold(
                             style:
                                 const TextStyle(color: AppColor.accentColor)))
                   ])
@@ -135,13 +139,15 @@ class OnboardingCardWidget extends StatelessWidget {
                 ? Row(children: [
                     const Icon(
                       Icons.warning,
-                      size: 16,
+                      size: 20,
                       color: AppColor.warningColor,
                     ),
                     const SizedBox(
                       width: 8,
                     ),
-                    const Text("Serviços").body_regular(),
+                    const Text("Serviços").body_regular(
+                        style: const TextStyle(
+                            color: AppColor.textSecondaryColor)),
                     const Expanded(child: SizedBox.shrink()),
                     TextButton(
                         style: const ButtonStyle(
@@ -165,7 +171,7 @@ class OnboardingCardWidget extends StatelessWidget {
                             context.read<HomePresenter>().load();
                           }
                         },
-                        child: const Text("Cadastrar").body_regular(
+                        child: const Text("Cadastrar").body_bold(
                             style:
                                 const TextStyle(color: AppColor.accentColor)))
                   ])

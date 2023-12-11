@@ -30,7 +30,7 @@ class CustomerItemWidget extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: AppColor.backgroundTertiary,
+                  backgroundColor: AppColor.backgroundTransparent,
                   child: Text(
                     customerDto.getInitialsName(),
                     overflow: TextOverflow.ellipsis,
@@ -70,7 +70,7 @@ class CustomerItemWidget extends StatelessWidget {
                         const Icon(
                           Icons.monetization_on_outlined,
                           size: 16,
-                          color: AppColor.supportColor,
+                          color: AppColor.accentColor,
                         ),
                         const SizedBox(
                           width: 4,

@@ -400,7 +400,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
                             color: AppColor.backgroundColor,
                           ),
                         )
-                      : const Text("Continuar"),
+                      : const Text("Cadastrar"),
                 ),
               );
             }),
