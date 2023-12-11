@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
@@ -25,8 +27,11 @@ class _SubscriptionHomeCardState extends State<SubscriptionHomeCard> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
+
     storeProducts = await Purchases.getProducts(
-        ['ios_monthly_partners', 'ios_yearly_partners'],
+        Platform.isAndroid
+            ? ['android_monthly_partners', 'android_yearly_partners']
+            : ['ios_monthly_partners', 'ios_yearly_partners'],
         productCategory: ProductCategory.subscription);
     storeProducts.sort((a, b) => a.price.compareTo(b.price));
   }

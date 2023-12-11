@@ -56,7 +56,7 @@ class HomePresenter extends Cubit<DHState> {
           PurchasesConfiguration("appl_kKamBNUKIXvKwJajplUGnUrMJqz");
     }
     await Purchases.configure(configuration);
-    await Purchases.setLogLevel(LogLevel.debug);
+    //await Purchases.setLogLevel(LogLevel.debug);
     await Purchases.logIn(homeResponseDto.data.partnerData.email);
     await Purchases.setEmail(homeResponseDto.data.partnerData.email);
     await Purchases.setDisplayName(homeResponseDto.data.partnerData.name);
