@@ -13,3 +13,11 @@ class PlanIsSelected extends DHState {
   @override
   List<Object?> get props => [index];
 }
+
+class SubscribedIsUpdated extends DHState {
+  final bool isSubscribed;
+
+  SubscribedIsUpdated({required this.isSubscribed});
+  @override
+  List<Object?> get props => [isSubscribed];
+}

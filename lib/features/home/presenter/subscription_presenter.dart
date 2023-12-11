@@ -81,6 +81,7 @@ class SubscriptionPresenter extends Cubit<DHState> {
       isSub = containsActiveSubscription;
     }
     isSubscribed = isSub;
+    emit(SubscribedIsUpdated(isSubscribed: isSubscribed));
   }
 }
 

@@ -56,24 +56,25 @@ class _SchedulesViewState extends State<SchedulesView>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TabViewHeader(
-                              onPressed: () {
-                                // NO MERGE - ALTERAR DONOTHINGACTION POR CHAMADA DE TELA DE CADASTRAR AGENDAMENTO
-                                !context
-                                        .read<SubscriptionPresenter>()
-                                        .isSubscribed
-                                    ? context
-                                        .read<SubscriptionPresenter>()
-                                        .openPayWall(context)
-                                    : DoNothingAction();
-                              },
-                              addButtonIsVisible: context
-                                  .read<SubscriptionPresenter>()
-                                  .isSubscribed,
-                              title: "Agenda",
-                              subtitle:
-                                  "${presenter.filteredList.length} agendamentos esse mês",
-                            ),
+                            BlocBuilder<SubscriptionPresenter, DHState>(
+                                builder: (context, state) => TabViewHeader(
+                                      onPressed: () {
+                                        // NO MERGE - ALTERAR DONOTHINGACTION POR CHAMADA DE TELA DE CADASTRAR AGENDAMENTO
+                                        !context
+                                                .read<SubscriptionPresenter>()
+                                                .isSubscribed
+                                            ? context
+                                                .read<SubscriptionPresenter>()
+                                                .openPayWall(context)
+                                            : DoNothingAction();
+                                      },
+                                      addButtonIsVisible: context
+                                          .read<SubscriptionPresenter>()
+                                          .isSubscribed,
+                                      title: "Agenda",
+                                      subtitle:
+                                          "${presenter.filteredList.length} agendamentos esse mês",
+                                    )),
                           ],
                         ),
                       ),
