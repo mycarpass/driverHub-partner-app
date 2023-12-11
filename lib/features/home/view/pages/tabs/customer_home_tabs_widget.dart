@@ -21,14 +21,6 @@ class CustomerHomeTabsWidget extends StatefulWidget {
 
 class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     with TickerProviderStateMixin {
-  var _index = 0;
-
-  void changeTab(int indexOfTabClicked) {
-    setState(() {
-      _index = indexOfTabClicked;
-    });
-  }
-
   @override
   void initState() {
     context.read<HomePresenter>().load();
@@ -46,9 +38,6 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     // _index = preselectedIndex ?? 0;
     dynamic args = ModalRoute.of(context)?.settings.arguments;
     if (args != null) {
-      if (args['index'] != null) {
-        _index = args['index'] ?? 0;
-      }
       //    var preselectedIndex = args as int?;
       if (args['deeplink'] != null) {
         context.read<HomePresenter>().deepLink = args['deeplink'].toString();

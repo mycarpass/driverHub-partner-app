@@ -2,10 +2,10 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
-import 'package:driver_hub_partner/features/home/view/resources/home_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SubscriptionIntroBottomSheet extends StatelessWidget {
   const SubscriptionIntroBottomSheet({required this.storeProducts, super.key});
@@ -17,33 +17,19 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
     var presenter = context.read<SubscriptionPresenter>();
     return BlocBuilder<SubscriptionPresenter, DHState>(
         builder: (context, state) => Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(24),
               child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.82,
+                height: MediaQuery.sizeOf(context).height * 0.8,
                 child: SingleChildScrollView(
                   child: SizedBox(
                     child: Column(
                       children: [
-                        // const BottomSheetHeader(),
-                        const SizedBox(
-                          height: 16,
+                        SvgPicture.asset(
+                          "lib/assets/images/LogoWhiteForPartners.svg",
+                          height: 50,
+                          colorFilter: const ColorFilter.mode(
+                              AppColor.blackColor, BlendMode.srcIn),
                         ),
-                        SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(99)),
-                                  border: Border.all(
-                                      color: AppColor.accentColor, width: 1.5)),
-                              child: Image.asset(
-                                HomeResources.hubClubLogo,
-                                height: 80,
-                                width: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            )),
                         const SizedBox(
                           height: 24,
                         ),
@@ -55,7 +41,8 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 32,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.group_outlined,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Gestão de clientes",
                           serviceDescription:
                               "Ofereça uma experiência inovadora aos seus clientes",
@@ -64,7 +51,8 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.calendar_month,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Agendamentos",
                           serviceDescription:
                               "Seus agendamentos na palma da mão, papel nunca mais!",
@@ -73,7 +61,8 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.monetization_on_outlined,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Controle de vendas",
                           serviceDescription:
                               "Venda mais e melhor, ajudamos você a fazer mais vendas com seu controle de vendas.",
@@ -82,25 +71,18 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
-                          serviceName: "Taxa pela metade",
-                          serviceDescription:
-                              "Os clientes que vierem pelo app da DriverHub, a taxa é de 10% por serviço e não mais 20%",
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.group_add_outlined,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Novos clientes",
                           serviceDescription:
-                              "Nós vamos atrás e divulgamos para mais clientes sua empresa em nosso app para clientes",
+                              "Nós divulgamos para mais pessoas sua empresa em nosso app para clientes",
                         ),
                         const SizedBox(
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.insert_chart_outlined,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Financeiro",
                           serviceDescription:
                               "Seu financeiro sob-controle, saiba quanto está ganhando, qual serviço que mais vende, etc.",
@@ -109,7 +91,8 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.card_membership_outlined,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Pós venda",
                           serviceDescription:
                               "Nós automatizamos e criamos um pós venda para você nunca mais deixar dinheiro na mesa.",
@@ -118,7 +101,18 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          assetPath: HomeResources.hubClubLogo,
+                          icon: Icons.discount_outlined,
+                          backgroundIconColor: AppColor.supportColor,
+                          serviceName: "Taxa pela metade",
+                          serviceDescription:
+                              "Os clientes que vierem pelo app da DriverHub, a taxa é de 10% por serviço e não mais 20%",
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        const _SubscriptionBenefitWidget(
+                          icon: Icons.sms_outlined,
+                          backgroundIconColor: AppColor.supportColor,
                           serviceName: "Comunicação com clientes",
                           serviceDescription:
                               "Vamos facilitar e automatizar as comunicações com seus clientes, gerando alta fidelização.",
@@ -131,7 +125,6 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
-
                         BlocBuilder<SubscriptionPresenter, DHState>(
                             builder: (context, state) => ListView.separated(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -266,7 +259,6 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                             },
                             child:
                                 const Text('Restaurar compra').body_regular()),
-
                         const SizedBox(
                           height: 24,
                         ),
@@ -321,22 +313,37 @@ class BottomSheetHeader extends StatelessWidget {
 
 class _SubscriptionBenefitWidget extends StatelessWidget {
   const _SubscriptionBenefitWidget(
-      {required this.assetPath,
+      {required this.icon,
       required this.serviceName,
+      required this.backgroundIconColor,
       required this.serviceDescription});
 
-  final String assetPath;
   final String serviceName;
   final String serviceDescription;
+  final IconData icon;
+  final Color backgroundIconColor;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset(
-          assetPath,
-          height: 48,
-        ),
+        Container(
+            height: 48,
+            width: 48,
+            decoration: BoxDecoration(
+                color: backgroundIconColor,
+                borderRadius: const BorderRadius.all(Radius.circular(96))),
+            child: Center(
+              child: Icon(
+                icon,
+                color: AppColor.iconPrimaryColor,
+                size: 20,
+              ),
+            )),
+        // Image.asset(
+        //   assetPath,
+        //   height: 48,
+        // ),
         const SizedBox(
           width: 16,
         ),

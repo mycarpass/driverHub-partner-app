@@ -22,6 +22,8 @@ class WelcomeView extends StatelessWidget {
               SvgPicture.asset(
                 "lib/assets/images/LogoWhiteForPartners.svg",
                 height: 60,
+                colorFilter: const ColorFilter.mode(
+                    AppColor.blackColor, BlendMode.srcIn),
               ),
               const SizedBox(
                 height: 12,
