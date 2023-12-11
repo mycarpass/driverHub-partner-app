@@ -5,6 +5,7 @@ import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
+import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +56,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
                 presenter.pricePickupController.text = moneyBase;
                 presenter.priceRAMController.text = moneyBase;
                 presenter.serviceEntity.basePrice =
-                    presenter.moneyBaseController.numberValue;
+                    presenter.moneyBaseController.text;
               },
               //  controller: nameController,
             ),
@@ -353,8 +354,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
                                                   presenter
                                                       .setBasePriceAddtionalService(
                                                           index,
-                                                          moneyFormatter
-                                                              .numberValue);
+                                                          moneyFormatter.text);
                                                 },
                                                 decoration: const InputDecoration
                                                     .collapsed(
@@ -379,10 +379,16 @@ class ServicePricesBottomSheet extends StatelessWidget {
                 : const SizedBox(height: 24),
             BlocConsumer<ServicesRegisterPresenter, DHState>(
                 listener: (context, state) {
-              if (state is DHSuccessState) {
+              if (state is ServiceRegisteredSuccessful) {
+                Navigator.of(context).pop(true);
                 Navigator.of(context).pop(true);
                 DHSnackBar().showSnackBar("Oba!",
                     "Serviço cadastrado com sucesso", DHSnackBarType.success);
+              } else if (state is DHErrorState) {
+                DHSnackBar().showSnackBar(
+                    "Ops...",
+                    "Ocorreu um erro ao tentar salvar o serviço, tente novamente mais tarde",
+                    DHSnackBarType.error);
               }
             }, builder: (context, state) {
               return SizedBox(
@@ -390,8 +396,16 @@ class ServicePricesBottomSheet extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: state is DHLoadingState
                       ? () {}
-                      : () => DHSnackBar().showSnackBar("Ops...",
-                          "Preencha o nome e o telefone", DHSnackBarType.error),
+                      : () {
+                          if (presenter.isValideToContinue()) {
+                            presenter.saveService();
+                          } else {
+                            DHSnackBar().showSnackBar(
+                                "Ops...",
+                                "Preencha corretamente todos os dados para continuar",
+                                DHSnackBarType.error);
+                          }
+                        },
                   child: state is DHLoadingState
                       ? const SizedBox(
                           height: 20,

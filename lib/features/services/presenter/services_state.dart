@@ -39,3 +39,5 @@ class WashAddtionalIsSelected extends DHState {
 }
 
 class LoadingServicesDropdownState extends DHLoadingState {}
+
+class ServiceRegisteredSuccessful extends DHSuccessState {}

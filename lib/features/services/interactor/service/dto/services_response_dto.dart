@@ -18,7 +18,8 @@ class ServicesResponseDto {
   List<ServiceEntity> fetchServices() {
     List<ServiceEntity> servicesEntity = [];
     for (var service in services) {
-      if (service.category == ServiceCategory.services) {
+      if (service.category == ServiceCategory.services &&
+          service.type == ServiceType.service) {
         var serviceEntity = ServiceEntity(
             service.serviceId,
             service.name,

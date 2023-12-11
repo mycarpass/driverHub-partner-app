@@ -11,7 +11,9 @@ class ServiceEntity with CustomDropdownListFilter {
   ServiceType type;
   bool isLiveOnApp;
   bool? isSelected = false;
-  double? basePrice;
+  String? basePrice;
+  List<ServiceRequestPrice> prices = [];
+  List<AddtionalWashRequest>? additionalWashes;
 
   ServiceEntity(
     this.id,
@@ -32,5 +34,69 @@ class ServiceEntity with CustomDropdownListFilter {
   @override
   bool filter(String query) {
     return name.toLowerCase().contains(query.toLowerCase());
+  }
+
+  Map<String, dynamic> toJson() {
+    List<Map<String, dynamic>> jsonPrices = [];
+    for (var price in prices) {
+      jsonPrices.add(price.toJson());
+    }
+    List<Map<String, dynamic>> jsonAdditionalWashes = [];
+    if (additionalWashes != null) {
+      for (var additional in additionalWashes!) {
+        jsonAdditionalWashes.add(additional.toJson());
+      }
+    }
+
+    return {
+      "serviceId": id,
+      "description": description,
+      "time": _fetchTimeHoursInMinutes(),
+      "dayPosSales": daysPosSales,
+      "isLiveOnApp": isLiveOnApp,
+      "prices": jsonPrices,
+      "additionalWashes": additionalWashes != null ? jsonAdditionalWashes : null
+    };
+  }
+
+  int? _fetchTimeHoursInMinutes() {
+    if (serviceTimeHours == null || serviceTimeHours == "") {
+      return null;
+    }
+    return int.parse(serviceTimeHours!) * 60;
+  }
+}
+
+class ServiceRequestPrice {
+  int carBodyType;
+  String value;
+
+  ServiceRequestPrice(
+    this.carBodyType,
+    this.value,
+  );
+
+  Map<String, dynamic> toJson() {
+    return {
+      "carBodyType": carBodyType,
+      "value": value.replaceAll("R\$", "").trim(),
+    };
+  }
+}
+
+class AddtionalWashRequest {
+  int id;
+  String price;
+
+  AddtionalWashRequest(
+    this.id,
+    this.price,
+  );
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "price": price.replaceAll("R\$", "").trim(),
+    };
   }
 }

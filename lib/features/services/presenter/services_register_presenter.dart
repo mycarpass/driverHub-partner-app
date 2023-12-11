@@ -88,6 +88,56 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
     }
   }
 
+  Future saveService() async {
+    try {
+      emit(DHLoadingState());
+      _fillPrices();
+      _fillAdditionalWashes();
+
+      await _servicesInteractor.saveService(serviceEntity);
+
+      emit(ServiceRegisteredSuccessful());
+    } catch (e) {
+      emit(DHErrorState());
+    }
+  }
+
+  void _fillPrices() {
+    serviceEntity.prices = [];
+    ServiceRequestPrice priceHatch =
+        ServiceRequestPrice(0, priceHatchController.text);
+    ServiceRequestPrice priceSedan =
+        ServiceRequestPrice(1, priceHatchController.text);
+    ServiceRequestPrice priceSuv =
+        ServiceRequestPrice(2, priceHatchController.text);
+    ServiceRequestPrice pricePickup =
+        ServiceRequestPrice(3, priceHatchController.text);
+    ServiceRequestPrice priceRAM =
+        ServiceRequestPrice(9, priceHatchController.text);
+
+    serviceEntity.prices.add(priceHatch);
+    serviceEntity.prices.add(priceSedan);
+    serviceEntity.prices.add(priceSuv);
+    serviceEntity.prices.add(pricePickup);
+    serviceEntity.prices.add(priceRAM);
+  }
+
+  void _fillAdditionalWashes() {
+    serviceEntity.additionalWashes = null;
+    List<ServiceEntity> additionalWashesSelected =
+        addtionalWashes.where((i) => i.isSelected ?? false).toList();
+    if (additionalWashesSelected.isNotEmpty) {
+      List<AddtionalWashRequest> additionalWashesRequest = [];
+      serviceEntity.additionalWashes = [];
+      for (var additionalWash in additionalWashesSelected) {
+        AddtionalWashRequest addtionalWashRequest = AddtionalWashRequest(
+            additionalWash.id ?? 0, additionalWash.basePrice.toString());
+        additionalWashesRequest.add(addtionalWashRequest);
+      }
+      serviceEntity.additionalWashes = additionalWashesRequest;
+    }
+  }
+
   void selectServiceDropDown(ServiceEntity service) {
     serviceEntity.id = service.id;
     serviceEntity.name = service.name;
@@ -138,7 +188,7 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
     }
   }
 
-  void setBasePriceAddtionalService(int index, double basePrice) {
+  void setBasePriceAddtionalService(int index, String basePrice) {
     addtionalWashes[index].basePrice = basePrice;
   }
 }

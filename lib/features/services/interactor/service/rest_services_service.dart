@@ -5,6 +5,7 @@ import 'package:dh_http_client/interactor/service/fz_http_client.dart';
 import 'package:dio/dio.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/services_service.dart';
+import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 
 class RestServicesService implements ServicesService {
   final _httpClient = DHInjector.instance.get<DHHttpClient>();
@@ -15,6 +16,18 @@ class RestServicesService implements ServicesService {
       Response response = await _httpClient.get("/services");
 
       return ServicesResponseDto.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<dynamic> saveService(ServiceEntity entity) async {
+    try {
+      Response response =
+          await _httpClient.post("/partner/new-service", body: entity.toJson());
+
+      return response.data;
     } catch (e) {
       rethrow;
     }
