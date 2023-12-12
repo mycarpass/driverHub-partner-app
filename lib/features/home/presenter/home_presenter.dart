@@ -45,15 +45,6 @@ class HomePresenter extends Cubit<DHState> {
   }
 
   Future<void> _configureRevenueCat() async {
-    PurchasesConfiguration configuration;
-    if (Platform.isAndroid) {
-      configuration =
-          PurchasesConfiguration("goog_HqMGaaqXNYxpodCeFvFMkJopvCj");
-    } else {
-      configuration =
-          PurchasesConfiguration("appl_kKamBNUKIXvKwJajplUGnUrMJqz");
-    }
-    await Purchases.configure(configuration);
     //await Purchases.setLogLevel(LogLevel.debug);
     await Purchases.logIn(homeResponseDto.data.partnerData.email);
     await Purchases.setEmail(homeResponseDto.data.partnerData.email);

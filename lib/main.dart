@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:io';
+
 import 'package:dh_http_client/http_client_module.dart';
 import 'package:dh_dependency_injection/dh_module_builder.dart';
 import 'package:dh_navigation/navigation_service.dart';
@@ -25,6 +27,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:dh_notification/notification_module.dart';
 // import 'config/firebase_options.dart';
 import 'package:dh_cache_manager/cache_manager_module.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 List<DHModule> moduleList = [
   DHCacheManagerModule(),
@@ -59,6 +62,14 @@ void main() async {
   for (var element in moduleList) {
     element.registerProviders();
   }
+
+  PurchasesConfiguration configuration;
+  if (Platform.isAndroid) {
+    configuration = PurchasesConfiguration("goog_HqMGaaqXNYxpodCeFvFMkJopvCj");
+  } else {
+    configuration = PurchasesConfiguration("appl_kKamBNUKIXvKwJajplUGnUrMJqz");
+  }
+  await Purchases.configure(configuration);
 
   runApp(const AppEntryPoint());
 }

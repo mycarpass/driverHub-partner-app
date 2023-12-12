@@ -5,7 +5,5 @@ abstract class ProfileRooutes {
 }
 
 abstract class ProfileRoutesMap {
-  static var routes = {
-    "/home/profile": (context) => const HomeProfileView(),
-  };
+  static var routes = {"/home/profile": (context) => const HomeProfileView()};
 }

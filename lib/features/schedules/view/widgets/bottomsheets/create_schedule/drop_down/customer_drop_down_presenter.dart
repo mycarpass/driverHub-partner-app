@@ -4,8 +4,6 @@ import 'package:driver_hub_partner/features/customers/interactor/customers_inter
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
-import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
-import 'package:driver_hub_partner/features/services/interactor/services_interactor.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -4,11 +4,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_presenter.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/service_drop_down_presenter.dart';
-import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
-import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +13,7 @@ class CustomerDropDownController {
   Future<void> Function() load = () async {};
 }
 
+// ignore: must_be_immutable
 class CustomerDropDownWidget extends StatelessWidget {
   CustomerDropDownWidget(
       {super.key, required this.onChanged, required this.controller}) {}

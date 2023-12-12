@@ -7,7 +7,6 @@ import 'package:driver_hub_partner/features/services/interactor/service/dto/enum
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +17,7 @@ class ServicesDropDownController {
   Future<void> Function() load = () async => {};
 }
 
+// ignore: must_be_immutable
 class ServicesDropDownWidget extends StatelessWidget {
   ServicesDropDownWidget._(
       {super.key, required this.onChanged, required this.controller});
