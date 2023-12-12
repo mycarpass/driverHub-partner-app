@@ -7,7 +7,7 @@ import 'package:driver_hub_partner/features/customers/view/pages/home/customers_
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customers_error_widget.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/loading/customers_body_loading.dart';
-import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscriptions/subscription_ended_widget.dart';
+import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +29,9 @@ class _CustomersViewState extends State<CustomersView>
       providers: [
         BlocProvider<CustomersPresenter>(
           create: (BuildContext context) => CustomersPresenter()..load(),
+        ),
+        BlocProvider<SubscriptionPresenter>(
+          create: (BuildContext context) => SubscriptionPresenter()..start(),
         )
       ],
       child: Builder(
@@ -53,18 +56,30 @@ class _CustomersViewState extends State<CustomersView>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TabViewHeader(
+                              addButtonIsVisible: context
+                                  .read<SubscriptionPresenter>()
+                                  .isSubscribed,
                               onPressed: () async {
-                                bool? isCustomerRegistered =
-                                    await showModalBottomSheet<bool?>(
-                                  context: context,
-                                  showDragHandle: true,
-                                  isScrollControlled: true,
-                                  builder: (_) => CustomerRegisterBottomSheet(),
-                                );
+                                if (!context
+                                    .read<SubscriptionPresenter>()
+                                    .isSubscribed) {
+                                  context
+                                      .read<SubscriptionPresenter>()
+                                      .openPayWall(context);
+                                } else {
+                                  bool? isCustomerRegistered =
+                                      await showModalBottomSheet<bool?>(
+                                    context: context,
+                                    showDragHandle: true,
+                                    isScrollControlled: true,
+                                    builder: (_) =>
+                                        CustomerRegisterBottomSheet(),
+                                  );
 
-                                if (isCustomerRegistered != null &&
-                                    isCustomerRegistered) {
-                                  presenter.load();
+                                  if (isCustomerRegistered != null &&
+                                      isCustomerRegistered) {
+                                    presenter.load();
+                                  }
                                 }
                               },
                               title: "Clientes",
@@ -91,7 +106,7 @@ class _CustomersViewState extends State<CustomersView>
                           )),
                         ],
                       ),
-                      const SubscriptionEndedWidget()
+                      // const SubscriptionEndedWidget()
                     ],
                   ],
                 );

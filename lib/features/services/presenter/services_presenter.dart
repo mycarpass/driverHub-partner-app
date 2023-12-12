@@ -1,6 +1,6 @@
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
-import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/services_interactor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +10,8 @@ class ServicesPresenter extends Cubit<DHState> {
   final ServicesInteractor _servicesInteractor =
       DHInjector.instance.get<ServicesInteractor>();
 
-  ServicesResponseDto servicesResponseDto = ServicesResponseDto();
+  PartnerServicesResponseDto partnerServicesResponseDto =
+      PartnerServicesResponseDto();
 
   Future<void> load() async {
     await _getServices();
@@ -19,7 +20,8 @@ class ServicesPresenter extends Cubit<DHState> {
   Future _getServices() async {
     try {
       emit(DHLoadingState());
-      //servicesResponseDto = await _servicesInteractor.getServices();
+      partnerServicesResponseDto =
+          await _servicesInteractor.getPartnerServices();
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());

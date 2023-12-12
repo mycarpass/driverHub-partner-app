@@ -6,6 +6,7 @@ import 'package:dh_ui_kit/view/widgets/tabs/dh_contained_tab_bar.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
+import 'package:driver_hub_partner/features/services/view/pages/home/services_list_widget.dart';
 import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/service_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/services/view/widgets/loading/services_body_loading.dart';
 import 'package:driver_hub_partner/features/services/view/widgets/services_error_widget.dart';
@@ -70,7 +71,8 @@ class _ServicesViewState extends State<ServicesView>
                                 }
                               },
                               title: "Serviços",
-                              subtitle: "0 cadastradas",
+                              subtitle:
+                                  "${presenter.partnerServicesResponseDto.partnerServicesLength()} cadastrados",
                             ),
                           ],
                         ),
@@ -93,7 +95,19 @@ class _ServicesViewState extends State<ServicesView>
                           Text("Todos"),
                           Text("Visível para clientes"),
                         ],
-                        views: [Container(), Container()],
+                        views: [
+                          ServicesListBodyWidget(
+                            services:
+                                presenter.partnerServicesResponseDto.services,
+                            washes: presenter.partnerServicesResponseDto.washes,
+                          ),
+                          ServicesListBodyWidget(
+                            services: presenter.partnerServicesResponseDto
+                                .fetchServiceLiveOnApp(),
+                            washes: presenter.partnerServicesResponseDto
+                                .fetchWashesLiveOnApp(),
+                          ),
+                        ],
                       ),
                     ]
                   ],

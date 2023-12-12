@@ -33,7 +33,10 @@ class _CustomersListBodyWidgetState extends State<CustomersListBodyWidget> {
                         child: EmptyStateList(
                         text: 'Nenhum cliente encontrado \nainda por aqui :|',
                       ))
-                    : ListView.builder(
+                    : ListView.separated(
+                        separatorBuilder: (context, index) => const Divider(
+                          height: 0.2,
+                        ),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         padding: const EdgeInsets.only(bottom: 32),

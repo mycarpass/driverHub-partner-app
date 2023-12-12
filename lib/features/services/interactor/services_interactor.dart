@@ -1,3 +1,4 @@
+import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/services_service.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
@@ -10,6 +11,14 @@ class ServicesInteractor {
   Future<ServicesResponseDto> getServicesDropDown() async {
     try {
       return await _servicesService.getServicesDropDown();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<PartnerServicesResponseDto> getPartnerServices() async {
+    try {
+      return await _servicesService.getPartnerServices();
     } catch (e) {
       rethrow;
     }

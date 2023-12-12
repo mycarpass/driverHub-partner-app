@@ -83,7 +83,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
                 ),
                 TabBarWidget(
                   icon: Icons.account_box_outlined,
-                  title: "Perfil",
+                  title: "Conta",
                 ),
               ],
             )),

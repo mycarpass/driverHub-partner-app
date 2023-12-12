@@ -2,7 +2,7 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
-import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscriptions/subscription_ended_widget.dart';
+import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/sales/presenter/sales_presenter.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/loading/sales_body_loading.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/sales_error_widget.dart';
@@ -27,6 +27,9 @@ class _SalesViewState extends State<SalesView>
       providers: [
         BlocProvider<SalesPresenter>(
           create: (BuildContext context) => SalesPresenter()..load(),
+        ),
+        BlocProvider<SubscriptionPresenter>(
+          create: (BuildContext context) => SubscriptionPresenter()..start(),
         )
       ],
       child: Builder(
@@ -51,7 +54,18 @@ class _SalesViewState extends State<SalesView>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TabViewHeader(
-                              onPressed: () {},
+                              addButtonIsVisible: context
+                                  .read<SubscriptionPresenter>()
+                                  .isSubscribed,
+                              onPressed: () {
+                                !context
+                                        .read<SubscriptionPresenter>()
+                                        .isSubscribed
+                                    ? context
+                                        .read<SubscriptionPresenter>()
+                                        .openPayWall(context)
+                                    : DoNothingAction();
+                              },
                               title: "Vendas",
                               subtitle: "0 cadastradas",
                             ),
@@ -64,7 +78,7 @@ class _SalesViewState extends State<SalesView>
                         views: [Container(), Container()],
                       ),
                     ],
-                    const SubscriptionEndedWidget()
+                    //  const SubscriptionEndedWidget()
                   ],
                 );
               },
