@@ -53,22 +53,23 @@ class _SalesViewState extends State<SalesView>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TabViewHeader(
-                              addButtonIsVisible: context
-                                  .read<SubscriptionPresenter>()
-                                  .isSubscribed,
-                              onPressed: () {
-                                !context
-                                        .read<SubscriptionPresenter>()
-                                        .isSubscribed
-                                    ? context
-                                        .read<SubscriptionPresenter>()
-                                        .openPayWall(context)
-                                    : DoNothingAction();
-                              },
-                              title: "Vendas",
-                              subtitle: "0 cadastradas",
-                            ),
+                            BlocBuilder<SubscriptionPresenter, DHState>(
+                                builder: (context, state) => TabViewHeader(
+                                      addButtonIsVisible: context
+                                          .read<SubscriptionPresenter>()
+                                          .isSubscribed,
+                                      onPressed: () {
+                                        !context
+                                                .read<SubscriptionPresenter>()
+                                                .isSubscribed
+                                            ? context
+                                                .read<SubscriptionPresenter>()
+                                                .openPayWall(context)
+                                            : DoNothingAction();
+                                      },
+                                      title: "Vendas",
+                                      subtitle: "0 cadastradas",
+                                    )),
                           ],
                         ),
                       ),

@@ -1,4 +1,4 @@
-package com.example.driver_hub_partner
+package com.driver_hub_partner
 
 import io.flutter.embedding.android.FlutterActivity
 

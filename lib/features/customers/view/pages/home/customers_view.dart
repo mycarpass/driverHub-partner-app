@@ -55,37 +55,38 @@ class _CustomersViewState extends State<CustomersView>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TabViewHeader(
-                              addButtonIsVisible: context
-                                  .read<SubscriptionPresenter>()
-                                  .isSubscribed,
-                              onPressed: () async {
-                                if (!context
-                                    .read<SubscriptionPresenter>()
-                                    .isSubscribed) {
-                                  context
-                                      .read<SubscriptionPresenter>()
-                                      .openPayWall(context);
-                                } else {
-                                  bool? isCustomerRegistered =
-                                      await showModalBottomSheet<bool?>(
-                                    context: context,
-                                    showDragHandle: true,
-                                    isScrollControlled: true,
-                                    builder: (_) =>
-                                        CustomerRegisterBottomSheet(),
-                                  );
+                            BlocBuilder<SubscriptionPresenter, DHState>(
+                                builder: (context, state) => TabViewHeader(
+                                      addButtonIsVisible: context
+                                          .read<SubscriptionPresenter>()
+                                          .isSubscribed,
+                                      onPressed: () async {
+                                        if (!context
+                                            .read<SubscriptionPresenter>()
+                                            .isSubscribed) {
+                                          context
+                                              .read<SubscriptionPresenter>()
+                                              .openPayWall(context);
+                                        } else {
+                                          bool? isCustomerRegistered =
+                                              await showModalBottomSheet<bool?>(
+                                            context: context,
+                                            showDragHandle: true,
+                                            isScrollControlled: true,
+                                            builder: (_) =>
+                                                CustomerRegisterBottomSheet(),
+                                          );
 
-                                  if (isCustomerRegistered != null &&
-                                      isCustomerRegistered) {
-                                    presenter.load();
-                                  }
-                                }
-                              },
-                              title: "Clientes",
-                              subtitle:
-                                  "${presenter.customersResponseDto.customers.length} cadastrados",
-                            ),
+                                          if (isCustomerRegistered != null &&
+                                              isCustomerRegistered) {
+                                            presenter.load();
+                                          }
+                                        }
+                                      },
+                                      title: "Clientes",
+                                      subtitle:
+                                          "${presenter.customersResponseDto.customers.length} cadastrados",
+                                    )),
                           ],
                         ),
                       ),

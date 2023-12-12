@@ -1,4 +1,5 @@
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
+import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 
 class PartnerServicesResponseDto {
   late List<PartnerServiceDto> services;
@@ -31,6 +32,40 @@ class PartnerServicesResponseDto {
 
   List<PartnerServiceDto> fetchWashesLiveOnApp() {
     return washes.where((i) => i.isLiveOnApp).toList();
+  }
+
+  List<ServiceEntity> washesToEntityList() {
+    List<ServiceEntity> entities = [];
+    for (var wash in washes) {
+      var serviceEntity = ServiceEntity(
+          wash.serviceId,
+          wash.name,
+          wash.description,
+          null,
+          null,
+          ServiceCategory.wash,
+          wash.type,
+          wash.isLiveOnApp);
+      entities.add(serviceEntity);
+    }
+    return entities;
+  }
+
+  List<ServiceEntity> servicesToEntityList() {
+    List<ServiceEntity> entities = [];
+    for (var service in services) {
+      var serviceEntity = ServiceEntity(
+          service.serviceId,
+          service.name,
+          service.description,
+          null,
+          null,
+          ServiceCategory.wash,
+          service.type,
+          service.isLiveOnApp);
+      entities.add(serviceEntity);
+    }
+    return entities;
   }
 
   PartnerServicesResponseDto();

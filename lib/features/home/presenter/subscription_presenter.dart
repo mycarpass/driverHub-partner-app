@@ -72,6 +72,7 @@ class SubscriptionPresenter extends Cubit<DHState> {
 
   Future<void> _verifySubscribe() async {
     bool isSub = await _dhCacheManager.getBool(SubscriptionTokenKey()) ?? false;
+    int daysOfTrial = await _dhCacheManager.getInt(DaysTrialKey()) ?? 0;
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
     bool containsActiveSubscription =
         customerInfo.activeSubscriptions.isNotEmpty;
@@ -80,7 +81,13 @@ class SubscriptionPresenter extends Cubit<DHState> {
           SubscriptionTokenKey(), containsActiveSubscription);
       isSub = containsActiveSubscription;
     }
-    isSubscribed = isSub;
+
+    if (!isSub && daysOfTrial > 0) {
+      isSubscribed = true;
+    } else {
+      isSubscribed = isSub;
+    }
+
     emit(SubscribedIsUpdated(isSubscribed: isSubscribed));
   }
 }
@@ -88,4 +95,9 @@ class SubscriptionPresenter extends Cubit<DHState> {
 class SubscriptionTokenKey implements CacheKey {
   @override
   String get key => "is_subscribed";
+}
+
+class DaysTrialKey implements CacheKey {
+  @override
+  String get key => "days_trial";
 }

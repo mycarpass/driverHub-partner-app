@@ -21,7 +21,7 @@ class ServicesPresenter extends Cubit<DHState> {
     try {
       emit(DHLoadingState());
       partnerServicesResponseDto =
-          await _servicesInteractor.getPartnerServices();
+          await _servicesInteractor.getPartnersService();
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());

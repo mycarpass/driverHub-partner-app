@@ -11,6 +11,15 @@ class SchedulesLoaded extends DHSuccessState {
   SchedulesLoaded(this.schedulesResponseDto);
 }
 
+class NewDateSeleceted extends DHState {
+  String newDate;
+
+  NewDateSeleceted(this.newDate);
+
+  @override
+  List<Object?> get props => [newDate];
+}
+
 class FilteredListState extends DHState {
   final List<ScheduleDataDto> schedules;
   final Map<DateTime, List<dynamic>> map;

@@ -56,12 +56,13 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
-                        subscribePresenter.isSubscribed
+                        !subscribePresenter.isSubscribed
                             ? BlocProvider(
                                 create: (context) =>
                                     SubscriptionPresenter()..start(),
                                 child: SubscriptionHomeCard(
-                                  daysTrialLeft: 0,
+                                  daysTrialLeft: presenter.homeResponseDto.data
+                                      .partnerData.daysTrialLeft,
                                 ))
                             : const SizedBox.shrink(),
                         !onboardingPresenter.isAllCompletedOnboarding(

@@ -16,7 +16,7 @@ class ServicesInteractor {
     }
   }
 
-  Future<PartnerServicesResponseDto> getPartnerServices() async {
+  Future<PartnerServicesResponseDto> getPartnersService() async {
     try {
       return await _servicesService.getPartnerServices();
     } catch (e) {

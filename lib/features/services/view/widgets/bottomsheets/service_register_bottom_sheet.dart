@@ -84,49 +84,48 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                       .caption1_bold(),
                 ]),
                 BlocBuilder<ServicesRegisterPresenter, DHState>(
-                    builder: (context, state) =>
-                        CustomDropdown<ServiceEntity>.search(
-                          hintText: state is LoadingServicesDropdownState
-                              ? 'Aguarde carregando...'
-                              : 'Selecione o serviço',
-                          items: presenter.serviceEntity.category ==
-                                  ServiceCategory.services
-                              ? presenter.dropDownServices
-                              : presenter.dropDownWashes,
-                          searchHintText: "Buscar",
-                          excludeSelected: true,
-                          closedFillColor: AppColor.backgroundColor,
-                          closedBorder: Border.all(color: AppColor.borderColor),
-                          expandedFillColor: AppColor.backgroundColor,
-                          closedSuffixIcon: const Icon(
-                              Icons.arrow_drop_down_outlined,
-                              color: AppColor.iconPrimaryColor),
-                          expandedBorder:
-                              Border.all(color: AppColor.borderColor),
-                          noResultFoundText:
-                              "Nenhum serviço encontrado, entre em contato para adicionarmos o serviço desejado.",
-                          listItemBuilder: (context, item) =>
-                              Text(item.name).body_regular(),
-                          noResultFoundBuilder: (context, text) => Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Center(child: Text(text).body_regular())),
-                          headerBuilder: (context, selectedItem) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Serviço').caption1_emphasized(
-                                    style: const TextStyle(
-                                        color: AppColor.textSecondaryColor)),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(selectedItem.name).body_regular(
-                                    style: const TextStyle(
-                                        color: AppColor.textPrimaryColor))
-                              ]),
-                          onChanged: (value) {
-                            presenter.selectServiceDropDown(value);
-                          },
-                        )),
+                  builder: (context, state) =>
+                      CustomDropdown<ServiceEntity>.search(
+                    hintText: state is LoadingServicesDropdownState
+                        ? 'Aguarde carregando...'
+                        : 'Selecione o serviço',
+                    items: presenter.serviceEntity.category ==
+                            ServiceCategory.services
+                        ? presenter.dropDownServices
+                        : presenter.dropDownWashes,
+                    searchHintText: "Buscar",
+                    excludeSelected: true,
+                    closedFillColor: AppColor.backgroundColor,
+                    closedBorder: Border.all(color: AppColor.borderColor),
+                    expandedFillColor: AppColor.backgroundColor,
+                    closedSuffixIcon: const Icon(Icons.arrow_drop_down_outlined,
+                        color: AppColor.iconPrimaryColor),
+                    expandedBorder: Border.all(color: AppColor.borderColor),
+                    noResultFoundText:
+                        "Nenhum serviço encontrado, entre em contato para adicionarmos o serviço desejado.",
+                    listItemBuilder: (context, item) =>
+                        Text(item.name).body_regular(),
+                    noResultFoundBuilder: (context, text) => Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Center(child: Text(text).body_regular())),
+                    headerBuilder: (context, selectedItem) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Serviço').caption1_emphasized(
+                              style: const TextStyle(
+                                  color: AppColor.textSecondaryColor)),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Text(selectedItem.name).body_regular(
+                              style: const TextStyle(
+                                  color: AppColor.textPrimaryColor))
+                        ]),
+                    onChanged: (value) {
+                      presenter.selectServiceDropDown(value);
+                    },
+                  ),
+                ),
                 BlocBuilder<ServicesRegisterPresenter, DHState>(
                     builder: (context, state) => Container(
                         padding: const EdgeInsets.all(16),
