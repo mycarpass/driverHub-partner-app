@@ -4,6 +4,7 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/header/tab_header.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/calendar_schedules_widget.dart';
@@ -60,13 +61,19 @@ class _SchedulesViewState extends State<SchedulesView>
                                 builder: (context, state) => TabViewHeader(
                                       onPressed: () {
                                         // NO MERGE - ALTERAR DONOTHINGACTION POR CHAMADA DE TELA DE CADASTRAR AGENDAMENTO
-                                        !context
-                                                .read<SubscriptionPresenter>()
-                                                .isSubscribed
+                                        false
+                                            // !context
+                                            //         .read<SubscriptionPresenter>()
+                                            //         .isSubscribed
                                             ? context
                                                 .read<SubscriptionPresenter>()
                                                 .openPayWall(context)
-                                            : DoNothingAction();
+                                            : showModalBottomSheet(
+                                                context: context,
+                                                showDragHandle: true,
+                                                builder: (context) =>
+                                                    CreateScheduleBottomSheet(),
+                                              );
                                       },
                                       addButtonIsVisible: context
                                           .read<SubscriptionPresenter>()

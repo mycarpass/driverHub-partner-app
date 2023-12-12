@@ -34,6 +34,11 @@ class ServicesDropDownPresenter extends Cubit<DHState> {
         ServiceCategory.wash, ServiceType.service, false)
   ];
 
+  List<ServiceEntity> allServices = [
+    ServiceEntity(null, "Carregando aguarde...3", "", null, null,
+        ServiceCategory.wash, ServiceType.service, false)
+  ];
+
   List<ServiceEntity> addtionalWashes = [
     ServiceEntity(2, "Cera", "Enceramento básico", null, null,
         ServiceCategory.wash, ServiceType.additional, true),

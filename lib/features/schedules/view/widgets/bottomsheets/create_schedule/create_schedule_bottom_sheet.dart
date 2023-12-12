@@ -41,6 +41,9 @@ class CreateScheduleBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
+              const SizedBox(
+                height: 32,
+              ),
               const Text("Adicionar agendamento").title1_bold(),
               const SizedBox(
                 height: 16,
