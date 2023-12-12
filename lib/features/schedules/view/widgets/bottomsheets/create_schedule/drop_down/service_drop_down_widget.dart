@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
@@ -6,7 +8,9 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
+import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
+import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/service_register_bottom_sheet.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,10 +31,20 @@ class ServicesDropDownWidget extends StatelessWidget {
     onlyRegisteredServices = true;
   }
 
+  ServicesDropDownWidget.fetchByType(
+      {super.key,
+      required this.onChanged,
+      required this.controller,
+      required this.serviceCategory}) {
+    onlyRegisteredServices = true;
+  }
+
   ServicesDropDownWidget.onlyRegisteredServices(
       {super.key, required this.onChanged, required this.controller});
 
   bool onlyRegisteredServices = false;
+
+  ServiceCategory? serviceCategory;
 
   final Function(ServiceDto) onChanged;
 
@@ -53,10 +67,11 @@ class ServicesDropDownWidget extends StatelessWidget {
                 hintText: state is LoadingServicesDropdownState
                     ? 'Aguarde carregando...'
                     : 'Selecione o serviço',
-                items:
-                    presenter.serviceEntity.category == ServiceCategory.services
+                items: serviceCategory == ServiceCategory.wash
+                    ? presenter.dropDownWashes
+                    : serviceCategory == ServiceCategory.services
                         ? presenter.dropDownServices
-                        : presenter.dropDownWashes,
+                        : presenter.allServices,
                 searchHintText: "Buscar",
                 excludeSelected: true,
                 closedFillColor: AppColor.backgroundColor,
@@ -66,12 +81,43 @@ class ServicesDropDownWidget extends StatelessWidget {
                     color: AppColor.iconPrimaryColor),
                 expandedBorder: Border.all(color: AppColor.borderColor),
                 noResultFoundText:
-                    "Nenhum serviço encontrado, entre em contato para adicionarmos o serviço desejado.",
+                    "Nenhum serviço encontrado, clique no botao abaixo e cadastre um novo",
                 listItemBuilder: (context, item) =>
                     Text(item.name).body_regular(),
+
                 noResultFoundBuilder: (context, text) => Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Center(child: Text(text).body_regular())),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Text(text).body_regular(),
+                      Center(
+                        child: TextButton(
+                          child: Text("+ Novo"),
+                          onPressed: () async {
+                            bool? isServiceRegistered =
+                                await showModalBottomSheet<bool?>(
+                              context: context,
+                              showDragHandle: true,
+                              isScrollControlled: true,
+                              builder: (_) => BlocProvider(
+                                  create: (context) =>
+                                      ServicesRegisterPresenter()..load(),
+                                  child: ServiceRegisterBottomSheet()),
+                            );
+
+                            if (isServiceRegistered != null &&
+                                isServiceRegistered) {
+                              servicesDropDownController.load();
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // noResultFoundBuilder: (context, text) => Padding(
+                //     padding: const EdgeInsets.all(16),
+                //     child: Center(child: Text(text).body_regular())),
                 headerBuilder: (context, selectedItem) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

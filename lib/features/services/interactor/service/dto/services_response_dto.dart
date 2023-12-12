@@ -35,6 +35,25 @@ class ServicesResponseDto {
     return servicesEntity;
   }
 
+  List<ServiceEntity> allServices() {
+    List<ServiceEntity> washesEntity = [];
+    for (var service in services) {
+      if (service.type != ServiceType.additional) {
+        var serviceEntity = ServiceEntity(
+            service.serviceId,
+            service.name,
+            service.description,
+            null,
+            null,
+            service.category,
+            service.type,
+            false);
+        washesEntity.add(serviceEntity);
+      }
+    }
+    return washesEntity;
+  }
+
   List<ServiceEntity> fetchWashes() {
     List<ServiceEntity> washesEntity = [];
     for (var service in services) {

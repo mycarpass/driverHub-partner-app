@@ -66,13 +66,19 @@ class _SchedulesViewState extends State<SchedulesView>
                                 builder: (context, state) => TabViewHeader(
                                       onPressed: () {
                                         // NO MERGE - ALTERAR DONOTHINGACTION POR CHAMADA DE TELA DE CADASTRAR AGENDAMENTO
-                                        !context
-                                                .read<SubscriptionPresenter>()
-                                                .isSubscribed
+                                        false
+                                            // !context
+                                            //         .read<SubscriptionPresenter>()
+                                            //         .isSubscribed
                                             ? context
                                                 .read<SubscriptionPresenter>()
                                                 .openPayWall(context)
-                                            : DoNothingAction();
+                                            : showModalBottomSheet(
+                                                context: context,
+                                                showDragHandle: true,
+                                                builder: (context) =>
+                                                    CreateScheduleBottomSheet(),
+                                              );
                                       },
                                       addButtonIsVisible: context
                                           .read<SubscriptionPresenter>()
