@@ -4,4 +4,5 @@ import 'package:driver_hub_partner/features/services/presenter/entities/service_
 abstract class ServicesService {
   Future<ServicesResponseDto> getServicesDropDown();
   Future<dynamic> saveService(ServiceEntity entity);
+  Future<ServicesResponseDto> getPartnerServices();
 }

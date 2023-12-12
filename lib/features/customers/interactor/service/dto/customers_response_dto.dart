@@ -2,7 +2,7 @@ import 'package:driver_hub_partner/features/customers/interactor/service/dto/enu
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 
 class CustomersResponseDto {
-  late List<CustomerDto> customers;
+  List<CustomerDto> customers = [];
 
   CustomersResponseDto.fromJson(Map<String, dynamic> json) {
     customers = [];

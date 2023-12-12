@@ -32,4 +32,14 @@ class RestServicesService implements ServicesService {
       rethrow;
     }
   }
+
+  Future<ServicesResponseDto> getPartnerServices() async {
+    try {
+      Response response = await _httpClient.get("/partner/services");
+
+      return ServicesResponseDto.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

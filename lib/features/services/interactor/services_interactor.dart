@@ -15,6 +15,14 @@ class ServicesInteractor {
     }
   }
 
+  Future<ServicesResponseDto> getOnlyRegisteredServices() async {
+    try {
+      return await _servicesService.getPartnerServices();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> saveService(ServiceEntity entity) async {
     try {
       return await _servicesService.saveService(entity);
