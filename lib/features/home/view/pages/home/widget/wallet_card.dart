@@ -19,14 +19,14 @@ class WalletCardWidget extends StatelessWidget {
       color: AppColor.backgroundTransparent,
       elevation: 0,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 8, 16),
+        padding: const EdgeInsets.fromLTRB(24, 12, 12, 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(children: [
               const Icon(
-                Icons.wallet,
+                Icons.wallet_outlined,
                 color: AppColor.iconSecondaryColor,
                 size: 20,
               ),
