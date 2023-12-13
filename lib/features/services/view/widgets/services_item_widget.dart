@@ -51,13 +51,13 @@ class ServiceItemWidget extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(6))),
                             child: Row(children: [
                               const Icon(
-                                Icons.play_arrow,
+                                Icons.visibility_outlined,
                                 size: 12,
                               ),
                               const SizedBox(
-                                width: 2,
+                                width: 4,
                               ),
-                              const Text('Live').caption2_bold()
+                              const Text('Visível').caption2_bold()
                             ]),
                           )
                         : const SizedBox.shrink(),

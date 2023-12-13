@@ -33,7 +33,7 @@ class WalletCardWidget extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              const Text("Carteira").body_bold(),
+              const Text("Resumo financeiro").body_bold(),
               const Expanded(child: SizedBox.shrink()),
               BlocBuilder<HomePresenter, DHState>(
                 builder: (context, state) => IconButton(
@@ -55,7 +55,7 @@ class WalletCardWidget extends StatelessWidget {
               height: 0,
             ),
             Row(children: [
-              const Text("À receber").body_regular(),
+              const Text("Vendas hoje").body_regular(),
               const Expanded(child: SizedBox.shrink()),
             ]),
             Column(
@@ -106,6 +106,40 @@ class WalletCardWidget extends StatelessWidget {
                             .volumeThisMonth.priceInReal)
                         .title2_bold(
                         style: const TextStyle(color: AppColor.accentColor),
+                      ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              children: [
+                const Text("À receber da DriverHub").body_regular(),
+                const Expanded(child: SizedBox.shrink()),
+              ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                !presenter.isVisible
+                    ? Container(
+                        margin: const EdgeInsets.only(top: 4),
+                        decoration: const BoxDecoration(
+                          color: AppColor.backgroundSecondary,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        height: 24,
+                        width: 120,
+                      )
+                    : Text(presenter.financialInfoDto.data.accountInfo
+                            .volumeThisMonth.priceInReal)
+                        .title2_bold(
+                        style:
+                            const TextStyle(color: AppColor.textSecondaryColor),
                       ),
               ],
             ),
