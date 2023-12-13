@@ -10,7 +10,7 @@ abstract class DHEnvs {
       );
 
   static const oneSignalToken = String.fromEnvironment("ONE_SIGNAL_TOKEN",
-      defaultValue: "5517405b-d5cf-4f6f-b7cd-84b32a7ae99f"
+      defaultValue: "c4494182-3301-4c3a-a6e8-b01beebe2317"
       // defaultValue: "d625e208-30bd-40f5-b9c2-d014e8353e3e",
       );
 }
