@@ -5,7 +5,6 @@ import 'package:driver_hub_partner/features/sign_up/router/sign_up_router.dart';
 import 'package:driver_hub_partner/features/welcome/view/resources/welcome_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});

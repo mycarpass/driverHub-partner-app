@@ -9,6 +9,9 @@ import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/financial_movimentations_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/onboarding_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_quantity_chart.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/last_week_earn_chart.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_value_chart.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscription_home_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/wallet_card.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
@@ -90,22 +93,35 @@ class _HomeViewState extends State<HomeView>
                                   ),
                                 ),
                               ),
-                        state is FinancialLoadadedState
-                            ? FinancialMovimentationsCard(
-                                transactions: presenter
-                                        .financialInfoDto.data.transactions ??
-                                    List.empty(),
-                              )
-                            : DHSkeleton(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 500,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              )
+                        // state is FinancialLoadadedState
+                        //     ? FinancialMovimentationsCard(
+                        //         transactions: presenter
+                        //                 .financialInfoDto.data.transactions ??
+                        //             List.empty(),
+                        //       )
+                        //     : DHSkeleton(
+                        //         child: Container(
+                        //           width: double.infinity,
+                        //           height: 500,
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(12),
+                        //             color: Colors.black,
+                        //           ),
+                        //         ),
+                        //       ),
+                        LastWeekEarnChart(
+                          presenter: presenter,
+                        ),
+                        ServicesValueChart(
+                          presenter: presenter,
+                        ),
+
+                        ServicesQuantityChart(
+                          presenter: presenter,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
                       ],
                     )),
               ]
