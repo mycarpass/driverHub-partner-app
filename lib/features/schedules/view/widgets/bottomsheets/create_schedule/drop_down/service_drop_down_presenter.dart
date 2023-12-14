@@ -35,7 +35,7 @@ class ServicesDropDownPresenter extends Cubit<DHState> {
   ];
 
   List<ServiceEntity> allServices = [
-    ServiceEntity(null, "Carregando aguarde...3", "", null, null,
+    ServiceEntity(null, "Carregando aguarde...", "", null, null,
         ServiceCategory.wash, ServiceType.service, false)
   ];
 
@@ -70,7 +70,7 @@ class ServicesDropDownPresenter extends Cubit<DHState> {
           await _servicesInteractor.getPartnersService();
       dropDownServices = partnerServicesResponseDto.servicesToEntityList();
       dropDownWashes = partnerServicesResponseDto.washesToEntityList();
-
+      allServices = [...dropDownWashes, ...dropDownServices];
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());

@@ -1,4 +1,5 @@
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 
 class PartnerServicesResponseDto {
@@ -47,7 +48,13 @@ class PartnerServicesResponseDto {
           wash.type,
           wash.isLiveOnApp);
       entities.add(serviceEntity);
+
+      for (var price in wash.prices) {
+        serviceEntity.prices.add(
+            ServiceRequestPrice(price.carBodyType, price.price, price.priceId));
+      }
     }
+
     return entities;
   }
 
@@ -63,6 +70,12 @@ class PartnerServicesResponseDto {
           ServiceCategory.wash,
           service.type,
           service.isLiveOnApp);
+
+      for (var price in service.prices) {
+        serviceEntity.prices.add(
+            ServiceRequestPrice(price.carBodyType, price.price, price.priceId));
+      }
+
       entities.add(serviceEntity);
     }
     return entities;
@@ -74,11 +87,12 @@ class PartnerServicesResponseDto {
 class PartnerServiceDto {
   late int serviceId;
   late String name;
-  late String description;
+  late String? description;
   late ServiceType type;
   late bool isLiveOnApp;
   late int quantityDoneServices;
   late String totalAmountBilling;
+  List<PriceDto> prices = [];
 
   PartnerServiceDto(
       {required this.serviceId,
@@ -95,6 +109,10 @@ class PartnerServiceDto {
     isLiveOnApp = json['is_live_on_app'] ?? false;
     quantityDoneServices = json['quantity_done_services'] ?? 0;
     totalAmountBilling = json['total_amount_billed'] ?? "R\$ 0,00";
+
+    for (var price in json["prices"]) {
+      prices.add(PriceDto.fromJson(price));
+    }
   }
 
   ServiceType _getType(String type) {

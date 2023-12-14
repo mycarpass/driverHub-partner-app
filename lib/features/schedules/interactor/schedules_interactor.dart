@@ -1,6 +1,7 @@
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/schedules_service.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_presenter.dart';
 
 class SchedulesInteractor {
   final SchedulesService _schedulesService;
@@ -53,6 +54,16 @@ class SchedulesInteractor {
     try {
       return await _schedulesService.suggestNewHoursSchedule(
           scheduleId, request);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> registerNewSchedule(ScheduleEntity scheduleEntity) async {
+    try {
+      return await _schedulesService.createNewSchedule(
+        scheduleEntity,
+      );
     } catch (e) {
       rethrow;
     }

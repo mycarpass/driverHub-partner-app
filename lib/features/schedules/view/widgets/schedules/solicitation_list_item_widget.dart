@@ -54,7 +54,7 @@ class SolicitationListItemWidget extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(solicitationDataDto.vehicle?.nickname ??
+                  Text(solicitationDataDto.vehicle?.name ??
                           "Veículo não cadastrado")
                       .body_regular(),
 

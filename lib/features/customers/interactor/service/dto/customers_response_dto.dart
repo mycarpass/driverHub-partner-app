@@ -1,5 +1,6 @@
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 
 class CustomersResponseDto {
   List<CustomerDto> customers = [];
@@ -26,7 +27,8 @@ class CustomerDto {
   late int? quantityDoneSales;
   late String? email;
   late String? plate;
-  late VehicleDto? vehicle;
+  VehicleDto? vehicle;
+  CarBodyType? manualBodyTypeSelected;
 
   CustomerDto(
       {required this.customerId,
@@ -40,6 +42,14 @@ class CustomerDto {
       this.quantityDoneSales,
       this.plate});
 
+  bool isVehicleNull() {
+    var a = customerId != 0 &&
+        (vehicle == null ||
+            (vehicle?.id == 0 && manualBodyTypeSelected == null));
+    print(a);
+    return a;
+  }
+
   CustomerDto.fromJson(Map<String, dynamic> json) {
     customerId = json['customerId'];
     status = _getStatus(json['status'] ?? "NOT_VERIFIED");
@@ -50,7 +60,15 @@ class CustomerDto {
     isSubscribed = json['isSubscribed'];
     spentValue = json['totalSpent'];
     quantityDoneSales = json['quantityDoneSales'] ?? 0;
-    //  vehicle = VehicleDto.fromJson(json["vehicle"]);
+    if (json["vehicle"] != null && json["vehicle"] is List) {
+      for (var vehicle in json["vehicle"]) {
+        vehicle = VehicleDto.fromJson(vehicle);
+      }
+    } else {
+      json["vehicle"] != null
+          ? vehicle = VehicleDto.fromJson(json["vehicle"])
+          : vehicle = null;
+    }
   }
 
   CustomerStatus _getStatus(String status) {

@@ -1,5 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 
 class ServiceEntity with CustomDropdownListFilter {
   int? id;
@@ -68,19 +70,19 @@ class ServiceEntity with CustomDropdownListFilter {
 }
 
 class ServiceRequestPrice {
-  int carBodyType;
-  String value;
+  CarBodyType carBodyType;
+  MoneyValue value;
+  int partnerId;
 
-  ServiceRequestPrice(
-    this.carBodyType,
-    this.value,
-  );
+  ServiceRequestPrice(this.carBodyType, this.value, this.partnerId);
 
   Map<String, dynamic> toJson() {
-    return {
-      "carBodyType": carBodyType,
-      "value": value.replaceAll("R\$", "").trim(),
+    var map = {
+      "carBodyType": carBodyType.toInt(),
+      "value": value.getStringValueWithoutSimbols(),
     };
+
+    return map;
   }
 }
 

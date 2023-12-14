@@ -2,6 +2,7 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_pull_to_refresh.dart';
+import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_bottom_sheet.dart';
@@ -58,30 +59,42 @@ class _SchedulesViewState extends State<SchedulesView>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BlocBuilder<SubscriptionPresenter, DHState>(
-                                builder: (context, state) => TabViewHeader(
-                                      onPressed: () {
-                                        // NO MERGE - ALTERAR DONOTHINGACTION POR CHAMADA DE TELA DE CADASTRAR AGENDAMENTO
-                                        false
-                                            // !context
-                                            //         .read<SubscriptionPresenter>()
-                                            //         .isSubscribed
-                                            ? context
-                                                .read<SubscriptionPresenter>()
-                                                .openPayWall(context)
-                                            : showModalBottomSheet(
-                                                context: context,
-                                                showDragHandle: true,
-                                                builder: (context) =>
-                                                    CreateScheduleBottomSheet(),
-                                              );
-                                      },
-                                      addButtonIsVisible: context
-                                          .read<SubscriptionPresenter>()
-                                          .isSubscribed,
-                                      title: "Agenda",
-                                      subtitle:
-                                          "${presenter.filteredList.length} agendamentos esse mês",
-                                    )),
+                              builder: (context, state) => TabViewHeader(
+                                onPressed: () async {
+                                  if (!context
+                                      .read<SubscriptionPresenter>()
+                                      .isSubscribed) {
+                                    context
+                                        .read<SubscriptionPresenter>()
+                                        .openPayWall(context);
+                                  } else {
+                                    bool? isScheduleCreated =
+                                        await showModalBottomSheet(
+                                      context: context,
+                                      showDragHandle: true,
+                                      isScrollControlled: true,
+                                      builder: (context) =>
+                                          CreateScheduleBottomSheet(),
+                                    );
+
+                                    if (isScheduleCreated != null &&
+                                        isScheduleCreated) {
+                                      presenter.load();
+                                      DHSnackBar().showSnackBar(
+                                          "Sucesso!",
+                                          "Seu novo agendamento foi criado",
+                                          DHSnackBarType.success);
+                                    }
+                                  }
+                                },
+                                addButtonIsVisible: context
+                                    .read<SubscriptionPresenter>()
+                                    .isSubscribed,
+                                title: "Agenda",
+                                subtitle:
+                                    "${presenter.filteredList.length} agendamentos esse mês",
+                              ),
+                            ),
                           ],
                         ),
                       ),

@@ -3,10 +3,11 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
+import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
+import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomerDropDownController {
@@ -16,7 +17,7 @@ class CustomerDropDownController {
 // ignore: must_be_immutable
 class CustomerDropDownWidget extends StatelessWidget {
   CustomerDropDownWidget(
-      {super.key, required this.onChanged, required this.controller}) {}
+      {super.key, required this.onChanged, required this.controller});
 
   Function(CustomerDto) onChanged;
   final CustomerDropDownController controller;
@@ -45,16 +46,23 @@ class CustomerDropDownWidget extends StatelessWidget {
                     color: AppColor.iconPrimaryColor),
                 expandedBorder: Border.all(color: AppColor.borderColor),
                 noResultFoundText:
-                    "Nenhum serviço encontrado, entre em contato para adicionarmos o serviço desejado.",
+                    "Nenhum cliente encontrado, adicione um no botão",
                 listItemBuilder: (context, item) =>
                     Text(item.name).body_regular(),
                 noResultFoundBuilder: (context, text) => Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Center(child: Text(text).body_regular())),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Text(text).body_regular(),
+                      ),
+                    ],
+                  ),
+                ),
                 headerBuilder: (context, selectedItem) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Serviço').caption1_emphasized(
+                      const Text('Cliente').caption1_emphasized(
                           style: const TextStyle(
                               color: AppColor.textSecondaryColor)),
                       const SizedBox(
