@@ -14,7 +14,7 @@ class RestSchedulesService implements SchedulesService {
   @override
   Future<SchedulesResponseDto> getSchedules() async {
     try {
-      Response response = await _httpClient.get("/schedules");
+      Response response = await _httpClient.get("/partner/schedules");
 
       return SchedulesResponseDto.fromJson(response.data);
     } catch (e) {

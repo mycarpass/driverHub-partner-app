@@ -298,9 +298,11 @@ packages:
   dh_ui_kit:
     dependency: "direct main"
     description:
-      path: "../dh_ui_kit_light"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "022458071eeecfbaf5cb8a484a1f47bde4e9bb22"
+      url: "https://github.com/mycarpass/dh_ui_kit_light"
+    source: git
     version: "0.0.1"
   dio:
     dependency: "direct main"

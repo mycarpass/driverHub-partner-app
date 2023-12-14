@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: '>=3.1.5 <4.0.0'
@@ -52,12 +52,11 @@ dependencies:
     git:
       url: https://github.com/mycarpass/dh_notification_package
       ref: main
-  # dh_ui_kit:
-    # git:
-    #   url: https://github.com/mycarpass/dh_ui_kit_light
-    #   ref: main
   dh_ui_kit:
-      path: ../dh_ui_kit_light
+    git:
+      url: https://github.com/mycarpass/dh_ui_kit_light
+      ref: main
+ 
   dh_navigation:
     git:
       url: https://github.com/mycarpass/dh_navigation

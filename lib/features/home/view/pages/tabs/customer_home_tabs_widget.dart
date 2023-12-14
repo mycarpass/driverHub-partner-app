@@ -26,7 +26,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     context.read<HomePresenter>().load();
 
     tabController = TabController(
-      length: 6,
+      length: 5,
       vsync: this,
     );
     super.initState();
