@@ -23,6 +23,7 @@ class CustomerDto {
   late String phone;
   late bool isSubscribed;
   late String? spentValue;
+  late int? quantityDoneSales;
   late String? email;
   late String? plate;
   late VehicleDto? vehicle;
@@ -36,6 +37,7 @@ class CustomerDto {
       this.email,
       this.spentValue,
       this.vehicle,
+      this.quantityDoneSales,
       this.plate});
 
   CustomerDto.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class CustomerDto {
     plate = json['car_licence_plate'];
     isSubscribed = json['isSubscribed'];
     spentValue = json['totalSpent'];
+    quantityDoneSales = json['quantityDoneSales'] ?? 0;
     //  vehicle = VehicleDto.fromJson(json["vehicle"]);
   }
 

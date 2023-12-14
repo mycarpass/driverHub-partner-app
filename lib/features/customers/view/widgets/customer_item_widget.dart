@@ -61,7 +61,10 @@ class CustomerItemWidget extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    Text(customerDto.phone).body_regular(),
+                    Text(customerDto.quantityDoneSales == 1
+                            ? '${customerDto.quantityDoneSales} venda realizada'
+                            : '${customerDto.quantityDoneSales} vendas realizadas')
+                        .body_regular(),
                     const SizedBox(
                       height: 4,
                     ),
