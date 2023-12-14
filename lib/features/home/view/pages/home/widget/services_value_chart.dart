@@ -1,25 +1,18 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
-import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/charts_info_dto.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/emptystate/empty_state_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ServicesValueChart extends StatelessWidget {
-  ServicesValueChart({
+  const ServicesValueChart({
     super.key,
-    required this.presenter,
+    required this.data,
   });
 
-  final HomePresenter presenter;
-
-  final List<ChartData> data = [
-    ChartData(xval: 'Polimento', yval: 2500),
-    ChartData(xval: 'Vitrificação', yval: 3500),
-    ChartData(xval: 'Lavada simplessasdasdasda', yval: 1500),
-    ChartData(xval: 'Michael', yval: 200),
-    ChartData(xval: 'Janet', yval: 120),
-  ];
+  final List<ChartData> data;
 
   @override
   Widget build(BuildContext context) {
@@ -58,56 +51,62 @@ class ServicesValueChart extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              SfCircularChart(
-                series: <CircularSeries>[
-                  // Render pie chart
-                  PieSeries<ChartData, String>(
-                      dataSource: data,
-                      enableTooltip: true,
-                      legendIconType: LegendIconType.diamond,
-                      dataLabelMapper: (datum, index) {
-                        return NumberFormat.simpleCurrency(locale: "pt_BR")
-                            .format(datum.yval)
-                            .toString();
-                      },
-                      dataLabelSettings: const DataLabelSettings(
+              data.isEmpty
+                  ? const EmptyStateList(
+                      icon: Icons.bar_chart_rounded,
+                      text:
+                          "Nenhum dado encontrado ainda para mostrar o gráfico")
+                  : SfCircularChart(
+                      series: <CircularSeries>[
+                        // Render pie chart
+                        PieSeries<ChartData, String>(
+                            dataSource: data,
+                            enableTooltip: true,
+                            legendIconType: LegendIconType.diamond,
+                            dataLabelMapper: (datum, index) {
+                              return NumberFormat.simpleCurrency(
+                                      locale: "pt_BR")
+                                  .format(datum.yval)
+                                  .toString();
+                            },
+                            dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                                color: AppColor.backgroundSecondary,
+                                borderRadius: 4,
+                                showZeroValue: false,
+                                margin: EdgeInsets.all(2),
+                                labelPosition: ChartDataLabelPosition.inside,
+                                // builder: (data, point, series, pointIndex,
+                                //     seriesIndex) {
+                                //   return Container(
+                                //       padding: const EdgeInsets.all(4),
+                                //       decoration: const BoxDecoration(
+                                //           color: AppColor.blackColor,
+                                //           borderRadius: BorderRadius.all(
+                                //               Radius.circular(8))),
+                                //       child:
+                                //           Text('R\$ ${data.yval.toString()}')
+                                //               .caption1_bold(
+                                //                   style: TextStyle(
+                                //                       color: AppColor
+                                //                           .whiteColor)));
+                                // },
+                                textStyle: TextStyle(
+                                    color: AppColor.whiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'CircularStd',
+                                    fontSize: 12)),
+                            xValueMapper: (ChartData data, _) => data.xval,
+                            yValueMapper: (ChartData data, _) => data.yval),
+                      ],
+                      legend: const Legend(
                           isVisible: true,
-                          color: AppColor.backgroundSecondary,
-                          borderRadius: 4,
-                          showZeroValue: false,
-                          margin: EdgeInsets.all(2),
-                          labelPosition: ChartDataLabelPosition.inside,
-                          // builder: (data, point, series, pointIndex,
-                          //     seriesIndex) {
-                          //   return Container(
-                          //       padding: const EdgeInsets.all(4),
-                          //       decoration: const BoxDecoration(
-                          //           color: AppColor.blackColor,
-                          //           borderRadius: BorderRadius.all(
-                          //               Radius.circular(8))),
-                          //       child:
-                          //           Text('R\$ ${data.yval.toString()}')
-                          //               .caption1_bold(
-                          //                   style: TextStyle(
-                          //                       color: AppColor
-                          //                           .whiteColor)));
-                          // },
-                          textStyle: TextStyle(
-                              color: AppColor.whiteColor,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'CircularStd',
-                              fontSize: 12)),
-                      xValueMapper: (ChartData data, _) => data.xval,
-                      yValueMapper: (ChartData data, _) => data.yval),
-                ],
-                legend: const Legend(
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                    overflowMode: LegendItemOverflowMode.wrap,
-                    toggleSeriesVisibility: true,
-                    shouldAlwaysShowScrollbar: true,
-                    isResponsive: true),
-              ),
+                          position: LegendPosition.bottom,
+                          overflowMode: LegendItemOverflowMode.wrap,
+                          toggleSeriesVisibility: true,
+                          shouldAlwaysShowScrollbar: true,
+                          isResponsive: true),
+                    ),
 
               // SfCartesianChart(
               //     primaryXAxis: CategoryAxis(),
@@ -147,10 +146,4 @@ class ServicesValueChart extends StatelessWidget {
               // )
             ])));
   }
-}
-
-class ChartData {
-  ChartData({required this.xval, required this.yval});
-  final String xval;
-  final double yval;
 }

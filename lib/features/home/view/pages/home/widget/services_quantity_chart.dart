@@ -1,26 +1,17 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
-import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/charts_info_dto.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/emptystate/empty_state_list.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ServicesQuantityChart extends StatelessWidget {
-  ServicesQuantityChart({
+  const ServicesQuantityChart({
     super.key,
-    required this.presenter,
+    required this.data,
   });
 
-  final HomePresenter presenter;
-
-  final List<ChartData> data = [
-    ChartData(xval: 'Polimento', yval: 10),
-    ChartData(xval: 'Vitrificação', yval: 20),
-    ChartData(xval: 'Lavada simplessasdasdasda', yval: 24),
-    ChartData(xval: 'Michael', yval: 20),
-    ChartData(xval: 'Janet', yval: 23),
-    ChartData(xval: 'Janet', yval: 23),
-    ChartData(xval: 'Janet', yval: 23),
-  ];
+  final List<ChartData> data;
 
   @override
   Widget build(BuildContext context) {
@@ -59,35 +50,40 @@ class ServicesQuantityChart extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              SfCircularChart(
-                series: <CircularSeries>[
-                  // Render pie chart
-                  DoughnutSeries<ChartData, String>(
-                      dataSource: data,
-                      legendIconType: LegendIconType.diamond,
-                      dataLabelSettings: const DataLabelSettings(
-                          isVisible: true,
-                          color: AppColor.backgroundSecondary,
-                          borderRadius: 6,
-                          // margin: EdgeInsets.all(24),
-                          labelPosition: ChartDataLabelPosition.outside,
-                          textStyle: TextStyle(
-                              color: AppColor.whiteColor,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'CircularStd',
-                              fontSize: 14)),
-                      xValueMapper: (ChartData data, _) => data.xval,
-                      yValueMapper: (ChartData data, _) => data.yval)
-                ],
-                legend: const Legend(
-                  isVisible: true,
-                  position: LegendPosition.bottom,
-                  overflowMode: LegendItemOverflowMode.wrap,
-                  toggleSeriesVisibility: true,
-                  shouldAlwaysShowScrollbar: true,
-                  isResponsive: true,
-                ),
-              ),
+              data.isEmpty
+                  ? const EmptyStateList(
+                      icon: Icons.bar_chart_rounded,
+                      text:
+                          "Nenhum dado encontrado ainda para mostrar o gráfico")
+                  : SfCircularChart(
+                      series: <CircularSeries>[
+                        // Render pie chart
+                        DoughnutSeries<ChartData, String>(
+                            dataSource: data,
+                            legendIconType: LegendIconType.diamond,
+                            dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                                color: AppColor.backgroundSecondary,
+                                borderRadius: 6,
+                                // margin: EdgeInsets.all(24),
+                                labelPosition: ChartDataLabelPosition.outside,
+                                textStyle: TextStyle(
+                                    color: AppColor.whiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'CircularStd',
+                                    fontSize: 14)),
+                            xValueMapper: (ChartData data, _) => data.xval,
+                            yValueMapper: (ChartData data, _) => data.yval)
+                      ],
+                      legend: const Legend(
+                        isVisible: true,
+                        position: LegendPosition.bottom,
+                        overflowMode: LegendItemOverflowMode.wrap,
+                        toggleSeriesVisibility: true,
+                        shouldAlwaysShowScrollbar: true,
+                        isResponsive: true,
+                      ),
+                    ),
 
               // SfCartesianChart(
               //     primaryXAxis: CategoryAxis(),
@@ -127,10 +123,4 @@ class ServicesQuantityChart extends StatelessWidget {
               // )
             ])));
   }
-}
-
-class ChartData {
-  ChartData({required this.xval, required this.yval});
-  final String xval;
-  final int yval;
 }

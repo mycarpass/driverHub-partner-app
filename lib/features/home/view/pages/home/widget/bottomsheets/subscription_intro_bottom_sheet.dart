@@ -253,12 +253,61 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                         const SizedBox(
                           height: 16,
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TextButton(
+                                style: const ButtonStyle(
+                                    tapTargetSize: MaterialTapTargetSize
+                                        .shrinkWrap,
+                                    padding: MaterialStatePropertyAll(
+                                        EdgeInsets.zero)),
+                                onPressed: () {
+                                  Uri uri = Uri(
+                                    host: "driverhub.com.br",
+                                    scheme: "https",
+                                    path: "terms-of-service",
+                                  );
+                                  presenter.openUrl(uri);
+                                },
+                                child: const Text('Termos de uso')
+                                    .caption1_regular(
+                                        style: const TextStyle(
+                                            color:
+                                                AppColor.textSecondaryColor))),
+                            TextButton(
+                                style: const ButtonStyle(
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    padding: MaterialStatePropertyAll(
+                                        EdgeInsets.zero)),
+                                onPressed: () {
+                                  Uri uri = Uri(
+                                    host: "driverhub.com.br",
+                                    scheme: "https",
+                                    path: "privacy-policy",
+                                  );
+                                  presenter.openUrl(uri);
+                                },
+                                child: const Text('Políticas de privacidade')
+                                    .caption1_regular(
+                                        style: const TextStyle(
+                                            color:
+                                                AppColor.textSecondaryColor))),
+                          ],
+                        ),
                         TextButton(
+                            style: const ButtonStyle(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                padding:
+                                    MaterialStatePropertyAll(EdgeInsets.zero)),
                             onPressed: () {
                               presenter.restorePurchase();
                             },
-                            child:
-                                const Text('Restaurar compra').body_regular()),
+                            child: const Text('Restaurar compra')
+                                .caption1_regular(
+                                    style: const TextStyle(
+                                        color: AppColor.textSecondaryColor))),
                         const SizedBox(
                           height: 24,
                         ),

@@ -1,4 +1,6 @@
+import 'dart:collection';
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
+import 'package:intl/intl.dart';
 
 class ChartsResponseDto {
   late MoneyValue todayTotalSales;
@@ -23,11 +25,45 @@ class ChartsResponseDto {
     }
     weeklyBilling = [];
     if (json['weekly_billing'] != null) {
-      //Map<String, String> map = json['weekly_billing'];
-      // map.forEach((key, value) {
-      //   weeklyBilling.add(DayOfBilling(key, value));
-      // });
+      Map<dynamic, dynamic> map = HashMap.from(json['weekly_billing']);
+      print(map);
+      map.forEach((key, value) {
+        weeklyBilling.add(DayOfBilling(key, value));
+      });
     }
+  }
+
+  List<ChartData> fetchWeeklyEarnData() {
+    List<ChartData> data = [];
+    for (var weeklyBill in weeklyBilling) {
+      DateTime date = DateFormat("dd/MM/yyy").parse(weeklyBill.date);
+      MoneyValue value = MoneyValue(weeklyBill.value);
+      ChartData chartData = ChartData(xval: value.price, yval: date);
+      data.add(chartData);
+    }
+    return data;
+  }
+
+  List<ChartData> fetchServicesValueData() {
+    List<ChartData> data = [];
+    for (var soldServices in topSoldServices) {
+      String service = soldServices.name;
+      MoneyValue value = MoneyValue(soldServices.totalSold);
+      ChartData chartData = ChartData(yval: value.price, xval: service);
+      data.add(chartData);
+    }
+    return data;
+  }
+
+  List<ChartData> fetchServicesQuantityData() {
+    List<ChartData> data = [];
+    for (var soldServices in topSoldServices) {
+      String service = soldServices.name;
+      int quantity = soldServices.quantitySold;
+      ChartData chartData = ChartData(yval: quantity, xval: service);
+      data.add(chartData);
+    }
+    return data;
   }
 
   String removeBrl(String value) {
@@ -61,4 +97,11 @@ class DayOfBilling {
   late String value;
 
   DayOfBilling(this.date, this.value);
+}
+
+class ChartData {
+  ChartData({required this.xval, required this.yval});
+  final dynamic xval;
+  final dynamic yval;
+  // final String rawValue;
 }

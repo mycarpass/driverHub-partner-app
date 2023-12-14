@@ -7,11 +7,13 @@ class EmptyStateList extends StatelessWidget {
   const EmptyStateList({
     required this.text,
     this.padding,
+    this.icon,
     super.key,
   });
 
   final String text;
   final EdgeInsets? padding;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,8 @@ class EmptyStateList extends StatelessWidget {
             padding ?? const EdgeInsets.symmetric(vertical: 80, horizontal: 24),
         child: Column(
           children: [
-            const Icon(
-              CustomIcons.dhCanceled,
+            Icon(
+              icon ?? CustomIcons.dhCanceled,
               size: 48,
             ),
             const SizedBox(

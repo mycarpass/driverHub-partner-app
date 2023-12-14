@@ -9,6 +9,7 @@ import 'package:driver_hub_partner/features/home/view/pages/home/widget/bottomsh
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionPresenter extends Cubit<DHState> {
   SubscriptionPresenter() : super(DHInitialState());
@@ -93,6 +94,20 @@ class SubscriptionPresenter extends Cubit<DHState> {
     }
 
     emit(SubscribedIsUpdated(isSubscribed: isSubscribed));
+  }
+
+  void openUrl(Uri uri) async {
+    //Uri uri = Uri.parse(url);
+    await canLaunchUrl(uri) ? _launchInBrowser(uri) : null;
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
   }
 }
 

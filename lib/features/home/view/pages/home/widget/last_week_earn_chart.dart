@@ -1,17 +1,15 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
-import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/charts_info_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LastWeekEarnChart extends StatelessWidget {
-  LastWeekEarnChart({
+  const LastWeekEarnChart({
     super.key,
-    required this.presenter,
+    required this.data,
   });
-
-  final HomePresenter presenter;
 
   // final List<ChartData> data = [
   //   ChartData(xval: 'Polimento', yval: 10),
@@ -23,8 +21,9 @@ class LastWeekEarnChart extends StatelessWidget {
   //   ChartData(xval: 'Janet', yval: 23),
   // ];
 
-  final List<ChartData> data = [
-    ChartData(
+  final List<ChartData> data;
+
+/* ChartData(
         xval: 600, yval: DateTime.now().subtract(const Duration(days: 6))),
     ChartData(
         xval: 500, yval: DateTime.now().subtract(const Duration(days: 5))),
@@ -35,9 +34,7 @@ class LastWeekEarnChart extends StatelessWidget {
         xval: 900, yval: DateTime.now().subtract(const Duration(days: 2))),
     ChartData(
         xval: 1200, yval: DateTime.now().subtract(const Duration(days: 1))),
-    ChartData(xval: 600, yval: DateTime.now()),
-  ];
-
+    ChartData(xval: 600, yval: DateTime.now()),*/
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -90,6 +87,7 @@ class LastWeekEarnChart extends StatelessWidget {
                       minorGridLines: const MinorGridLines(width: 0),
                       majorGridLines: const MajorGridLines(width: 0),
                       interval: 1,
+                      intervalType: DateTimeIntervalType.days,
                       dateFormat: DateFormat('d, EEE', 'pt_BR'),
                       opposedPosition: false,
                       labelStyle: const TextStyle(fontFamily: 'CircularStd'),
@@ -104,7 +102,7 @@ class LastWeekEarnChart extends StatelessWidget {
                                 .format(datum.xval)
                                 .toString(),
                         dataLabelSettings: const DataLabelSettings(
-                            showZeroValue: false,
+                            showZeroValue: true,
                             isVisible: true,
                             textStyle: TextStyle(
                                 fontFamily: 'CircularStd', fontSize: 11)),
@@ -157,11 +155,4 @@ class LastWeekEarnChart extends StatelessWidget {
               // )
             ])));
   }
-}
-
-class ChartData {
-  ChartData({required this.xval, required this.yval});
-  final double xval;
-  final DateTime yval;
-  // final String rawValue;
 }

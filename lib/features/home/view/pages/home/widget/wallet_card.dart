@@ -104,7 +104,7 @@ class WalletCardWidget extends StatelessWidget {
                       )
                     : Text(presenter.chartsResponseDto.currentMonthTotalSales
                             .priceInReal)
-                        .title2_bold(
+                        .title1_bold(
                         style: const TextStyle(color: AppColor.accentColor),
                       ),
               ],

@@ -111,14 +111,17 @@ class _HomeViewState extends State<HomeView>
                         //       ),
                         DailyNumbersCard(presenter: presenter),
                         LastWeekEarnChart(
-                          presenter: presenter,
+                          data:
+                              presenter.chartsResponseDto.fetchWeeklyEarnData(),
                         ),
                         ServicesValueChart(
-                          presenter: presenter,
+                          data: presenter.chartsResponseDto
+                              .fetchServicesValueData(),
                         ),
 
                         ServicesQuantityChart(
-                          presenter: presenter,
+                          data: presenter.chartsResponseDto
+                              .fetchServicesQuantityData(),
                         ),
                         const SizedBox(
                           height: 24,
