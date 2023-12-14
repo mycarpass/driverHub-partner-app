@@ -52,12 +52,12 @@ dependencies:
     git:
       url: https://github.com/mycarpass/dh_notification_package
       ref: main
-  dh_ui_kit:
-    git:
-      url: https://github.com/mycarpass/dh_ui_kit_light
-      ref: main
   # dh_ui_kit:
-  #     path: ../dh_ui_kit_light
+    # git:
+    #   url: https://github.com/mycarpass/dh_ui_kit_light
+    #   ref: main
+  dh_ui_kit:
+      path: ../dh_ui_kit_light
   dh_navigation:
     git:
       url: https://github.com/mycarpass/dh_navigation

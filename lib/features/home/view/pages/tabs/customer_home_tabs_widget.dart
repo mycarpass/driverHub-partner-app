@@ -147,7 +147,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
         children: const [
           HomeView(),
           SchedulesView(),
-          SalesView(),
+          // SalesView(),
           CustomersView(),
           ServicesView(),
           HomeProfileView(),
