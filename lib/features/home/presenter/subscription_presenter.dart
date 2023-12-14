@@ -26,15 +26,19 @@ class SubscriptionPresenter extends Cubit<DHState> {
   }
 
   Future _loadProducts() async {
-    storeProducts = await Purchases.getProducts(
-        Platform.isAndroid
-            ? [
-                'android_monthly_partners:android-monthly-partners-plan',
-                'android_monthly_partners:android-yearly-partners-plan'
-              ]
-            : ['ios_monthly_partners', 'ios_yearly_partners'],
-        productCategory: ProductCategory.subscription);
-    storeProducts.sort((a, b) => a.price.compareTo(b.price));
+    try {
+      storeProducts = await Purchases.getProducts(
+          Platform.isAndroid
+              ? [
+                  'android_monthly_partners:android-monthly-partners-plan',
+                  'android_monthly_partners:android-yearly-partners-plan'
+                ]
+              : ['ios_monthly_partners', 'ios_yearly_partners'],
+          productCategory: ProductCategory.subscription);
+      storeProducts.sort((a, b) => a.price.compareTo(b.price));
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<bool?> openPayWall(BuildContext context) async {

@@ -42,19 +42,19 @@ class DailyNumbersCard extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Text("2").title1_bold(),
+                          Text("0").title1_bold(),
                           const Text("agenda hoje").body_regular(),
                         ],
                       ),
                       Column(
                         children: [
-                          Text("3").title1_bold(),
+                          Text("0").title1_bold(),
                           const Text("vendas hoje").body_regular(),
                         ],
                       ),
                       Column(
                         children: [
-                          Text("4").title1_bold(),
+                          Text("0").title1_bold(),
                           const Text("pós-vendas").body_regular(),
                         ],
                       ),

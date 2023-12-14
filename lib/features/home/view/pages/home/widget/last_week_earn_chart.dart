@@ -43,124 +43,119 @@ class LastWeekEarnChart extends StatelessWidget {
     return Card(
         color: AppColor.backgroundTransparent,
         elevation: 0,
-        child: SizedBox(
-            height: 396,
-            child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
+        child: Padding(
+            padding: const EdgeInsets.all(24),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.calendar_today_outlined,
+                    color: AppColor.iconSecondaryColor,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.calendar_today_outlined,
-                            color: AppColor.iconSecondaryColor,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Faturamento da semana').body_bold(),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              const Text('Últimos 7 dias').caption1_regular(
-                                  style: const TextStyle(
-                                      color: AppColor.textTertiaryColor))
-                            ],
-                          ),
-                        ],
-                      ),
-
+                      const Text('Faturamento da semana').body_bold(),
                       const SizedBox(
-                        height: 8,
+                        height: 2,
                       ),
+                      const Text('Últimos 7 dias').caption1_regular(
+                          style: const TextStyle(
+                              color: AppColor.textTertiaryColor))
+                    ],
+                  ),
+                ],
+              ),
 
-                      SfCartesianChart(
-                          isTransposed: true,
-                          primaryYAxis: NumericAxis(
-                              minorGridLines: const MinorGridLines(width: 0),
-                              majorGridLines: const MajorGridLines(width: 0),
-                              maximumLabelWidth: 58,
-                              opposedPosition: true,
-                              numberFormat: NumberFormat.simpleCurrency(
-                                  locale: "pt_BR", decimalDigits: 0),
-                              isVisible: false),
-                          primaryXAxis: DateTimeAxis(
-                              minorGridLines: const MinorGridLines(width: 0),
-                              majorGridLines: const MajorGridLines(width: 0),
-                              interval: 1,
-                              dateFormat: DateFormat('d, EEE', 'pt_BR'),
-                              opposedPosition: false,
-                              labelStyle:
-                                  const TextStyle(fontFamily: 'CircularStd'),
-                              borderWidth: 0,
-                              isVisible: true),
-                          series: <ChartSeries>[
-                            ColumnSeries<ChartData, DateTime>(
-                                dataSource: data,
-                                color: AppColor.accentColor,
-                                dataLabelMapper: (datum, index) =>
-                                    NumberFormat.simpleCurrency(locale: "pt_BR")
-                                        .format(datum.xval)
-                                        .toString(),
-                                dataLabelSettings: const DataLabelSettings(
-                                    showZeroValue: false,
-                                    isVisible: true,
-                                    textStyle: TextStyle(
-                                        fontFamily: 'CircularStd',
-                                        fontSize: 11)),
-                                trackBorderColor: AppColor.accentColor,
-                                borderColor: AppColor.blackColor,
-                                borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(6),
-                                    topRight: Radius.circular(6)),
-                                borderWidth: 0.2,
-                                enableTooltip: true,
-                                xValueMapper: (ChartData data, _) => data.yval,
-                                yValueMapper: (ChartData data, _) => data.xval)
-                          ])
+              const SizedBox(
+                height: 8,
+              ),
 
-                      // SfCartesianChart(
-                      //     primaryXAxis: CategoryAxis(),
-                      //     // Chart title
-                      //     title: ChartTitle(text: 'Half yearly sales analysis'),
-                      //     // Enable legend
-                      //     legend: Legend(isVisible: true),
-                      //     // Enable tooltip
-                      //     tooltipBehavior: TooltipBehavior(enable: true),
-                      //     series: <ChartSeries<_SalesData, String>>[
-                      //       LineSeries<_SalesData, String>(
-                      //           dataSource: data,
-                      //           xValueMapper: (_SalesData sales, _) => sales.year,
-                      //           yValueMapper: (_SalesData sales, _) => sales.sales,
-                      //           name: 'Sales',
-                      //           // Enable data label
-                      //           dataLabelSettings: DataLabelSettings(isVisible: true))
-                      //     ]),
-                      // Expanded(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(8.0),
-                      //     //Initialize the spark charts widget
-                      //     child: SfSparkLineChart.custom(
-                      //       //Enable the trackball
-                      //       trackball: SparkChartTrackball(
-                      //           activationMode: SparkChartActivationMode.tap),
-                      //       //Enable marker
-                      //       marker: SparkChartMarker(
-                      //           displayMode: SparkChartMarkerDisplayMode.all),
-                      //       //Enable data label
-                      //       labelDisplayMode: SparkChartLabelDisplayMode.all,
-                      //       xValueMapper: (int index) => data[index].year,
-                      //       yValueMapper: (int index) => data[index].sales,
-                      //       dataCount: 5,
-                      //     ),
-                      //   ),
-                      // )
-                    ]))));
+              SfCartesianChart(
+                  isTransposed: true,
+                  primaryYAxis: NumericAxis(
+                      minorGridLines: const MinorGridLines(width: 0),
+                      majorGridLines: const MajorGridLines(width: 0),
+                      maximumLabelWidth: 58,
+                      opposedPosition: true,
+                      numberFormat: NumberFormat.simpleCurrency(
+                          locale: "pt_BR", decimalDigits: 0),
+                      isVisible: false),
+                  primaryXAxis: DateTimeAxis(
+                      minorGridLines: const MinorGridLines(width: 0),
+                      majorGridLines: const MajorGridLines(width: 0),
+                      interval: 1,
+                      dateFormat: DateFormat('d, EEE', 'pt_BR'),
+                      opposedPosition: false,
+                      labelStyle: const TextStyle(fontFamily: 'CircularStd'),
+                      borderWidth: 0,
+                      isVisible: true),
+                  series: <ChartSeries>[
+                    ColumnSeries<ChartData, DateTime>(
+                        dataSource: data,
+                        color: AppColor.accentColor,
+                        dataLabelMapper: (datum, index) =>
+                            NumberFormat.simpleCurrency(locale: "pt_BR")
+                                .format(datum.xval)
+                                .toString(),
+                        dataLabelSettings: const DataLabelSettings(
+                            showZeroValue: false,
+                            isVisible: true,
+                            textStyle: TextStyle(
+                                fontFamily: 'CircularStd', fontSize: 11)),
+                        trackBorderColor: AppColor.accentColor,
+                        borderColor: AppColor.blackColor,
+                        borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(6),
+                            topRight: Radius.circular(6)),
+                        borderWidth: 0.2,
+                        enableTooltip: true,
+                        xValueMapper: (ChartData data, _) => data.yval,
+                        yValueMapper: (ChartData data, _) => data.xval)
+                  ])
+
+              // SfCartesianChart(
+              //     primaryXAxis: CategoryAxis(),
+              //     // Chart title
+              //     title: ChartTitle(text: 'Half yearly sales analysis'),
+              //     // Enable legend
+              //     legend: Legend(isVisible: true),
+              //     // Enable tooltip
+              //     tooltipBehavior: TooltipBehavior(enable: true),
+              //     series: <ChartSeries<_SalesData, String>>[
+              //       LineSeries<_SalesData, String>(
+              //           dataSource: data,
+              //           xValueMapper: (_SalesData sales, _) => sales.year,
+              //           yValueMapper: (_SalesData sales, _) => sales.sales,
+              //           name: 'Sales',
+              //           // Enable data label
+              //           dataLabelSettings: DataLabelSettings(isVisible: true))
+              //     ]),
+              // Expanded(
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     //Initialize the spark charts widget
+              //     child: SfSparkLineChart.custom(
+              //       //Enable the trackball
+              //       trackball: SparkChartTrackball(
+              //           activationMode: SparkChartActivationMode.tap),
+              //       //Enable marker
+              //       marker: SparkChartMarker(
+              //           displayMode: SparkChartMarkerDisplayMode.all),
+              //       //Enable data label
+              //       labelDisplayMode: SparkChartLabelDisplayMode.all,
+              //       xValueMapper: (int index) => data[index].year,
+              //       yValueMapper: (int index) => data[index].sales,
+              //       dataCount: 5,
+              //     ),
+              //   ),
+              // )
+            ])));
   }
 }
 

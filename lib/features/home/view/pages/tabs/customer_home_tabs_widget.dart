@@ -69,10 +69,10 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
                   icon: Icons.calendar_month_outlined,
                   title: "Agenda",
                 ),
-                TabBarWidget(
-                  icon: Icons.monetization_on_outlined,
-                  title: "Vendas",
-                ),
+                // TabBarWidget(
+                //   icon: Icons.monetization_on_outlined,
+                //   title: "Vendas",
+                // ),
                 TabBarWidget(
                   icon: Icons.group_outlined,
                   title: "Clientes",

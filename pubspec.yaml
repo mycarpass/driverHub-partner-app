@@ -102,11 +102,6 @@ dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
 
 
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "lib/assets/images/logo.png"
-  min_sdk_android: 21 # androi
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
