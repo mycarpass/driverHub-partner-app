@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>DriverHub&#x2007;Parceiros</string>
+	<string>DriverHub Parceiros</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,6 +45,10 @@
 	<string>Precisamos de acesso ao microfone, pois é necessário ao abrir a câmera e registrar as fotos do estabelecimento.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Precisamos de acesso a biblioteca de fotos para você carregar as imagens do seu estabelecimento.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Precisamos de acesso ao bluetooth para oferecer uma experiência de pagamento com o cliente no estabelecimento</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Precisamos de acesso ao bluetooth, estando sempre ativo para oferecer uma jornada de pagamento com o cliente no estabelecimento</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

@@ -5,6 +5,7 @@ import 'package:dh_navigation/navigation_service.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/config/enviroment_variables.dart';
 import 'package:driver_hub_partner/features/home/interactor/home_interactor.dart';
+import 'package:driver_hub_partner/features/home/interactor/service/dto/charts_info_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/financial_info_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
@@ -29,6 +30,7 @@ class HomePresenter extends Cubit<DHState> {
 
   HomeResponseDto homeResponseDto = HomeResponseDto();
   late FinancialInfoDto financialInfoDto;
+  late ChartsResponseDto chartsResponseDto;
   String? deepLink;
   bool isVisible = true;
 
@@ -64,7 +66,9 @@ class HomePresenter extends Cubit<DHState> {
     try {
       emit(DHLoadingState());
       homeResponseDto = await _homeInteractor.getHomeInfo();
+      chartsResponseDto = await _homeInteractor.getCharts();
       emit(HomeLoaded(homeResponseDto));
+
       await _configureRevenueCat();
       _configurePush();
       _dhCacheManager.setInt(

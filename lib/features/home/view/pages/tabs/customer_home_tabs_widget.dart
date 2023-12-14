@@ -5,7 +5,6 @@ import 'package:driver_hub_partner/features/customers/view/pages/home/customers_
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart';
 import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
-import 'package:driver_hub_partner/features/sales/view/pages/home/sales_view.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/schedules_view.dart';
 import 'package:driver_hub_partner/features/services/view/pages/home/services_view.dart';
 import 'package:flutter/material.dart';

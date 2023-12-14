@@ -134,12 +134,12 @@ PODS:
   - PromisesObjC (2.3.1)
   - PromisesSwift (2.3.1):
     - PromisesObjC (= 2.3.1)
-  - purchases_flutter (6.5.0):
+  - purchases_flutter (6.5.1):
     - Flutter
-    - PurchasesHybridCommon (= 8.1.0)
-  - PurchasesHybridCommon (8.1.0):
-    - RevenueCat (= 4.31.1)
-  - RevenueCat (4.31.1)
+    - PurchasesHybridCommon (= 8.1.1)
+  - PurchasesHybridCommon (8.1.1):
+    - RevenueCat (= 4.31.2)
+  - RevenueCat (4.31.2)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -248,9 +248,9 @@ SPEC CHECKSUMS:
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  purchases_flutter: 437e9c2ba0619a8c502a4036d3e0ea78c870d429
-  PurchasesHybridCommon: 8920b878fd7b5e2b358b24c6c37592259655657a
-  RevenueCat: 3d9d19d3564c101f7f25a0a4fc10da1a9b04ddbe
+  purchases_flutter: 87bed34c0cf821834812f9e02b245f6b325c8e58
+  PurchasesHybridCommon: 2439f6e671fb4d60878a652e4377fa7e588368e6
+  RevenueCat: 63f6f4ae6916095561b90b2e1de86a492af67493
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   StripeTerminal: cc78f3deca49d72ffa1285609ca2a125535ac7d1
@@ -259,4 +259,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9c46fd01abff66081b39f5fa5767b3f1d0b11d76
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.12.1

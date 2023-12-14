@@ -71,8 +71,8 @@ class WalletCardWidget extends StatelessWidget {
                         height: 32,
                         width: 140,
                       )
-                    : Text(presenter.financialInfoDto.data.accountInfo
-                            .receivableBalance.priceInReal)
+                    : Text(presenter
+                            .chartsResponseDto.todayTotalSales.priceInReal)
                         .title1_bold(),
               ],
             ),
@@ -102,8 +102,8 @@ class WalletCardWidget extends StatelessWidget {
                         height: 24,
                         width: 120,
                       )
-                    : Text(presenter.financialInfoDto.data.accountInfo
-                            .volumeThisMonth.priceInReal)
+                    : Text(presenter.chartsResponseDto.currentMonthTotalSales
+                            .priceInReal)
                         .title2_bold(
                         style: const TextStyle(color: AppColor.accentColor),
                       ),

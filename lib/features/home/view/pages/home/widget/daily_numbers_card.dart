@@ -42,13 +42,15 @@ class DailyNumbersCard extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Text("0").title1_bold(),
+                          Text("${presenter.chartsResponseDto.todayQuantitySchedules}")
+                              .title1_bold(),
                           const Text("agenda hoje").body_regular(),
                         ],
                       ),
                       Column(
                         children: [
-                          Text("0").title1_bold(),
+                          Text("${presenter.chartsResponseDto.todayQuantitySales}")
+                              .title1_bold(),
                           const Text("vendas hoje").body_regular(),
                         ],
                       ),
