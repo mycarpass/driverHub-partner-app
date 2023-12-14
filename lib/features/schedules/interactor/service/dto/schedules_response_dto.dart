@@ -46,15 +46,13 @@ class SchedulesData {
   }
 
   List<ScheduleDataDto> filterByDate(DateTime date) {
-    var _list = schedules
+    return schedules
         .where(
           (element) =>
               element.scheduleDateTime.month == date.month &&
               element.scheduleDateTime.year == date.year,
         )
         .toList();
-
-    return _list;
   }
 
   SchedulesData();

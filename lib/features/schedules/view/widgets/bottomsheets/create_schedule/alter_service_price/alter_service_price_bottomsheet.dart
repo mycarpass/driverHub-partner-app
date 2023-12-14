@@ -1,6 +1,5 @@
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
-import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 

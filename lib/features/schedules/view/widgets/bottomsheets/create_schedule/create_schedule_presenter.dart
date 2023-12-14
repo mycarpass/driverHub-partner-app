@@ -225,16 +225,16 @@ class ScheduleEntity {
   void recalculatePrices() {
     value = MoneyValue(0.00);
     if (customerDto.vehicle != null) {
-      for (var _service in services) {
+      for (ServiceDto serviceElement in services) {
         try {
-          value.sum(_service.prices
+          value.sum(serviceElement.prices
               .where((element) =>
                   element.carBodyType == customerDto.vehicle!.bodyType)
               .first
               .price
               .price);
         } catch (e) {
-          value.sum(_service.prices
+          value.sum(serviceElement.prices
               .where((element) => element.carBodyType == CarBodyType.hatchback)
               .first
               .price

@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ServicesDropDownPresenter extends Cubit<DHState> {
   ServicesDropDownPresenter(
     this.loadOnlyPartnerRegisteredServices,
-  ) : super(DHInitialState()) {}
+  ) : super(DHInitialState());
   final bool loadOnlyPartnerRegisteredServices;
 
   final ServicesInteractor _servicesInteractor =

@@ -17,7 +17,7 @@ class ServiceItemWidget extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
-      onPressed: () => null,
+      onPressed: () {},
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         child: Row(

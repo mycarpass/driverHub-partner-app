@@ -91,7 +91,6 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                 // initialItem: presenter.banksList.values.toList()[0],
                 onChanged: (value) {
                   presenter.selectBank(value);
-                  print('changing value to: $value');
                 },
               ),
               BlocBuilder<OnboardingPresenter, DHState>(
@@ -162,7 +161,6 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                         TextStyle(fontSize: 16, fontFamily: 'CircularStd')),
                 radioButtonValue: (value) {
                   presenter.bankAccountDto.typeAccount = value;
-                  print(value);
                 },
                 defaultSelected: "CC",
                 height: 60,
@@ -196,7 +194,6 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                         TextStyle(fontSize: 16, fontFamily: 'CircularStd')),
                 radioButtonValue: (value) {
                   presenter.changeTypePerson(value);
-                  print(value);
                 },
                 defaultSelected: "PF",
                 height: 60,

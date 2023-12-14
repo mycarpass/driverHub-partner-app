@@ -122,8 +122,6 @@ class ServiceDto {
     for (var price in serviceEntity.prices) {
       prices.add(PriceDto(price.value, price.carBodyType, price.partnerId));
     }
-
-    print(prices);
   }
 
   ServiceDto.fromJson(Map<String, dynamic> json) {

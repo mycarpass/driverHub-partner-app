@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, avoid_print
 
 import 'dart:async';
 import 'dart:io';
@@ -29,7 +29,7 @@ class TapPayPresenter extends Cubit<DHState> {
 
   StreamSubscription? _discoverReaderSub;
   List<Reader> _readers = [];
-  bool _isSimulated = true;
+  final bool _isSimulated = true;
   Reader? _reader;
 
   var amount = "17.25";
