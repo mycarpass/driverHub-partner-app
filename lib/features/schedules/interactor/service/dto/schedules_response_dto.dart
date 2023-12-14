@@ -1,5 +1,6 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enum/schedule_status.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -66,16 +67,16 @@ class ScheduleDataDto {
   late String origin;
   late String originDelivery;
   late bool delivery;
-  late String paymentStatus;
-  late String totalAmountPayable;
-  late String paymentType;
+  late String? paymentStatus;
+  late String? totalAmountPayable;
+  late String? paymentType;
   late String scheduleDate;
   late DateTime scheduleDateTime;
   late List<ScheduleTimeSuggestionDto> timeSuggestions;
   late ScheduleSelectedServicesDto selectedServices;
   late ClientScheduleDto client;
   late String? serviceType;
-  late AddressDto userAddress;
+  late AddressDto? userAddress;
   late PixScheduleDto? pix;
   late VehicleDto? vehicle;
 
@@ -97,29 +98,36 @@ class ScheduleDataDto {
       this.pix});
 
   ScheduleDataDto.fromJson(Map<String, dynamic> json) {
-    scheduleId = json['schedule_id'];
-    status = _getStatus(json['status']);
-    origin = json['origin'];
-    originDelivery = json['origin_delivery'];
-    delivery = json['delivery'];
-    paymentStatus = json['payment_status'];
-    totalAmountPayable = json['total_amount_payable'];
-    paymentType = json['payment_type'];
-    scheduleDate = json['scheduled_date'];
-    scheduleDateTime = DateFormat('dd/MM/yyyy').parse(json['scheduled_date']);
-    timeSuggestions = [];
-    for (var time in json['time_suggestions']) {
-      timeSuggestions.add(ScheduleTimeSuggestionDto.fromJson(time));
-    }
+    try {
+      scheduleId = json['schedule_id'];
+      status = _getStatus(json['status']);
+      origin = json['origin'];
+      originDelivery = json['origin_delivery'];
+      delivery = json['delivery'];
+      paymentStatus = json['payment_status'];
+      totalAmountPayable = json['total_amount_payable'];
+      paymentType = json['payment_type'];
+      scheduleDate = json['scheduled_date'];
+      scheduleDateTime = DateFormat('dd/MM/yyyy').parse(json['scheduled_date']);
+      timeSuggestions = [];
+      for (var time in json['time_suggestions']) {
+        timeSuggestions.add(ScheduleTimeSuggestionDto.fromJson(time));
+      }
 
-    selectedServices =
-        ScheduleSelectedServicesDto.fromJson(json['selected_services']);
-    userAddress = AddressDto.fromJson(json["user_address"]);
-    serviceType = json["service_type"];
-    client = ClientScheduleDto.fromJson(json["client"]);
-    pix = PixScheduleDto.fromJson(json["pix"]);
-    vehicle = VehicleDto.fromJson(json["vehicle"]);
-    statusFriendly = _getUserFriendlyStatus(json["status"]);
+      selectedServices =
+          ScheduleSelectedServicesDto.fromJson(json['selected_services']);
+      userAddress = json["user_address"] != null
+          ? AddressDto.fromJson(json["user_address"])
+          : null;
+      serviceType = json["service_type"];
+      client = ClientScheduleDto.fromJson(json["client"]);
+      pix = PixScheduleDto.fromJson(json["pix"]);
+      vehicle =
+          json["vehicle"] != null ? VehicleDto.fromJson(json["vehicle"]) : null;
+      statusFriendly = _getUserFriendlyStatus(json["status"]);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   IconData getIcon() {
@@ -460,56 +468,50 @@ class AddressDto {
 
 class VehicleDto {
   late int id;
-  late String name;
+  String? name;
   late String make;
   late String model;
-  late String nickname;
-  late String color;
-  late String bodyType;
-  late String year;
+  late CarBodyType bodyType;
   late String plate;
-
-  late bool isSelected;
-  String? desvalorizometro;
-  String? monthReference;
-  String? fipeValue;
-  String? fipePriceStatus;
-  String? imageBase64;
 
   VehicleDto({
     required this.id,
-    required this.isSelected,
     required this.name,
     required this.make,
     required this.model,
-    required this.nickname,
-    required this.color,
     required this.bodyType,
-    required this.year,
     required this.plate,
-    this.monthReference,
-    this.desvalorizometro,
-    this.fipeValue,
-    this.fipePriceStatus,
-    this.imageBase64,
   });
 
   VehicleDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    isSelected = json['is_selected'];
-    name = json['name'];
     make = json['make'];
     model = json['model'];
-    color = json['color'];
-    bodyType = json['body_type'];
-    nickname = json['nickname'];
-    year = json['year'];
-    plate = json['license_plate'];
-    desvalorizometro = json['desvalorizometro'];
-    monthReference = json['monthReference'];
-    fipeValue = json['fipeValue'];
-    fipePriceStatus = json['fipePriceStatus'];
-    imageBase64 = json['base_64_image'];
+    bodyType = getCategory(json['body_type']);
+    // plate = json['license_plate'];
+  }
+}
+
+CarBodyType getCategory(dynamic category) {
+  switch (category) {
+    case "HATCHBACK":
+    case 0:
+      return CarBodyType.hatchback;
+    case "SEDAN":
+    case 1:
+      return CarBodyType.sedan;
+    case "SUV":
+    case 2:
+      return CarBodyType.suv;
+    case "PICKUP":
+    case 3:
+      return CarBodyType.pickup;
+    case "HIGH_VALUE_PICKUP":
+      // case 0:
+
+      return CarBodyType.ram;
+    default:
+      return CarBodyType.sedan;
   }
 }
 

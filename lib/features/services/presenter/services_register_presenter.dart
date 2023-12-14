@@ -1,5 +1,6 @@
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/services_interactor.dart';
@@ -104,16 +105,31 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
 
   void _fillPrices() {
     serviceEntity.prices = [];
-    ServiceRequestPrice priceHatch =
-        ServiceRequestPrice(0, priceHatchController.text);
-    ServiceRequestPrice priceSedan =
-        ServiceRequestPrice(1, priceHatchController.text);
-    ServiceRequestPrice priceSuv =
-        ServiceRequestPrice(2, priceHatchController.text);
-    ServiceRequestPrice pricePickup =
-        ServiceRequestPrice(3, priceHatchController.text);
-    ServiceRequestPrice priceRAM =
-        ServiceRequestPrice(9, priceHatchController.text);
+    ServiceRequestPrice priceHatch = ServiceRequestPrice(
+      CarBodyType.hatchback,
+      MoneyValue(priceHatchController.numberValue),
+      0,
+    );
+    ServiceRequestPrice priceSedan = ServiceRequestPrice(
+      CarBodyType.sedan,
+      MoneyValue(priceSedanController.numberValue),
+      0,
+    );
+    ServiceRequestPrice priceSuv = ServiceRequestPrice(
+      CarBodyType.suv,
+      MoneyValue(priceSuvController.numberValue),
+      0,
+    );
+    ServiceRequestPrice pricePickup = ServiceRequestPrice(
+      CarBodyType.pickup,
+      MoneyValue(pricePickupController.numberValue),
+      0,
+    );
+    ServiceRequestPrice priceRAM = ServiceRequestPrice(
+      CarBodyType.ram,
+      MoneyValue(priceRAMController.numberValue),
+      0,
+    );
 
     serviceEntity.prices.add(priceHatch);
     serviceEntity.prices.add(priceSedan);

@@ -367,21 +367,21 @@ class ScheduleDetailView extends StatelessWidget {
                                       height: 8,
                                     ),
                                     Text(presenter.scheduleDataDto.vehicle
-                                                ?.nickname ??
+                                                ?.name ??
                                             "")
                                         .body_bold(),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text("${presenter.scheduleDataDto.vehicle?.color ?? ""} - ${presenter.scheduleDataDto.vehicle?.plate ?? ""}")
-                                            .body_regular(
-                                                style: TextStyle(
-                                                    color: AppColor
-                                                        .textSecondaryColor)),
-                                      ],
-                                    ),
+                                    // SizedBox(
+                                    //   height: 4,
+                                    // ),
+                                    // Row(
+                                    //   children: [
+                                    //     Text("${presenter.scheduleDataDto.vehicle?.color ?? ""} - ${presenter.scheduleDataDto.vehicle?.plate ?? ""}")
+                                    //         .body_regular(
+                                    //             style: TextStyle(
+                                    //                 color: AppColor
+                                    //                     .textSecondaryColor)),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                                 SizedBox(

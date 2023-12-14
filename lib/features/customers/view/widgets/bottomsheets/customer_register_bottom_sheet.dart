@@ -10,11 +10,18 @@ import 'package:dh_ui_kit/view/widgets/input/uppercase_formatter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 // ignore: must_be_immutable
-class CustomerRegisterBottomSheet extends StatelessWidget {
+class CustomerRegisterBottomSheet extends StatefulWidget {
   CustomerRegisterBottomSheet({
     super.key,
   });
 
+  @override
+  State<CustomerRegisterBottomSheet> createState() =>
+      _CustomerRegisterBottomSheetState();
+}
+
+class _CustomerRegisterBottomSheetState
+    extends State<CustomerRegisterBottomSheet> {
   final MaskTextInputFormatter formatter = MaskTextInputFormatter(
     mask: "#######",
     initialText: "ABC1234",
@@ -33,9 +40,19 @@ class CustomerRegisterBottomSheet extends StatelessWidget {
     },
   );
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController plateControler = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    phoneController = TextEditingController();
+    plateControler = TextEditingController();
+  }
+
+  late TextEditingController nameController;
+
+  late TextEditingController phoneController;
+
+  late TextEditingController plateControler;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +72,9 @@ class CustomerRegisterBottomSheet extends StatelessWidget {
                 hint: "Joao da silva",
                 title: "Nome",
                 icon: Icons.person_outline,
-                onChanged: (_) {},
+                onChanged: (_) {
+                  nameController.text = _;
+                },
                 controller: nameController,
               ),
               const SizedBox(
@@ -66,7 +85,9 @@ class CustomerRegisterBottomSheet extends StatelessWidget {
                 hint: "(99) 999999-9999",
                 icon: Icons.phone_outlined,
                 formatters: [phoneFormatter],
-                onChanged: (_) {},
+                onChanged: (_) {
+                  phoneController.text = _;
+                },
                 controller: phoneController,
               ),
               const SizedBox(

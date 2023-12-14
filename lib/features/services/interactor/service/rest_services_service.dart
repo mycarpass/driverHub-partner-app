@@ -26,7 +26,6 @@ class RestServicesService implements ServicesService {
   Future<PartnerServicesResponseDto> getPartnerServices() async {
     try {
       Response response = await _httpClient.get("/partner/services");
-
       return PartnerServicesResponseDto.fromJson(response.data);
     } catch (e) {
       rethrow;

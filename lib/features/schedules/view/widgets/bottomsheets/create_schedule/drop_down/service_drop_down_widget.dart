@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
@@ -8,11 +6,8 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
-import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
-import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/service_register_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServicesDropDownController {
@@ -23,9 +18,6 @@ class ServicesDropDownController {
 
 // ignore: must_be_immutable
 class ServicesDropDownWidget extends StatelessWidget {
-  ServicesDropDownWidget._(
-      {super.key, required this.onChanged, required this.controller});
-
   ServicesDropDownWidget.allServices(
       {super.key, required this.onChanged, required this.controller}) {
     onlyRegisteredServices = true;
@@ -40,7 +32,9 @@ class ServicesDropDownWidget extends StatelessWidget {
   }
 
   ServicesDropDownWidget.onlyRegisteredServices(
-      {super.key, required this.onChanged, required this.controller});
+      {super.key, required this.onChanged, required this.controller}) {
+    onlyRegisteredServices = true;
+  }
 
   bool onlyRegisteredServices = false;
 
@@ -66,19 +60,20 @@ class ServicesDropDownWidget extends StatelessWidget {
               return CustomDropdown<ServiceEntity>.search(
                 hintText: state is LoadingServicesDropdownState
                     ? 'Aguarde carregando...'
-                    : 'Selecione o serviço',
-                items: serviceCategory == ServiceCategory.wash
-                    ? presenter.dropDownWashes
-                    : serviceCategory == ServiceCategory.services
-                        ? presenter.dropDownServices
-                        : presenter.allServices,
+                    : 'Adicione serviço(s)',
+                items: onlyRegisteredServices
+                    ? presenter.allServices
+                    : serviceCategory == ServiceCategory.wash
+                        ? presenter.dropDownWashes
+                        : presenter.dropDownServices,
                 searchHintText: "Buscar",
                 excludeSelected: true,
                 closedFillColor: AppColor.backgroundColor,
                 closedBorder: Border.all(color: AppColor.borderColor),
                 expandedFillColor: AppColor.backgroundColor,
-                closedSuffixIcon: const Icon(Icons.arrow_drop_down_outlined,
-                    color: AppColor.iconPrimaryColor),
+                closedSuffixIcon: const Icon(
+                  Icons.arrow_drop_down_outlined,
+                ),
                 expandedBorder: Border.all(color: AppColor.borderColor),
                 noResultFoundText:
                     "Nenhum serviço encontrado, clique no botao abaixo e cadastre um novo",
@@ -90,28 +85,28 @@ class ServicesDropDownWidget extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(text).body_regular(),
-                      Center(
-                        child: TextButton(
-                          child: Text("+ Novo"),
-                          onPressed: () async {
-                            bool? isServiceRegistered =
-                                await showModalBottomSheet<bool?>(
-                              context: context,
-                              showDragHandle: true,
-                              isScrollControlled: true,
-                              builder: (_) => BlocProvider(
-                                  create: (context) =>
-                                      ServicesRegisterPresenter()..load(),
-                                  child: ServiceRegisterBottomSheet()),
-                            );
+                      // Center(
+                      //   child: TextButton(
+                      //     child: Text("+ Novo"),
+                      //     onPressed: () async {
+                      //       bool? isServiceRegistered =
+                      //           await showModalBottomSheet<bool?>(
+                      //         context: context,
+                      //         showDragHandle: true,
+                      //         isScrollControlled: true,
+                      //         builder: (_) => BlocProvider(
+                      //             create: (context) =>
+                      //                 ServicesRegisterPresenter()..load(),
+                      //             child: ServiceRegisterBottomSheet()),
+                      //       );
 
-                            if (isServiceRegistered != null &&
-                                isServiceRegistered) {
-                              servicesDropDownController.load();
-                            }
-                          },
-                        ),
-                      ),
+                      //       if (isServiceRegistered != null &&
+                      //           isServiceRegistered) {
+                      //         servicesDropDownController.load();
+                      //       }
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -133,6 +128,9 @@ class ServicesDropDownWidget extends StatelessWidget {
                     ]),
                 onChanged: (value) {
                   presenter.selectServiceDropDown(value);
+                  onChanged(
+                    ServiceDto.fromEntity(value),
+                  );
                 },
               );
             }),

@@ -10,8 +10,8 @@ class LighDHDatePickerBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.dark(
-          primary: AppColor.blackColor.withOpacity(0.2),
+        colorScheme: const ColorScheme.light(
+          primary: AppColor.accentColor,
           onPrimary: AppColor.accentColor,
         ),
         textButtonTheme: TextButtonThemeData(
@@ -27,7 +27,6 @@ class LighDHDatePickerBottomSheet extends StatelessWidget {
       ),
       child: DatePickerTheme(
         data: DatePickerThemeData(
-          backgroundColor: Colors.grey.withOpacity(0.4),
           yearBackgroundColor: MaterialStateProperty.all(
             AppColor.blackColor.withOpacity(0.5),
           ),
@@ -69,7 +68,7 @@ class LighDHDatePickerBottomSheet extends StatelessWidget {
           elevation: 0,
           headerBackgroundColor: Colors.transparent,
           todayForegroundColor: MaterialStateProperty.all(
-            AppColor.accentColor,
+            const Color.fromARGB(255, 9, 95, 79),
           ),
           todayBackgroundColor: MaterialStateProperty.all(
             Colors.transparent,

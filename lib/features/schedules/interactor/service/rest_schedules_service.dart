@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/schedules_service.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_presenter.dart';
 
 class RestSchedulesService implements SchedulesService {
   final _httpClient = DHInjector.instance.get<DHHttpClient>();
@@ -79,6 +80,16 @@ class RestSchedulesService implements SchedulesService {
           body: request.toJson());
 
       return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> createNewSchedule(ScheduleEntity scheduleEntity) async {
+    try {
+      await _httpClient.post("/partner/new-schedule",
+          body: scheduleEntity.toJson());
     } catch (e) {
       rethrow;
     }
