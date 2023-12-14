@@ -36,7 +36,7 @@ class _TapPayViewState extends State<TapPayView> {
                         onPressed: () {
                           presenter.proceedTapToPay();
                         },
-                        child: Text('clique aqui'))
+                        child: const Text('clique aqui'))
                   ],
                 )),
           ]

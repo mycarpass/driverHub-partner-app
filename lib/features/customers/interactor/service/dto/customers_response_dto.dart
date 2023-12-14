@@ -43,11 +43,9 @@ class CustomerDto {
       this.plate});
 
   bool isVehicleNull() {
-    var a = customerId != 0 &&
+    return customerId != 0 &&
         (vehicle == null ||
             (vehicle?.id == 0 && manualBodyTypeSelected == null));
-    print(a);
-    return a;
   }
 
   CustomerDto.fromJson(Map<String, dynamic> json) {

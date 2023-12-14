@@ -3,8 +3,6 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
-import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
-import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:flutter/material.dart';

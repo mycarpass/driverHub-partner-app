@@ -1,7 +1,6 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class TabsHomeAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
@@ -28,7 +27,7 @@ class TabsHomeAppBarWidget extends StatelessWidget
           ),
         ],
       ),
-      actions: [],
+      actions: const [],
     );
   }
 }

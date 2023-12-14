@@ -20,15 +20,15 @@ class MonthSwiperWidget extends StatefulWidget {
 }
 
 class _MonthSwiperWidgetState extends State<MonthSwiperWidget> {
-  void _changeMonth(DateTime _value) {
+  void _changeMonth(DateTime value) {
     setState(() {
-      widget.selectedMonth = _value;
+      widget.selectedMonth = value;
     });
     widget.onChanged(widget.selectedMonth);
   }
 
-  String _formatDate(DateTime _value) {
-    return DateFormat('MMMM y', 'pt_BR').format(_value).capitalize();
+  String _formatDate(DateTime value) {
+    return DateFormat('MMMM y', 'pt_BR').format(value).capitalize();
   }
 
   @override
