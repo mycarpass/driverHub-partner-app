@@ -135,7 +135,7 @@ class ScheduleDetailView extends StatelessWidget {
                                                   CrossAxisAlignment.center,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Text(!presenter.scheduleDataDto
+                                                Text(presenter.scheduleDataDto
                                                             .delivery
                                                         ? "À domicílio"
                                                         : "Cliente irá levar")

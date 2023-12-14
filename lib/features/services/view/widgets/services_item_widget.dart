@@ -1,5 +1,6 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
+import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,12 @@ class ServiceItemWidget extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
-      onPressed: () {},
+      onPressed: () {
+        DHSnackBar().showSnackBar(
+            "😅 Ops..",
+            "Estamos trabalhando para liberar os detalhes do serviço nos próximos dias, aguarde... :)",
+            DHSnackBarType.warning);
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         child: Row(

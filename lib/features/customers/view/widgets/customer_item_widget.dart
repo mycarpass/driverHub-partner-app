@@ -1,6 +1,7 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
+import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,12 @@ class CustomerItemWidget extends StatelessWidget {
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
-      onPressed: () {},
+      onPressed: () {
+        DHSnackBar().showSnackBar(
+            "😅 Ops..",
+            "Estamos trabalhando para liberar os detalhes do cliente nos próximos dias, aguarde... :)",
+            DHSnackBarType.warning);
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         child: Row(
