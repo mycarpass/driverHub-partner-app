@@ -16,6 +16,8 @@ class ServiceItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          padding: const MaterialStatePropertyAll(EdgeInsets.zero),
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
       onPressed: () {
@@ -24,8 +26,13 @@ class ServiceItemWidget extends StatelessWidget {
             "Estamos trabalhando para liberar os detalhes do serviço nos próximos dias, aguarde... :)",
             DHSnackBarType.warning);
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundTertiary,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: const EdgeInsets.all(16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,

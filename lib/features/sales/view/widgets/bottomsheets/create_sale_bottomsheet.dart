@@ -142,9 +142,9 @@ class CreateSaleBottomSheet extends StatelessWidget {
                       ],
                     ),
                     DHTextField(
-                      title: "Algum desconto foi aplicado? (Opcional)",
+                      title: "Desconto (Opcional)",
                       hint: "0,00",
-                      icon: (Icons.money_off),
+                      icon: (Icons.discount_outlined),
                       controller: presenter.discountController,
                       onChanged: (_) {},
                     ),
@@ -162,6 +162,9 @@ class CreateSaleBottomSheet extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(
+                                  height: 8,
+                                ),
                                 const Text(
                                         "Qual a carroceria do carro do cliente?")
                                     .body_bold(),
@@ -170,7 +173,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   // width: 80,
-                                  height: 80,
+                                  height: 60,
                                   child: ListView.separated(
                                     separatorBuilder: (context, index) =>
                                         const SizedBox(
@@ -184,7 +187,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                                         CarBodyType.values[index],
                                       ),
                                       child: Container(
-                                        width: 90,
+                                        width: 100,
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               width: 2,
@@ -193,7 +196,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                                                           CarBodyType
                                                               .values[index])
                                                   ? AppColor.accentColor
-                                                  : Colors.transparent),
+                                                  : AppColor.borderColor),
                                           borderRadius:
                                               BorderRadius.circular(20),
                                         ),
@@ -299,7 +302,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                                                   ],
                                                 ),
                                                 Text(
-                                                    "Veículo: ${presenter.scheduleEntity.customerDto.vehicle?.model ?? 'Não informado'}"),
+                                                    "Veículo: ${presenter.scheduleEntity.containsVehicle() ? presenter.scheduleEntity.customerDto.vehicle?.name : 'Não informado'}"),
                                                 const SizedBox(
                                                   height: 12,
                                                 ),

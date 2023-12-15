@@ -37,11 +37,7 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                       ))
                     : Column(children: [
                         widget.washes.isNotEmpty
-                            ? ListView.separated(
-                                separatorBuilder: (context, index) =>
-                                    const Divider(
-                                  height: 0.2,
-                                ),
+                            ? ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.only(bottom: 12),
@@ -56,6 +52,9 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                                           height: 8,
                                         ),
                                         const Text('Lavadas').label1_bold(),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
                                         ServiceItemWidget(
                                           serviceDto: widget.washes[index],
                                         )
@@ -69,11 +68,7 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                               )
                             : const SizedBox.shrink(),
                         widget.services.isNotEmpty
-                            ? ListView.separated(
-                                separatorBuilder: (context, index) =>
-                                    const Divider(
-                                  height: 0.2,
-                                ),
+                            ? ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 padding: const EdgeInsets.only(bottom: 32),
@@ -88,6 +83,9 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                                           height: 8,
                                         ),
                                         const Text('Serviços').label1_bold(),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
                                         ServiceItemWidget(
                                           serviceDto: widget.services[index],
                                         )

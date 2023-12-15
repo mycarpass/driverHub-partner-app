@@ -17,17 +17,23 @@ class SolicitationListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
-        elevation: MaterialStateProperty.all(0),
-      ),
+          padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          elevation: MaterialStateProperty.all(0),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap),
       onPressed: () => Navigator.pushNamed(
         context,
         SchedulesRoutes.scheduleDetail,
         arguments:
             ScheduleDetailParams(scheduleId: solicitationDataDto.scheduleId),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: AppColor.backgroundTertiary,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: const EdgeInsets.all(16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

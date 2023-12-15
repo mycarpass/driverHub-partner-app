@@ -159,6 +159,9 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(
+                                  height: 8,
+                                ),
                                 const Text(
                                         "Qual a carroceria do carro do cliente?")
                                     .body_bold(),
@@ -167,7 +170,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   // width: 80,
-                                  height: 80,
+                                  height: 60,
                                   child: ListView.separated(
                                     separatorBuilder: (context, index) =>
                                         const SizedBox(
@@ -181,7 +184,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                                         CarBodyType.values[index],
                                       ),
                                       child: Container(
-                                        width: 90,
+                                        width: 100,
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                               width: 2,
@@ -190,7 +193,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                                                           CarBodyType
                                                               .values[index])
                                                   ? AppColor.accentColor
-                                                  : Colors.transparent),
+                                                  : AppColor.borderColor),
                                           borderRadius:
                                               BorderRadius.circular(20),
                                         ),

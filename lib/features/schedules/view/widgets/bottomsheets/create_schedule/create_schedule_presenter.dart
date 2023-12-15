@@ -146,6 +146,10 @@ class ScheduleEntity {
     return hour.isNotEmpty && date.isNotEmpty && services.isNotEmpty;
   }
 
+  bool containsVehicle() {
+    return customerDto.vehicle != null && customerDto.vehicle?.name != "";
+  }
+
   void alterPrice(ServiceDto serviceDto, double newPrice) {
     ServiceDto service = services
         .where((element) => element.serviceId == serviceDto.serviceId)

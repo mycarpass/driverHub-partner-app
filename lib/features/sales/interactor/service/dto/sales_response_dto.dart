@@ -1,8 +1,9 @@
+import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
 import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/enum/sales_status.dart';
-import 'package:driver_hub_partner/features/sales/interactor/service/sales_service.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SalesResponseDto {
@@ -78,6 +79,19 @@ class SalesDto {
         return SalesStatus.notVerified;
       default:
         return SalesStatus.notVerified;
+    }
+  }
+
+  IconData iconPaymentType() {
+    switch (paymentType) {
+      case PaymentType.creditCard:
+        return Icons.credit_card;
+      case PaymentType.pix:
+        return Icons.pix;
+      case PaymentType.paper:
+        return Icons.money;
+      default:
+        return CustomIcons.dhCanceled;
     }
   }
 }

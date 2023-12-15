@@ -3,10 +3,8 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/commom_objects/extensions/date_extensions.dart';
 import 'package:driver_hub_partner/features/sales/presenter/sales_presenter.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/sales_list_item_widget.dart';
-import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/emptystate/empty_state_list.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/month/month_swiper_widget.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/solicitation_list_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -89,11 +87,11 @@ class SalesListWidget extends StatelessWidget {
                                       ),
                                     );
                                   } else {
-                                    return const SizedBox();
-                                    // return SolicitationListItemWidget(
-                                    //   solicitationDataDto:
-                                    //       presenter.filteredList[index],
-                                    // );
+                                    //  return const Divider();
+                                    return SalesListItemWidget(
+                                      solicitationDataDto:
+                                          presenter.filteredList[index],
+                                    );
                                   }
                                 },
                               ),
