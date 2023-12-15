@@ -43,6 +43,28 @@ class ServiceEntity with CustomDropdownListFilter {
     for (var price in prices) {
       jsonPrices.add(price.toJson());
     }
+    if (prices.isNotEmpty) {
+      jsonPrices.add({
+        "carBodyType": 4,
+        "value": prices[1].value.getStringValueWithoutSimbols(),
+      });
+
+      jsonPrices.add({
+        "carBodyType": 5,
+        "value": prices[1].value.getStringValueWithoutSimbols(),
+      });
+
+      jsonPrices.add({
+        "carBodyType": 6,
+        "value": prices[1].value.getStringValueWithoutSimbols(),
+      });
+
+      jsonPrices.add({
+        "carBodyType": 7,
+        "value": prices[2].value.getStringValueWithoutSimbols(),
+      });
+    }
+
     List<Map<String, dynamic>> jsonAdditionalWashes = [];
     if (additionalWashes != null) {
       for (var additional in additionalWashes!) {

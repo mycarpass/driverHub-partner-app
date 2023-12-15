@@ -69,7 +69,7 @@ class _ServicesViewState extends State<ServicesView>
 
                                 if (isServiceRegistered != null &&
                                     isServiceRegistered) {
-                                  // presenter.load();
+                                  presenter.load();
                                 }
                               },
                               title: "Serviços",

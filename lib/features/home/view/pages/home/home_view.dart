@@ -74,7 +74,9 @@ class _HomeViewState extends State<HomeView>
                                 value: onboardingPresenter,
                                 child: Container(
                                     margin: const EdgeInsets.only(bottom: 4),
-                                    child: const OnboardingCardWidget()))
+                                    child: OnboardingCardWidget(
+                                      homePresenter: presenter,
+                                    )))
                             : const SizedBox.shrink(),
                         Container(
                             margin: const EdgeInsets.only(bottom: 0),

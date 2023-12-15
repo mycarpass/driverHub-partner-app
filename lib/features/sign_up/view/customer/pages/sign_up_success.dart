@@ -11,7 +11,7 @@ class SignUpSuccessView extends StatelessWidget {
     return Builder(builder: (context) {
       var presenter = context.read<SignUpPresenter>();
       return Scaffold(
-        body: SafeArea(
+        body: Center(
           child: DHSuccessFeedbackLayout(
             buttonTitle: 'Continuar',
             description:

@@ -30,7 +30,7 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                widget.services.isEmpty
+                widget.services.isEmpty && widget.washes.isEmpty
                     ? const Center(
                         child: EmptyStateList(
                         text: 'Nenhum serviço cadastrado \nainda por aqui :|',

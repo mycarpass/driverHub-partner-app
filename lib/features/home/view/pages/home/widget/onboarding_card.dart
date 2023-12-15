@@ -9,10 +9,14 @@ import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class OnboardingCardWidget extends StatelessWidget {
-  const OnboardingCardWidget({
+  OnboardingCardWidget({
     super.key,
+    required this.homePresenter,
   });
+
+  HomePresenter homePresenter;
 
   @override
   Widget build(BuildContext context) {
@@ -75,18 +79,14 @@ class OnboardingCardWidget extends StatelessWidget {
                             builder: (_) => BlocProvider.value(
                                 value: presenter,
                                 child: BankAccountRegisterBottomSheet(
-                                  accountCNPJ: context
-                                      .read<HomePresenter>()
-                                      .homeResponseDto
-                                      .data
-                                      .partnerData
-                                      .cnpj,
+                                  accountCNPJ: homePresenter
+                                      .homeResponseDto.data.partnerData.cnpj,
                                 )),
                           );
                           if (isBankAccountRegistered != null &&
                               isBankAccountRegistered) {
                             // ignore: use_build_context_synchronously
-                            context.read<HomePresenter>().load();
+                            homePresenter.load();
                           }
                         },
                         child: const Text("Cadastrar").body_bold(
@@ -94,7 +94,6 @@ class OnboardingCardWidget extends StatelessWidget {
                                 const TextStyle(color: AppColor.accentColor)))
                   ])
                 : const SizedBox.shrink(),
-
             !presenter.isLogoOnboardingCompleted()
                 ? Row(children: [
                     const Icon(
@@ -126,7 +125,7 @@ class OnboardingCardWidget extends StatelessWidget {
                           );
                           if (isLogoRegistered != null && isLogoRegistered) {
                             // ignore: use_build_context_synchronously
-                            context.read<HomePresenter>().load();
+                            homePresenter.load();
                           }
                         },
                         child: const Text("Cadastrar").body_bold(
@@ -134,7 +133,6 @@ class OnboardingCardWidget extends StatelessWidget {
                                 const TextStyle(color: AppColor.accentColor)))
                   ])
                 : const SizedBox.shrink(),
-
             !presenter.isServiceOnboardingCompleted()
                 ? Row(children: [
                     const Icon(
@@ -168,7 +166,7 @@ class OnboardingCardWidget extends StatelessWidget {
                           if (isServiceRegistered != null &&
                               isServiceRegistered) {
                             // ignore: use_build_context_synchronously
-                            context.read<HomePresenter>().load();
+                            homePresenter.load();
                           }
                         },
                         child: const Text("Cadastrar").body_bold(
@@ -176,33 +174,6 @@ class OnboardingCardWidget extends StatelessWidget {
                                 const TextStyle(color: AppColor.accentColor)))
                   ])
                 : const SizedBox.shrink(),
-
-            // Row(
-            //   children: [
-            //     const Text("Total de assinantes").body_regular(),
-            //     const Expanded(child: SizedBox.shrink()),
-            //   ],
-            // ),
-            // Column(
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     !presenter.isVisible
-            //         ? Container(
-            //             margin: const EdgeInsets.only(top: 4),
-            //             decoration: const BoxDecoration(
-            //                 color: AppColor.iconPrimaryColor,
-            //                 borderRadius: BorderRadius.all(Radius.circular(8))),
-            //             height: 24,
-            //             width: 60,
-            //           )
-            //         : Text(
-            //             presenter.financialInfoDto.data.accountInfo
-            //                 .totalActiveSubscriptions
-            //                 .toString(),
-            //           ).title2_bold(),
-            //   ],
-            // ),
           ],
         ),
       ),

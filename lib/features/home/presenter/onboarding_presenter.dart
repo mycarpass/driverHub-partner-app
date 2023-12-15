@@ -98,7 +98,7 @@ class OnboardingPresenter extends Cubit<DHState> {
     BankEntity('070', 'BRB', '####'),
     BankEntity('085', 'Via Credi/Civia Cooperativa', '####'),
     BankEntity('655', 'Neon/Votorantim', '####'),
-    BankEntity('290', 'PagSeguro/PagBank', '####'),
+    BankEntity('290', 'Pagseguro', '####'),
     BankEntity('212', 'Banco Original', '####'),
     BankEntity('422', 'Safra', '####'),
     BankEntity('746', 'Modal', '####'),
