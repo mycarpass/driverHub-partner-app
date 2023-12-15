@@ -39,74 +39,86 @@ class SignUpView extends StatelessWidget {
       return Scaffold(
         appBar: AppBar().backButton(
             onPressed: () => context.read<SignUpPresenter>().backStep()),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                BlocConsumer<SignUpPresenter, DHState>(
-                    listener: (context, state) {
-                      if (state is SignUpFinishedState) {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          SignUpRoutes.success,
-                          (route) => false,
-                        );
-                      }
-                      if (state is DHErrorState) {
-                        DHSnackBar().showSnackBar(
-                            "Ops..",
-                            state.error ??
-                                "Ocorreu um erro ao tentar se cadastrar, tente novamente mais tarde.",
-                            DHSnackBarType.error);
-                      }
-                    },
-                    bloc: context.read<SignUpPresenter>(),
-                    builder: (context, state) {
-                      return SizedBox(
-                        height: 50,
-                        child: StepIndicatorWidget(
-                          countSteps: 6,
-                          currentStep:
-                              context.read<SignUpPresenter>().currentStep,
-                        ),
-                      );
-                    }),
-                BlocBuilder<SignUpPresenter, DHState>(
-                  builder: (context, state) {
-                    return signUpSteps[
-                        context.read<SignUpPresenter>().currentStep];
-                  },
+        body: SingleChildScrollView(
+          child: IntrinsicHeight(
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      BlocConsumer<SignUpPresenter, DHState>(
+                          listener: (context, state) {
+                            if (state is SignUpFinishedState) {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                SignUpRoutes.success,
+                                (route) => false,
+                              );
+                            }
+                            if (state is DHErrorState) {
+                              DHSnackBar().showSnackBar(
+                                  "Ops..",
+                                  state.error ??
+                                      "Ocorreu um erro ao tentar se cadastrar, tente novamente mais tarde.",
+                                  DHSnackBarType.error);
+                            }
+                          },
+                          bloc: context.read<SignUpPresenter>(),
+                          builder: (context, state) {
+                            return SizedBox(
+                              height: 50,
+                              child: StepIndicatorWidget(
+                                countSteps: 6,
+                                currentStep:
+                                    context.read<SignUpPresenter>().currentStep,
+                              ),
+                            );
+                          }),
+                      BlocBuilder<SignUpPresenter, DHState>(
+                        builder: (context, state) {
+                          return signUpSteps[
+                              context.read<SignUpPresenter>().currentStep];
+                        },
+                      ),
+                      SizedBox(
+                        height: 100,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            presenter.validate(
+                                    signUpSteps[presenter.currentStep].step)
+                                ? signUpSteps[presenter.currentStep]
+                                    .action(context)
+                                : DoNothingAction();
+                          },
+                          child: BlocBuilder<SignUpPresenter, DHState>(
+                            builder: (context, state) => state is DHLoadingState
+                                ? const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      DHCircularLoading(),
+                                    ],
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(presenter.currentStep == 5
+                                              ? "Criar conta"
+                                              : "Continuar")
+                                          .label1_bold(
+                                              style: const TextStyle(
+                                                  color: AppColor.blackColor)),
+                                    ],
+                                  ),
+                          ))
+                    ],
+                  ),
                 ),
-                const Expanded(child: SizedBox()),
-                ElevatedButton(
-                    onPressed: () {
-                      presenter
-                              .validate(signUpSteps[presenter.currentStep].step)
-                          ? signUpSteps[presenter.currentStep].action(context)
-                          : DoNothingAction();
-                    },
-                    child: BlocBuilder<SignUpPresenter, DHState>(
-                      builder: (context, state) => state is DHLoadingState
-                          ? const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                DHCircularLoading(),
-                              ],
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(presenter.currentStep == 5
-                                        ? "Criar conta"
-                                        : "Continuar")
-                                    .label1_bold(
-                                        style: const TextStyle(
-                                            color: AppColor.blackColor)),
-                              ],
-                            ),
-                    ))
-              ],
+              ),
             ),
           ),
         ),
