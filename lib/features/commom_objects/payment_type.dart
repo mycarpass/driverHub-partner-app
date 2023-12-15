@@ -1,8 +1,7 @@
 enum PaymentType {
   creditCard("Cartão de crédito"),
   pix("Pix"),
-  paper("Dinheiro"),
-  uniformed("Não Informado");
+  paper("Dinheiro");
 
   const PaymentType(this.value);
   final String value;
@@ -16,7 +15,7 @@ enum PaymentType {
       case "CASH":
         return PaymentType.paper;
       default:
-        return PaymentType.uniformed;
+        return PaymentType.creditCard;
     }
   }
 
