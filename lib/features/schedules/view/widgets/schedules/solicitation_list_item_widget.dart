@@ -17,8 +17,9 @@ class SolicitationListItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          elevation: MaterialStateProperty.all(0)),
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        elevation: MaterialStateProperty.all(0),
+      ),
       onPressed: () => Navigator.pushNamed(
         context,
         SchedulesRoutes.scheduleDetail,

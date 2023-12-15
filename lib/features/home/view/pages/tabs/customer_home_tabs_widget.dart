@@ -5,6 +5,7 @@ import 'package:driver_hub_partner/features/customers/view/pages/home/customers_
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart';
 import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
+import 'package:driver_hub_partner/features/sales/view/pages/home/sales_view.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/schedules_view.dart';
 import 'package:driver_hub_partner/features/services/view/pages/home/services_view.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     context.read<HomePresenter>().load();
 
     tabController = TabController(
-      length: 5,
+      length: 6,
       vsync: this,
     );
     super.initState();
@@ -68,10 +69,10 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
                   icon: Icons.calendar_month_outlined,
                   title: "Agenda",
                 ),
-                // TabBarWidget(
-                //   icon: Icons.monetization_on_outlined,
-                //   title: "Vendas",
-                // ),
+                TabBarWidget(
+                  icon: Icons.monetization_on_outlined,
+                  title: "Vendas",
+                ),
                 TabBarWidget(
                   icon: Icons.group_outlined,
                   title: "Clientes",
@@ -146,7 +147,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
         children: const [
           HomeView(),
           SchedulesView(),
-          // SalesView(),
+          SalesView(),
           CustomersView(),
           ServicesView(),
           HomeProfileView(),

@@ -2,9 +2,17 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:flutter/material.dart';
 
 class LighDHDatePickerBottomSheet extends StatelessWidget {
-  const LighDHDatePickerBottomSheet({super.key, required this.initialDate});
+  LighDHDatePickerBottomSheet(
+      {super.key, required this.currentDate, DateTime? lastDateFromParam}) {
+    lastDateFromParam != null
+        ? lastDate = lastDateFromParam
+        : lastDate = DateTime.now().add(
+            const Duration(days: 90),
+          );
+  }
 
-  final DateTime initialDate;
+  final DateTime currentDate;
+  late DateTime lastDate;
 
   @override
   Widget build(BuildContext context) {
@@ -82,14 +90,15 @@ class LighDHDatePickerBottomSheet extends StatelessWidget {
         ),
         child: DatePickerDialog(
           initialCalendarMode: DatePickerMode.day,
-          initialDate: initialDate,
-          firstDate: initialDate,
+          initialDate: currentDate,
+          firstDate: DateTime.now().subtract(
+            const Duration(days: 31),
+          ),
+          currentDate: DateTime.now(),
           cancelText: "Voltar",
           confirmText: "Pronto",
           helpText: "Data do serviço",
-          lastDate: DateTime.now().add(
-            const Duration(days: 90),
-          ),
+          lastDate: lastDate,
         ),
       ),
     );

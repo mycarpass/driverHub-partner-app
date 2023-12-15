@@ -3,9 +3,9 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:flutter/material.dart';
 
 class SchedulesErrorWidget extends StatelessWidget {
-  const SchedulesErrorWidget({
-    super.key,
-  });
+  const SchedulesErrorWidget({super.key, required this.reload});
+
+  final Function reload;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,8 @@ class SchedulesErrorWidget extends StatelessWidget {
         const Text(
           "Não foi possível carregar os agendamentos",
           textAlign: TextAlign.center,
-        ).title1_regular()
+        ).title1_regular(),
+        TextButton(onPressed: () => reload(), child: Text("Recarregar"))
       ],
     );
   }

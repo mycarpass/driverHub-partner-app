@@ -50,7 +50,9 @@ class _SchedulesViewState extends State<SchedulesView>
                     if (state is DHLoadingState) ...[
                       const SchedulesBodyLoading()
                     ] else if (state is DHErrorState) ...[
-                      const SchedulesErrorWidget()
+                      SchedulesErrorWidget(
+                        reload: presenter.load,
+                      )
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(
@@ -122,10 +124,11 @@ class _SchedulesViewState extends State<SchedulesView>
                           //   );
                           // }),
                           SingleChildScrollView(
-                              child: ScheduledListBodyWidget(
-                            schedules:
-                                presenter.schedulesResponseDto.data.schedules,
-                          )),
+                            child: ScheduledListBodyWidget(
+                              schedules:
+                                  presenter.schedulesResponseDto.data.schedules,
+                            ),
+                          ),
                         ],
                       ),
                     ]

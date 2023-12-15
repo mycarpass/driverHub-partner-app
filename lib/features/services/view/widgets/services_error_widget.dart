@@ -3,9 +3,9 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:flutter/material.dart';
 
 class ServicesErrorWidget extends StatelessWidget {
-  const ServicesErrorWidget({
-    super.key,
-  });
+  const ServicesErrorWidget({super.key, required this.reload});
+
+  final Function reload;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,8 @@ class ServicesErrorWidget extends StatelessWidget {
         const Text(
           "Não foi possível \ncarregar os serviços",
           textAlign: TextAlign.center,
-        ).title3_regular()
+        ).title3_regular(),
+        TextButton(onPressed: () => reload(), child: const Text("Recarregar"))
       ],
     ));
   }

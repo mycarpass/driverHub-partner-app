@@ -47,7 +47,9 @@ class _CustomersViewState extends State<CustomersView>
                     if (state is DHLoadingState) ...[
                       const CustomersBodyLoading()
                     ] else if (state is DHErrorState) ...[
-                      const CustomersErrorWidget()
+                      CustomersErrorWidget(
+                        reload: presenter.load,
+                      )
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(

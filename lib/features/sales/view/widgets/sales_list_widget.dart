@@ -1,7 +1,8 @@
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/commom_objects/extensions/date_extensions.dart';
-import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
+import 'package:driver_hub_partner/features/sales/presenter/sales_presenter.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/sales_list_item_widget.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/emptystate/empty_state_list.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/month/month_swiper_widget.dart';
@@ -9,36 +10,30 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/sol
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ScheduledListBodyWidget extends StatefulWidget {
-  const ScheduledListBodyWidget({required this.schedules, super.key});
+class SalesListWidget extends StatelessWidget {
+  const SalesListWidget({required this.sales, super.key});
 
-  final List<ScheduleDataDto> schedules;
+  final List<dynamic> sales;
 
-  @override
-  State<ScheduledListBodyWidget> createState() =>
-      _ScheduledListBodyWidgetState();
-}
-
-class _ScheduledListBodyWidgetState extends State<ScheduledListBodyWidget> {
   @override
   Widget build(BuildContext context) {
-    var presenter = context.read<SchedulesPresenter>();
+    var presenter = context.read<SalesPresenter>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: BlocBuilder<SchedulesPresenter, DHState>(
+      child: BlocBuilder<SalesPresenter, DHState>(
         builder: (context, state) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               MonthSwiperWidget(
-                  selectedMonth: presenter.selectedMonth,
-                  onChanged: (_) {
-                    presenter.filterListByDate(_);
-                  }),
-              widget.schedules.isEmpty
+                selectedMonth: presenter.selectedMonth,
+                onChanged: (_) {
+                  presenter.filterListByDate(_);
+                },
+              ),
+              sales.isEmpty
                   ? const EmptyStateList(
-                      text:
-                          'Nenhum agendamento encontrado para o mês selecionado.',
+                      text: 'Nenhuma venda encontrado para o mês selecionado.',
                     )
                   : Column(
                       mainAxisSize: MainAxisSize.max,
@@ -47,7 +42,7 @@ class _ScheduledListBodyWidgetState extends State<ScheduledListBodyWidget> {
                         presenter.filteredList.isEmpty
                             ? const EmptyStateList(
                                 text:
-                                    'Nenhum agendamento encontrado para o mês selecionado.',
+                                    'Nenhuma venda encontrado para o mês selecionado.',
                               )
                             : ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -56,15 +51,14 @@ class _ScheduledListBodyWidgetState extends State<ScheduledListBodyWidget> {
                                 itemCount: presenter.filteredList.length,
                                 itemBuilder: (context, index) {
                                   bool isSameDate = true;
-                                  final DateTime date = presenter
-                                      .filteredList[index].scheduleDateTime;
+                                  final DateTime date =
+                                      presenter.filteredList[index].saleDate;
 
                                   if (index == 0) {
                                     isSameDate = false;
                                   } else {
                                     final DateTime prevDate = presenter
-                                        .filteredList[index - 1]
-                                        .scheduleDateTime;
+                                        .filteredList[index - 1].saleDate;
                                     isSameDate = date.isSameDate(prevDate);
                                   }
                                   if (index == 0 || !(isSameDate)) {
@@ -76,15 +70,18 @@ class _ScheduledListBodyWidgetState extends State<ScheduledListBodyWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(presenter.filteredList[index]
-                                                  .scheduleDateTime
-                                                  .formatDate(
-                                                      'dd, EEEE', 'pt_BR'))
-                                              .body_bold(),
+                                          Text(
+                                            presenter
+                                                .filteredList[index].saleDate
+                                                .formatDate(
+                                              'dd, EEEE',
+                                              'pt_BR',
+                                            ),
+                                          ).body_bold(),
                                           const SizedBox(
                                             height: 12,
                                           ),
-                                          SolicitationListItemWidget(
+                                          SalesListItemWidget(
                                             solicitationDataDto:
                                                 presenter.filteredList[index],
                                           ),
@@ -92,10 +89,11 @@ class _ScheduledListBodyWidgetState extends State<ScheduledListBodyWidget> {
                                       ),
                                     );
                                   } else {
-                                    return SolicitationListItemWidget(
-                                      solicitationDataDto:
-                                          presenter.filteredList[index],
-                                    );
+                                    return const SizedBox();
+                                    // return SolicitationListItemWidget(
+                                    //   solicitationDataDto:
+                                    //       presenter.filteredList[index],
+                                    // );
                                   }
                                 },
                               ),

@@ -6,11 +6,13 @@ import 'package:dh_ui_kit/view/widgets/loading/dh_circular_loading.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/create_sale_presenter.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/create_sale_state.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/payment_type_drop_down.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/card_date_read_only.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/ligh_dh_date_picker.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/alter_service_price/alter_service_price_bottomsheet.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/cerate_schedule_state.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/service_drop_down_widget.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
@@ -20,8 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class CreateScheduleBottomSheet extends StatelessWidget {
-  CreateScheduleBottomSheet({
+class CreateSaleBottomSheet extends StatelessWidget {
+  CreateSaleBottomSheet({
     super.key,
   });
 
@@ -46,9 +48,9 @@ class CreateScheduleBottomSheet extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: BlocProvider(
-            create: (context) => CreateSchedulePresenter(),
+            create: (context) => CreateSalePresenter(),
             child: Builder(builder: (context) {
-              var presenter = context.read<CreateSchedulePresenter>();
+              var presenter = context.read<CreateSalePresenter>();
 
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -57,7 +59,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    const Text("Adicionar agendamento").label1_bold(),
+                    const Text("Adicionar venda").label1_bold(),
                     const SizedBox(
                       height: 24,
                     ),
@@ -71,6 +73,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                             height: MediaQuery.sizeOf(context).height * 0.85,
                             child: LighDHDatePickerBottomSheet(
                               currentDate: DateTime.now(),
+                              lastDateFromParam: DateTime.now(),
                             ),
                           ),
                         );
@@ -78,14 +81,14 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                           presenter.updateServiceDate(result);
                         }
                       },
-                      child: BlocConsumer<CreateSchedulePresenter, DHState>(
+                      child: BlocConsumer<CreateSalePresenter, DHState>(
                           listener: (context, state) {
                         if (state is DHErrorState) {
                           DHSnackBar().showSnackBar(
                               "Opss..",
-                              "Não foi possível criar seu agendamento, tente novamente mais tarde",
+                              "Não foi possível registrar sua venda, tente novamente mais tarde",
                               DHSnackBarType.error);
-                        } else if (state is NewScheduleCreatedState) {
+                        } else if (state is NewSaleCreated) {
                           Navigator.of(context).pop(true);
                         }
                       }, builder: (context, state) {
@@ -94,16 +97,9 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                         );
                       }),
                     ),
-                    DHTextField(
-                      title: "Horário",
-                      hint: "08:00",
-                      formatters: [hourFormatter],
-                      icon: Icons.timer,
-                      keyboardType: TextInputType.number,
-                      onChanged: (hour) {
-                        presenter.setScheduleHour(hour);
-                      },
-                    ),
+                    DropDownPaymentType(onChanged: (selectedPayment) {
+                      presenter.paymentType = selectedPayment;
+                    }),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -145,9 +141,16 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                         ),
                       ],
                     ),
+                    DHTextField(
+                      title: "Algum desconto foi aplicado? (Opcional)",
+                      hint: "0,00",
+                      icon: (Icons.money_off),
+                      controller: presenter.discountController,
+                      onChanged: (_) {},
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 12.0),
-                      child: BlocBuilder<CreateSchedulePresenter, DHState>(
+                      child: BlocBuilder<CreateSalePresenter, DHState>(
                         builder: (context, state) {
                           return Visibility(
                             visible: presenter.scheduleEntity.customerDto
@@ -209,7 +212,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                         },
                       ),
                     ),
-                    BlocBuilder<CreateSchedulePresenter, DHState>(
+                    BlocBuilder<CreateSalePresenter, DHState>(
                         builder: (context, state) {
                       return AnimatedOpacity(
                         duration: const Duration(milliseconds: 250),
@@ -254,7 +257,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                         ),
                       );
                     }),
-                    BlocBuilder<CreateSchedulePresenter, DHState>(
+                    BlocBuilder<CreateSalePresenter, DHState>(
                       builder: (context, state) => presenter
                               .scheduleEntity.services.isNotEmpty
                           ? SizedBox(
@@ -359,7 +362,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: BlocBuilder<CreateSchedulePresenter, DHState>(
+                      child: BlocBuilder<CreateSalePresenter, DHState>(
                           builder: (context, state) {
                         return AnimatedOpacity(
                             duration: const Duration(milliseconds: 250),
@@ -382,7 +385,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                             //   keyboardType: TextInputType.number,
                             //   disabled: true,
                             //   onChanged: (_) {
-                            //     context.read<CreateSchedulePresenter>().setValue(_);
+                            //     context.read<CreateSalePresenter>().setValue(_);
                             //   },
                             // ),
                             );
@@ -391,17 +394,16 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    BlocBuilder<CreateSchedulePresenter, DHState>(
+                    BlocBuilder<CreateSalePresenter, DHState>(
                         builder: (context, state) {
                       return ElevatedButton(
-                        onPressed: () =>
-                            presenter.scheduleEntity.isEverythingFilled()
-                                ? presenter.sendSchedule()
-                                : DHSnackBar().showSnackBar(
-                                    "Opss..",
-                                    "Preencha todos o dados",
-                                    DHSnackBarType.warning,
-                                  ),
+                        onPressed: () => presenter.isEverythingFilled()
+                            ? presenter.sendSale()
+                            : DHSnackBar().showSnackBar(
+                                "Opss..",
+                                "Preencha todos o dados",
+                                DHSnackBarType.warning,
+                              ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

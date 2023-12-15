@@ -3,9 +3,9 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:flutter/material.dart';
 
 class CustomersErrorWidget extends StatelessWidget {
-  const CustomersErrorWidget({
-    super.key,
-  });
+  const CustomersErrorWidget({super.key, required this.reload});
+
+  final Function reload;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,8 @@ class CustomersErrorWidget extends StatelessWidget {
         const Text(
           "Não foi possível \ncarregar os clientes",
           textAlign: TextAlign.center,
-        ).title3_regular()
+        ).title3_regular(),
+        TextButton(onPressed: () => reload(), child: Text("Recarregar"))
       ],
     ));
   }

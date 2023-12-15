@@ -45,7 +45,9 @@ class _HomeViewState extends State<HomeView>
               if (state is DHLoadingState) ...[
                 const HomeBodyLoading()
               ] else if (state is DHErrorState) ...[
-                const HomeErrorWidget()
+                HomeErrorWidget(
+                  reload: presenter.load,
+                )
               ] else ...[
                 Padding(
                     padding: const EdgeInsets.only(

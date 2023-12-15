@@ -19,6 +19,7 @@ class SchedulesPresenter extends Cubit<DHState> {
 
   Future<void> load() async {
     await _getSchedules();
+    filterListByDate(DateTime.now());
   }
 
   Future _getSchedules() async {
@@ -41,6 +42,7 @@ class SchedulesPresenter extends Cubit<DHState> {
     emit(
       FilteredListState(schedules: filteredList, map: mapListFiltered),
     );
+    emit(DHSuccessState());
   }
 
   Future<void> mapFromFilteredList() async {

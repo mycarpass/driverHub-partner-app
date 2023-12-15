@@ -44,7 +44,9 @@ class _ServicesViewState extends State<ServicesView>
                     if (state is DHLoadingState) ...[
                       const ServicesBodyLoading()
                     ] else if (state is DHErrorState) ...[
-                      const ServicesErrorWidget()
+                      ServicesErrorWidget(
+                        reload: presenter.load,
+                      )
                     ] else ...[
                       Padding(
                         padding: const EdgeInsets.only(
