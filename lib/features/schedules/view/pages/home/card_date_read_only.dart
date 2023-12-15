@@ -30,7 +30,7 @@ class CardDateReadOnly extends StatelessWidget {
             Row(
               children: [
                 const Icon(
-                  CustomIcons.dhCalendarFilled,
+                  CustomIcons.dhCalendarOutlined,
                   color: AppColor.textTertiaryColor,
                   size: 16,
                 ),
