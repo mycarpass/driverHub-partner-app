@@ -368,7 +368,7 @@ class ScheduleDetailView extends StatelessWidget {
                                     ),
                                     Text(presenter.scheduleDataDto.vehicle
                                                 ?.name ??
-                                            "")
+                                            "Não informado")
                                         .body_bold(),
                                     // SizedBox(
                                     //   height: 4,

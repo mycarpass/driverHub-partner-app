@@ -174,10 +174,18 @@ class ServiceDto {
   }
 
   PriceDto finPrice(CarBodyType carBodyType) {
-    var value = prices
-        .where((element) => element.carBodyType == carBodyType)
-        .toList()
-        .first;
+    dynamic value;
+    try {
+      value = prices
+          .where((element) => element.carBodyType == carBodyType)
+          .toList()
+          .first;
+    } catch (e) {
+      value = prices
+          .where((element) => element.carBodyType == CarBodyType.hatchback)
+          .toList()
+          .first;
+    }
 
     return value;
   }

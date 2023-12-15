@@ -12,7 +12,6 @@ import 'package:driver_hub_partner/features/sales/view/widgets/payment_type_drop
 import 'package:driver_hub_partner/features/schedules/view/pages/home/card_date_read_only.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/ligh_dh_date_picker.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/alter_service_price/alter_service_price_bottomsheet.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/cerate_schedule_state.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/service_drop_down_widget.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
@@ -264,7 +263,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                       builder: (context, state) => presenter
                               .scheduleEntity.services.isNotEmpty
                           ? SizedBox(
-                              height: 160,
+                              height: 164,
                               child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) => SizedBox(
@@ -301,10 +300,13 @@ class CreateSaleBottomSheet extends StatelessWidget {
                                                     )
                                                   ],
                                                 ),
-                                                Text(
-                                                    "Veículo: ${presenter.scheduleEntity.containsVehicle() ? presenter.scheduleEntity.customerDto.vehicle?.name : 'Não informado'}"),
+                                                Text("Veículo: ${presenter.scheduleEntity.containsVehicle() ? presenter.scheduleEntity.customerDto.vehicle?.model : 'Não informado'}")
+                                                    .caption1_regular(
+                                                        style: const TextStyle(
+                                                            color: AppColor
+                                                                .textSecondaryColor)),
                                                 const SizedBox(
-                                                  height: 12,
+                                                  height: 4,
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
@@ -418,7 +420,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                       );
                     }),
                     const SizedBox(
-                      height: 24,
+                      height: 36,
                     ),
                   ],
                 ),

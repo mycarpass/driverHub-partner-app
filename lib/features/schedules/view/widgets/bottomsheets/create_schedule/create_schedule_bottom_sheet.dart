@@ -261,7 +261,7 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                       builder: (context, state) => presenter
                               .scheduleEntity.services.isNotEmpty
                           ? SizedBox(
-                              height: 160,
+                              height: 164,
                               child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) => SizedBox(
@@ -298,10 +298,13 @@ class CreateScheduleBottomSheet extends StatelessWidget {
                                                     )
                                                   ],
                                                 ),
-                                                Text(
-                                                    "Veículo: ${presenter.scheduleEntity.customerDto.vehicle?.model ?? 'Não informado'}"),
+                                                Text("Veículo: ${presenter.scheduleEntity.containsVehicle() ? presenter.scheduleEntity.customerDto.vehicle?.model : 'Não informado'}")
+                                                    .caption1_regular(
+                                                        style: const TextStyle(
+                                                            color: AppColor
+                                                                .textSecondaryColor)),
                                                 const SizedBox(
-                                                  height: 12,
+                                                  height: 4,
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
