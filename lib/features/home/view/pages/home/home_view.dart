@@ -2,9 +2,7 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
-import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
-import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/daily_numbers_card.dart';
