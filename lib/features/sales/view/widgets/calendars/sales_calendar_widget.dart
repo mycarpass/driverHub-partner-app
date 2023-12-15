@@ -1,8 +1,8 @@
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/presenter/sales_presenter.dart';
-import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
-import 'package:driver_hub_partner/features/schedules/presenter/schedules_presenter.dart';
-import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
+import 'package:driver_hub_partner/features/sales/router/sales_router.dart';
+
 import 'package:driver_hub_partner/features/schedules/view/widgets/month/month_swiper_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/schedules/calendar_widget.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +31,11 @@ class SalesCalendarWidget extends StatelessWidget {
                 onSelectedDay: (selectedDay, eventsList) {
                   Navigator.pushNamed(
                     context,
-                    SchedulesRoutes.scheduleList,
+                    SalesRoutes.salesList,
                     arguments: {
-                      'schedules': eventsList.isEmpty
+                      'sales': eventsList.isEmpty
                           ? null
-                          : eventsList as List<ScheduleDataDto>,
+                          : eventsList as List<SalesDto>,
                       'day': selectedDay
                     },
                   );

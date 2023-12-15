@@ -60,45 +60,46 @@ class _SalesViewState extends State<SalesView>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BlocBuilder<SubscriptionPresenter, DHState>(
-                                builder: (context, state) => TabViewHeader(
-                                      addButtonIsVisible: context
-                                          .read<SubscriptionPresenter>()
-                                          .isSubscribed,
-                                      onPressed: () async {
-                                        //
-                                        //
-                                        //
+                              builder: (context, state) => TabViewHeader(
+                                addButtonIsVisible: context
+                                    .read<SubscriptionPresenter>()
+                                    .isSubscribed,
+                                onPressed: () async {
+                                  //
+                                  //
+                                  //
 
-                                        if (!context
-                                            .read<SubscriptionPresenter>()
-                                            .isSubscribed) {
-                                          context
-                                              .read<SubscriptionPresenter>()
-                                              .openPayWall(context);
-                                        } else {
-                                          bool? isSaleCreated =
-                                              await showModalBottomSheet<bool>(
-                                            context: context,
-                                            showDragHandle: true,
-                                            isScrollControlled: true,
-                                            builder: (context) =>
-                                                CreateSaleBottomSheet(),
-                                          );
+                                  if (!context
+                                      .read<SubscriptionPresenter>()
+                                      .isSubscribed) {
+                                    context
+                                        .read<SubscriptionPresenter>()
+                                        .openPayWall(context);
+                                  } else {
+                                    bool? isSaleCreated =
+                                        await showModalBottomSheet<bool>(
+                                      context: context,
+                                      showDragHandle: true,
+                                      isScrollControlled: true,
+                                      builder: (context) =>
+                                          CreateSaleBottomSheet(),
+                                    );
 
-                                          if (isSaleCreated != null &&
-                                              isSaleCreated) {
-                                            DHSnackBar().showSnackBar(
-                                                "Uhuuu",
-                                                "Sua nova venda foi registrada",
-                                                DHSnackBarType.success);
-                                            presenter.load();
-                                          }
-                                        }
-                                      },
-                                      title: "Vendas",
-                                      subtitle:
-                                          "${presenter.filteredList.length}  cadastradas",
-                                    )),
+                                    if (isSaleCreated != null &&
+                                        isSaleCreated) {
+                                      DHSnackBar().showSnackBar(
+                                          "Uhuuu",
+                                          "Sua nova venda foi registrada",
+                                          DHSnackBarType.success);
+                                      presenter.load();
+                                    }
+                                  }
+                                },
+                                title: "Vendas",
+                                subtitle:
+                                    "${presenter.filteredList.length}  cadastradas",
+                              ),
+                            ),
                           ],
                         ),
                       ),
