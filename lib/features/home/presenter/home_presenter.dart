@@ -29,14 +29,16 @@ class HomePresenter extends Cubit<DHState> {
       DHInjector.instance.get<DHCacheManager>();
 
   HomeResponseDto homeResponseDto = HomeResponseDto();
-  late FinancialInfoDto financialInfoDto;
+  FinancialInfoDto? financialInfoDto;
   late ChartsResponseDto chartsResponseDto;
   String? deepLink;
   bool isVisible = true;
 
   Future<void> load() async {
     await _getHomeInfo();
-    await _getFinancialInfo();
+    if (homeResponseDto.data.partnerData.isBankAccountCreated) {
+      await _getFinancialInfo();
+    }
   }
 
   void _configurePush() {

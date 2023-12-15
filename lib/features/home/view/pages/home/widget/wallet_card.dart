@@ -135,8 +135,10 @@ class WalletCardWidget extends StatelessWidget {
                         height: 24,
                         width: 120,
                       )
-                    : Text(presenter.financialInfoDto.data.accountInfo
-                            .volumeThisMonth.priceInReal)
+                    : Text(presenter.financialInfoDto != null
+                            ? presenter.financialInfoDto!.data.accountInfo
+                                .volumeThisMonth.priceInReal
+                            : "R\$ 0,00")
                         .title2_bold(
                         style:
                             const TextStyle(color: AppColor.textSecondaryColor),

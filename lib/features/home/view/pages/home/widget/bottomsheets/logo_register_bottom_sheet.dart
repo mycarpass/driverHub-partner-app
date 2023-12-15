@@ -51,12 +51,14 @@ class LogoRegisterBottomSheet extends StatelessWidget {
                   ),
                   Stack(
                     children: [
-                      Image.asset(
-                        'lib/assets/images/onboarding/HeaderPartner2.jpg',
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        height: 240,
-                      ),
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.asset(
+                            'lib/assets/images/onboarding/HeaderPartner2.jpg',
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            height: 240,
+                          )),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,

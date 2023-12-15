@@ -78,23 +78,31 @@ class _HomeViewState extends State<HomeView>
                                     margin: const EdgeInsets.only(bottom: 4),
                                     child: const OnboardingCardWidget()))
                             : const SizedBox.shrink(),
-                        state is FinancialLoadadedState
-                            ? Container(
-                                margin: const EdgeInsets.only(bottom: 4),
-                                child: WalletCardWidget(presenter: presenter))
-                            : Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
-                                child: DHSkeleton(
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                        Container(
+                            margin: const EdgeInsets.only(bottom: 0),
+                            child: WalletCardWidget(presenter: presenter)),
+                        // state is FinancialLoadadedState
+                        //     ? Container(
+                        //         margin: const EdgeInsets.only(bottom: 4),
+                        //         child: WalletCardWidget(presenter: presenter))
+                        //     : presenter.homeResponseDto.data.partnerData
+                        //             .isBankAccountCreated
+                        //         ? Padding(
+                        //             padding:
+                        //                 const EdgeInsets.only(bottom: 16.0),
+                        //             child: DHSkeleton(
+                        //               child: Container(
+                        //                 width: double.infinity,
+                        //                 height: 200,
+                        //                 decoration: BoxDecoration(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(12),
+                        //                   color: Colors.black,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           )
+                        //         : const SizedBox.shrink(),
                         // state is FinancialLoadadedState
                         //     ? FinancialMovimentationsCard(
                         //         transactions: presenter
