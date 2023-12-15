@@ -81,7 +81,7 @@ class _CustomerRegisterBottomSheetState
                 height: 8,
               ),
               DHTextField(
-                title: "Telefone",
+                title: "Whatsapp",
                 hint: "(99) 999999-9999",
                 icon: Icons.phone_outlined,
                 formatters: [phoneFormatter],
@@ -96,7 +96,7 @@ class _CustomerRegisterBottomSheetState
               DHTextField(
                 title: "Placa (Opcional)",
                 hint: "XXX0000",
-                icon: Icons.fingerprint_outlined,
+                icon: Icons.car_rental_outlined,
                 formatters: [UpperCaseTextFormatter(), formatter],
                 onChanged: (_) {},
                 controller: plateControler,
