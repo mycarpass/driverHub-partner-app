@@ -52,7 +52,7 @@ class SalesListItemWidget extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 4,
+                      height: 8,
                     ),
                     Row(
                       children: [
