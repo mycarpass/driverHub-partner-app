@@ -32,40 +32,43 @@ class _ScheduledListViewState extends State<ScheduledListView> {
   Widget build(BuildContext context) {
     // var presenter = context.read<SchedulesPresenter>();
     return Scaffold(
-        appBar: AppBar().backButton(),
-        body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: BlocBuilder<SchedulesPresenter, DHState>(
-                builder: (context, state) {
-              return Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Text(daySelected.formatDate('dd, EEEE', 'pt_BR'))
-                        .title2_bold(),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    schedules.isEmpty
-                        ? const EmptyStateList(
-                            text:
-                                'Nenhum agendamento encontrado para a data selecionada.',
-                          )
-                        : ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(bottom: 32),
-                            itemCount: schedules.length,
-                            itemBuilder: (context, index) {
-                              return SolicitationListItemWidget(
-                                solicitationDataDto: schedules[index],
-                              );
-                            },
-                          ),
-                  ]);
-            })));
+      appBar: AppBar().backButton(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: BlocBuilder<SchedulesPresenter, DHState>(
+          builder: (context, state) {
+            return Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(daySelected.formatDate('dd, EEEE', 'pt_BR'))
+                      .title2_bold(),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  schedules.isEmpty
+                      ? const EmptyStateList(
+                          text:
+                              'Nenhum agendamento encontrado para a data selecionada.',
+                        )
+                      : ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.only(bottom: 32),
+                          itemCount: schedules.length,
+                          itemBuilder: (context, index) {
+                            return SolicitationListItemWidget(
+                              solicitationDataDto: schedules[index],
+                            );
+                          },
+                        ),
+                ]);
+          },
+        ),
+      ),
+    );
   }
 }
