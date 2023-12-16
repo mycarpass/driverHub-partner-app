@@ -45,6 +45,12 @@ class ProfilePresenter extends Cubit<DHState> {
     return "$firstLetter$secondLetter";
   }
 
+  String? getUrlLogo() {
+    return _homeInteractor.response.data.partnerData.thumb == ""
+        ? null
+        : _homeInteractor.response.data.partnerData.thumb;
+  }
+
   void openUrl(Uri uri) async {
     //Uri uri = Uri.parse(url);
     await canLaunchUrl(uri) ? _launchInBrowser(uri) : null;

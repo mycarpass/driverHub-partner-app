@@ -7,6 +7,7 @@ import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/home/presenter/entities/bank_entity.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
+import 'package:driver_hub_partner/features/home/presenter/onboarding_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
@@ -114,6 +115,7 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                     keyboardType: TextInputType.text,
                                     onChanged: (_) {
                                       agencyController.text = _;
+                                      presenter.bankAccountDto.agency = _;
                                     },
                                     formatters: [
                                       MaskTextInputFormatter(
@@ -141,6 +143,7 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                             signed: true),
                                     onChanged: (_) {
                                       accountController.text = _;
+                                      presenter.bankAccountDto.account = _;
                                     },
                                     controller: accountController,
                                   ))
@@ -214,19 +217,21 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                   ),
                   BlocBuilder<OnboardingPresenter, DHState>(
                       builder: (context, state) =>
-                          presenter.bankAccountDto.typePerson == "PJ" &&
-                                  accountCNPJ == null
-                              ? DHTextField(
-                                  //controller: cnpjController,
-                                  title: "CNPJ",
-                                  hint: "00.000.000/0001-00",
-                                  keyboardType: TextInputType.number,
-                                  icon: (Icons.numbers_rounded),
-                                  formatters: [formatterCNPJ],
-                                  onChanged: (cnpj) {
-                                    presenter.bankAccountDto.cnpj = cnpj;
-                                  },
-                                )
+                          state is ChangedTypePersonState
+                              ? presenter.bankAccountDto.typePerson == "PJ" &&
+                                      accountCNPJ!.isEmpty
+                                  ? DHTextField(
+                                      //controller: cnpjController,
+                                      title: "CNPJ",
+                                      hint: "00.000.000/0001-00",
+                                      keyboardType: TextInputType.number,
+                                      icon: (Icons.numbers_rounded),
+                                      formatters: [formatterCNPJ],
+                                      onChanged: (cnpj) {
+                                        presenter.bankAccountDto.cnpj = cnpj;
+                                      },
+                                    )
+                                  : const SizedBox.shrink()
                               : const SizedBox.shrink()),
                   const SizedBox(
                     height: 36,
@@ -252,17 +257,18 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                         onPressed: state is DHLoadingState
                             ? () {}
                             : () {
-                                if (agencyController.text.isNotEmpty &&
-                                    agencyController.text.length >= 3 &&
-                                    accountController.text.isNotEmpty &&
-                                    accountController.text.length >= 4 &&
+                                if (presenter.bankAccountDto.agency != null &&
+                                    presenter
+                                        .bankAccountDto.agency!.isNotEmpty &&
+                                    presenter.bankAccountDto.agency!.length >=
+                                        3 &&
+                                    presenter.bankAccountDto.account != null &&
+                                    presenter
+                                        .bankAccountDto.account!.isNotEmpty &&
+                                    presenter.bankAccountDto.account!.length >=
+                                        4 &&
                                     presenter.bankEntitySelected != null) {
-                                  presenter.bankAccountDto.agency =
-                                      agencyController.text;
-                                  presenter.bankAccountDto.account =
-                                      accountController.text;
-
-                                  if (accountCNPJ == null &&
+                                  if (accountCNPJ!.isEmpty &&
                                       presenter.bankAccountDto.typePerson ==
                                           "PJ" &&
                                       (presenter.bankAccountDto.cnpj == null ||
@@ -278,8 +284,9 @@ class BankAccountRegisterBottomSheet extends StatelessWidget {
                                     if (presenter.bankAccountDto.typePerson ==
                                         "PJ") {
                                       presenter.bankAccountDto.cnpj =
-                                          accountCNPJ ??
-                                              presenter.bankAccountDto.cnpj;
+                                          accountCNPJ!.isNotEmpty
+                                              ? accountCNPJ
+                                              : presenter.bankAccountDto.cnpj;
                                     }
 
                                     presenter.saveBankAccount();

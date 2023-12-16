@@ -58,14 +58,26 @@ class _HomeProfileViewState extends State<HomeProfileView>
                                   backgroundColor:
                                       AppColor.backgroundTransparent,
                                   arrowColor: Colors.transparent,
-                                  leading: CircleAvatar(
-                                    backgroundColor:
-                                        AppColor.backgroundTertiary,
-                                    child: Text(
-                                      presenter.getInitialsName(),
-                                      overflow: TextOverflow.ellipsis,
-                                    ).label1_bold(),
-                                  ),
+                                  leading: presenter.getUrlLogo() != null
+                                      ? SizedBox(
+                                          width: 48,
+                                          height: 48,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(48)),
+                                              child: Image.network(
+                                                presenter.getUrlLogo()!,
+                                                fit: BoxFit.cover,
+                                              )))
+                                      : CircleAvatar(
+                                          backgroundColor:
+                                              AppColor.backgroundTertiary,
+                                          child: Text(
+                                            presenter.getInitialsName(),
+                                            overflow: TextOverflow.ellipsis,
+                                          ).label1_bold(),
+                                        ),
                                   title: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
