@@ -88,7 +88,7 @@ class _SalesViewState extends State<SalesView>
                                     if (isSaleCreated != null &&
                                         isSaleCreated) {
                                       DHSnackBar().showSnackBar(
-                                          "Uhuuu",
+                                          "Parabéns!",
                                           "Sua nova venda foi registrada",
                                           DHSnackBarType.success);
                                       presenter.load();

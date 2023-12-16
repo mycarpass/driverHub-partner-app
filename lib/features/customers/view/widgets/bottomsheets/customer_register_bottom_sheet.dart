@@ -113,7 +113,7 @@ class _CustomerRegisterBottomSheetState
                     if (state is DHSuccessState) {
                       Navigator.of(context).pop(true);
                       DHSnackBar().showSnackBar(
-                          "Oba!",
+                          "Parabéns!",
                           "Cliente cadastrado com sucesso",
                           DHSnackBarType.success);
                     }

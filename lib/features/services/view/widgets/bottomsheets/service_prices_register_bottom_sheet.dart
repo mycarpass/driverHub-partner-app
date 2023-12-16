@@ -395,7 +395,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
                     Navigator.of(context).pop(true);
                     Navigator.of(context).pop(true);
                     DHSnackBar().showSnackBar(
-                        "Oba!",
+                        "Parabéns!",
                         "Serviço cadastrado com sucesso",
                         DHSnackBarType.success);
                   } else if (state is DHErrorState) {

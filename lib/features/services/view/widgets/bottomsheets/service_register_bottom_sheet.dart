@@ -93,7 +93,9 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                           CustomDropdown<ServiceEntity>.search(
                         hintText: state is LoadingServicesDropdownState
                             ? 'Aguarde carregando...'
-                            : 'Selecione o serviço',
+                            : state is EmptyDropdownState
+                                ? 'Nenhum serviço cadastrado'
+                                : 'Selecione o serviço',
                         items: presenter.serviceEntity.category ==
                                 ServiceCategory.services
                             ? presenter.dropDownServices

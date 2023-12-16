@@ -71,6 +71,12 @@ class ServicesDropDownPresenter extends Cubit<DHState> {
       dropDownServices = partnerServicesResponseDto.servicesToEntityList();
       dropDownWashes = partnerServicesResponseDto.washesToEntityList();
       allServices = [...dropDownWashes, ...dropDownServices];
+      if (allServices.isEmpty) {
+        [
+          ServiceEntity(null, "Nenhum serviço cadastrado", "", null, null,
+              ServiceCategory.wash, ServiceType.service, false)
+        ];
+      }
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());

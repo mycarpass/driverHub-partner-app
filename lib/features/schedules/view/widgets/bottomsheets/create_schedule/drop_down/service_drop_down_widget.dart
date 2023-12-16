@@ -60,7 +60,9 @@ class ServicesDropDownWidget extends StatelessWidget {
               return CustomDropdown<ServiceEntity>.search(
                 hintText: state is LoadingServicesDropdownState
                     ? 'Aguarde carregando...'
-                    : 'Adicione serviço(s)',
+                    : state is EmptyDropdownState
+                        ? 'Nenhum serviço cadastrado'
+                        : 'Adicione serviço(s)',
                 items: onlyRegisteredServices
                     ? presenter.allServices
                     : serviceCategory == ServiceCategory.wash

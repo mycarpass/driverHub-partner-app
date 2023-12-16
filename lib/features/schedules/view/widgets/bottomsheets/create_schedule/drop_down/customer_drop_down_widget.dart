@@ -27,13 +27,14 @@ class CustomerDropDownWidget extends StatelessWidget {
         child: Builder(builder: (context) {
           var presenter = context.read<CustomerDropDownPresenter>();
           controller.load = presenter.load;
-
           return BlocBuilder<CustomerDropDownPresenter, DHState>(
             builder: (context, state) => Builder(builder: (context) {
               return CustomDropdown<CustomerDto>.search(
                 hintText: state is LoadingServicesDropdownState
                     ? 'Aguarde carregando...'
-                    : 'Selecione o cliente',
+                    : state is EmptyDropdownState
+                        ? 'Nenhum cliente cadastrado'
+                        : 'Selecione o cliente',
                 items: presenter.customersResponseDto.customers,
                 searchHintText: "Buscar",
                 excludeSelected: true,

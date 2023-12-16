@@ -37,6 +37,18 @@ class CustomerDropDownPresenter extends Cubit<DHState> {
     try {
       emit(LoadingServicesDropdownState());
       customersResponseDto = await _customersInteractor.getCustomers();
+      if (customersResponseDto.customers.isEmpty) {
+        customersResponseDto.customers = [
+          CustomerDto(
+              customerId: 0,
+              status: CustomerStatus.notVerified,
+              name: "Nenhum cliente cadastrado",
+              phone: "xxxxx",
+              isSubscribed: false)
+        ];
+        emit(EmptyDropdownState());
+      }
+
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());
