@@ -54,7 +54,7 @@ class PartnerDataDto {
     isAnyServiceRegistered = json["isAnyServiceRegistered"] ?? false;
     isBankAccountCreated = json["is_bank_account_created"] ?? false;
     isSubscribed = json["is_subscribed"] ?? false;
-    daysTrialLeft = json["days_trial_left"] ?? 0;
+    daysTrialLeft = json["daysLeftTrial"] ?? 0;
   }
 }
 
