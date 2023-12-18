@@ -5,7 +5,6 @@ import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enu
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_finish_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_start_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/new_dates_schedule_action.dart';
 import 'package:flutter/material.dart';
@@ -69,10 +68,10 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     }
   }
 
-  Future finishSchedule(String code) async {
+  Future finishSchedule() async {
     try {
       emit(ScheduleLoadingButton());
-      await _schedulesInteractor.finishSchedule(scheduleId, code);
+      await _schedulesInteractor.finishSchedule(scheduleId);
       await _getScheduleDetail();
       emit(ScheduleFinishedSuccess());
     } catch (e) {
@@ -96,16 +95,7 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
         }
 
       case ScheduleStatus.inProgress:
-        // ignore: use_build_context_synchronously
-        dynamic code = await showModalBottomSheet<String>(
-            context: context,
-            isScrollControlled: true,
-            builder: (BuildContext context) {
-              return const ConfirmFinishScheduleWidget();
-            });
-        if (code != null && code != "") {
-          await finishSchedule(code);
-        }
+        await finishSchedule();
 
       default:
         return null;

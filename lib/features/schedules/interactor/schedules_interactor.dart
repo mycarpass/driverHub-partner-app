@@ -41,9 +41,9 @@ class SchedulesInteractor {
     }
   }
 
-  Future<dynamic> finishSchedule(int scheduleId, String code) async {
+  Future<dynamic> finishSchedule(int scheduleId) async {
     try {
-      return await _schedulesService.finishSchedule(scheduleId, code);
+      return await _schedulesService.finishSchedule(scheduleId);
     } catch (e) {
       rethrow;
     }
