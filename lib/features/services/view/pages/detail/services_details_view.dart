@@ -95,7 +95,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                         height: 12,
                       ),
                       SizedBox(
-                        height: 100,
+                        height: 150,
                         child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -129,17 +129,42 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  serviceDto.prices[index]
-                                                      .carBodyType.value,
-                                                ).label1_bold(),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      serviceDto.prices[index]
+                                                          .carBodyType.value,
+                                                    ).label1_bold(),
+                                                  ],
+                                                ),
                                                 const SizedBox(
                                                   height: 8,
                                                 ),
                                                 Text(
                                                   serviceDto.prices[index].price
                                                       .priceInReal,
-                                                ).label1_bold()
+                                                ).label1_bold(),
+                                                Row(
+                                                  children: [
+                                                    Text("Quantidade: ")
+                                                        .body_regular(),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text("120").body_bold(),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text("Rendeu: ")
+                                                        .body_regular(),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text("R\$ 100,00")
+                                                        .body_bold(),
+                                                  ],
+                                                ),
                                               ],
                                             )
                                           ],
