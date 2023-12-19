@@ -470,7 +470,7 @@ class VehicleDto {
   late String make;
   late String model;
   late CarBodyType bodyType;
-  late String plate;
+  String? plate;
 
   VehicleDto({
     required this.id,

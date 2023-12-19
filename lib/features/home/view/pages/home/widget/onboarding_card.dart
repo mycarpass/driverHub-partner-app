@@ -161,7 +161,7 @@ class OnboardingCardWidget extends StatelessWidget {
                             builder: (_) => BlocProvider(
                                 create: (context) =>
                                     ServicesRegisterPresenter()..load(),
-                                child: ServiceRegisterBottomSheet()),
+                                child: ServiceRegisterBottomSheet.create()),
                           );
                           if (isServiceRegistered != null &&
                               isServiceRegistered) {

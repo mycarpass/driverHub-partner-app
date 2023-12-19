@@ -57,16 +57,16 @@ class _CalendarScheduledBodyWidgetState
                 //                   : eventsList as List<ScheduleDataDto>));
                 //       // return ContactInfoSheetWidget(
                 //       //   onTapButton: () {
-                //       //     Uri uri = Uri(
-                //       //         host: "api.whatsapp.com",
-                //       //         scheme: "https",
-                //       //         path: "send",
-                //       //         queryParameters: {
-                //       //           "phone": "+5534984044391",
-                //       //           "text":
-                //       //               "[Fale conosco - DriverHub]: Gostaria de falar sobre..."
-                //       //         });
-                //       //     presenter.openUrl(uri);
+                // Uri uri = Uri(
+                //     host: "api.whatsapp.com",
+                //     scheme: "https",
+                //     path: "send",
+                //     queryParameters: {
+                //       "phone": "+5534984044391",
+                //       "text":
+                //           "[Fale conosco - DriverHub]: Gostaria de falar sobre..."
+                //     });
+                // presenter.openUrl(uri);
                 //       //   },
                 //     });
               },

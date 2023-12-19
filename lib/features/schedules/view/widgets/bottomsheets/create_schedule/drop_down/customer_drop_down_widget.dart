@@ -14,8 +14,11 @@ class CustomerDropDownController {
 
 // ignore: must_be_immutable
 class CustomerDropDownWidget extends StatelessWidget {
-  CustomerDropDownWidget(
-      {super.key, required this.onChanged, required this.controller});
+  CustomerDropDownWidget({
+    super.key,
+    required this.onChanged,
+    required this.controller,
+  });
 
   Function(CustomerDto) onChanged;
   final CustomerDropDownController controller;
@@ -27,7 +30,6 @@ class CustomerDropDownWidget extends StatelessWidget {
         child: Builder(builder: (context) {
           var presenter = context.read<CustomerDropDownPresenter>();
           controller.load = presenter.load;
-
           return BlocBuilder<CustomerDropDownPresenter, DHState>(
             builder: (context, state) => Builder(builder: (context) {
               return CustomDropdown<CustomerDto>.search(
