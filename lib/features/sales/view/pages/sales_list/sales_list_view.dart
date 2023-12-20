@@ -30,36 +30,39 @@ class _SalesListViewState extends State<SalesListView> {
     // var presenter = context.read<SchedulesPresenter>();
     return Scaffold(
       appBar: AppBar().backButton(),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 12,
-              ),
-              Text(daySelected.formatDate('dd, EEEE', 'pt_BR')).title2_bold(),
-              const SizedBox(
-                height: 24,
-              ),
-              sales.isEmpty
-                  ? const EmptyStateList(
-                      text: 'Nenhuma venda encontrado para a data selecionada.',
-                    )
-                  : ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(bottom: 32),
-                      itemCount: sales.length,
-                      itemBuilder: (context, index) {
-                        return SalesListItemWidget(
-                          solicitationDataDto: sales[index],
-                        );
-                      },
-                    ),
-            ],
-          )),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(daySelected.formatDate('dd, EEEE', 'pt_BR')).title2_bold(),
+                const SizedBox(
+                  height: 24,
+                ),
+                sales.isEmpty
+                    ? const EmptyStateList(
+                        text:
+                            'Nenhuma venda encontrado para a data selecionada.',
+                      )
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.only(bottom: 32),
+                        itemCount: sales.length,
+                        itemBuilder: (context, index) {
+                          return SalesListItemWidget(
+                            solicitationDataDto: sales[index],
+                          );
+                        },
+                      ),
+              ],
+            )),
+      ),
     );
   }
 }

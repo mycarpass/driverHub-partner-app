@@ -50,7 +50,7 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                         height: 12,
                       ),
                       const Divider(),
-                      _DetailsCellWidget(
+                      DetailsCellWidget(
                         items: [
                           customerDetailParams.customerDto.name,
                           customerDetailParams.customerDto.phone.value
@@ -77,11 +77,11 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                           ),
                         ),
                       ),
-                      _DetailsCellWidget(items: [
+                      DetailsCellWidget(items: [
                         customerDetailParams.customerDto.vehicle?.name ??
                             "Não informado"
                       ], title: "Veículo do cliente"),
-                      const _DetailsCellWidget(
+                      const DetailsCellWidget(
                           items: ["10/12/2022"], title: "Cliente desde"),
                       const SizedBox(
                         height: 12,
@@ -155,9 +155,9 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                       const SizedBox(
                         height: 12,
                       ),
-                      const _DetailsCellWidget(
+                      const DetailsCellWidget(
                           items: ["10"], title: "Quantidade de vendas"),
-                      const _DetailsCellWidget(
+                      const DetailsCellWidget(
                           items: ["R\$ 10,00"], title: "Total em vendas"),
                       SizedBox(
                         height: 100,
@@ -272,8 +272,8 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
   }
 }
 
-class _DetailsCellWidget extends StatelessWidget {
-  const _DetailsCellWidget(
+class DetailsCellWidget extends StatelessWidget {
+  const DetailsCellWidget(
       {super.key, required this.items, required this.title, this.iconButton});
 
   final List<String> items;

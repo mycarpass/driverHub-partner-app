@@ -45,19 +45,19 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                         height: 12,
                       ),
                       const Divider(),
-                      _DetailsCellWidget(
+                      DetailsCellWidget(
                           items: [serviceDto.name], title: "Nome do serviço"),
-                      _DetailsCellWidget(items: [
+                      DetailsCellWidget(items: [
                         serviceDto.description ?? "Descrição não informada"
                       ], title: "Descrição"),
-                      _DetailsCellWidget(
+                      DetailsCellWidget(
                           items: [serviceDto.friendlyTime],
                           title: "Tempo de execução"),
-                      const _DetailsCellWidget(
+                      const DetailsCellWidget(
                           items: ["1 dia"], title: "Pós venda:"),
-                      const _DetailsCellWidget(
+                      const DetailsCellWidget(
                           items: ["12 vezes"], title: "Ja foi feito:"),
-                      const _DetailsCellWidget(
+                      const DetailsCellWidget(
                           items: ["R\$ 100,00"], title: "Total em vendas:"),
                       Align(
                         alignment: Alignment.centerRight,
@@ -194,8 +194,8 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
   }
 }
 
-class _DetailsCellWidget extends StatelessWidget {
-  const _DetailsCellWidget(
+class DetailsCellWidget extends StatelessWidget {
+  const DetailsCellWidget(
       {super.key, required this.items, required this.title, this.iconButton});
 
   final List<String> items;
