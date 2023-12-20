@@ -36,23 +36,18 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Detalhes do cliente").label1_bold(),
+                      const Text("Detalhes da venda").label1_bold(),
                       const SizedBox(
                         height: 12,
                       ),
                       const Divider(),
                       DetailsCellWidget(
-                          items: ["Não informado"],
-                          title: "Veículo do cliente"),
-                      const DetailsCellWidget(
-                          items: ["10/12/2022"], title: "Cliente desde"),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      const Divider(),
-                      const SizedBox(
-                        height: 12,
-                      ),
+                          items: [salesDto.client.personName.name],
+                          title: "Nome do cliente"),
+                      DetailsCellWidget(
+                          items: [salesDto.client.phone], title: "Telefone"),
+                      DetailsCellWidget(
+                          items: [salesDto.client.phone], title: "Veículo"),
                       const DetailsCellWidget(
                           items: ["10"], title: "Quantidade de vendas"),
                       const DetailsCellWidget(
