@@ -11,13 +11,15 @@ class PartnerServicesResponseDto {
     washes = [];
     for (var service in json['data']['Serviços']) {
       PartnerServiceDto sls = PartnerServiceDto.fromJson(service);
-      if (sls.type == ServiceType.service) {
+      if (sls.type == ServiceType.service ||
+          sls.type == ServiceType.additional) {
         services.add(sls);
       }
     }
     for (var wash in json['data']['Lavagens']) {
       PartnerServiceDto wsh = PartnerServiceDto.fromJson(wash);
-      if (wsh.type == ServiceType.service) {
+      if (wsh.type == ServiceType.service ||
+          wsh.type == ServiceType.additional) {
         washes.add(wsh);
       }
     }
