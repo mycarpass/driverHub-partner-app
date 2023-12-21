@@ -103,6 +103,20 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
     }
   }
 
+  Future updateService() async {
+    try {
+      emit(DHLoadingState());
+      _fillPrices();
+      _fillAdditionalWashes();
+
+      await _servicesInteractor.updateService(serviceEntity);
+
+      emit(ServiceRegisteredSuccessful());
+    } catch (e) {
+      emit(DHErrorState());
+    }
+  }
+
   void _fillPrices() {
     serviceEntity.prices = [];
     ServiceRequestPrice priceHatch = ServiceRequestPrice(
@@ -161,10 +175,13 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
     emit(DropDownServiceSelected(serviceEntity: service));
   }
 
-  void setServiceCategory(String category) {
-    serviceEntity.id = null;
-    serviceEntity.name = "";
-    serviceEntity.description = "";
+  void setServiceCategory(String category, {bool shouldCleanData = true}) {
+    if (shouldCleanData) {
+      serviceEntity.id = null;
+      serviceEntity.name = "";
+      serviceEntity.description = "";
+    }
+
     switch (category) {
       case "Lavada":
         serviceEntity.category = ServiceCategory.wash;

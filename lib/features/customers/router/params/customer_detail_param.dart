@@ -1,5 +1,7 @@
-class CustomerDetailParams {
-  int customerId;
+import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 
-  CustomerDetailParams({required this.customerId});
+class CustomerDetailParams {
+  CustomerDto customerDto;
+
+  CustomerDetailParams({required this.customerDto});
 }

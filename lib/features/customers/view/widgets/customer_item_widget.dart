@@ -4,6 +4,9 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
+import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
+import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
+import 'package:driver_hub_partner/features/customers/view/pages/detail/customer_details_view.dart';
 import 'package:flutter/material.dart';
 
 class CustomerItemWidget extends StatelessWidget {
@@ -23,10 +26,12 @@ class CustomerItemWidget extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
       onPressed: () {
-        DHSnackBar().showSnackBar(
-            "😅 Ops..",
-            "Estamos trabalhando para liberar os detalhes do cliente nos próximos dias, aguarde... :)",
-            DHSnackBarType.warning);
+        Navigator.of(context).pushNamed(
+          CustomerRoutes.detail,
+          arguments: CustomerDetailParams(
+            customerDto: customerDto,
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),

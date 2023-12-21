@@ -1,3 +1,4 @@
+import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
@@ -21,7 +22,7 @@ class CustomerDto {
   late int customerId;
   late CustomerStatus status;
   late String name;
-  late String phone;
+  late PhoneValue phone;
   late bool isSubscribed;
   late String? spentValue;
   late int? quantityDoneSales;
@@ -42,6 +43,14 @@ class CustomerDto {
       this.quantityDoneSales,
       this.plate});
 
+  String getPlate() {
+    if (plate != null) {
+      return plate!;
+    } else {
+      return "Placa não cadastrada";
+    }
+  }
+
   bool isVehicleNull() {
     return customerId != 0 &&
         (vehicle == null ||
@@ -52,7 +61,7 @@ class CustomerDto {
     customerId = json['customerId'];
     status = _getStatus(json['status'] ?? "NOT_VERIFIED");
     name = json['name'];
-    phone = json['phone'];
+    phone = PhoneValue(value: json['phone']);
     email = json['email'];
     plate = json['car_licence_plate'];
     isSubscribed = json['isSubscribed'];

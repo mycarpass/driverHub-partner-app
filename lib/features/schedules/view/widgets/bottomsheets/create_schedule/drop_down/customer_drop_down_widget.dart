@@ -14,8 +14,11 @@ class CustomerDropDownController {
 
 // ignore: must_be_immutable
 class CustomerDropDownWidget extends StatelessWidget {
-  CustomerDropDownWidget(
-      {super.key, required this.onChanged, required this.controller});
+  CustomerDropDownWidget({
+    super.key,
+    required this.onChanged,
+    required this.controller,
+  });
 
   Function(CustomerDto) onChanged;
   final CustomerDropDownController controller;

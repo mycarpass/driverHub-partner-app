@@ -95,13 +95,17 @@ class PartnerServiceDto {
   late int quantityDoneServices;
   late String totalAmountBilling;
   List<PriceDto> prices = [];
+  late String friendlyTime;
+  late int hourTime;
 
-  PartnerServiceDto(
-      {required this.serviceId,
-      required this.description,
-      required this.name,
-      required this.type,
-      required this.isLiveOnApp});
+  PartnerServiceDto({
+    required this.serviceId,
+    required this.description,
+    required this.name,
+    required this.type,
+    required this.isLiveOnApp,
+    required this.friendlyTime,
+  });
 
   PartnerServiceDto.fromJson(Map<String, dynamic> json) {
     serviceId = json['partner_service_id'];
@@ -111,9 +115,28 @@ class PartnerServiceDto {
     isLiveOnApp = json['is_live_on_app'] ?? false;
     quantityDoneServices = json['quantity_done_services'] ?? 0;
     totalAmountBilling = json['total_amount_billed'] ?? "R\$ 0,00";
-
+    friendlyTime = _convertToFriendlyHour(json["max_time"]);
+    hourTime = _convertToHour(json["max_time"]);
     for (var price in json["prices"]) {
       prices.add(PriceDto.fromJson(price));
+    }
+  }
+
+  int _convertToHour(int? minutes) {
+    if (minutes == null) {
+      return 0;
+    } else {
+      return minutes ~/ 60;
+    }
+  }
+
+  String _convertToFriendlyHour(int? minutes) {
+    if (minutes == null) {
+      return "Tempo não informado";
+    } else {
+      var inHours = minutes / 60;
+
+      return "${inHours.toInt()} hora(s)";
     }
   }
 

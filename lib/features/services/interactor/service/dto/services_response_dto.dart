@@ -216,6 +216,8 @@ class PriceDto {
         return CarBodyType.pickup;
       case "HIGH_VALUE_PICKUP":
         return CarBodyType.ram;
+      case "VAN_OR_UTILITY":
+        return CarBodyType.van;
       default:
         return CarBodyType.hatchback;
     }
@@ -227,6 +229,7 @@ enum CarBodyType {
   sedan("Sedan"),
   suv("SUV"),
   pickup("Caminhonete"),
+  van("Van"),
   ram("RAM");
 
   const CarBodyType(this.value);
@@ -246,6 +249,8 @@ extension GetCarBodyTypeByString on CarBodyType {
         return CarBodyType.pickup;
       case "HIGH_VALUE_PICKUP":
         return CarBodyType.ram;
+      case "VAN_OR_UTILITY":
+        return CarBodyType.van;
       default:
         return CarBodyType.hatchback;
     }
