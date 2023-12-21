@@ -130,31 +130,31 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                               const SizedBox(
                                 height: 12,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      showModalBottomSheet<bool?>(
-                                        context: context,
-                                        showDragHandle: true,
-                                        isScrollControlled: true,
-                                        builder: (_) => BlocProvider(
-                                          create: (context) =>
-                                              CustomerRegisterPresenter(),
-                                          child: CustomerRegisterBottomSheet
-                                              .update(
-                                            customerDetailParams.customerDto,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "Editar dados do cliente",
-                                    ),
-                                  )
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.end,
+                              //   children: [
+                              //     TextButton(
+                              //       onPressed: () {
+                              //         showModalBottomSheet<bool?>(
+                              //           context: context,
+                              //           showDragHandle: true,
+                              //           isScrollControlled: true,
+                              //           builder: (_) => BlocProvider(
+                              //             create: (context) =>
+                              //                 CustomerRegisterPresenter(),
+                              //             child: CustomerRegisterBottomSheet
+                              //                 .update(
+                              //               customerDetailParams.customerDto,
+                              //             ),
+                              //           ),
+                              //         );
+                              //       },
+                              //       child: const Text(
+                              //         "Editar dados do cliente",
+                              //       ),
+                              //     )
+                              //   ],
+                              // ),
                               const SizedBox(
                                 height: 24,
                               ),
@@ -215,7 +215,7 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                     .priceInReal
                               ], title: "Total em vendas"),
                               SizedBox(
-                                height: 100,
+                                height: 80,
                                 child: BlocBuilder<CustomerDetailsPresenter,
                                     DHState>(builder: (context, state) {
                                   if (state is! DHLoadingState) {
@@ -293,9 +293,7 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                   }
                                 }),
                               ),
-                              const SizedBox(
-                                height: 16,
-                              ),
+
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(

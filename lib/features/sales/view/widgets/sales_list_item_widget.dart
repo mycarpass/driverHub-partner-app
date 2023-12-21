@@ -27,6 +27,11 @@ class SalesListItemWidget extends StatelessWidget {
           //   SalesRoutes.salesDetail,
           //   arguments: solicitationDataDto,
           // );
+
+          DHSnackBar().showSnackBar(
+              "😅 Ops..",
+              "Estamos trabalhando para liberar os detalhes da venda nos próximos dias, aguarde... :)",
+              DHSnackBarType.warning);
         },
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),

@@ -40,7 +40,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Detalhes da serviço").label1_bold(),
+                      const Text("Detalhes do serviço").label1_bold(),
                       const SizedBox(
                         height: 12,
                       ),
