@@ -58,100 +58,94 @@ class _CustomerRegisterBottomSheetState
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CustomerRegisterPresenter(),
-      child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.7,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  const Text("Cadastrar cliente").label1_bold(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  DHTextField(
-                    hint: "Joao da silva",
-                    title: "Nome",
-                    icon: Icons.person_outline,
-                    onChanged: (_) {
-                      nameController.text = _;
-                    },
-                    controller: nameController,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  DHTextField(
-                    title: "Whatsapp",
-                    hint: "(99) 999999-9999",
-                    icon: Icons.phone_outlined,
-                    formatters: [phoneFormatter],
-                    onChanged: (_) {
-                      phoneController.text = _;
-                    },
-                    controller: phoneController,
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  DHTextField(
-                    title: "Placa (Opcional)",
-                    hint: "XXX0000",
-                    icon: Icons.car_rental_outlined,
-                    formatters: [UpperCaseTextFormatter(), formatter],
-                    onChanged: (_) {},
-                    controller: plateControler,
-                  ),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  BlocConsumer<CustomerRegisterPresenter, DHState>(
-                      listener: (context, state) {
-                    if (state is DHSuccessState) {
-                      Navigator.of(context).pop(true);
-                      DHSnackBar().showSnackBar(
-                          "Parabéns!",
-                          "Cliente cadastrado com sucesso",
-                          DHSnackBarType.success);
-                    }
-                  }, builder: (context, state) {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: state is DHLoadingState
-                            ? () {}
-                            : () => nameController.text.isNotEmpty &&
-                                    phoneController.text.isNotEmpty
-                                ? context
-                                    .read<CustomerRegisterPresenter>()
-                                    .register(
-                                      name: nameController.text,
-                                      phone: phoneController.text,
-                                      plate: plateControler.text,
-                                    )
-                                : DHSnackBar().showSnackBar(
-                                    "Ops...",
-                                    "Preencha o nome e o telefone",
-                                    DHSnackBarType.error),
-                        child: state is DHLoadingState
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  color: AppColor.backgroundColor,
-                                ),
-                              )
-                            : const Text("Cadastrar"),
-                      ),
-                    );
-                  })
-                ],
+      child: SizedBox(
+        height: MediaQuery.sizeOf(context).height * 0.7,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const Text("Cadastrar cliente").label1_bold(),
+              const SizedBox(
+                height: 16,
               ),
-            ),
-          )),
+              DHTextField(
+                hint: "Joao da silva",
+                title: "Nome",
+                icon: Icons.person_outline,
+                onChanged: (_) {
+                  nameController.text = _;
+                },
+                controller: nameController,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DHTextField(
+                title: "Whatsapp",
+                hint: "(99) 999999-9999",
+                icon: Icons.phone_outlined,
+                formatters: [phoneFormatter],
+                onChanged: (_) {
+                  phoneController.text = _;
+                },
+                controller: phoneController,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              DHTextField(
+                title: "Placa (Opcional)",
+                hint: "XXX0000",
+                icon: Icons.car_rental_outlined,
+                formatters: [UpperCaseTextFormatter(), formatter],
+                onChanged: (_) {},
+                controller: plateControler,
+              ),
+              const SizedBox(
+                height: 32,
+              ),
+              BlocConsumer<CustomerRegisterPresenter, DHState>(
+                  listener: (context, state) {
+                if (state is DHSuccessState) {
+                  Navigator.of(context).pop(true);
+                  DHSnackBar().showSnackBar("Parabéns!",
+                      "Cliente cadastrado com sucesso", DHSnackBarType.success);
+                }
+              }, builder: (context, state) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: state is DHLoadingState
+                        ? () {}
+                        : () => nameController.text.isNotEmpty &&
+                                phoneController.text.isNotEmpty
+                            ? context
+                                .read<CustomerRegisterPresenter>()
+                                .register(
+                                  name: nameController.text,
+                                  phone: phoneController.text,
+                                  plate: plateControler.text,
+                                )
+                            : DHSnackBar().showSnackBar(
+                                "Ops...",
+                                "Preencha o nome e o telefone",
+                                DHSnackBarType.error),
+                    child: state is DHLoadingState
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: AppColor.backgroundColor,
+                            ),
+                          )
+                        : const Text("Cadastrar"),
+                  ),
+                );
+              })
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
