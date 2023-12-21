@@ -69,7 +69,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
         height: MediaQuery.sizeOf(context).height * 0.8,
         child: SingleChildScrollView(
             child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

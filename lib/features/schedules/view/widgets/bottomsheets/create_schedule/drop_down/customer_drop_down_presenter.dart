@@ -44,7 +44,7 @@ class CustomerDropDownPresenter extends Cubit<DHState> {
               customerId: 0,
               status: CustomerStatus.notVerified,
               name: "Nenhum cliente cadastrado",
-              phone: "xxxxx",
+              phone: PhoneValue(value: ""),
               isSubscribed: false)
         ];
         emit(EmptyDropdownState());
