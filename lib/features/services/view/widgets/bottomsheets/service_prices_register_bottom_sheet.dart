@@ -4,6 +4,8 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
@@ -12,13 +14,54 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class ServicePricesBottomSheet extends StatelessWidget {
-  const ServicePricesBottomSheet({
-    super.key,
-  });
+  const ServicePricesBottomSheet._({super.key, this.serviceDto});
+
+  factory ServicePricesBottomSheet.create() {
+    return const ServicePricesBottomSheet._();
+  }
+
+  factory ServicePricesBottomSheet.update(PartnerServiceDto _serviceDto) {
+    return ServicePricesBottomSheet._(
+      serviceDto: _serviceDto,
+    );
+  }
+
+  final PartnerServiceDto? serviceDto;
 
   @override
   Widget build(BuildContext context) {
     var presenter = context.read<ServicesRegisterPresenter>();
+
+    if (serviceDto != null) {
+      presenter.serviceEntity.id = serviceDto!.serviceId;
+      presenter.priceHatchController.text = serviceDto!.prices
+          .where((element) => element.carBodyType == CarBodyType.hatchback)
+          .first
+          .price
+          .priceInReal;
+      presenter.priceSedanController.text = serviceDto!.prices
+          .where((element) => element.carBodyType == CarBodyType.sedan)
+          .first
+          .price
+          .priceInReal;
+      presenter.priceSuvController.text = serviceDto!.prices
+          .where((element) => element.carBodyType == CarBodyType.suv)
+          .first
+          .price
+          .priceInReal;
+      ;
+      presenter.pricePickupController.text = serviceDto!.prices
+          .where((element) => element.carBodyType == CarBodyType.pickup)
+          .first
+          .price
+          .priceInReal;
+      ;
+      presenter.priceRAMController.text = serviceDto!.prices
+          .where((element) => element.carBodyType == CarBodyType.ram)
+          .first
+          .price
+          .priceInReal;
+    }
     return SizedBox(
       height: MediaQuery.sizeOf(context).height * 0.8,
       child: SingleChildScrollView(
@@ -398,7 +441,9 @@ class ServicePricesBottomSheet extends StatelessWidget {
                       ? () {}
                       : () {
                           if (presenter.isValideToContinue()) {
-                            presenter.saveService();
+                            serviceDto != null
+                                ? presenter.updateService()
+                                : presenter.saveService();
                           } else {
                             DHSnackBar().showSnackBar(
                                 "Ops...",
@@ -414,7 +459,9 @@ class ServicePricesBottomSheet extends StatelessWidget {
                             color: AppColor.backgroundColor,
                           ),
                         )
-                      : const Text("Cadastrar"),
+                      : serviceDto != null
+                          ? const Text("Salvar")
+                          : const Text("Cadastrar"),
                 ),
               );
             }),

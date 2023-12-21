@@ -57,8 +57,10 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
       presenter.serviceEntity.description =
           partnerServiceDto!.description ?? "";
       timeController.text = partnerServiceDto!.hourTime.toString();
+      presenter.serviceEntity.name = partnerServiceDto!.name;
 
-      presenter.setServiceCategory(partnerServiceDto!.type.name);
+      presenter.setServiceCategory(partnerServiceDto!.type.name,
+          shouldCleanData: false);
       partnerServiceDto!.type == ServiceType.service
           ? defaultServiceTypeSelected = "Serviço"
           : DoNothingAction();
@@ -292,9 +294,13 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                                       showDragHandle: true,
                                       isScrollControlled: true,
                                       builder: (_) => BlocProvider.value(
-                                          value: presenter,
-                                          child:
-                                              const ServicePricesBottomSheet()),
+                                        value: presenter,
+                                        child: isCreatingService
+                                            ? ServicePricesBottomSheet.create()
+                                            : ServicePricesBottomSheet.update(
+                                                partnerServiceDto!,
+                                              ),
+                                      ),
                                     );
 
                                     if (isServiceRegistered != null &&

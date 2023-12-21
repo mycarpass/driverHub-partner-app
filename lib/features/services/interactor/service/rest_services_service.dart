@@ -43,4 +43,16 @@ class RestServicesService implements ServicesService {
       rethrow;
     }
   }
+
+  @override
+  Future updateService(ServiceEntity entity) async {
+    try {
+      Response response = await _httpClient.put("/partner/service/${entity.id}",
+          body: entity.toJson());
+
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

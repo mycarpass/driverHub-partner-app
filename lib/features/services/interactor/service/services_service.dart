@@ -6,4 +6,5 @@ abstract class ServicesService {
   Future<ServicesResponseDto> getServicesDropDown();
   Future<PartnerServicesResponseDto> getPartnerServices();
   Future<dynamic> saveService(ServiceEntity entity);
+  Future<dynamic> updateService(ServiceEntity entity);
 }
