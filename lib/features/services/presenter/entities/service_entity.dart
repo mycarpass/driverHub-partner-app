@@ -83,6 +83,59 @@ class ServiceEntity with CustomDropdownListFilter {
     };
   }
 
+  Map<String, dynamic> toUpdateServiceJson() {
+    List<Map<String, dynamic>> jsonPrices = [];
+    for (var price in prices) {
+      jsonPrices.add(price.toJson());
+    }
+    if (prices.isNotEmpty) {
+      jsonPrices.add({
+        "carBodyType": 4,
+        "value": prices[1].value.getStringValueWithoutSimbols(),
+      });
+
+      jsonPrices.add({
+        "carBodyType": 5,
+        "value": prices[1].value.getStringValueWithoutSimbols(),
+      });
+
+      jsonPrices.add({
+        "carBodyType": 6,
+        "value": prices[1].value.getStringValueWithoutSimbols(),
+      });
+
+      jsonPrices.add({
+        "carBodyType": 7,
+        "value": prices[2].value.getStringValueWithoutSimbols(),
+      });
+    }
+
+    List<Map<String, dynamic>> jsonAdditionalWashes = [];
+    if (additionalWashes != null) {
+      for (var additional in additionalWashes!) {
+        jsonAdditionalWashes.add(additional.toJson());
+      }
+    }
+
+    return {
+      "services": [
+        {
+          "partner_service_description": description,
+          "min_time": _fetchTimeHoursInMinutes(),
+          "max_time": _fetchTimeHoursInMinutes(),
+          "day_pos_sales": daysPosSales,
+          "is_live_on_app": isLiveOnApp,
+          "prices": jsonPrices,
+
+          ///TODO Add update of commented lines on backend
+
+          // "additionalWashes":
+          // additionalWashes != null ? jsonAdditionalWashes : null
+        }
+      ]
+    };
+  }
+
   int? _fetchTimeHoursInMinutes() {
     if (serviceTimeHours == null || serviceTimeHours == "") {
       return null;

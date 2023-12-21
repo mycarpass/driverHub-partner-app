@@ -48,7 +48,7 @@ class RestServicesService implements ServicesService {
   Future updateService(ServiceEntity entity) async {
     try {
       Response response = await _httpClient.put("/partner/service/${entity.id}",
-          body: entity.toJson());
+          body: entity.toUpdateServiceJson());
 
       return response.data;
     } catch (e) {

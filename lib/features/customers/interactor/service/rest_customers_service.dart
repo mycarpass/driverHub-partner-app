@@ -7,6 +7,7 @@ import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
 import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/customers_service.dart';
+import 'package:driver_hub_partner/features/customers/interactor/service/dto/customer_details_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customer_register_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
@@ -56,6 +57,17 @@ class RestCustomerService implements CustomersService {
             friendlyDate: "12/12/23",
             createdAt: "")
       ];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CustomerDetailsDto> getCustomersDetails(String id) async {
+    try {
+      Response response = await _httpClient.get("/partner/leads/$id");
+
+      return CustomerDetailsDto.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

@@ -49,13 +49,12 @@ class ServicePricesBottomSheet extends StatelessWidget {
           .first
           .price
           .priceInReal;
-      ;
       presenter.pricePickupController.text = serviceDto!.prices
           .where((element) => element.carBodyType == CarBodyType.pickup)
           .first
           .price
           .priceInReal;
-      ;
+
       presenter.priceRAMController.text = serviceDto!.prices
           .where((element) => element.carBodyType == CarBodyType.ram)
           .first
@@ -70,7 +69,11 @@ class ServicePricesBottomSheet extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(child: const Text("Cadastrar preços").label1_bold()),
+            Center(
+                child: Text(serviceDto != null
+                        ? "Editar preços"
+                        : "Cadastrar preços")
+                    .label1_bold()),
             const SizedBox(
               height: 24,
             ),

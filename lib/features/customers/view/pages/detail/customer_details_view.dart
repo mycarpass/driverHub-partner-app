@@ -31,243 +31,308 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
     var presenter = context.read<CustomerDetailsPresenter>()
       ..load(customerDetailParams.customerDto.customerId.toString());
 
-    return Builder(
-      builder: (context) {
-        return Scaffold(
-          appBar: AppBar().backButton(),
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Detalhes do cliente").label1_bold(),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Divider(),
-                      DetailsCellWidget(
-                        items: [
-                          customerDetailParams.customerDto.name,
-                          customerDetailParams.customerDto.phone.value
+    return BlocBuilder<CustomerDetailsPresenter, DHState>(
+      builder: (context, state) => Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar().backButton(),
+            body: SafeArea(
+              child: state is DHLoadingState
+                  ? Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: DHSkeleton(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 450,
+                                    width: double.infinity,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: DHSkeleton(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    width: double.infinity,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
-                        title: "Cliente",
-                        iconButton: IconButton(
-                          onPressed: () {
-                            Uri uri = Uri(
-                              host: "api.whatsapp.com",
-                              scheme: "https",
-                              path: "send",
-                              queryParameters: {
-                                "phone":
-                                    "+55${customerDetailParams.customerDto.phone.withoutSymbolValue}",
-                                // "text":
-                                //     "Olá, "
-                              },
-                            );
-                            presenter.openUrl(uri);
-                          },
-                          icon: const Icon(
-                            Icons.chat,
-                            color: AppColor.accentColor,
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Detalhes do cliente").label1_bold(),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              const Divider(),
+                              DetailsCellWidget(
+                                items: [
+                                  customerDetailParams.customerDto.name,
+                                  customerDetailParams.customerDto.phone.value
+                                ],
+                                title: "Cliente",
+                                iconButton: IconButton(
+                                  onPressed: () {
+                                    Uri uri = Uri(
+                                      host: "api.whatsapp.com",
+                                      scheme: "https",
+                                      path: "send",
+                                      queryParameters: {
+                                        "phone":
+                                            "+55${customerDetailParams.customerDto.phone.withoutSymbolValue}",
+                                        // "text":
+                                        //     "Olá, "
+                                      },
+                                    );
+                                    presenter.openUrl(uri);
+                                  },
+                                  icon: const Icon(
+                                    Icons.chat,
+                                    color: AppColor.accentColor,
+                                  ),
+                                ),
+                              ),
+                              DetailsCellWidget(items: [
+                                customerDetailParams
+                                        .customerDto.vehicle?.name ??
+                                    "Não informado"
+                              ], title: "Veículo do cliente"),
+                              DetailsCellWidget(items: [
+                                presenter.customerDetailsDto.data.createdAt ??
+                                    presenter.customerDetailsDto.data
+                                        .salesHistory.first.saleDate
+                              ], title: "Cliente desde"),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      showModalBottomSheet<bool?>(
+                                        context: context,
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        builder: (_) => BlocProvider(
+                                          create: (context) =>
+                                              CustomerRegisterPresenter(),
+                                          child: CustomerRegisterBottomSheet
+                                              .update(
+                                            customerDetailParams.customerDto,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Editar dados do cliente",
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text("Vendas para essse cliente")
+                                      .label2_bold(),
+                                  IconButton(
+                                    onPressed: () async {
+                                      bool? isSaleCreated =
+                                          await showModalBottomSheet<bool>(
+                                        context: context,
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        builder: (context) =>
+                                            CreateSaleBottomSheet(
+                                          selectedCustomer:
+                                              customerDetailParams.customerDto,
+                                        ),
+                                      );
+
+                                      if (isSaleCreated != null &&
+                                          isSaleCreated) {
+                                        DHSnackBar().showSnackBar(
+                                            "Uhuuu",
+                                            "Sua nova venda foi registrada",
+                                            DHSnackBarType.success);
+                                        presenter.load(
+                                          customerDetailParams
+                                              .customerDto.customerId
+                                              .toString(),
+                                        );
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.add,
+                                      color: AppColor.accentColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              const Divider(),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              DetailsCellWidget(items: [
+                                presenter
+                                    .customerDetailsDto.data.salesHistory.length
+                                    .toString()
+                              ], title: "Quantidade de vendas"),
+                              DetailsCellWidget(items: [
+                                presenter.customerDetailsDto.data.totalSold
+                                    .priceInReal
+                              ], title: "Total em vendas"),
+                              SizedBox(
+                                height: 100,
+                                child: BlocBuilder<CustomerDetailsPresenter,
+                                    DHState>(builder: (context, state) {
+                                  if (state is! DHLoadingState) {
+                                    return ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) =>
+                                          ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                            Colors.white,
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.monetization_on,
+                                                    color: AppColor.accentColor,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 16,
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        presenter
+                                                            .salesByCustomer[
+                                                                index]
+                                                            .friendlyDate,
+                                                      ).label1_bold(),
+                                                      const SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        presenter
+                                                            .salesByCustomer[
+                                                                index]
+                                                            .totalAmountPaid
+                                                            .priceInReal,
+                                                      ).label1_bold()
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(
+                                        width: 8,
+                                      ),
+                                      itemCount:
+                                          presenter.salesByCustomer.length,
+                                    );
+                                  } else {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: DHSkeleton(
+                                        child: Container(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () async {
+                                    bool? isScheduleCreated =
+                                        await showModalBottomSheet(
+                                      context: context,
+                                      showDragHandle: true,
+                                      isScrollControlled: true,
+                                      builder: (context) =>
+                                          CreateScheduleBottomSheet(
+                                              selectedCustomer:
+                                                  customerDetailParams
+                                                      .customerDto),
+                                    );
+
+                                    if (isScheduleCreated != null &&
+                                        isScheduleCreated) {
+                                      // presenter.load();
+                                      DHSnackBar().showSnackBar(
+                                          "Sucesso!",
+                                          "Seu novo agendamento foi criado",
+                                          DHSnackBarType.success);
+                                    }
+                                  },
+                                  child: const Text("Criar agendamento"),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
-                      DetailsCellWidget(items: [
-                        customerDetailParams.customerDto.vehicle?.name ??
-                            "Não informado"
-                      ], title: "Veículo do cliente"),
-                      const DetailsCellWidget(
-                          items: ["10/12/2022"], title: "Cliente desde"),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              showModalBottomSheet<bool?>(
-                                context: context,
-                                showDragHandle: true,
-                                isScrollControlled: true,
-                                builder: (_) => BlocProvider(
-                                  create: (context) =>
-                                      CustomerRegisterPresenter(),
-                                  child: CustomerRegisterBottomSheet.update(
-                                    customerDetailParams.customerDto,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              "Editar dados do cliente",
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Vendas para essse cliente").label2_bold(),
-                          IconButton(
-                            onPressed: () async {
-                              bool? isSaleCreated =
-                                  await showModalBottomSheet<bool>(
-                                context: context,
-                                showDragHandle: true,
-                                isScrollControlled: true,
-                                builder: (context) => CreateSaleBottomSheet(
-                                  selectedCustomer:
-                                      customerDetailParams.customerDto,
-                                ),
-                              );
-
-                              if (isSaleCreated != null && isSaleCreated) {
-                                DHSnackBar().showSnackBar(
-                                    "Uhuuu",
-                                    "Sua nova venda foi registrada",
-                                    DHSnackBarType.success);
-                                presenter.load(
-                                  customerDetailParams.customerDto.customerId
-                                      .toString(),
-                                );
-                              }
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                              color: AppColor.accentColor,
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Divider(),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const DetailsCellWidget(
-                          items: ["10"], title: "Quantidade de vendas"),
-                      const DetailsCellWidget(
-                          items: ["R\$ 10,00"], title: "Total em vendas"),
-                      SizedBox(
-                        height: 100,
-                        child: BlocBuilder<CustomerDetailsPresenter, DHState>(
-                            builder: (context, state) {
-                          if (state is! DHLoadingState) {
-                            return ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) => ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                    Colors.white,
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.monetization_on,
-                                            color: AppColor.accentColor,
-                                          ),
-                                          const SizedBox(
-                                            width: 16,
-                                          ),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                presenter.salesByCustomer[index]
-                                                    .friendlyDate,
-                                              ).label1_bold(),
-                                              const SizedBox(
-                                                height: 8,
-                                              ),
-                                              Text(
-                                                presenter
-                                                    .salesByCustomer[index]
-                                                    .totalAmountPaid
-                                                    .priceInReal,
-                                              ).label1_bold()
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                width: 8,
-                              ),
-                              itemCount: presenter.salesByCustomer.length,
-                            );
-                          } else {
-                            return ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: DHSkeleton(
-                                child: Container(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () async {
-                            bool? isScheduleCreated =
-                                await showModalBottomSheet(
-                              context: context,
-                              showDragHandle: true,
-                              isScrollControlled: true,
-                              builder: (context) => CreateScheduleBottomSheet(
-                                  selectedCustomer:
-                                      customerDetailParams.customerDto),
-                            );
-
-                            if (isScheduleCreated != null &&
-                                isScheduleCreated) {
-                              // presenter.load();
-                              DHSnackBar().showSnackBar(
-                                  "Sucesso!",
-                                  "Seu novo agendamento foi criado",
-                                  DHSnackBarType.success);
-                            }
-                          },
-                          child: const Text("Criar agendamento"),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                    ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

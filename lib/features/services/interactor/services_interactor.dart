@@ -34,7 +34,7 @@ class ServicesInteractor {
 
   Future<dynamic> updateService(ServiceEntity entity) async {
     try {
-      return await _servicesService.saveService(entity);
+      return await _servicesService.updateService(entity);
     } catch (e) {
       rethrow;
     }
