@@ -123,9 +123,15 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                     "Não informado"
                               ], title: "Veículo do cliente"),
                               DetailsCellWidget(items: [
-                                presenter.customerDetailsDto.data.createdAt ??
-                                    presenter.customerDetailsDto.data
-                                        .salesHistory.first.saleDate
+                                presenter.customerDetailsDto.data.createdAt !=
+                                        null
+                                    ? presenter
+                                        .customerDetailsDto.data.createdAt!
+                                    : presenter.customerDetailsDto.data
+                                            .salesHistory.isNotEmpty
+                                        ? presenter.customerDetailsDto.data
+                                            .salesHistory.first.saleDate
+                                        : "Nenhum serviço realizado ainda"
                               ], title: "Cliente desde"),
                               const SizedBox(
                                 height: 12,
