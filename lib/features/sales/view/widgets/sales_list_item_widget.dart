@@ -23,10 +23,10 @@ class SalesListItemWidget extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all(Colors.transparent),
             elevation: MaterialStateProperty.all(0)),
         onPressed: () {
-          Navigator.of(context).pushNamed(
-            SalesRoutes.salesDetail,
-            arguments: solicitationDataDto,
-          );
+          // Navigator.of(context).pushNamed(
+          //   SalesRoutes.salesDetail,
+          //   arguments: solicitationDataDto,
+          // );
         },
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),
