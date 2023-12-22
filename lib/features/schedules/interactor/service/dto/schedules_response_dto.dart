@@ -359,8 +359,8 @@ class ClientScheduleDto {
   });
 
   ClientScheduleDto.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
-    phone = json["phone"];
+    name = json["name"] ?? "Não carregado";
+    phone = json["phone"] ?? "Não carregado";
   }
 
   String getFirstAndLastName() {
