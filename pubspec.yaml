@@ -121,6 +121,7 @@ flutter:
     - lib/assets/images/home/
     - lib/assets/images/home/schedule_home/
     - lib/assets/images/washer/
+    - lib/assets/images/cars/
     - lib/assets/animations/
 
 

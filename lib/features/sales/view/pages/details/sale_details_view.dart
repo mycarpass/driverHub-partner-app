@@ -25,7 +25,11 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
     return Builder(
       builder: (context) {
         return Scaffold(
-          appBar: AppBar().backButton(),
+          appBar: AppBar().modalAppBar(
+              title: "Venda",
+              showHeaderIcon: false,
+              doneButtonIsEnabled: false,
+              doneButtonText: 'Editar'),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

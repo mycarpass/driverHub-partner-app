@@ -97,6 +97,8 @@ class PartnerServiceDto {
   List<PriceDto> prices = [];
   late String friendlyTime;
   late int hourTime;
+  late int? daysPosSales;
+  late ServiceCategory category;
 
   PartnerServiceDto({
     required this.serviceId,
@@ -105,6 +107,7 @@ class PartnerServiceDto {
     required this.type,
     required this.isLiveOnApp,
     required this.friendlyTime,
+    required this.category,
   });
 
   PartnerServiceDto.fromJson(Map<String, dynamic> json) {
@@ -112,7 +115,9 @@ class PartnerServiceDto {
     name = json['name'];
     description = json['description'] ?? "";
     type = _getType(json['type']);
+    category = _getCategory(json['category']);
     isLiveOnApp = json['is_live_on_app'] ?? false;
+    daysPosSales = json['day_pos_sales'];
     quantityDoneServices = json['quantity_done_services'] ?? 0;
     totalAmountBilling = json['total_amount_billed'] ?? "R\$ 0,00";
     friendlyTime = _convertToFriendlyHour(json["max_time"]);
@@ -148,6 +153,17 @@ class PartnerServiceDto {
         return ServiceType.additional;
       default:
         return ServiceType.service;
+    }
+  }
+
+  ServiceCategory _getCategory(String category) {
+    switch (category) {
+      case "Lavagens":
+        return ServiceCategory.wash;
+      case "Serviços":
+        return ServiceCategory.services;
+      default:
+        return ServiceCategory.services;
     }
   }
 }

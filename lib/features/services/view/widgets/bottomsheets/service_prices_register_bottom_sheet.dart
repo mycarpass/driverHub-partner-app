@@ -11,6 +11,7 @@ import 'package:driver_hub_partner/features/services/presenter/services_state.da
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class ServicePricesBottomSheet extends StatelessWidget {
@@ -124,7 +125,20 @@ class ServicePricesBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Hatch').body_bold(),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            CarBodyType.hatchback.icon,
+                            height: 30,
+                            colorFilter: const ColorFilter.mode(
+                                AppColor.blackColor, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text('Hatch').body_bold(),
+                        ],
+                      ),
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 12),
@@ -158,7 +172,20 @@ class ServicePricesBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Sedan').body_bold(),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            CarBodyType.sedan.icon,
+                            height: 30,
+                            colorFilter: const ColorFilter.mode(
+                                AppColor.blackColor, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text('Sedan').body_bold(),
+                        ],
+                      ),
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 12),
@@ -192,7 +219,20 @@ class ServicePricesBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('SUV').body_bold(),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            CarBodyType.suv.icon,
+                            height: 30,
+                            colorFilter: const ColorFilter.mode(
+                                AppColor.blackColor, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text('SUV').body_bold(),
+                        ],
+                      ),
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 12),
@@ -225,7 +265,20 @@ class ServicePricesBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Caminhonete').body_bold(),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            CarBodyType.pickup.icon,
+                            height: 30,
+                            colorFilter: const ColorFilter.mode(
+                                AppColor.blackColor, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text('Caminhonete').body_bold(),
+                        ],
+                      ),
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 12),
@@ -258,7 +311,20 @@ class ServicePricesBottomSheet extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('RAM').body_bold(),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            CarBodyType.ram.icon,
+                            height: 30,
+                            colorFilter: const ColorFilter.mode(
+                                AppColor.blackColor, BlendMode.srcIn),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text('RAM').body_bold(),
+                        ],
+                      ),
                       Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 12),

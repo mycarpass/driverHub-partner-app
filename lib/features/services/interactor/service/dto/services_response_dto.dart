@@ -1,6 +1,7 @@
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
+import 'package:driver_hub_partner/features/services/view/resources/services_resources.dart';
 
 class ServicesResponseDto {
   late List<ServiceDto> services;
@@ -225,15 +226,16 @@ class PriceDto {
 }
 
 enum CarBodyType {
-  hatchback("Hatch"),
-  sedan("Sedan"),
-  suv("SUV"),
-  pickup("Caminhonete"),
-  van("Van"),
-  ram("RAM");
+  hatchback("Hatch", ServicesResources.hatchIcon),
+  sedan("Sedan", ServicesResources.sedanIcon),
+  suv("SUV", ServicesResources.suvIcon),
+  pickup("Caminhonete", ServicesResources.caminhoneteIcon),
+  van("Van", ServicesResources.suvIcon),
+  ram("RAM", ServicesResources.ramIcon);
 
-  const CarBodyType(this.value);
+  const CarBodyType(this.value, this.icon);
   final String value;
+  final String icon;
 }
 
 extension GetCarBodyTypeByString on CarBodyType {

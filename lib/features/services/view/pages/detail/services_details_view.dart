@@ -2,12 +2,14 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/details/service_details_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
 import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/service_register_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ServicesDetailsView extends StatefulWidget {
   const ServicesDetailsView({
@@ -29,161 +31,211 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
     return Builder(
       builder: (context) {
         return Scaffold(
-          appBar: AppBar().backButton(),
+          appBar: AppBar().modalAppBar(
+              title: 'Serviço',
+              showHeaderIcon: false,
+              doneButtonIsEnabled: false,
+              backButtonsIsVisible: true,
+              onDonePressed: () async {
+                bool? isServiceRegistered = await showModalBottomSheet<bool?>(
+                  context: context,
+                  showDragHandle: true,
+                  isScrollControlled: true,
+                  builder: (_) => BlocProvider(
+                    create: (context) => ServicesRegisterPresenter()..load(),
+                    child: ServiceRegisterBottomSheet.update(serviceDto),
+                  ),
+                );
+                if (isServiceRegistered != null && isServiceRegistered) {
+                  // ignore: use_build_context_synchronously
+                  // homePresenter.load();
+                }
+              },
+              doneButtonText: 'Editar'),
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(24.0),
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Detalhes do serviço").label1_bold(),
-                      const SizedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                serviceDto.category == ServiceCategory.wash
+                                    ? CustomIcons.dhCarWash
+                                    : CustomIcons.dhCarService,
+                                size: 24,
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Text(serviceDto.name).label1_bold()
+                            ],
+                          ),
+                          serviceDto.category == ServiceCategory.wash &&
+                                  serviceDto.type == ServiceType.additional
+                              ? Container(
+                                  margin: const EdgeInsets.only(bottom: 6),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(6, 4, 6, 4),
+                                  decoration: BoxDecoration(
+                                      color: Colors.lightBlue[100],
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(6))),
+                                  child: Row(children: [
+                                    const Icon(
+                                      CustomIcons.dhSun,
+                                      size: 12,
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    const Text('Adicional').caption2_bold()
+                                  ]),
+                                )
+                              : const SizedBox.shrink(),
+                        ]),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text('Descrição do serviço').caption1_regular(),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(serviceDto.description ?? 'Descrição não informada')
+                        .body_regular(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    const Text('Visível no App para Clientes?')
+                        .caption1_regular(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      width: serviceDto.isLiveOnApp ? 65 : 85,
+                      padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
+                      decoration: BoxDecoration(
+                          color: serviceDto.isLiveOnApp
+                              ? AppColor.supportColor
+                              : AppColor.borderColor,
+                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                      child: Row(children: [
+                        Icon(
+                          serviceDto.isLiveOnApp
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          size: 12,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(serviceDto.isLiveOnApp ? 'Visível' : 'Não visível')
+                            .caption2_bold()
+                      ]),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text('Tempo médio de execução').caption1_regular(),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(serviceDto.friendlyTime).body_regular(),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text('Dias de pós-vendas').caption1_regular(),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(serviceDto.daysPosSales != null
+                            ? serviceDto.daysPosSales.toString()
+                            : "Não informado")
+                        .body_regular(),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text('Dados sobre esse serviço').label2_bold(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        const Text('Já foi vendido ').body_regular(),
+                        Text(serviceDto.quantityDoneServices.toString())
+                            .body_bold(),
+                        const Text(' vezes').body_regular(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Row(
+                      children: [
+                        const Text('Somando um total de ').body_regular(),
+                        Text(serviceDto.totalAmountBilling.toString())
+                            .body_bold(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text("Preços por carroceria").label1_bold(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    ListView.separated(
+                      itemCount: serviceDto.prices.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) => const SizedBox(
                         height: 12,
                       ),
-                      const Divider(),
-                      DetailsCellWidget(
-                          items: [serviceDto.name], title: "Nome do serviço"),
-                      DetailsCellWidget(items: [
-                        serviceDto.description ?? "Descrição não informada"
-                      ], title: "Descrição"),
-                      DetailsCellWidget(
-                          items: [serviceDto.friendlyTime],
-                          title: "Tempo de execução"),
-                      const DetailsCellWidget(
-                          items: ["1 dia"], title: "Pós venda:"),
-                      const DetailsCellWidget(
-                          items: ["12 vezes"], title: "Ja foi feito:"),
-                      const DetailsCellWidget(
-                          items: ["R\$ 100,00"], title: "Total em vendas:"),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                            onPressed: () async {
-                              bool? isServiceRegistered =
-                                  await showModalBottomSheet<bool?>(
-                                context: context,
-                                showDragHandle: true,
-                                isScrollControlled: true,
-                                builder: (_) => BlocProvider(
-                                  create: (context) =>
-                                      ServicesRegisterPresenter()..load(),
-                                  child: ServiceRegisterBottomSheet.update(
-                                      serviceDto),
-                                ),
-                              );
-                              if (isServiceRegistered != null &&
-                                  isServiceRegistered) {
-                                // ignore: use_build_context_synchronously
-                                // homePresenter.load();
-                              }
-                            },
-                            child: Text("Editar serviço")),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      const Text("Preços").label1_bold(),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Divider(),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      SizedBox(
-                        height: 150,
-                        child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) => ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      Colors.white,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      serviceDto.prices[index].carBodyType.icon,
+                                      height: 30,
+                                      colorFilter: const ColorFilter.mode(
+                                          AppColor.blackColor, BlendMode.srcIn),
                                     ),
-                                  ),
-                                  onPressed: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              CustomIcons.dhCar,
-                                              color: AppColor.accentColor,
-                                            ),
-                                            const SizedBox(
-                                              width: 16,
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      serviceDto.prices[index]
-                                                          .carBodyType.value,
-                                                    ).label1_bold(),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 8,
-                                                ),
-                                                Text(
-                                                  serviceDto.prices[index].price
-                                                      .priceInReal,
-                                                ).label1_bold(),
-                                                Row(
-                                                  children: [
-                                                    Text("Quantidade: ")
-                                                        .body_regular(),
-                                                    SizedBox(
-                                                      width: 8,
-                                                    ),
-                                                    Text("120").body_bold(),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text("Rendeu: ")
-                                                        .body_regular(),
-                                                    SizedBox(
-                                                      width: 8,
-                                                    ),
-                                                    Text("R\$ 100,00")
-                                                        .body_bold(),
-                                                  ],
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                    const SizedBox(
+                                      width: 4,
                                     ),
-                                  ),
+                                    Text(serviceDto
+                                            .prices[index].carBodyType.value)
+                                        .body_bold()
+                                  ],
                                 ),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                            itemCount: serviceDto.prices.length),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                    ],
-                  ),
+                                const Text('10 vendas e ganhou R\$ 600,00')
+                                    .body_regular(
+                                        style: const TextStyle(
+                                            color: AppColor.textTertiaryColor))
+                              ],
+                            ),
+                            Text(serviceDto.prices[index].price.priceInReal)
+                                .body_bold()
+                          ],
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
