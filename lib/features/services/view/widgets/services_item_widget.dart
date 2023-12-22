@@ -22,12 +22,12 @@ class ServiceItemWidget extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
       onPressed: () {
-        // Navigator.of(context)
-        //     .pushNamed(ServicesRoutes.servicesDetail, arguments: serviceDto);
-        DHSnackBar().showSnackBar(
-            "😅 Ops..",
-            "Estamos trabalhando para liberar os detalhes do serviço nos próximos dias, aguarde... :)",
-            DHSnackBarType.warning);
+        Navigator.of(context)
+            .pushNamed(ServicesRoutes.servicesDetail, arguments: serviceDto);
+        // DHSnackBar().showSnackBar(
+        //     "😅 Ops..",
+        //     "Estamos trabalhando para liberar os detalhes do serviço nos próximos dias, aguarde... :)",
+        //     DHSnackBarType.warning);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),

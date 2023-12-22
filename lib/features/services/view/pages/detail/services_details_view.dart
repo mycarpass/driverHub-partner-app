@@ -175,7 +175,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                 ),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(
-                                  width: 8,
+                                  width: 16,
                                 ),
                             itemCount: serviceDto.prices.length),
                       ),
@@ -216,6 +216,7 @@ class DetailsCellWidget extends StatelessWidget {
               height: 8,
             ),
             ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) => const SizedBox(
                 height: 4,
               ),
