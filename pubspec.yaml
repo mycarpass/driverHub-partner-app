@@ -56,7 +56,6 @@ dependencies:
     git:
       url: https://github.com/mycarpass/dh_ui_kit_light
       ref: main
- 
   dh_navigation:
     git:
       url: https://github.com/mycarpass/dh_navigation

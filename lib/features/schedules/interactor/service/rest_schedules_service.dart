@@ -64,7 +64,7 @@ class RestSchedulesService implements SchedulesService {
   Future<dynamic> finishSchedule(int scheduleId) async {
     try {
       Response response = await _httpClient
-          .put("/partner/finish-schedule/$scheduleId");
+          .put("/partner/finish-schedule/$scheduleId", body: {"code": ""});
 
       return response.data;
     } catch (e) {

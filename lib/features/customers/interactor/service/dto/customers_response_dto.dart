@@ -1,3 +1,4 @@
+import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
@@ -24,7 +25,7 @@ class CustomerDto {
   late String name;
   late PhoneValue phone;
   late bool isSubscribed;
-  late String? spentValue;
+  late MoneyValue? spentValue;
   late int? quantityDoneSales;
   late String? email;
   late String? plate;
@@ -65,7 +66,7 @@ class CustomerDto {
     email = json['email'];
     plate = json['car_licence_plate'];
     isSubscribed = json['isSubscribed'];
-    spentValue = json['totalSpent'];
+    spentValue = MoneyValue(json['totalSpent']);
     quantityDoneSales = json['quantityDoneSales'] ?? 0;
     if (json["vehicle"] != null && json["vehicle"] is List) {
       for (var vehicle in json["vehicle"]) {

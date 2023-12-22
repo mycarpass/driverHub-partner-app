@@ -38,7 +38,7 @@ class Data {
 class SalesHistory {
   late int saleId;
   late List<Services> services;
-  late String totalAmountPaid;
+  late MoneyValue totalAmountPaid;
   late String discountValue;
   late String saleDate;
 
@@ -50,9 +50,22 @@ class SalesHistory {
         services.add(Services.fromJson(v));
       });
     }
-    totalAmountPaid = json['total_amount_paid'];
+    totalAmountPaid = MoneyValue(json['total_amount_paid']);
     discountValue = json['discount_value'];
     saleDate = json['sale_date'];
+  }
+
+  String getServicesRaw() {
+    String servicesRaw = '';
+    for (var i = 0; i < services.length; i++) {
+      if (i == services.length - 1) {
+        servicesRaw += services[i].serviceName;
+      } else {
+        servicesRaw += "${services[i].serviceName} + ";
+      }
+    }
+
+    return servicesRaw;
   }
 }
 

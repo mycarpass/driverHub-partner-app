@@ -24,6 +24,7 @@ class CustomerDetailsPresenter extends Cubit<DHState> {
 
       customerDetailsDto =
           await customersInteractor.getCustomersDetails(customerId);
+      customerDetailsDto.data.salesHistory;
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());
