@@ -143,12 +143,21 @@ class _CustomerRegisterBottomSheetState
                     listener: (context, state) {
                   if (state is DHSuccessState) {
                     Navigator.of(context).pop(true);
+                    Navigator.of(context).pop(true);
                     DHSnackBar().showSnackBar(
                         "Oba!",
                         widget.isCreatingCustomer
                             ? "Cliente cadastrado com sucesso!"
                             : "Cliente editado com sucesso!",
                         DHSnackBarType.success);
+                  }
+
+                  if (state is DHErrorState) {
+                    Navigator.of(context).pop(true);
+                    DHSnackBar().showSnackBar(
+                        "Opss...",
+                        "Não foi possível atualizar os dados desse cliente",
+                        DHSnackBarType.error);
                   }
                 }, builder: (context, state) {
                   return SizedBox(
@@ -158,13 +167,22 @@ class _CustomerRegisterBottomSheetState
                           ? () {}
                           : () => nameController.text.isNotEmpty &&
                                   phoneController.text.isNotEmpty
-                              ? context
-                                  .read<CustomerRegisterPresenter>()
-                                  .register(
-                                    name: nameController.text,
-                                    phone: phoneController.text,
-                                    plate: plateControler.text,
-                                  )
+                              ? widget.isCreatingCustomer
+                                  ? context
+                                      .read<CustomerRegisterPresenter>()
+                                      .register(
+                                        name: nameController.text,
+                                        phone: phoneController.text,
+                                        plate: plateControler.text,
+                                      )
+                                  : context
+                                      .read<CustomerRegisterPresenter>()
+                                      .update(
+                                          name: nameController.text,
+                                          phone: phoneController.text,
+                                          plate: plateControler.text,
+                                          id: widget.customerDto!.customerId
+                                              .toString())
                               : DHSnackBar().showSnackBar(
                                   "Ops...",
                                   "Preencha o nome e o telefone",

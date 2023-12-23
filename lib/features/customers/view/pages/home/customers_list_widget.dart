@@ -19,32 +19,34 @@ class CustomersListBodyWidget extends StatefulWidget {
 class _CustomersListBodyWidgetState extends State<CustomersListBodyWidget> {
   @override
   Widget build(BuildContext context) {
-    // var presenter = context.read<CustomersPresenter>();
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child:
-            BlocBuilder<CustomersPresenter, DHState>(builder: (context, state) {
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: BlocBuilder<CustomersPresenter, DHState>(
+        builder: (context, state) {
           return Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                widget.customers.isEmpty
-                    ? const Center(
-                        child: EmptyStateList(
-                        text: 'Nenhum cliente encontrado \nainda por aqui :|',
-                      ))
-                    : ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(bottom: 32),
-                        itemCount: widget.customers.length,
-                        itemBuilder: (context, index) {
-                          return CustomerItemWidget(
-                            customerDto: widget.customers[index],
-                          );
-                        },
-                      ),
-              ]);
-        }));
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              widget.customers.isEmpty
+                  ? const Center(
+                      child: EmptyStateList(
+                      text: 'Nenhum cliente encontrado \nainda por aqui :|',
+                    ))
+                  : ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(bottom: 32),
+                      itemCount: widget.customers.length,
+                      itemBuilder: (context, index) {
+                        return CustomerItemWidget(
+                          customerDto: widget.customers[index],
+                        );
+                      },
+                    ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

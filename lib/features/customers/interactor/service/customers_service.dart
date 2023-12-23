@@ -8,4 +8,6 @@ abstract class CustomersService {
   Future<CustomerDetailsDto> getCustomersDetails(String id);
   Future<List<SalesDto>> getSalesByCustomer(String customerId);
   Future<void> registerCustomer(CustomerRegisterDto customerRegisterDto);
+  Future<void> update(
+      CustomerRegisterDto customerRegisterDto, String customerId);
 }

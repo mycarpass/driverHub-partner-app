@@ -38,6 +38,18 @@ class RestCustomerService implements CustomersService {
   }
 
   @override
+  Future<void> update(
+      CustomerRegisterDto customerRegisterDto, String customerId) async {
+    try {
+      Response response = await _httpClient.put("/partner/leads/$customerId",
+          body: customerRegisterDto.toJson());
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<SalesDto>> getSalesByCustomer(String customerUd) async {
     try {
       // Response response = await _httpClient.get("/partner/leads");

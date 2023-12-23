@@ -4,10 +4,12 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
+import 'package:driver_hub_partner/features/customers/presenter/customers_presenter.dart';
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/customers/view/pages/detail/customer_details_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomerItemWidget extends StatelessWidget {
   const CustomerItemWidget({
@@ -19,19 +21,24 @@ class CustomerItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var presenter = context.read<CustomersPresenter>();
+
     return ElevatedButton(
       style: ButtonStyle(
           padding: const MaterialStatePropertyAll(EdgeInsets.zero),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
-      onPressed: () {
-        Navigator.of(context).pushNamed(
+      onPressed: () async {
+        var result = await Navigator.of(context).pushNamed(
           CustomerRoutes.detail,
           arguments: CustomerDetailParams(
             customerDto: customerDto,
           ),
         );
+        if (result != null && result == true) {
+          presenter.load();
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),

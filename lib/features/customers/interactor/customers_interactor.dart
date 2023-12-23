@@ -36,4 +36,9 @@ class CustomersInteractor {
   Future<void> registerCustomer(CustomerRegisterDto customerRegisterDto) async {
     await _customersService.registerCustomer(customerRegisterDto);
   }
+
+  Future<void> update(
+      CustomerRegisterDto customerRegisterDto, String id) async {
+    await _customersService.update(customerRegisterDto, id);
+  }
 }

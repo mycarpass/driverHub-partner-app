@@ -154,76 +154,146 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                         height: 8,
                                       ),
                                       SizedBox(
-                                          width: 200,
-                                          height: 40,
-                                          child: TextButton(
-                                              style: ButtonStyle(
-                                                  elevation:
-                                                      const MaterialStatePropertyAll(
-                                                          0.0),
-                                                  shape:
-                                                      MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                  ),
-                                                  tapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                  padding:
-                                                      const MaterialStatePropertyAll(
-                                                          EdgeInsets.zero)),
-                                              onPressed: () {
-                                                Uri uri = Uri(
-                                                  host: "api.whatsapp.com",
-                                                  scheme: "https",
-                                                  path: "send",
-                                                  queryParameters: {
-                                                    "phone":
-                                                        "+55${customerDetailParams.customerDto.phone.withoutSymbolValue}",
-                                                    // "text":
-                                                    //     "Olá, "
-                                                  },
-                                                );
-                                                presenter.openUrl(uri);
+                                        width: 200,
+                                        height: 40,
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  const MaterialStatePropertyAll(
+                                                      0.0),
+                                              shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                              ),
+                                              tapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
+                                              padding:
+                                                  const MaterialStatePropertyAll(
+                                                      EdgeInsets.zero)),
+                                          onPressed: () {
+                                            Uri uri = Uri(
+                                              host: "api.whatsapp.com",
+                                              scheme: "https",
+                                              path: "send",
+                                              queryParameters: {
+                                                "phone":
+                                                    "+55${customerDetailParams.customerDto.phone.withoutSymbolValue}",
+                                                // "text":
+                                                //     "Olá, "
                                               },
-                                              child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius.all(
-                                                              Radius.circular(
-                                                                  8)),
-                                                      border: Border.all(
-                                                          color: AppColor
-                                                              .accentColor)),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Icon(
-                                                        CustomIcons.dhWhatsapp,
-                                                        size: 16,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 8,
-                                                      ),
-                                                      const Text(
-                                                        'Chamar no WhatsApp',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ).body_regular(
-                                                          style: const TextStyle(
-                                                              color: AppColor
-                                                                  .accentColor))
-                                                    ],
-                                                  )))),
+                                            );
+                                            presenter.openUrl(uri);
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(8)),
+                                                border: Border.all(
+                                                    color:
+                                                        AppColor.accentColor)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                  CustomIcons.dhWhatsapp,
+                                                  size: 16,
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                const Text(
+                                                  'Chamar no WhatsApp',
+                                                  textAlign: TextAlign.center,
+                                                ).body_regular(
+                                                    style: const TextStyle(
+                                                        color: AppColor
+                                                            .accentColor))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
 
                                       const SizedBox(height: 12),
+
+                                      SizedBox(
+                                        width: 200,
+                                        height: 40,
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                            elevation:
+                                                const MaterialStatePropertyAll(
+                                                    0.0),
+                                            shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            ),
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
+                                            padding:
+                                                const MaterialStatePropertyAll(
+                                                    EdgeInsets.zero),
+                                          ),
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              showDragHandle: true,
+                                              builder: (context) =>
+                                                  CustomerRegisterBottomSheet
+                                                      .update(
+                                                customerDetailParams
+                                                    .customerDto,
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(8)),
+                                              border: Border.all(
+                                                color:
+                                                    AppColor.textTertiaryColor,
+                                              ),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Icon(
+                                                  Icons.edit,
+                                                  size: 16,
+                                                  color: AppColor
+                                                      .textTertiaryColor,
+                                                ),
+                                                const SizedBox(
+                                                  width: 8,
+                                                ),
+                                                const Text(
+                                                  'Editar dados do cliente',
+                                                  textAlign: TextAlign.center,
+                                                ).body_regular(
+                                                  style: const TextStyle(
+                                                    color: AppColor
+                                                        .textTertiaryColor,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 12),
+
                                       // Text('Ações').body_regular(),
                                       // const SizedBox(height: 12),
                                       Row(

@@ -24,4 +24,20 @@ class CustomerRegisterPresenter extends Cubit<DHState> {
       emit(DHErrorState());
     }
   }
+
+  Future<void> update(
+      {required String name,
+      required String phone,
+      required String plate,
+      required String id}) async {
+    try {
+      emit(DHLoadingState());
+
+      await customersInteractor.update(
+          CustomerRegisterDto(name: name, plate: plate, phone: phone), id);
+      emit(DHSuccessState());
+    } catch (e) {
+      emit(DHErrorState());
+    }
+  }
 }
