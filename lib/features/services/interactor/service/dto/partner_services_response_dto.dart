@@ -129,16 +129,20 @@ class PartnerServiceDto {
 
   List<PriceDto> getOnlyDefaultPrices() {
     var _prices = prices
-        .where((element) => element.carBodyType != CarBodyType.van)
+        .where((element) =>
+            (element.carBodyType != CarBodyType.van) &&
+            (element.carBodyType != CarBodyType.stationwagon) &&
+            (element.carBodyType != CarBodyType.convertible) &&
+            (element.carBodyType != CarBodyType.coupe))
         .toSet()
         .toList();
 
-    _prices.removeWhere((element) =>
-        _prices
-            .where((_el) => _el.carBodyType == element.carBodyType)
-            .toList()
-            .length >
-        1);
+    // _prices.removeWhere((element) =>
+    //     _prices
+    //         .where((_el) => _el.carBodyType == element.carBodyType)
+    //         .toList()
+    //         .length >
+    //     1);
 
     return _prices;
   }

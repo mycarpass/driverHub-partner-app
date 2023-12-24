@@ -219,8 +219,14 @@ class PriceDto {
         return CarBodyType.ram;
       case "VAN_OR_UTILITY":
         return CarBodyType.van;
+      case "COUPE":
+        return CarBodyType.coupe;
+      case "STATION_WAGON":
+        return CarBodyType.stationwagon;
+      case "CONVERTIBLE":
+        return CarBodyType.convertible;
       default:
-        return CarBodyType.hatchback;
+        return CarBodyType.convertible;
     }
   }
 }
@@ -231,7 +237,10 @@ enum CarBodyType {
   suv("SUV", ServicesResources.suvIcon),
   pickup("Caminhonete", ServicesResources.caminhoneteIcon),
   van("Van", ServicesResources.suvIcon),
-  ram("RAM", ServicesResources.ramIcon);
+  ram("RAM", ServicesResources.ramIcon),
+  coupe("Coupe", ServicesResources.ramIcon),
+  stationwagon("STATION WAGON", ServicesResources.ramIcon),
+  convertible("Conversível", ServicesResources.ramIcon);
 
   const CarBodyType(this.value, this.icon);
   final String value;
@@ -253,8 +262,14 @@ extension GetCarBodyTypeByString on CarBodyType {
         return CarBodyType.ram;
       case "VAN_OR_UTILITY":
         return CarBodyType.van;
+      case "COUPE":
+        return CarBodyType.coupe;
+      case "STATION_WAGON":
+        return CarBodyType.stationwagon;
+      case "CONVERTIBLE":
+        return CarBodyType.convertible;
       default:
-        return CarBodyType.hatchback;
+        return CarBodyType.convertible;
     }
   }
 
@@ -270,8 +285,16 @@ extension GetCarBodyTypeByString on CarBodyType {
         return 3;
       case CarBodyType.ram:
         return 9;
+      case CarBodyType.van:
+        return 7;
+      case CarBodyType.coupe:
+        return 4;
+      case CarBodyType.convertible:
+        return 6;
+      case CarBodyType.stationwagon:
+        return 5;
       default:
-        return 1;
+        return 8;
     }
   }
 }

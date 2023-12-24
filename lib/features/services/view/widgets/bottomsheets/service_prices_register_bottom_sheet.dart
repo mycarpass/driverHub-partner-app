@@ -36,31 +36,51 @@ class ServicePricesBottomSheet extends StatelessWidget {
     if (serviceDto != null) {
       presenter.serviceEntity.id = serviceDto!.serviceId;
       presenter.priceHatchController.text = serviceDto!.prices
-          .where((element) => element.carBodyType == CarBodyType.hatchback)
-          .first
-          .price
-          .priceInReal;
+              .where((element) => element.carBodyType == CarBodyType.hatchback)
+              .isEmpty
+          ? "R\$ 0,00"
+          : serviceDto!.prices
+              .where((element) => element.carBodyType == CarBodyType.hatchback)
+              .first
+              .price
+              .priceInReal;
       presenter.priceSedanController.text = serviceDto!.prices
-          .where((element) => element.carBodyType == CarBodyType.sedan)
-          .first
-          .price
-          .priceInReal;
+              .where((element) => element.carBodyType == CarBodyType.sedan)
+              .isEmpty
+          ? "R\$ 0,00"
+          : serviceDto!.prices
+              .where((element) => element.carBodyType == CarBodyType.sedan)
+              .first
+              .price
+              .priceInReal;
       presenter.priceSuvController.text = serviceDto!.prices
-          .where((element) => element.carBodyType == CarBodyType.suv)
-          .first
-          .price
-          .priceInReal;
+              .where((element) => element.carBodyType == CarBodyType.suv)
+              .isEmpty
+          ? "R\$ 0,00"
+          : serviceDto!.prices
+              .where((element) => element.carBodyType == CarBodyType.suv)
+              .first
+              .price
+              .priceInReal;
       presenter.pricePickupController.text = serviceDto!.prices
-          .where((element) => element.carBodyType == CarBodyType.pickup)
-          .first
-          .price
-          .priceInReal;
+              .where((element) => element.carBodyType == CarBodyType.pickup)
+              .isEmpty
+          ? "R\$ 0,00"
+          : serviceDto!.prices
+              .where((element) => element.carBodyType == CarBodyType.pickup)
+              .first
+              .price
+              .priceInReal;
 
       presenter.priceRAMController.text = serviceDto!.prices
-          .where((element) => element.carBodyType == CarBodyType.ram)
-          .first
-          .price
-          .priceInReal;
+              .where((element) => element.carBodyType == CarBodyType.ram)
+              .isEmpty
+          ? "R\$ 0,00"
+          : serviceDto!.prices
+              .where((element) => element.carBodyType == CarBodyType.ram)
+              .first
+              .price
+              .priceInReal;
     }
     return GestureDetector(
       onTap: () {

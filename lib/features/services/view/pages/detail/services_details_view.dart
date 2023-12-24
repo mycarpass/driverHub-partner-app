@@ -234,7 +234,10 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                 //             color: AppColor.textTertiaryColor))
                               ],
                             ),
-                            Text(serviceDto.prices[index].price.priceInReal)
+                            Text(serviceDto
+                                    .getOnlyDefaultPrices()[index]
+                                    .price
+                                    .priceInReal)
                                 .body_bold()
                           ],
                         );
