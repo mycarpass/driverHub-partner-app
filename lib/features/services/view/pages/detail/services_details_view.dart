@@ -34,7 +34,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
           appBar: AppBar().modalAppBar(
               title: 'Serviço',
               showHeaderIcon: false,
-              doneButtonIsEnabled: false,
+              doneButtonIsEnabled: true,
               backButtonsIsVisible: true,
               onDonePressed: () async {
                 bool? isServiceRegistered = await showModalBottomSheet<bool?>(
@@ -48,7 +48,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                 );
                 if (isServiceRegistered != null && isServiceRegistered) {
                   // ignore: use_build_context_synchronously
-                  // homePresenter.load();
+                  // presenter.load();
                 }
               },
               doneButtonText: 'Editar'),
@@ -162,28 +162,28 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                     const SizedBox(
                       height: 24,
                     ),
-                    const Text('Dados sobre esse serviço').label2_bold(),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        const Text('Já foi vendido ').body_regular(),
-                        Text(serviceDto.quantityDoneServices.toString())
-                            .body_bold(),
-                        const Text(' vezes').body_regular(),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
-                      children: [
-                        const Text('Somando um total de ').body_regular(),
-                        Text(serviceDto.totalAmountBilling.toString())
-                            .body_bold(),
-                      ],
-                    ),
+                    // const Text('Dados sobre esse serviço').label2_bold(),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     const Text('Já foi vendido ').body_regular(),
+                    //     Text(serviceDto.quantityDoneServices.toString())
+                    //         .body_bold(),
+                    //     const Text(' vezes').body_regular(),
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   height: 4,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     const Text('Somando um total de ').body_regular(),
+                    //     Text(serviceDto.totalAmountBilling.toString())
+                    //         .body_bold(),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 24,
                     ),
@@ -192,7 +192,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                       height: 8,
                     ),
                     ListView.separated(
-                      itemCount: serviceDto.prices.length,
+                      itemCount: serviceDto.getOnlyDefaultPrices().length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       separatorBuilder: (context, index) => const SizedBox(
@@ -210,7 +210,10 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(
-                                      serviceDto.prices[index].carBodyType.icon,
+                                      serviceDto
+                                          .getOnlyDefaultPrices()[index]
+                                          .carBodyType
+                                          .icon,
                                       height: 30,
                                       colorFilter: const ColorFilter.mode(
                                           AppColor.blackColor, BlendMode.srcIn),
@@ -219,14 +222,16 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                       width: 4,
                                     ),
                                     Text(serviceDto
-                                            .prices[index].carBodyType.value)
+                                            .getOnlyDefaultPrices()[index]
+                                            .carBodyType
+                                            .value)
                                         .body_bold()
                                   ],
                                 ),
-                                const Text('10 vendas e ganhou R\$ 600,00')
-                                    .body_regular(
-                                        style: const TextStyle(
-                                            color: AppColor.textTertiaryColor))
+                                // const Text('10 vendas e ganhou R\$ 600,00')
+                                //     .body_regular(
+                                //         style: const TextStyle(
+                                //             color: AppColor.textTertiaryColor))
                               ],
                             ),
                             Text(serviceDto.prices[index].price.priceInReal)
@@ -234,6 +239,9 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                           ],
                         );
                       },
+                    ),
+                    const SizedBox(
+                      height: 24,
                     ),
                   ],
                 ),

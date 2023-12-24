@@ -4,15 +4,16 @@ import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
+import 'package:driver_hub_partner/features/services/presenter/services_presenter.dart';
 import 'package:driver_hub_partner/features/services/router/services_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServiceItemWidget extends StatelessWidget {
-  const ServiceItemWidget({
-    super.key,
-    required this.serviceDto,
-  });
+  const ServiceItemWidget(
+      {super.key, required this.serviceDto, required this.presenter});
 
+  final ServicesPresenter presenter;
   final PartnerServiceDto serviceDto;
 
   @override
@@ -23,13 +24,12 @@ class ServiceItemWidget extends StatelessWidget {
           padding: const MaterialStatePropertyAll(EdgeInsets.zero),
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0)),
-      onPressed: () {
-        // Navigator.of(context)
-        //     .pushNamed(ServicesRoutes.servicesDetail, arguments: serviceDto);
-        DHSnackBar().showSnackBar(
-            "😅 Ops..",
-            "Estamos trabalhando para liberar os detalhes do serviço nos próximos dias, aguarde... :)",
-            DHSnackBarType.warning);
+      onPressed: () async {
+        var result = await Navigator.of(context)
+            .pushNamed(ServicesRoutes.servicesDetail, arguments: serviceDto);
+        if (result != null && result == true) {
+          presenter.load();
+        }
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),

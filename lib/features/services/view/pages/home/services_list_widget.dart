@@ -57,12 +57,16 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                                         ),
                                         ServiceItemWidget(
                                           serviceDto: widget.washes[index],
+                                          presenter:
+                                              context.read<ServicesPresenter>(),
                                         )
                                       ],
                                     );
                                   }
                                   return ServiceItemWidget(
                                     serviceDto: widget.washes[index],
+                                    presenter:
+                                        context.read<ServicesPresenter>(),
                                   );
                                 },
                               )
@@ -88,12 +92,16 @@ class _ServicesListBodyWidgetState extends State<ServicesListBodyWidget> {
                                         ),
                                         ServiceItemWidget(
                                           serviceDto: widget.services[index],
+                                          presenter:
+                                              context.read<ServicesPresenter>(),
                                         )
                                       ],
                                     );
                                   }
                                   return ServiceItemWidget(
                                     serviceDto: widget.services[index],
+                                    presenter:
+                                        context.read<ServicesPresenter>(),
                                   );
                                 },
                               )

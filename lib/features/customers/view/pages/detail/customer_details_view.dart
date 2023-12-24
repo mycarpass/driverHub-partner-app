@@ -40,8 +40,18 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                 backButtonsIsVisible: true,
                 title: 'Cliente',
                 showHeaderIcon: false,
-                doneButtonIsEnabled: false,
-                doneButtonText: 'Editar'),
+                doneButtonIsEnabled: true,
+                doneButtonText: 'Editar',
+                onDonePressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    showDragHandle: true,
+                    isScrollControlled: true,
+                    builder: (context) => CustomerRegisterBottomSheet.update(
+                      customerDetailParams.customerDto,
+                    ),
+                  );
+                }),
             body: SafeArea(
                 child: state is DHLoadingState
                     ? SingleChildScrollView(
@@ -219,81 +229,7 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                           ),
                                         ),
                                       ),
-
                                       const SizedBox(height: 12),
-
-                                      SizedBox(
-                                        width: 200,
-                                        height: 40,
-                                        child: TextButton(
-                                          style: ButtonStyle(
-                                            elevation:
-                                                const MaterialStatePropertyAll(
-                                                    0.0),
-                                            shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                              ),
-                                            ),
-                                            tapTargetSize: MaterialTapTargetSize
-                                                .shrinkWrap,
-                                            padding:
-                                                const MaterialStatePropertyAll(
-                                                    EdgeInsets.zero),
-                                          ),
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              showDragHandle: true,
-                                              builder: (context) =>
-                                                  CustomerRegisterBottomSheet
-                                                      .update(
-                                                customerDetailParams
-                                                    .customerDto,
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(8)),
-                                              border: Border.all(
-                                                color:
-                                                    AppColor.textTertiaryColor,
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                const Icon(
-                                                  Icons.edit,
-                                                  size: 16,
-                                                  color: AppColor
-                                                      .textTertiaryColor,
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                const Text(
-                                                  'Editar dados do cliente',
-                                                  textAlign: TextAlign.center,
-                                                ).body_regular(
-                                                  style: const TextStyle(
-                                                    color: AppColor
-                                                        .textTertiaryColor,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 12),
-
                                       // Text('Ações').body_regular(),
                                       // const SizedBox(height: 12),
                                       Row(

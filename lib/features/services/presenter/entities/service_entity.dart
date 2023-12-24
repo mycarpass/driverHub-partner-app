@@ -118,21 +118,15 @@ class ServiceEntity with CustomDropdownListFilter {
     }
 
     return {
-      "services": [
-        {
-          "partner_service_description": description,
-          "min_time": _fetchTimeHoursInMinutes(),
-          "max_time": _fetchTimeHoursInMinutes(),
-          "day_pos_sales": daysPosSales,
-          "is_live_on_app": isLiveOnApp,
-          "prices": jsonPrices,
+      "partner_service_description": description,
+      "min_time": _fetchTimeHoursInMinutes(),
+      "max_time": _fetchTimeHoursInMinutes(),
+      "day_pos_sales": daysPosSales,
+      "is_live_on_app": isLiveOnApp,
+      "prices": jsonPrices,
 
-          ///TODO Add update of commented lines on backend
-
-          // "additionalWashes":
-          // additionalWashes != null ? jsonAdditionalWashes : null
-        }
-      ]
+      // "additionalWashes":
+      // additionalWashes != null ? jsonAdditionalWashes : null
     };
   }
 

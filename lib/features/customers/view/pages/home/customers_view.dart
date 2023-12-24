@@ -63,14 +63,9 @@ class _CustomersViewState extends State<CustomersView>
                                     .read<SubscriptionPresenter>()
                                     .isSubscribed,
                                 onPressed: () async {
-                                  if (false
-
-                                      ///TODO uncoment
-                                      // !context
-                                      // .read<SubscriptionPresenter>()
-                                      // .isSubscribed
-
-                                      ) {
+                                  if (!context
+                                      .read<SubscriptionPresenter>()
+                                      .isSubscribed) {
                                     context
                                         .read<SubscriptionPresenter>()
                                         .openPayWall(context);

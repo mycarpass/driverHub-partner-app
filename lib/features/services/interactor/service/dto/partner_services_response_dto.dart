@@ -127,6 +127,15 @@ class PartnerServiceDto {
     }
   }
 
+  List<PriceDto> getOnlyDefaultPrices() {
+    var _prices = prices
+        .where((element) => element.carBodyType != CarBodyType.van)
+        .toSet()
+        .toList();
+
+    return _prices;
+  }
+
   int _convertToHour(int? minutes) {
     if (minutes == null) {
       return 0;
