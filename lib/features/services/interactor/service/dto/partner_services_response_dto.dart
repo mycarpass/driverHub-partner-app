@@ -133,6 +133,13 @@ class PartnerServiceDto {
         .toSet()
         .toList();
 
+    _prices.removeWhere((element) =>
+        _prices
+            .where((_el) => _el.carBodyType == element.carBodyType)
+            .toList()
+            .length >
+        1);
+
     return _prices;
   }
 
