@@ -17,6 +17,12 @@ class ServiceEntity with CustomDropdownListFilter {
   List<ServiceRequestPrice> prices = [];
   List<AddtionalWashRequest>? additionalWashes;
 
+  bool isAllPricesFilled() {
+    var r =
+        prices.where((element) => element.value.price == 0).toList().isEmpty;
+    return r;
+  }
+
   ServiceEntity(
     this.id,
     this.name,
