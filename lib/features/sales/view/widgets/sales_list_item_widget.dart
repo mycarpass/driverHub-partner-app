@@ -24,7 +24,7 @@ class SalesListItemWidget extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).pushNamed(
             SalesRoutes.salesDetail,
-            arguments: solicitationDataDto,
+            arguments: solicitationDataDto.id.toString(),
           );
 
           // DHSnackBar().showSnackBar(

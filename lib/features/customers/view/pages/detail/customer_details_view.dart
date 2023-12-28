@@ -7,6 +7,8 @@ import 'package:driver_hub_partner/features/customers/presenter/details/customer
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customer_details_widget.dart';
+import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
+import 'package:driver_hub_partner/features/sales/router/sales_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -139,9 +141,10 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                           .label2_bold(),
                                       const Text(" vendas realizadas")
                                           .label2_regular(
-                                              style: const TextStyle(
-                                                  color: AppColor
-                                                      .textTertiaryColor)),
+                                        style: const TextStyle(
+                                          color: AppColor.textTertiaryColor,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Row(
@@ -196,7 +199,18 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                                         Colors.white,
                                                       ),
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      Navigator.of(context).pushNamed(
+                                                          SalesRoutes
+                                                              .salesDetail,
+                                                          arguments: presenter
+                                                              .customerDetailsDto
+                                                              .data
+                                                              .salesHistory[
+                                                                  index]
+                                                              .saleId
+                                                              .toString());
+                                                    },
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.all(

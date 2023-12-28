@@ -1,5 +1,6 @@
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
+import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 
 class SaleDetailsDto {
   late SaleDetailsData data;
@@ -50,14 +51,14 @@ class SaleDetailsData {
 }
 
 class SaleDetailsClient {
-  late String name;
+  late PersonName name;
   late String phone;
   late String id;
   SaleDetailsVehicle? vehicle;
 
   SaleDetailsClient.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
-    name = json['name'];
+    name = PersonName(json['name']);
     phone = json['phone'];
     vehicle = json['vehicle'] != null
         ? SaleDetailsVehicle.fromJson(json['vehicle'])
@@ -94,13 +95,13 @@ class SaleDetailsVehicle {
 class Services {
   late int priceId;
   late String serviceName;
-  late String basePrice;
-  late String chargedPrice;
+  late MoneyValue basePrice;
+  late MoneyValue chargedPrice;
 
   Services.fromJson(Map<String, dynamic> json) {
     priceId = json['price_id'];
     serviceName = json['service_name'];
-    basePrice = json['base_price'];
-    chargedPrice = json['charged_price'];
+    basePrice = MoneyValue(json['base_price']);
+    chargedPrice = MoneyValue(json['charged_price']);
   }
 }
