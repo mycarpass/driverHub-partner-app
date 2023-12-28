@@ -1,15 +1,8 @@
-import 'package:dh_cache_manager/uuid_manager.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
-import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
-import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
-import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/sales/interactor/sales_interactor.dart';
-import 'package:driver_hub_partner/features/sales/interactor/service/dto/enum/sales_status.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/presenter/sales_state.dart';
-import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
-import 'package:driver_hub_partner/features/schedules/presenter/schedules_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SalesPresenter extends Cubit<DHState> {

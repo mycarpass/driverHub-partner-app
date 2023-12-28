@@ -24,7 +24,7 @@ class HomeErrorWidget extends StatelessWidget {
           "Não foi possível carregar a home",
           textAlign: TextAlign.center,
         ).title1_regular(),
-        TextButton(onPressed: () => reload(), child: Text("Recarregar"))
+        TextButton(onPressed: () => reload(), child: const Text("Recarregar"))
       ],
     );
   }

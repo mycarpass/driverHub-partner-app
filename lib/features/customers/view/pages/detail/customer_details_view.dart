@@ -1,16 +1,12 @@
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
-import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
-import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
-import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
 import 'package:driver_hub_partner/features/customers/presenter/details/customer_details_presenter.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
-import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/create_sale_bottomsheet.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_bottom_sheet.dart';
+import 'package:driver_hub_partner/features/customers/view/widgets/customer_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -104,329 +100,20 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  //const Text("Detalhes do cliente").label1_bold(),
-                                  // const SizedBox(
-                                  //   height: 12,
-                                  // ),
-                                  //const Divider(),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      //const Text('Cliente').label2_regular(),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      Center(
-                                          child: SizedBox(
-                                              height: 90,
-                                              width: 90,
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    AppColor.supportColor,
-                                                child: Text(customerDetailParams
-                                                        .customerDto
-                                                        .getInitialsName())
-                                                    .title2_regular(),
-                                              ))),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      Text(customerDetailParams
-                                              .customerDto.name)
-                                          .body_bold(),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(customerDetailParams
-                                              .customerDto.phone.value)
-                                          .body_regular(),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(presenter.customerDetailsDto.data
-                                                      .createdAt !=
-                                                  null
-                                              ? 'Cliente desde ${presenter.customerDetailsDto.data.createdAt!}'
-                                              : presenter
-                                                      .customerDetailsDto
-                                                      .data
-                                                      .salesHistory
-                                                      .isNotEmpty
-                                                  ? 'Cliente desde ${presenter.customerDetailsDto.data.salesHistory.first.saleDate}'
-                                                  : "Nenhum serviço realizado ainda")
-                                          .caption1_regular(
-                                              style: const TextStyle(
-                                                  color: AppColor
-                                                      .textTertiaryColor)),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
-                                      SizedBox(
-                                        width: 200,
-                                        height: 40,
-                                        child: TextButton(
-                                          style: ButtonStyle(
-                                              elevation:
-                                                  const MaterialStatePropertyAll(
-                                                      0.0),
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
-                                              tapTargetSize:
-                                                  MaterialTapTargetSize
-                                                      .shrinkWrap,
-                                              padding:
-                                                  const MaterialStatePropertyAll(
-                                                      EdgeInsets.zero)),
-                                          onPressed: () {
-                                            Uri uri = Uri(
-                                              host: "api.whatsapp.com",
-                                              scheme: "https",
-                                              path: "send",
-                                              queryParameters: {
-                                                "phone":
-                                                    "+55${customerDetailParams.customerDto.phone.withoutSymbolValue}",
-                                                // "text":
-                                                //     "Olá, "
-                                              },
-                                            );
-                                            presenter.openUrl(uri);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                        Radius.circular(8)),
-                                                border: Border.all(
-                                                    color:
-                                                        AppColor.accentColor)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Icon(
-                                                  CustomIcons.dhWhatsapp,
-                                                  size: 16,
-                                                ),
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
-                                                const Text(
-                                                  'Chamar no WhatsApp',
-                                                  textAlign: TextAlign.center,
-                                                ).body_regular(
-                                                    style: const TextStyle(
-                                                        color: AppColor
-                                                            .accentColor))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 12),
-                                      // Text('Ações').body_regular(),
-                                      // const SizedBox(height: 12),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          TextButton(
-                                              style: ButtonStyle(
-                                                  elevation:
-                                                      const MaterialStatePropertyAll(
-                                                          0.0),
-                                                  shape:
-                                                      MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                  ),
-                                                  tapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                  padding:
-                                                      const MaterialStatePropertyAll(
-                                                          EdgeInsets.zero)),
-                                              onPressed: () async {
-                                                bool? isSaleCreated =
-                                                    await showModalBottomSheet<
-                                                        bool>(
-                                                  context: context,
-                                                  showDragHandle: true,
-                                                  isScrollControlled: true,
-                                                  builder: (context) =>
-                                                      CreateSaleBottomSheet(
-                                                    selectedCustomer:
-                                                        customerDetailParams
-                                                            .customerDto,
-                                                  ),
-                                                );
-
-                                                if (isSaleCreated != null &&
-                                                    isSaleCreated) {
-                                                  DHSnackBar().showSnackBar(
-                                                      "Uhuuu",
-                                                      "Sua nova venda foi registrada",
-                                                      DHSnackBarType.success);
-                                                  presenter.load(
-                                                    customerDetailParams
-                                                        .customerDto.customerId
-                                                        .toString(),
-                                                  );
-                                                }
-                                              },
-                                              child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius.all(
-                                                              Radius.circular(
-                                                                  8)),
-                                                      border: Border.all(
-                                                          color: AppColor
-                                                              .textTertiaryColor)),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Icon(
-                                                        Icons
-                                                            .add_shopping_cart_outlined,
-                                                        color: AppColor
-                                                            .textSecondaryColor,
-                                                        size: 16,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 8,
-                                                      ),
-                                                      const Text(
-                                                        'Nova venda',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ).body_regular(
-                                                          style: const TextStyle(
-                                                              color: AppColor
-                                                                  .textSecondaryColor))
-                                                    ],
-                                                  ))),
-                                          TextButton(
-                                              style: ButtonStyle(
-                                                  elevation:
-                                                      const MaterialStatePropertyAll(
-                                                          0.0),
-                                                  shape:
-                                                      MaterialStateProperty.all(
-                                                    RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                  ),
-                                                  tapTargetSize:
-                                                      MaterialTapTargetSize
-                                                          .shrinkWrap,
-                                                  padding:
-                                                      const MaterialStatePropertyAll(
-                                                          EdgeInsets.zero)),
-                                              onPressed: () async {
-                                                bool? isScheduleCreated =
-                                                    await showModalBottomSheet(
-                                                  context: context,
-                                                  showDragHandle: true,
-                                                  isScrollControlled: true,
-                                                  builder: (context) =>
-                                                      CreateScheduleBottomSheet(
-                                                          selectedCustomer:
-                                                              customerDetailParams
-                                                                  .customerDto),
-                                                );
-
-                                                if (isScheduleCreated != null &&
-                                                    isScheduleCreated) {
-                                                  // presenter.load();
-                                                  DHSnackBar().showSnackBar(
-                                                      "Sucesso!",
-                                                      "Seu novo agendamento foi criado",
-                                                      DHSnackBarType.success);
-                                                }
-                                              },
-                                              child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius.all(
-                                                              Radius.circular(
-                                                                  8)),
-                                                      border: Border.all(
-                                                          color: AppColor
-                                                              .textTertiaryColor)),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Icon(
-                                                        Icons
-                                                            .calendar_month_outlined,
-                                                        color: AppColor
-                                                            .textSecondaryColor,
-                                                        size: 16,
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 8,
-                                                      ),
-                                                      const Text(
-                                                        'Novo agendamento',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ).body_regular(
-                                                          style: const TextStyle(
-                                                              color: AppColor
-                                                                  .textSecondaryColor))
-                                                    ],
-                                                  )))
-                                        ],
-                                      )
-                                    ],
+                                  CustomerDetailsWidget(
+                                    onScheduleCreated: () {},
+                                    onSaleCreated: () {
+                                      presenter.load(
+                                        customerDetailParams
+                                            .customerDto.customerId
+                                            .toString(),
+                                      );
+                                    },
+                                    customerDetailsParams:
+                                        CustomerDetailsParam.fromCustomerDto(
+                                            customerDetailParams.customerDto),
                                   ),
-                                  // DetailsCellWidget(
-                                  //   items: [
-                                  //     customerDetailParams.customerDto.name,
-                                  //     customerDetailParams.customerDto.phone.value
-                                  //   ],
-                                  //   title: "Cliente",
-                                  //   iconButton: IconButton(
-                                  //     onPressed: () {
-                                  //       Uri uri = Uri(
-                                  //         host: "api.whatsapp.com",
-                                  //         scheme: "https",
-                                  //         path: "send",
-                                  //         queryParameters: {
-                                  //           "phone":
-                                  //               "+55${customerDetailParams.customerDto.phone.withoutSymbolValue}",
-                                  //           // "text":
-                                  //           //     "Olá, "
-                                  //         },
-                                  //       );
-                                  //       presenter.openUrl(uri);
-                                  //     },
-                                  //     icon: const Icon(
-                                  //       Icons.chat,
-                                  //       color: AppColor.accentColor,
-                                  //     ),
-                                  //   ),
-                                  // ),
+
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -435,44 +122,6 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                             .customerDto.vehicle?.name ??
                                         "Não informado"
                                   ], title: "Veículo do cliente"),
-                                  // DetailsCellWidget(items: [
-                                  //   presenter.customerDetailsDto.data.createdAt !=
-                                  //           null
-                                  //       ? presenter
-                                  //           .customerDetailsDto.data.createdAt!
-                                  //       : presenter.customerDetailsDto.data
-                                  //               .salesHistory.isNotEmpty
-                                  //           ? presenter.customerDetailsDto.data
-                                  //               .salesHistory.first.saleDate
-                                  //           : "Nenhum serviço realizado ainda"
-                                  // ], title: "Cliente desde"),
-
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.end,
-                                  //   children: [
-                                  //     TextButton(
-                                  //       onPressed: () {
-                                  //         showModalBottomSheet<bool?>(
-                                  //           context: context,
-                                  //           showDragHandle: true,
-                                  //           isScrollControlled: true,
-                                  //           builder: (_) => BlocProvider(
-                                  //             create: (context) =>
-                                  //                 CustomerRegisterPresenter(),
-                                  //             child: CustomerRegisterBottomSheet
-                                  //                 .update(
-                                  //               customerDetailParams.customerDto,
-                                  //             ),
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //       child: const Text(
-                                  //         "Editar dados do cliente",
-                                  //       ),
-                                  //     )
-                                  //   ],
-                                  // ),
-
                                   const Text("Histórico de vendas")
                                       .label1_bold(),
                                   const SizedBox(
@@ -695,6 +344,7 @@ class DetailsCellWidget extends StatelessWidget {
               height: 8,
             ),
             ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) => const SizedBox(
                 height: 4,
               ),

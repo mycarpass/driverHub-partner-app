@@ -1,13 +1,11 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
-import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_presenter.dart';
 import 'package:driver_hub_partner/features/services/router/services_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServiceItemWidget extends StatelessWidget {
   const ServiceItemWidget(

@@ -46,39 +46,32 @@ class SalesDto {
       required this.createdAt});
 
   SalesDto.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    try {
+      id = json['id'];
 
-    paymentType = json['payment_type'] == null
-        ? null
-        : PaymentType.fromString(json['payment_type']);
-    client = SalesClient.fromJson(json['client']);
-    if (json['services'] != null) {
-      services = <SaleService>[];
-      json['services'].forEach((v) {
-        services.add(SaleService.fromJson(v));
-      });
+      paymentType = json['payment_type'] == null
+          ? null
+          : PaymentType.fromString(json['payment_type']);
+      client = SalesClient.fromJson(json['client']);
+      if (json['services'] != null) {
+        services = <SaleService>[];
+        json['services'].forEach((v) {
+          services.add(SaleService.fromJson(v));
+        });
 
-      for (var element in services) {
-        servicesValuePaidSum.sum(element.value.price);
+        for (var element in services) {
+          servicesValuePaidSum.sum(element.value.price);
+        }
       }
-    }
-    totalAmountPaid = MoneyValue(json['total_amount_paid']);
-    discountValue = MoneyValue(json['discount_value']);
-    // type = json['type'];
-    createdAt = json["created_at"];
-    // salesId = json['sales_id'];
-    saleDate = DateFormat('dd/MM/yyyy').parse(json['sale_date']);
-    friendlyDate = json['sale_date'];
-  }
-
-  SalesStatus _getStatus(String status) {
-    switch (status) {
-      case "VERIFIED":
-        return SalesStatus.verified;
-      case "NOT_VERIFIED":
-        return SalesStatus.notVerified;
-      default:
-        return SalesStatus.notVerified;
+      totalAmountPaid = MoneyValue(json['total_amount_paid']);
+      discountValue = MoneyValue(json['discount_value']);
+      // type = json['type'];
+      createdAt = json["created_at"];
+      // salesId = json['sales_id'];
+      saleDate = DateFormat('dd/MM/yyyy').parse(json['sale_date']);
+      friendlyDate = json['sale_date'];
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -98,25 +91,30 @@ class SalesDto {
 
 class SaleService {
   late MoneyValue value;
+  late String serviceName;
 
-  SaleService(this.value);
+  SaleService(this.value, this.serviceName);
 
   SaleService.fromJson(Map<String, dynamic> json) {
-    value = MoneyValue(json['value']);
+    value = MoneyValue(json['base_price']);
+    serviceName = json["service_name"];
   }
 }
 
 class SalesClient {
   late PersonName personName;
   late String phone;
-  late String status;
+  // late String status;
 
-  SalesClient(
-      {required this.personName, required this.phone, required this.status});
+  SalesClient({
+    required this.personName,
+    required this.phone,
+    // required this.status
+  });
 
   SalesClient.fromJson(Map<String, dynamic> json) {
     personName = PersonName(json['name']);
     phone = json['phone'];
-    status = json['status'];
+    // status = json['status'];
   }
 }

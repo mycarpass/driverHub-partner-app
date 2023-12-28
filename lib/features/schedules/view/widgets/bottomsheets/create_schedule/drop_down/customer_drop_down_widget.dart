@@ -50,7 +50,7 @@ class CustomerDropDownWidget extends StatelessWidget {
                 noResultFoundText:
                     "Nenhum cliente encontrado, adicione um no botão",
                 listItemBuilder: (context, item) =>
-                    Text(item.name).body_regular(),
+                    Text(item.name.name).body_regular(),
                 noResultFoundBuilder: (context, text) => Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -70,7 +70,7 @@ class CustomerDropDownWidget extends StatelessWidget {
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(selectedItem.name).body_regular(
+                      Text(selectedItem.name.name).body_regular(
                           style:
                               const TextStyle(color: AppColor.textPrimaryColor))
                     ]),

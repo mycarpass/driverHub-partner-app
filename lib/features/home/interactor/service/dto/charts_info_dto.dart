@@ -26,7 +26,6 @@ class ChartsResponseDto {
     weeklyBilling = [];
     if (json['weekly_billing'] != null) {
       Map<dynamic, dynamic> map = HashMap.from(json['weekly_billing']);
-      print(map);
       map.forEach((key, value) {
         weeklyBilling.add(DayOfBilling(key, value));
       });

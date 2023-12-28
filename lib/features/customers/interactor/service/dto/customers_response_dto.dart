@@ -1,4 +1,5 @@
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
+import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
@@ -22,7 +23,7 @@ class CustomersResponseDto {
 class CustomerDto {
   late int customerId;
   late CustomerStatus status;
-  late String name;
+  late PersonName name;
   late PhoneValue phone;
   late bool isSubscribed;
   late MoneyValue? spentValue;
@@ -61,7 +62,7 @@ class CustomerDto {
   CustomerDto.fromJson(Map<String, dynamic> json) {
     customerId = json['customerId'];
     status = _getStatus(json['status'] ?? "NOT_VERIFIED");
-    name = json['name'];
+    name = PersonName(json['name']);
     phone = PhoneValue(value: json['phone']);
     email = json['email'];
     plate = json['car_licence_plate'];
@@ -88,18 +89,5 @@ class CustomerDto {
       default:
         return CustomerStatus.notVerified;
     }
-  }
-
-  String getInitialsName() {
-    String firstLetter = name.trim().substring(0, 1).toUpperCase();
-    String secondLetter = "";
-    List<String> nameSplitted = name.trim().split(" ");
-    if (nameSplitted.length >= 2) {
-      String secondNameSplitted = nameSplitted[nameSplitted.length - 1];
-      secondLetter = secondNameSplitted.substring(0, 1).toUpperCase();
-    } else {
-      secondLetter = name.trim().substring(1, 2).toUpperCase();
-    }
-    return "$firstLetter$secondLetter";
   }
 }

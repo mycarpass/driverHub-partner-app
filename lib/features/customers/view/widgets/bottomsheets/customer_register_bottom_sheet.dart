@@ -13,7 +13,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 // ignore: must_be_immutable
 class CustomerRegisterBottomSheet extends StatefulWidget {
   CustomerRegisterBottomSheet._(
-      {super.key, required this.isCreatingCustomer, this.customerDto});
+      {required this.isCreatingCustomer, this.customerDto});
   bool isCreatingCustomer = false;
   CustomerDto? customerDto;
 
@@ -76,7 +76,7 @@ class _CustomerRegisterBottomSheetState
       DoNothingAction();
     }
     if (!widget.isCreatingCustomer) {
-      nameController.text = widget.customerDto?.name ?? "";
+      nameController.text = widget.customerDto?.name.name ?? "";
       phoneController.text = widget.customerDto?.phone.value ?? "";
       plateControler.text = widget.customerDto?.vehicle?.plate ?? "";
     }

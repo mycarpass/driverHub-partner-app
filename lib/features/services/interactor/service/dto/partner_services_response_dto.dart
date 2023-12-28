@@ -128,7 +128,7 @@ class PartnerServiceDto {
   }
 
   List<PriceDto> getOnlyDefaultPrices() {
-    var _prices = prices
+    var filteredPrices = prices
         .where((element) =>
             (element.carBodyType != CarBodyType.van) &&
             (element.carBodyType != CarBodyType.stationwagon) &&
@@ -144,7 +144,7 @@ class PartnerServiceDto {
     //         .length >
     //     1);
 
-    return _prices;
+    return filteredPrices;
   }
 
   int _convertToHour(int? minutes) {

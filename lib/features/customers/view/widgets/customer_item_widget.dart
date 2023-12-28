@@ -1,13 +1,11 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
-import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/customers/presenter/customers_presenter.dart';
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
-import 'package:driver_hub_partner/features/customers/view/pages/detail/customer_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +55,7 @@ class CustomerItemWidget extends StatelessWidget {
                   radius: 20,
                   backgroundColor: AppColor.backgroundTransparent,
                   child: Text(
-                    customerDto.getInitialsName(),
+                    customerDto.name.getInitialsName(),
                     overflow: TextOverflow.ellipsis,
                   ).caption1_bold(),
                 ),
@@ -70,7 +68,7 @@ class CustomerItemWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(customerDto.name).body_bold(),
+                        Text(customerDto.name.name).body_bold(),
                         const SizedBox(
                           width: 4,
                         ),

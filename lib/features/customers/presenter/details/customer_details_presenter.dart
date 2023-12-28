@@ -4,7 +4,6 @@ import 'package:driver_hub_partner/features/customers/interactor/customers_inter
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customer_details_dto.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CustomerDetailsPresenter extends Cubit<DHState> {
   CustomerDetailsPresenter() : super(DHInitialState());
@@ -28,19 +27,6 @@ class CustomerDetailsPresenter extends Cubit<DHState> {
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());
-    }
-  }
-
-  void openUrl(Uri uri) async {
-    await canLaunchUrl(uri) ? _launchInBrowser(uri) : null;
-  }
-
-  Future<void> _launchInBrowser(Uri url) async {
-    if (!await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $url');
     }
   }
 }

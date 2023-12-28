@@ -1,4 +1,5 @@
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/service_details_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/services_service.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
@@ -19,6 +20,14 @@ class ServicesInteractor {
   Future<PartnerServicesResponseDto> getPartnersService() async {
     try {
       return await _servicesService.getPartnerServices();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ServiceDetailsDto> getServiceDetails(String id) async {
+    try {
+      return await _servicesService.getServiceDetails(id);
     } catch (e) {
       rethrow;
     }

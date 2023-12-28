@@ -56,7 +56,7 @@ class DailyNumbersCard extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          Text("0").title1_bold(),
+                          const Text("0").title1_bold(),
                           const Text("pós-vendas").body_regular(),
                         ],
                       ),

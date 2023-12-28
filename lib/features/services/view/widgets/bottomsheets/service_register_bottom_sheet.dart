@@ -83,41 +83,42 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                Text(isCreatingService
-                        ? 'O que gostaria de cadastrar?'
-                        : "Qual o tipo do serviço?")
-                    .body_bold(),
-                CustomRadioButton(
-                  elevation: 0,
-                  absoluteZeroSpacing: true,
-                  unSelectedColor: AppColor.backgroundColor,
-                  buttonLables: const [
-                    'Lavada',
-                    'Serviço',
-                  ],
-                  buttonValues: const [
-                    "Lavada",
-                    "Serviço",
-                  ],
-                  buttonTextStyle: const ButtonTextStyle(
-                      selectedColor: AppColor.backgroundColor,
-                      unSelectedColor: AppColor.textSecondaryColor,
-                      textStyle:
-                          TextStyle(fontSize: 16, fontFamily: 'CircularStd')),
-                  radioButtonValue: (value) {
-                    presenter.setServiceCategory(value);
-                  },
-                  defaultSelected: "Serviço",
-                  height: 60,
-                  unSelectedBorderColor: AppColor.borderColor,
-                  selectedBorderColor: AppColor.borderColor,
-                  margin: const EdgeInsets.all(8),
-                  enableShape: true,
-                  shapeRadius: 16,
-                  autoWidth: true,
-                  radius: 16,
-                  selectedColor: AppColor.accentColor,
-                ),
+                isCreatingService
+                    ? const Text('O que gostaria de cadastrar?').body_bold()
+                    : const SizedBox.shrink(),
+                isCreatingService
+                    ? CustomRadioButton(
+                        elevation: 0,
+                        absoluteZeroSpacing: true,
+                        unSelectedColor: AppColor.backgroundColor,
+                        buttonLables: const [
+                          'Lavada',
+                          'Serviço',
+                        ],
+                        buttonValues: const [
+                          "Lavada",
+                          "Serviço",
+                        ],
+                        buttonTextStyle: const ButtonTextStyle(
+                            selectedColor: AppColor.backgroundColor,
+                            unSelectedColor: AppColor.textSecondaryColor,
+                            textStyle: TextStyle(
+                                fontSize: 16, fontFamily: 'CircularStd')),
+                        radioButtonValue: (value) {
+                          presenter.setServiceCategory(value);
+                        },
+                        defaultSelected: "Serviço",
+                        height: 60,
+                        unSelectedBorderColor: AppColor.borderColor,
+                        selectedBorderColor: AppColor.borderColor,
+                        margin: const EdgeInsets.all(8),
+                        enableShape: true,
+                        shapeRadius: 16,
+                        autoWidth: true,
+                        radius: 16,
+                        selectedColor: AppColor.accentColor,
+                      )
+                    : const SizedBox.shrink(),
                 Row(children: [
                   BlocBuilder<ServicesRegisterPresenter, DHState>(
                       builder: (context, state) => Checkbox(

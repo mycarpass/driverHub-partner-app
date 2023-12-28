@@ -64,8 +64,10 @@ class RestCustomerService implements CustomersService {
             services: [],
             totalAmountPaid: MoneyValue(1.00),
             discountValue: MoneyValue(0.00),
-            client:
-                SalesClient(personName: PersonName(""), phone: "", status: ""),
+            client: SalesClient(
+              personName: PersonName(""),
+              phone: "",
+            ),
             friendlyDate: "12/12/23",
             createdAt: "")
       ];

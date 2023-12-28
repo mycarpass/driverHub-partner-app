@@ -29,7 +29,7 @@ class CustomersErrorWidget extends StatelessWidget {
           "Não foi possível \ncarregar os clientes",
           textAlign: TextAlign.center,
         ).title3_regular(),
-        TextButton(onPressed: () => reload(), child: Text("Recarregar"))
+        TextButton(onPressed: () => reload(), child: const Text("Recarregar"))
       ],
     ));
   }

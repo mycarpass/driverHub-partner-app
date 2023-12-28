@@ -111,7 +111,7 @@ class CreateSaleBottomSheet extends StatelessWidget {
                       }),
                       selectedCustomer != null
                           ? DHTextField(
-                              hint: selectedCustomer!.name,
+                              hint: selectedCustomer!.name.name,
                               icon: Icons.person,
                               onChanged: (_) {},
                               title: "Cliente",

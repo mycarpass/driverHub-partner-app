@@ -5,6 +5,7 @@ import 'package:driver_hub_partner/features/home/interactor/home_interactor.dart
 import 'package:driver_hub_partner/features/profile/presenter/profile_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
+// ignore: depend_on_referenced_packages
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 

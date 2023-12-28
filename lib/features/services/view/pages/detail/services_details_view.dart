@@ -1,7 +1,9 @@
+import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
+import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/details/service_details_presenter.dart';
@@ -27,7 +29,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
         ModalRoute.of(context)?.settings.arguments as PartnerServiceDto;
 
     var presenter = context.read<ServiceDetailsPresenter>();
-
+    presenter.load(serviceDto.serviceId.toString());
     return Builder(
       builder: (context) {
         return Scaffold(
@@ -125,7 +127,8 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                           color: serviceDto.isLiveOnApp
                               ? AppColor.supportColor
                               : AppColor.borderColor,
-                          borderRadius: BorderRadius.all(Radius.circular(6))),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(6))),
                       child: Row(children: [
                         Icon(
                           serviceDto.isLiveOnApp
@@ -162,89 +165,154 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                     const SizedBox(
                       height: 24,
                     ),
-                    // const Text('Dados sobre esse serviço').label2_bold(),
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     const Text('Já foi vendido ').body_regular(),
-                    //     Text(serviceDto.quantityDoneServices.toString())
-                    //         .body_bold(),
-                    //     const Text(' vezes').body_regular(),
-                    //   ],
-                    // ),
-                    // const SizedBox(
-                    //   height: 4,
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     const Text('Somando um total de ').body_regular(),
-                    //     Text(serviceDto.totalAmountBilling.toString())
-                    //         .body_bold(),
-                    //   ],
-                    // ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const Text("Preços por carroceria").label1_bold(),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    ListView.separated(
-                      itemCount: serviceDto.getOnlyDefaultPrices().length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 12,
-                      ),
-                      itemBuilder: (context, index) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    BlocBuilder<ServiceDetailsPresenter, DHState>(
+                      builder: (context, state) {
+                        if (state is DHLoadingState) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      serviceDto
-                                          .getOnlyDefaultPrices()[index]
-                                          .carBodyType
-                                          .icon,
-                                      height: 30,
-                                      colorFilter: const ColorFilter.mode(
-                                          AppColor.blackColor, BlendMode.srcIn),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: DHSkeleton(
+                                    child: Container(
+                                      height: 80,
+                                      color: Colors.white,
                                     ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    Text(serviceDto
-                                            .getOnlyDefaultPrices()[index]
-                                            .carBodyType
-                                            .value)
-                                        .body_bold()
-                                  ],
+                                  ),
                                 ),
-                                // const Text('10 vendas e ganhou R\$ 600,00')
-                                //     .body_regular(
-                                //         style: const TextStyle(
-                                //             color: AppColor.textTertiaryColor))
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: DHSkeleton(
+                                    child: Container(
+                                      height: 560,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                            Text(serviceDto
-                                    .getOnlyDefaultPrices()[index]
-                                    .price
-                                    .priceInReal)
-                                .body_bold()
-                          ],
-                        );
+                          );
+                        } else {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Dados sobre esse serviço')
+                                  .label2_bold(),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                children: [
+                                  const Text('Já foi vendido ').body_regular(),
+                                  Text(presenter.serviceDetailsDto.soldAmount
+                                          .toString())
+                                      .body_bold(),
+                                  const Text(' vezes').body_regular(),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                children: [
+                                  const Text('Somando um total de ')
+                                      .body_regular(),
+                                  Text(presenter.serviceDetailsDto.totalBilled
+                                          .priceInReal)
+                                      .body_bold(),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              const Text("Preços por carroceria").label1_bold(),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              ListView.separated(
+                                itemCount:
+                                    serviceDto.getOnlyDefaultPrices().length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                  height: 16,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                serviceDto
+                                                    .getOnlyDefaultPrices()[
+                                                        index]
+                                                    .carBodyType
+                                                    .icon,
+                                                height: 30,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        AppColor.blackColor,
+                                                        BlendMode.srcIn),
+                                              ),
+                                              const SizedBox(
+                                                width: 16,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(serviceDto
+                                                          .getOnlyDefaultPrices()[
+                                                              index]
+                                                          .carBodyType
+                                                          .value)
+                                                      .body_bold(),
+                                                  // const SizedBox(
+                                                  //   height: 4,
+                                                  // ),
+                                                  Text('Feito ${presenter.serviceDetailsDto.soldAmountPerCarBodyType.soldByType[serviceDto.getOnlyDefaultPrices()[index].carBodyType]?.toString() ?? "0"} vezes')
+                                                      .body_regular()
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          // const Text('10 vendas e ganhou R\$ 600,00')
+                                          //     .body_regular(
+                                          //         style: const TextStyle(
+                                          //             color: AppColor.textTertiaryColor))
+                                        ],
+                                      ),
+                                      Text(serviceDto
+                                              .getOnlyDefaultPrices()[index]
+                                              .price
+                                              .priceInReal)
+                                          .body_bold()
+                                    ],
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                height: 24,
+                              ),
+                            ],
+                          );
+                        }
                       },
-                    ),
-                    const SizedBox(
-                      height: 24,
                     ),
                   ],
                 ),

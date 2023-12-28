@@ -4,6 +4,7 @@ import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_http_client/interactor/service/fz_http_client.dart';
 import 'package:dio/dio.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/service_details_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/services_service.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
@@ -52,6 +53,17 @@ class RestServicesService implements ServicesService {
           body: entity.toUpdateServiceJson());
 
       return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ServiceDetailsDto> getServiceDetails(String id) async {
+    try {
+      Response response = await _httpClient.get("/partner/services/$id");
+
+      return ServiceDetailsDto.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

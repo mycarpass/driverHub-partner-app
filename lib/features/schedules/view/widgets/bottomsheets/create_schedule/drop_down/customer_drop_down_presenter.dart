@@ -1,5 +1,6 @@
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/interactor/customers_interactor.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
@@ -27,7 +28,7 @@ class CustomerDropDownPresenter extends Cubit<DHState> {
       CustomerDto(
           customerId: 0,
           status: CustomerStatus.notVerified,
-          name: "Carregando lista",
+          name: PersonName("Carregando lista"),
           phone: PhoneValue(value: ""),
           isSubscribed: false)
     ];
@@ -43,7 +44,7 @@ class CustomerDropDownPresenter extends Cubit<DHState> {
           CustomerDto(
               customerId: 0,
               status: CustomerStatus.notVerified,
-              name: "Nenhum cliente cadastrado",
+              name: PersonName("Nenhum cliente cadastrado"),
               phone: PhoneValue(value: ""),
               isSubscribed: false)
         ];
