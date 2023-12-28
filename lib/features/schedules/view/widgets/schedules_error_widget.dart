@@ -25,7 +25,7 @@ class SchedulesErrorWidget extends StatelessWidget {
           "Não foi possível carregar os agendamentos",
           textAlign: TextAlign.center,
         ).title1_regular(),
-        TextButton(onPressed: () => reload(), child: Text("Recarregar"))
+        TextButton(onPressed: () => reload(), child: const Text("Recarregar"))
       ],
     );
   }

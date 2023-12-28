@@ -52,10 +52,16 @@ class SoldAmountPerCarBodyType {
     CarBodyType.coupe,
   ];
 
-  SoldAmountPerCarBodyType.fromJson(Map<String, dynamic> json) {
-    for (var bodyType in carBodyTypes) {
-      if (json[bodyType.name.toUpperCase()] != null) {
-        soldByType[bodyType] = json[bodyType.name.toUpperCase()];
+  SoldAmountPerCarBodyType.fromJson(dynamic json) {
+    if (json is List) {
+      for (var bodyType in carBodyTypes) {
+        soldByType[bodyType] = 0;
+      }
+    } else {
+      for (var bodyType in carBodyTypes) {
+        if (json[bodyType.name.toUpperCase()] != null) {
+          soldByType[bodyType] = json[bodyType.name.toUpperCase()];
+        }
       }
     }
 

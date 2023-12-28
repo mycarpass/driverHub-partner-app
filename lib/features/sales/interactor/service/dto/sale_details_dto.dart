@@ -25,7 +25,7 @@ class SaleDetailsData {
   SaleDetailsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     scheduleId = json['schedule_id'];
-    paymentType = json['payment_type'];
+    paymentType = PaymentType.fromString(json['payment_type']);
     client = SaleDetailsClient.fromJson(json['client']);
     if (json['services'] != null) {
       services = <Services>[];
