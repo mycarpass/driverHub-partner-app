@@ -270,7 +270,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                                         BlendMode.srcIn),
                                               ),
                                               const SizedBox(
-                                                width: 16,
+                                                width: 8,
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -285,16 +285,12 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                                                   // const SizedBox(
                                                   //   height: 4,
                                                   // ),
-                                                  Text('Feito ${presenter.serviceDetailsDto.soldAmountPerCarBodyType.soldByType[serviceDto.getOnlyDefaultPrices()[index].carBodyType]?.toString() ?? "0"} vezes')
+                                                  Text('${presenter.serviceDetailsDto.soldAmountPerCarBodyType.soldByType[serviceDto.getOnlyDefaultPrices()[index].carBodyType]?.toString() ?? "0"} venda(s)')
                                                       .body_regular()
                                                 ],
                                               )
                                             ],
                                           ),
-                                          // const Text('10 vendas e ganhou R\$ 600,00')
-                                          //     .body_regular(
-                                          //         style: const TextStyle(
-                                          //             color: AppColor.textTertiaryColor))
                                         ],
                                       ),
                                       Text(serviceDto
