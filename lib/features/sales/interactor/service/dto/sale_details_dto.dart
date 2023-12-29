@@ -1,6 +1,7 @@
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
 import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 
 class SaleDetailsDto {
   late SaleDetailsData data;
@@ -26,7 +27,9 @@ class SaleDetailsData {
   SaleDetailsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     scheduleId = json['schedule_id'];
-    paymentType = PaymentType.fromString(json['payment_type']);
+    paymentType = json['payment_type'] != null
+        ? PaymentType.fromString(json['payment_type'])
+        : null;
     client = SaleDetailsClient.fromJson(json['client']);
     if (json['services'] != null) {
       services = <Services>[];
@@ -54,15 +57,14 @@ class SaleDetailsClient {
   late PersonName name;
   late String phone;
   late String id;
-  SaleDetailsVehicle? vehicle;
+  VehicleDto? vehicle;
 
   SaleDetailsClient.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     name = PersonName(json['name']);
     phone = json['phone'];
-    vehicle = json['vehicle'] != null
-        ? SaleDetailsVehicle.fromJson(json['vehicle'])
-        : null;
+    vehicle =
+        json['vehicle'] != null ? VehicleDto.fromJson(json['vehicle']) : null;
   }
 }
 

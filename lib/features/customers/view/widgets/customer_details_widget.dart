@@ -99,11 +99,13 @@ class CustomerDetailsWidget extends StatelessWidget {
         const SizedBox(
           height: 4,
         ),
-        Text(customerDetailsParams.createdAt != null
-                ? 'Cliente desde ${customerDetailsParams.createdAt!}'
-                : "Não informado")
-            .caption1_regular(
-                style: const TextStyle(color: AppColor.textTertiaryColor)),
+        customerDetailsParams.createdAt != null
+            ? Text(customerDetailsParams.createdAt != null
+                    ? 'Cliente desde ${customerDetailsParams.createdAt!}'
+                    : "Não informado")
+                .caption1_regular(
+                    style: const TextStyle(color: AppColor.textTertiaryColor))
+            : const SizedBox.shrink(),
         const SizedBox(
           height: 8,
         ),
@@ -132,6 +134,8 @@ class CustomerDetailsWidget extends StatelessWidget {
                   //     "Olá, "
                 },
               );
+
+              openUrl(uri);
             },
             child: Container(
               padding: const EdgeInsets.all(8),

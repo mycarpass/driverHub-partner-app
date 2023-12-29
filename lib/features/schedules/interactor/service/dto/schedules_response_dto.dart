@@ -471,6 +471,7 @@ class VehicleDto {
   late String model;
   late CarBodyType bodyType;
   String? plate;
+  String? nickname;
 
   VehicleDto({
     required this.id,
@@ -479,12 +480,14 @@ class VehicleDto {
     required this.model,
     required this.bodyType,
     required this.plate,
+    this.nickname,
   });
 
   VehicleDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     make = json['make'];
     model = json['model'];
+    nickname = json['nickname'];
     bodyType = getCategory(json['body_type']);
     // plate = json['license_plate'];
   }

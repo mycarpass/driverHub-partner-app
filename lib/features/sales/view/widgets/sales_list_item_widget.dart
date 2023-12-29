@@ -1,4 +1,5 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/router/sales_router.dart';
@@ -103,7 +104,9 @@ class SalesListItemWidget extends StatelessWidget {
                           child: Row(
                             children: [
                               Icon(
-                                solicitationDataDto.iconPaymentType(),
+                                solicitationDataDto.paymentType
+                                        ?.iconPaymentType() ??
+                                    CustomIcons.dhCanceled,
                                 size: 16,
                               ),
                               const SizedBox(

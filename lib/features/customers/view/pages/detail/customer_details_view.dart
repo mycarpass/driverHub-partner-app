@@ -7,7 +7,6 @@ import 'package:driver_hub_partner/features/customers/presenter/details/customer
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customer_details_widget.dart';
-import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/router/sales_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,11 +118,28 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  DetailsCellWidget(items: [
-                                    customerDetailParams
-                                            .customerDto.vehicle?.name ??
-                                        "Não informado"
-                                  ], title: "Veículo do cliente"),
+                                  const Text('Veículo do cliente')
+                                      .caption1_regular(),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Row(children: [
+                                    Text(customerDetailParams
+                                                .customerDto.vehicle?.make ??
+                                            "Não informado")
+                                        .body_regular(),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(customerDetailParams
+                                                .customerDto.vehicle?.model ??
+                                            "")
+                                        .body_regular()
+                                  ]),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+
                                   const Text("Histórico de vendas")
                                       .label1_bold(),
                                   const SizedBox(

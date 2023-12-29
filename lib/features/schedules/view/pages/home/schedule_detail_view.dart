@@ -359,17 +359,24 @@ class ScheduleDetailView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Veículo do cliente').caption1_regular(
-                                        style: TextStyle(
-                                            color:
-                                                AppColor.textSecondaryColor)),
-                                    SizedBox(
-                                      height: 8,
+                                    const Text('Veículo do cliente')
+                                        .caption1_regular(),
+                                    const SizedBox(
+                                      height: 4,
                                     ),
-                                    Text(presenter.scheduleDataDto.vehicle
-                                                ?.name ??
-                                            "Não informado")
-                                        .body_bold(),
+                                    Row(children: [
+                                      Text(presenter.scheduleDataDto.vehicle
+                                                  ?.make ??
+                                              "Não informado")
+                                          .body_regular(),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(presenter.scheduleDataDto.vehicle
+                                                  ?.nickname ??
+                                              "")
+                                          .body_regular()
+                                    ]),
                                     // SizedBox(
                                     //   height: 4,
                                     // ),

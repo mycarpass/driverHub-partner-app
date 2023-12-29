@@ -1,3 +1,6 @@
+import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
+import 'package:flutter/material.dart';
+
 enum PaymentType {
   creditCard("Cartão de crédito"),
   pix("Pix"),
@@ -29,6 +32,19 @@ enum PaymentType {
         return 3;
       default:
         return 1;
+    }
+  }
+
+  IconData iconPaymentType() {
+    switch (this) {
+      case PaymentType.creditCard:
+        return Icons.credit_card;
+      case PaymentType.pix:
+        return Icons.pix;
+      case PaymentType.paper:
+        return Icons.money;
+      default:
+        return CustomIcons.dhCanceled;
     }
   }
 }

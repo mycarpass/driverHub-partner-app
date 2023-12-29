@@ -75,19 +75,6 @@ class SalesDto {
       rethrow;
     }
   }
-
-  IconData iconPaymentType() {
-    switch (paymentType) {
-      case PaymentType.creditCard:
-        return Icons.credit_card;
-      case PaymentType.pix:
-        return Icons.pix;
-      case PaymentType.paper:
-        return Icons.money;
-      default:
-        return CustomIcons.dhCanceled;
-    }
-  }
 }
 
 class SaleService {
