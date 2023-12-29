@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
 // ignore: depend_on_referenced_packages
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePresenter extends Cubit<DHState> {
@@ -73,6 +74,8 @@ class ProfilePresenter extends Cubit<DHState> {
   }
 
   void logout() {
+    Sentry.configureScope((scope) => scope.setUser(null));
+
     _cacheManager.reset();
 
     OneSignal.logout();
