@@ -5,6 +5,7 @@ import 'package:driver_hub_partner/features/login/entities/auth_entity.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/auth_service.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/dto/auth_dto.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/dto/auth_dto_response.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class AuthInteractor {
   AuthInteractor();
@@ -19,6 +20,15 @@ class AuthInteractor {
     try {
       AuthDtoResponse authReponse =
           await _authService.auth(AuthDto.fromEntity(authEntity));
+
+      Sentry.configureScope(
+        (scope) => scope.setUser(
+          SentryUser(
+            id: '',
+            email: authEntity.email,
+          ),
+        ),
+      );
       _dhCacheManager.setString(AuthTokenKey(), authReponse.token);
     } catch (e) {
       rethrow;

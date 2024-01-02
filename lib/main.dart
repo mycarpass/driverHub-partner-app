@@ -28,6 +28,7 @@ import 'package:dh_notification/notification_module.dart';
 // import 'config/firebase_options.dart';
 import 'package:dh_cache_manager/cache_manager_module.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 List<DHModule> moduleList = [
   DHCacheManagerModule(),
@@ -71,7 +72,17 @@ void main() async {
   }
   await Purchases.configure(configuration);
 
-  runApp(const AppEntryPoint());
+  await SentryFlutter.init(
+    (options) {
+      options.dsn =
+          'https://6a3c233d5ecd75299def9f76583fdd64@o4506476887539712.ingest.sentry.io/4506479616131072';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () => runApp(const AppEntryPoint()),
+  );
 }
 
 class AppEntryPoint extends StatelessWidget {
