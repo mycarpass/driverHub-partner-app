@@ -107,7 +107,7 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                         radioButtonValue: (value) {
                           presenter.setServiceCategory(value);
                         },
-                        defaultSelected: "Serviço",
+                        defaultSelected: defaultServiceTypeSelected,
                         height: 60,
                         unSelectedBorderColor: AppColor.borderColor,
                         selectedBorderColor: AppColor.borderColor,

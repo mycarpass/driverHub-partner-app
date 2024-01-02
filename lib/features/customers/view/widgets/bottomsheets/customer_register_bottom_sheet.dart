@@ -142,7 +142,7 @@ class _CustomerRegisterBottomSheetState
                 BlocConsumer<CustomerRegisterPresenter, DHState>(
                     listener: (context, state) {
                   if (state is DHSuccessState) {
-                    Navigator.of(context).pop(true);
+                    // Navigator.of(context).pop(true);
                     Navigator.of(context).pop(true);
                     DHSnackBar().showSnackBar(
                         "Oba!",
