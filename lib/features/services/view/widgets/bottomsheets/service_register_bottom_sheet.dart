@@ -46,13 +46,17 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var presenter = context.read<ServicesRegisterPresenter>();
-    var descriptionController =
+    // var descriptionController =
+    //     TextEditingController(text: presenter.serviceEntity.description ?? "");
+
+    presenter.descriptionController =
         TextEditingController(text: presenter.serviceEntity.description ?? "");
     if (partnerServiceDto != null) {
       presenter.serviceEntity.serviceTimeHours =
           partnerServiceDto!.hourTime.toString();
       presenter.setIsLiveOnApp(partnerServiceDto!.isLiveOnApp);
-      descriptionController.text = partnerServiceDto!.description ?? "";
+      presenter.descriptionController.text =
+          partnerServiceDto!.description ?? "";
       presenter.serviceEntity.description =
           partnerServiceDto!.description ?? "";
       timeController.text = partnerServiceDto!.hourTime.toString();
@@ -209,9 +213,11 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                                             Matrix4.translationValues(4, -6, 0),
                                         child: const Text(" (Opcional)")
                                             .caption1_regular(
-                                                style: const TextStyle(
-                                                    color: AppColor
-                                                        .textTertiaryColor)))
+                                          style: const TextStyle(
+                                            color: AppColor.textTertiaryColor,
+                                          ),
+                                        ),
+                                      )
                               ],
                             ),
                             const SizedBox(
@@ -219,7 +225,8 @@ class ServiceRegisterBottomSheet extends StatelessWidget {
                             ),
                             TextField(
                               //cursorWidth: 0,
-                              controller: descriptionController,
+
+                              controller: presenter.descriptionController,
                               cursorColor: AppColor.iconPrimaryColor,
                               showCursor: true,
                               style: const TextStyle(

@@ -7,6 +7,7 @@ import 'package:driver_hub_partner/features/services/interactor/services_interac
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ServicesRegisterPresenter extends Cubit<DHState> {
@@ -47,6 +48,8 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
     ServiceEntity(39, "Selante cerâmico", "Selante cerâmico", null, null,
         ServiceCategory.wash, ServiceType.additional, true)
   ];
+
+  var descriptionController = TextEditingController();
 
   final MoneyMaskedTextController moneyBaseController =
       MoneyMaskedTextController(
@@ -176,6 +179,7 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
     serviceEntity.id = service.id;
     serviceEntity.name = service.name;
     serviceEntity.description = service.description;
+    descriptionController.text = service.description ?? "";
     emit(DropDownServiceSelected(serviceEntity: service));
   }
 
