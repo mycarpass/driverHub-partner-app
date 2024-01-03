@@ -5,6 +5,7 @@ import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enu
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_delete_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_finish_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_start_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/new_dates_schedule_action.dart';
@@ -100,7 +101,8 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
 
       case ScheduleStatus.inProgress:
         if (scheduleDataDto.paymentType == null ||
-            scheduleDataDto.paymentType == "") {
+            scheduleDataDto.paymentType == "" ||
+            scheduleDataDto.paymentType == "IN_STORE") {
           dynamic paymentType = await showModalBottomSheet<int?>(
               context: context,
               isScrollControlled: true,
@@ -117,6 +119,29 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
 
       default:
         return null;
+    }
+  }
+
+  void deleteSchedule(BuildContext context) async {
+    dynamic isDeleted = await showModalBottomSheet<bool>(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return const ConfirmDeleteScheduleWidget();
+        });
+    if (isDeleted != null && isDeleted) {
+      await callDeleteSchedule();
+    }
+  }
+
+  Future callDeleteSchedule() async {
+    try {
+      emit(ScheduleLoadingButton());
+      await _schedulesInteractor.deleteSchedule(scheduleId);
+      emit(ScheduleDeletedSuccess());
+      NotificationCenter().notify('updateSchedules');
+    } catch (e) {
+      emit(DHErrorState());
     }
   }
 

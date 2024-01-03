@@ -24,3 +24,5 @@ class ScheduleStartedSuccess extends DHSuccessState {}
 class ScheduleFinishedSuccess extends DHSuccessState {}
 
 class ScheduleSuggestedSuccess extends DHSuccessState {}
+
+class ScheduleDeletedSuccess extends DHSuccessState {}

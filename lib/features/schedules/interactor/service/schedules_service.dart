@@ -12,4 +12,5 @@ abstract class SchedulesService {
   Future<dynamic> suggestNewHoursSchedule(
       int scheduleId, RequestNewHoursSuggest request);
   Future<void> createNewSchedule(ScheduleEntity scheduleEntity);
+  Future<dynamic> deleteSchedule(int scheduleId);
 }

@@ -75,6 +75,18 @@ class RestSchedulesService implements SchedulesService {
   }
 
   @override
+  Future<dynamic> deleteSchedule(int scheduleId) async {
+    try {
+      Response response =
+          await _httpClient.delete("/partner/schedules/$scheduleId");
+
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future suggestNewHoursSchedule(
       int scheduleId, RequestNewHoursSuggest request) async {
     try {

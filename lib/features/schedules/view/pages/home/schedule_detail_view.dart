@@ -59,6 +59,13 @@ class ScheduleDetailView extends StatelessWidget {
                     "Uma sugestão de um novo horário foi enviado com sucesso!",
                     DHSnackBarType.success);
                 //  Navigator.pop(context, true);
+              } else if (state is ScheduleDeletedSuccess) {
+                 Navigator.pop(context);
+                DHSnackBar().showSnackBar(
+                    "Sucesso!",
+                    "Seu agendamento foi excluído com sucesso!",
+                    DHSnackBarType.success);
+                
               } else if (state is DHErrorState) {
                 DHSnackBar().showSnackBar(
                     "Ops!",
@@ -520,7 +527,49 @@ class ScheduleDetailView extends StatelessWidget {
                                                                 .warningColor)))
                                               ],
                                             )
-                                          : SizedBox.shrink(),
+                                          : presenter.scheduleDataDto
+                                                          .paymentType ==
+                                                      null ||
+                                                  presenter.scheduleDataDto
+                                                          .paymentType ==
+                                                      ""
+                                              ? TextButton(
+                                                  style: ButtonStyle(
+                                                      tapTargetSize:
+                                                          MaterialTapTargetSize
+                                                              .shrinkWrap,
+                                                      padding:
+                                                          MaterialStatePropertyAll(
+                                                              EdgeInsets.zero),
+                                                      elevation:
+                                                          MaterialStatePropertyAll(
+                                                              0)),
+                                                  onPressed: () {
+                                                    presenter.deleteSchedule(
+                                                        context);
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .delete_outline_outlined,
+                                                        color:
+                                                            AppColor.errorColor,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      Text(
+                                                        "Excluir",
+                                                        textAlign:
+                                                            TextAlign.left,
+                                                      ).body_bold(
+                                                          style: TextStyle(
+                                                              color: AppColor
+                                                                  .errorColor))
+                                                    ],
+                                                  ))
+                                              : SizedBox.shrink(),
                                       ElevatedButton(
                                         onPressed:
                                             state is ScheduleLoadingButton

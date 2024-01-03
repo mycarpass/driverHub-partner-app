@@ -49,6 +49,14 @@ class SchedulesInteractor {
     }
   }
 
+  Future<dynamic> deleteSchedule(int scheduleId) async {
+    try {
+      return await _schedulesService.deleteSchedule(scheduleId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> suggestNewHoursSchedule(
       int scheduleId, RequestNewHoursSuggest request) async {
     try {
