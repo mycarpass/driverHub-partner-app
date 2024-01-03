@@ -2,12 +2,35 @@ import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
 import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 
 class SaleDetailsDto {
   late SaleDetailsData data;
 
   SaleDetailsDto.fromJson(Map<String, dynamic> json) {
     data = SaleDetailsData.fromJson(json['data']);
+  }
+
+  List<ServiceDto> toServiceDtoList() {
+    List<ServiceDto> list = [];
+
+    for (var service in data.services) {
+      list.add(
+        ServiceDto(
+            serviceId: service.priceId,
+
+            ///TODO adicionar type e category no /sales
+            type: ServiceType.service,
+            category: ServiceCategory.wash,
+            name: service.serviceName,
+            prices: [
+              PriceDto(
+                  service.basePrice, CarBodyType.hatchback, service.priceId)
+            ]),
+      );
+    }
+    return list;
   }
 }
 
