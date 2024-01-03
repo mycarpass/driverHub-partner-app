@@ -55,6 +55,9 @@ class _ServicesViewState extends State<ServicesView>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TabViewHeader(
+                              onRefresh: () async {
+                                presenter.load();
+                              },
                               onPressed: () async {
                                 bool? isServiceRegistered =
                                     await showModalBottomSheet<bool?>(

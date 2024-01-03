@@ -4,6 +4,7 @@ import 'package:driver_hub_partner/features/schedules/interactor/service/dto/sch
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
 import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
 import 'package:flutter/material.dart';
+import 'package:notification_center/notification_center.dart';
 
 class SolicitationListItemWidget extends StatelessWidget {
   const SolicitationListItemWidget({
@@ -21,12 +22,14 @@ class SolicitationListItemWidget extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(Colors.transparent),
           elevation: MaterialStateProperty.all(0),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-      onPressed: () => Navigator.pushNamed(
-        context,
-        SchedulesRoutes.scheduleDetail,
-        arguments:
-            ScheduleDetailParams(scheduleId: solicitationDataDto.scheduleId),
-      ),
+      onPressed: () {
+        Navigator.pushNamed(
+          context,
+          SchedulesRoutes.scheduleDetail,
+          arguments:
+              ScheduleDetailParams(scheduleId: solicitationDataDto.scheduleId),
+        );
+      },
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(

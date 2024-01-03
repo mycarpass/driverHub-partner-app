@@ -91,7 +91,7 @@ class _CustomerRegisterBottomSheetState
       child: BlocProvider(
         create: (context) => CustomerRegisterPresenter(),
         child: SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.7,
+          height: MediaQuery.sizeOf(context).height * 0.6,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -112,9 +112,7 @@ class _CustomerRegisterBottomSheetState
                   },
                   controller: nameController,
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+
                 DHTextField(
                   title: "Whatsapp",
                   hint: "(99) 999999-9999",
@@ -128,14 +126,15 @@ class _CustomerRegisterBottomSheetState
                 const SizedBox(
                   height: 8,
                 ),
-                DHTextField(
-                  title: "Placa (Opcional)",
-                  hint: "XXX0000",
-                  icon: Icons.car_rental_outlined,
-                  formatters: [UpperCaseTextFormatter(), formatter],
-                  onChanged: (_) {},
-                  controller: plateControler,
-                ),
+                // DHTextField(
+                //   title: "Placa (Opcional)",
+                //   hint: "XXX0000",
+                //   icon: Icons.car_rental_outlined,
+                //   formatters: [UpperCaseTextFormatter(), formatter],
+                //   onChanged: (_) {},
+                //   controller: plateControler,
+                // ),
+
                 const SizedBox(
                   height: 32,
                 ),
@@ -181,7 +180,7 @@ class _CustomerRegisterBottomSheetState
                                           name: nameController.text,
                                           phone: phoneController.text,
                                           plate: plateControler.text,
-                                          id: widget.customerDto!.customerId
+                                          id: widget.customerDto!.leadId
                                               .toString())
                               : DHSnackBar().showSnackBar(
                                   "Ops...",

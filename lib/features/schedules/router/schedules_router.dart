@@ -17,7 +17,7 @@ abstract class SchedulesRoutesMap {
         ),
     "/schedule-list": (context) => BlocProvider(
           create: (context) => SchedulesPresenter(),
-          child: ScheduledListView(),
+          child: const ScheduledListView(),
         ),
   };
 }

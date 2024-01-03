@@ -22,6 +22,7 @@ class CustomersResponseDto {
 
 class CustomerDto {
   late int customerId;
+  int? leadId;
   late CustomerStatus status;
   late PersonName name;
   late PhoneValue phone;
@@ -61,6 +62,7 @@ class CustomerDto {
 
   CustomerDto.fromJson(Map<String, dynamic> json) {
     customerId = json['customerId'];
+    leadId = json['lead_id'];
     status = _getStatus(json['status'] ?? "NOT_VERIFIED");
     name = PersonName(json['name']);
     phone = PhoneValue(value: json['phone']);

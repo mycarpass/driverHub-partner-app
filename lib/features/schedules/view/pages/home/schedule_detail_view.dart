@@ -31,7 +31,7 @@ class ScheduleDetailView extends StatelessWidget {
           var presenter = builderContext.read<ScheduleDetailPresenter>();
           return Scaffold(
             appBar: AppBar().backButton(onPressed: () {
-              Navigator.pop(context, 1);
+              Navigator.pop(context, false);
             }),
             body: BlocConsumer<ScheduleDetailPresenter, DHState>(
                 listener: (context, state) {
@@ -40,21 +40,25 @@ class ScheduleDetailView extends StatelessWidget {
                     "Sucesso!",
                     "Agendamento foi aceito com sucesso!",
                     DHSnackBarType.success);
+                // Navigator.pop(context, true);
               } else if (state is ScheduleStartedSuccess) {
                 DHSnackBar().showSnackBar(
                     "Sucesso!",
                     "Agendamento foi iniciado com sucesso!",
                     DHSnackBarType.success);
+                // Navigator.pop(context, true);
               } else if (state is ScheduleFinishedSuccess) {
                 DHSnackBar().showSnackBar(
                     "Sucesso!",
                     "Agendamento foi finalizado com sucesso!",
                     DHSnackBarType.success);
+                // Navigator.pop(context, true);
               } else if (state is ScheduleSuggestedSuccess) {
                 DHSnackBar().showSnackBar(
                     "Sucesso!",
                     "Uma sugestão de um novo horário foi enviado com sucesso!",
                     DHSnackBarType.success);
+                //  Navigator.pop(context, true);
               } else if (state is DHErrorState) {
                 DHSnackBar().showSnackBar(
                     "Ops!",

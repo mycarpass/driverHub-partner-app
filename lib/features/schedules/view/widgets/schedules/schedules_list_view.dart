@@ -11,8 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class ScheduledListView extends StatefulWidget {
-  ScheduledListView({super.key});
-
+  const ScheduledListView({super.key});
   @override
   State<ScheduledListView> createState() => _ScheduledListViewState();
 }

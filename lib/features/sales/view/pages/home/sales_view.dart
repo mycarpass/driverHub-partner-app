@@ -61,6 +61,9 @@ class _SalesViewState extends State<SalesView>
                           children: [
                             BlocBuilder<SubscriptionPresenter, DHState>(
                               builder: (context, state) => TabViewHeader(
+                                onRefresh: () async {
+                                  presenter.load();
+                                },
                                 addButtonIsVisible: context
                                     .read<SubscriptionPresenter>()
                                     .isSubscribed,

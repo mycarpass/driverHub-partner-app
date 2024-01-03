@@ -9,6 +9,7 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/new_dates_schedule_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notification_center/notification_center.dart';
 
 class ScheduleDetailPresenter extends Cubit<DHState> {
   ScheduleDetailPresenter({required this.scheduleId}) : super(DHInitialState());
@@ -83,6 +84,7 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     switch (scheduleDataDto.status) {
       case ScheduleStatus.pending:
         await acceptSchedule();
+        NotificationCenter().notify('updateSchedules');
       case ScheduleStatus.waitingToWork:
         // ignore: use_build_context_synchronously
         dynamic isConfirmed = await showModalBottomSheet<bool>(
@@ -92,10 +94,12 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
             });
         if (isConfirmed != null && isConfirmed) {
           await startSchedule();
+          NotificationCenter().notify('updateSchedules');
         }
 
       case ScheduleStatus.inProgress:
         await finishSchedule();
+        NotificationCenter().notify('updateSchedules');
 
       default:
         return null;
@@ -112,6 +116,7 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
             });
     if (requestNewHoursSuggest != null) {
       await _suggestNewDate(requestNewHoursSuggest);
+      NotificationCenter().notify('updateSchedules');
     }
   }
 

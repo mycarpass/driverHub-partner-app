@@ -73,7 +73,8 @@ class ServicesResponseDto {
         washesEntity.add(serviceEntity);
       }
     }
-    return washesEntity;
+    dynamic list = washesEntity.reversed.toList();
+    return list;
   }
 
   List<ServiceEntity> fetchAddionalWashes() {

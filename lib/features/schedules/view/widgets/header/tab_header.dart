@@ -10,12 +10,14 @@ class TabViewHeader extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.onPressed,
+    required this.onRefresh,
     this.addButtonIsVisible = true,
   });
   final String title;
   final String subtitle;
   final Function onPressed;
   bool addButtonIsVisible;
+  final Function onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +31,28 @@ class TabViewHeader extends StatelessWidget {
           children: [
             Text(title).title1_bold(),
             const SizedBox(
-              height: 4,
+              height: 2,
             ),
-            Padding(
-                padding: const EdgeInsets.only(left: 2),
-                child: Text(subtitle).body_regular())
+            Row(children: [
+              Padding(
+                  padding: const EdgeInsets.only(left: 2),
+                  child: Text(subtitle).body_regular()),
+              const SizedBox(
+                width: 8,
+              ),
+              GestureDetector(
+                onTap: () => onRefresh(),
+                child: Row(children: [
+                  const Icon(
+                    Icons.refresh,
+                    size: 18,
+                    color: AppColor.iconPrimaryColor,
+                  ),
+                  const Text('Atualizar').caption1_bold(
+                      style: const TextStyle(color: AppColor.iconPrimaryColor))
+                ]),
+              )
+            ]),
           ],
         ),
         TextButton(

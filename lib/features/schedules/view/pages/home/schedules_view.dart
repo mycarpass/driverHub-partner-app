@@ -14,6 +14,7 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/schedules_err
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dh_ui_kit/view/widgets/tabs/dh_contained_tab_bar.dart';
+import 'package:notification_center/notification_center.dart';
 
 class SchedulesView extends StatefulWidget {
   const SchedulesView({super.key});
@@ -25,12 +26,18 @@ class SchedulesView extends StatefulWidget {
 class _SchedulesViewState extends State<SchedulesView>
     with AutomaticKeepAliveClientMixin {
   @override
+  void dispose() {
+    NotificationCenter().unsubscribe('updateSchedules');
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<SchedulesPresenter>(
-          create: (BuildContext context) => SchedulesPresenter()..load(),
+          create: (BuildContext context) => SchedulesPresenter()..initialize(),
         ),
         BlocProvider<SubscriptionPresenter>(
           create: (BuildContext context) => SubscriptionPresenter()..start(),
@@ -62,6 +69,9 @@ class _SchedulesViewState extends State<SchedulesView>
                           children: [
                             BlocBuilder<SubscriptionPresenter, DHState>(
                               builder: (context, state) => TabViewHeader(
+                                onRefresh: () async {
+                                  presenter.load();
+                                },
                                 onPressed: () async {
                                   if (!context
                                       .read<SubscriptionPresenter>()
@@ -94,7 +104,7 @@ class _SchedulesViewState extends State<SchedulesView>
                                     .isSubscribed,
                                 title: "Agenda",
                                 subtitle:
-                                    "${presenter.filteredList.length} agendamentos esse mês",
+                                    "${presenter.filteredList.length} agendamentos",
                               ),
                             ),
                           ],
