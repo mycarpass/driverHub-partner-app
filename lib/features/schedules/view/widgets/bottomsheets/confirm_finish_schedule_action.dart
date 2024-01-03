@@ -1,3 +1,4 @@
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
@@ -18,12 +19,7 @@ class _ConfirmFinishScheduleWidgetWidgetState
     extends State<ConfirmFinishScheduleWidget> {
   final TextEditingController controller = TextEditingController();
 
-  MaskTextInputFormatter numberFormatter = MaskTextInputFormatter(
-    mask: "####",
-    filter: {
-      "#": RegExp('[0-9]'),
-    },
-  );
+  int optionDefaultSelected = 1;
 
   @override
   void initState() {
@@ -47,28 +43,46 @@ class _ConfirmFinishScheduleWidgetWidgetState
                   24, 24, 24, MediaQuery.of(context).viewInsets.bottom),
               child: Column(children: [
                 const Text(
-                  'Informe os 4 últimos números do telefone do cliente para finalizar o serviço.',
+                  'Qual foi o meio de pagamento utilizado para receber esse serviço do cliente?',
                   textAlign: TextAlign.center,
                 ).body_regular(
                     style: const TextStyle(color: AppColor.textSecondaryColor)),
                 const SizedBox(
                   height: 24,
                 ),
-                DHTextField(
-                    hint: "4 últimos números do telefone",
-                    icon: Icons.phone_android,
-                    controller: controller,
-                    autofocus: true,
-                    formatters: [numberFormatter],
-                    keyboardType: TextInputType.number,
-                    onChanged: (_) {}),
-                const SizedBox(
-                  height: 24,
-                ),
+                CustomRadioButton(
+                    horizontal: true,
+                    height: 48,
+                    unSelectedBorderColor: AppColor.borderColor,
+                    selectedBorderColor: AppColor.borderColor,
+                    margin: const EdgeInsets.all(8),
+                    enableShape: true,
+                    shapeRadius: 16,
+                    autoWidth: true,
+                    radius: 16,
+                    elevation: 0,
+                    absoluteZeroSpacing: true,
+                    buttonTextStyle: const ButtonTextStyle(
+                        selectedColor: AppColor.backgroundColor,
+                        unSelectedColor: AppColor.textSecondaryColor,
+                        textStyle:
+                            TextStyle(fontSize: 16, fontFamily: 'CircularStd')),
+                    buttonLables: const [
+                      'Cartão de Crédito',
+                      'Pix',
+                      'Dinheiro'
+                    ],
+                    buttonValues: const [1, 2, 3],
+                    defaultSelected: optionDefaultSelected,
+                    radioButtonValue: (value) {
+                      optionDefaultSelected = value;
+                    },
+                    unSelectedColor: AppColor.backgroundColor,
+                    selectedColor: AppColor.accentColor),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(
                     context,
-                    controller.text,
+                    optionDefaultSelected,
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +102,7 @@ class _ConfirmFinishScheduleWidgetWidgetState
                     child: const Text("Ainda não").label2_bold(
                         style: const TextStyle(color: AppColor.accentColor))),
                 const SizedBox(
-                  height: 12,
+                  height: 48,
                 ),
               ]))
         ]));

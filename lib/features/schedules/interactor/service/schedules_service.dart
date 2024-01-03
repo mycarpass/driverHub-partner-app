@@ -8,7 +8,7 @@ abstract class SchedulesService {
   Future<dynamic> acceptSchedule(
       int scheduleId, ScheduleTimeSuggestionDto timeSuggestion);
   Future<dynamic> startSchedule(int scheduleId);
-  Future<dynamic> finishSchedule(int scheduleId);
+  Future<dynamic> finishSchedule(int scheduleId, int? paymentType);
   Future<dynamic> suggestNewHoursSchedule(
       int scheduleId, RequestNewHoursSuggest request);
   Future<void> createNewSchedule(ScheduleEntity scheduleEntity);

@@ -5,6 +5,7 @@ import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enu
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_finish_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_start_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/new_dates_schedule_action.dart';
 import 'package:flutter/material.dart';
@@ -69,10 +70,10 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     }
   }
 
-  Future finishSchedule() async {
+  Future finishSchedule(int? paymentType) async {
     try {
       emit(ScheduleLoadingButton());
-      await _schedulesInteractor.finishSchedule(scheduleId);
+      await _schedulesInteractor.finishSchedule(scheduleId, paymentType);
       await _getScheduleDetail();
       emit(ScheduleFinishedSuccess());
     } catch (e) {
@@ -98,7 +99,20 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
         }
 
       case ScheduleStatus.inProgress:
-        await finishSchedule();
+        if (scheduleDataDto.paymentType == null ||
+            scheduleDataDto.paymentType == "") {
+          dynamic paymentType = await showModalBottomSheet<int?>(
+              context: context,
+              isScrollControlled: true,
+              builder: (BuildContext context) {
+                return const ConfirmFinishScheduleWidget();
+              });
+          if (paymentType != null) {
+            await finishSchedule(paymentType);
+          }
+        } else {
+          await finishSchedule(null);
+        }
         NotificationCenter().notify('updateSchedules');
 
       default:

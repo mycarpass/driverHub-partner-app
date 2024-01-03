@@ -4,7 +4,6 @@ import 'package:driver_hub_partner/features/schedules/interactor/service/dto/sch
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
 import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
 import 'package:flutter/material.dart';
-import 'package:notification_center/notification_center.dart';
 
 class SolicitationListItemWidget extends StatelessWidget {
   const SolicitationListItemWidget({
