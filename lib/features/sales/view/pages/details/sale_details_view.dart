@@ -47,8 +47,7 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
               title: "Venda",
               showHeaderIcon: false,
               //TODO Fix null check
-              doneButtonIsEnabled: state is DHSuccessState &&
-                  presenter.saleDetailsDto.data.scheduleId != null,
+              doneButtonIsEnabled: false,
               onDonePressed: state is DHSuccessState &&
                       presenter.saleDetailsDto.data.scheduleId != null
                   ? () {
