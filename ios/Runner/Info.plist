@@ -45,6 +45,8 @@
 	<string>Precisamos de acesso ao microfone, pois é necessário ao abrir a câmera e registrar as fotos do estabelecimento.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Precisamos de acesso a biblioteca de fotos para você carregar as imagens do seu estabelecimento.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Precisamos de acesso a biblioteca de fotos para você salvar as imagens dos comprovantes.</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>Precisamos de acesso ao bluetooth para oferecer uma experiência de pagamento com o cliente no estabelecimento</string>
     <key>NSBluetoothAlwaysUsageDescription</key>

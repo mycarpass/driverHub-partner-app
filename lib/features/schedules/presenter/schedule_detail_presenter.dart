@@ -1,5 +1,6 @@
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/schedules_interactor.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enum/schedule_status.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
@@ -9,6 +10,7 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_finish_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/confirm_start_schedule_action.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/new_dates_schedule_action.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/receipt/receipt_schedule_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notification_center/notification_center.dart';
@@ -103,6 +105,7 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
         if (scheduleDataDto.paymentType == null ||
             scheduleDataDto.paymentType == "" ||
             scheduleDataDto.paymentType == "IN_STORE") {
+          // ignore: use_build_context_synchronously
           dynamic paymentType = await showModalBottomSheet<int?>(
               context: context,
               isScrollControlled: true,
@@ -170,5 +173,25 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     } catch (e) {
       emit(DHErrorState());
     }
+  }
+
+  ReceiptScheduleEntity getScheduleReceiptEntity() {
+    String scheduleDate =
+        '${scheduleDataDto.scheduleDate} às ${timeSuggestionSelected.time}';
+
+    List<String> services = [];
+    for (var service in scheduleDataDto.selectedServices.items) {
+      MoneyValue price = MoneyValue(service.price);
+      services.add("${service.service} (${price.priceInReal})");
+    }
+
+    ReceiptScheduleEntity entity = ReceiptScheduleEntity(
+        customerName: scheduleDataDto.client.name,
+        partnerName: "Box do Jones",
+        services: services,
+        total: MoneyValue(scheduleDataDto.totalAmountPayable ?? "0,00"),
+        vehicle: scheduleDataDto.vehicle,
+        scheduleDate: scheduleDate);
+    return entity;
   }
 }

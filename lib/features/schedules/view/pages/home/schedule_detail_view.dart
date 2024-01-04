@@ -2,12 +2,15 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:dh_ui_kit/view/extensions/button_style_extension.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
+import 'package:driver_hub_partner/features/commom_objects/receipts/view/recepit_view_bottomsheet.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/receipt/receipt_schedule.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,12 +63,11 @@ class ScheduleDetailView extends StatelessWidget {
                     DHSnackBarType.success);
                 //  Navigator.pop(context, true);
               } else if (state is ScheduleDeletedSuccess) {
-                 Navigator.pop(context);
+                Navigator.pop(context);
                 DHSnackBar().showSnackBar(
                     "Sucesso!",
                     "Seu agendamento foi excluído com sucesso!",
                     DHSnackBarType.success);
-                
               } else if (state is DHErrorState) {
                 DHSnackBar().showSnackBar(
                     "Ops!",
@@ -462,6 +464,57 @@ class ScheduleDetailView extends StatelessWidget {
                                       },
                                     ),
                                   ],
+                                ),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                ElevatedButton(
+                                  style: const ButtonStyle().noStyle(),
+                                  onPressed: () {
+                                    //Navigator.pop(context, AddressActionOption.workset);
+                                    showModalBottomSheet(
+                                        context: context,
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        builder: (context) =>
+                                            ReceiptViewBottomSheet(
+                                                receiptWdiget: ScheduleReceipt(
+                                              entity: presenter
+                                                  .getScheduleReceiptEntity(),
+                                            )));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0,
+                                      top: 16,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text("Gerar comprovante")
+                                                .body_regular(
+                                                    style: const TextStyle(
+                                                        color: AppColor
+                                                            .textPrimaryColor)),
+                                            const Icon(
+                                              Icons.receipt_long_rounded,
+                                              color: AppColor.iconPrimaryColor,
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Container(
+                                          height: 1,
+                                          color: AppColor.borderColor,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 12,

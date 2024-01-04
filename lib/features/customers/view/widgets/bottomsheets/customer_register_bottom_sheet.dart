@@ -7,7 +7,6 @@ import 'package:driver_hub_partner/features/customers/interactor/service/dto/cus
 import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dh_ui_kit/view/widgets/input/uppercase_formatter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 // ignore: must_be_immutable
