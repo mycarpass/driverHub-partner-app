@@ -10,14 +10,8 @@ import 'package:driver_hub_partner/features/customers/interactor/service/dto/cus
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
-import 'package:driver_hub_partner/features/customers/view/pages/detail/customer_details_view.dart';
-import 'package:driver_hub_partner/features/customers/view/widgets/customer_details_widget.dart';
-import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/presenter/detail/sale_detail_presenter.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/update/update_sale_bottomsheet.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_presenter.dart';
-import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
-import 'package:driver_hub_partner/features/services/router/services_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

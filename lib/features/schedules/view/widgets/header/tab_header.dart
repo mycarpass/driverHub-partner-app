@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TabViewHeader extends StatelessWidget {
-  TabViewHeader({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.onPressed,
-    required this.onRefresh,
-    this.addButtonIsVisible = true,
-  });
+  TabViewHeader(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.onPressed,
+      required this.onRefresh,
+      this.addButtonIsVisible = true,
+      this.allButtonsIsVisible = true});
   final String title;
   final String subtitle;
   final Function onPressed;
   bool addButtonIsVisible;
+  bool allButtonsIsVisible;
   final Function onRefresh;
 
   @override
@@ -54,26 +55,29 @@ class TabViewHeader extends StatelessWidget {
             ]),
           ],
         ),
-        TextButton(
-          onPressed: () => onPressed(),
-          child: addButtonIsVisible
-              ? Row(
-                  children: [
-                    const Icon(
-                      Icons.add_outlined,
-                      color: AppColor.accentColor,
-                      size: 24,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    const Text("Novo").label1_bold(
+        allButtonsIsVisible
+            ? TextButton(
+                onPressed: () => onPressed(),
+                child: addButtonIsVisible
+                    ? Row(
+                        children: [
+                          const Icon(
+                            Icons.add_outlined,
+                            color: AppColor.accentColor,
+                            size: 24,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          const Text("Novo").label1_bold(
+                              style:
+                                  const TextStyle(color: AppColor.accentColor)),
+                        ],
+                      )
+                    : const Text("Assinar plano").label1_bold(
                         style: const TextStyle(color: AppColor.accentColor)),
-                  ],
-                )
-              : const Text("Assinar plano").label1_bold(
-                  style: const TextStyle(color: AppColor.accentColor)),
-        )
+              )
+            : const SizedBox.shrink()
       ],
     );
   }

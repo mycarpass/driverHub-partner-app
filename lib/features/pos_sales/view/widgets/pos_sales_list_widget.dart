@@ -1,24 +1,24 @@
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/commom_objects/extensions/date_extensions.dart';
-import 'package:driver_hub_partner/features/sales/presenter/sales_presenter.dart';
-import 'package:driver_hub_partner/features/sales/view/widgets/sales_list_item_widget.dart';
+import 'package:driver_hub_partner/features/pos_sales/presenter/pos_sales_presenter.dart';
+import 'package:driver_hub_partner/features/pos_sales/view/widgets/pos_sales_list_item_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/emptystate/empty_state_list.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/month/month_swiper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SalesListWidget extends StatelessWidget {
-  const SalesListWidget({required this.sales, super.key});
+class PosSalesListWidget extends StatelessWidget {
+  const PosSalesListWidget({required this.posSales, super.key});
 
-  final List<dynamic> sales;
+  final List<dynamic> posSales;
 
   @override
   Widget build(BuildContext context) {
-    var presenter = context.read<SalesPresenter>();
+    var presenter = context.read<PosSalesPresenter>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: BlocBuilder<SalesPresenter, DHState>(
+      child: BlocBuilder<PosSalesPresenter, DHState>(
         builder: (context, state) {
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -29,9 +29,10 @@ class SalesListWidget extends StatelessWidget {
                   presenter.filterListByDate(_);
                 },
               ),
-              sales.isEmpty
+              posSales.isEmpty
                   ? const EmptyStateList(
-                      text: 'Nenhuma venda encontrada para o mês selecionado.',
+                      text:
+                          'Nenhuma pós-venda encontrada para o mês selecionado.',
                     )
                   : Column(
                       mainAxisSize: MainAxisSize.max,
@@ -40,7 +41,7 @@ class SalesListWidget extends StatelessWidget {
                         presenter.filteredList.isEmpty
                             ? const EmptyStateList(
                                 text:
-                                    'Nenhuma venda encontrada para o mês selecionado.',
+                                    'Nenhuma pós-venda encontrada para o mês selecionado.',
                               )
                             : ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -50,13 +51,13 @@ class SalesListWidget extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   bool isSameDate = true;
                                   final DateTime date =
-                                      presenter.filteredList[index].saleDate;
+                                      presenter.filteredList[index].posSaleDate;
 
                                   if (index == 0) {
                                     isSameDate = false;
                                   } else {
                                     final DateTime prevDate = presenter
-                                        .filteredList[index - 1].saleDate;
+                                        .filteredList[index - 1].posSaleDate;
                                     isSameDate = date.isSameDate(prevDate);
                                   }
                                   if (index == 0 || !(isSameDate)) {
@@ -70,7 +71,7 @@ class SalesListWidget extends StatelessWidget {
                                         children: [
                                           Text(
                                             presenter
-                                                .filteredList[index].saleDate
+                                                .filteredList[index].posSaleDate
                                                 .formatDate(
                                               'dd, EEEE',
                                               'pt_BR',
@@ -79,8 +80,8 @@ class SalesListWidget extends StatelessWidget {
                                           const SizedBox(
                                             height: 12,
                                           ),
-                                          SalesListItemWidget(
-                                            solicitationDataDto:
+                                          PosSalesListItemWidget(
+                                            posSalesDto:
                                                 presenter.filteredList[index],
                                           ),
                                         ],
@@ -88,8 +89,8 @@ class SalesListWidget extends StatelessWidget {
                                     );
                                   } else {
                                     //  return const Divider();
-                                    return SalesListItemWidget(
-                                      solicitationDataDto:
+                                    return PosSalesListItemWidget(
+                                      posSalesDto:
                                           presenter.filteredList[index],
                                     );
                                   }

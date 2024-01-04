@@ -11,6 +11,7 @@ import 'package:driver_hub_partner/config/enviroment_variables.dart';
 import 'package:driver_hub_partner/features/customers/customers_module.dart';
 import 'package:driver_hub_partner/features/home/home_module.dart';
 import 'package:driver_hub_partner/features/login/login_module.dart';
+import 'package:driver_hub_partner/features/pos_sales/pos_sales_module.dart';
 import 'package:driver_hub_partner/features/profile/profile_module.dart';
 import 'package:driver_hub_partner/features/sales/sales_module.dart';
 import 'package:driver_hub_partner/features/schedules/schedules_module.dart';
@@ -43,6 +44,7 @@ List<DHModule> moduleList = [
   SalesModule(),
   SignUpModule(),
   ServicesModule(),
+  PosSalesModule(),
   NotificationPackageModule(notificationToken: DHEnvs.oneSignalToken)
 ];
 

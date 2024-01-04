@@ -1,0 +1,4 @@
+enum PosSalesStatus {
+  contacted,
+  waintingContact,
+}

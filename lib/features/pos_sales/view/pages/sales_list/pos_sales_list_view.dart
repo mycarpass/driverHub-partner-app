@@ -1,21 +1,21 @@
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:driver_hub_partner/features/commom_objects/extensions/date_extensions.dart';
-import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
-import 'package:driver_hub_partner/features/sales/view/widgets/sales_list_item_widget.dart';
+import 'package:driver_hub_partner/features/pos_sales/interactor/service/dto/pos_sales_response_dto.dart';
+import 'package:driver_hub_partner/features/pos_sales/view/widgets/pos_sales_list_item_widget.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/emptystate/empty_state_list.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class SalesListView extends StatefulWidget {
-  const SalesListView({super.key});
+class PosSalesListView extends StatefulWidget {
+  const PosSalesListView({super.key});
 
   @override
-  State<SalesListView> createState() => _SalesListViewState();
+  State<PosSalesListView> createState() => _PosSalesListViewState();
 }
 
-class _SalesListViewState extends State<SalesListView> {
-  List<SalesDto> sales = [];
+class _PosSalesListViewState extends State<PosSalesListView> {
+  List<PosSalesDto> sales = [];
   late DateTime daySelected;
   @override
   void didChangeDependencies() {
@@ -47,7 +47,7 @@ class _SalesListViewState extends State<SalesListView> {
                 sales.isEmpty
                     ? const EmptyStateList(
                         text:
-                            'Nenhuma venda encontrada para a data selecionada.',
+                            'Nenhuma pós-venda encontrada para a data selecionada.',
                       )
                     : ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -55,8 +55,8 @@ class _SalesListViewState extends State<SalesListView> {
                         padding: const EdgeInsets.only(bottom: 32),
                         itemCount: sales.length,
                         itemBuilder: (context, index) {
-                          return SalesListItemWidget(
-                            solicitationDataDto: sales[index],
+                          return PosSalesListItemWidget(
+                            posSalesDto: sales[index],
                           );
                         },
                       ),

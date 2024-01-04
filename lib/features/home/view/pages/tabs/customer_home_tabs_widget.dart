@@ -4,6 +4,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/customers/view/pages/home/customers_view.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart';
+import 'package:driver_hub_partner/features/pos_sales/view/pages/home/pos_sales_view.dart';
 import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
 import 'package:driver_hub_partner/features/sales/view/pages/home/sales_view.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/schedules_view.dart';
@@ -26,7 +27,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     context.read<HomePresenter>().load();
 
     tabController = TabController(
-      length: 6,
+      length: 7,
       vsync: this,
     );
     super.initState();
@@ -76,6 +77,10 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
                 TabBarWidget(
                   icon: Icons.group_outlined,
                   title: "Clientes",
+                ),
+                TabBarWidget(
+                  icon: Icons.mode_of_travel_outlined,
+                  title: "Pós-vendas",
                 ),
                 TabBarWidget(
                   icon: Icons.miscellaneous_services,
@@ -149,6 +154,7 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
           SchedulesView(),
           SalesView(),
           CustomersView(),
+          PosSalesView(),
           ServicesView(),
           HomeProfileView(),
         ],
