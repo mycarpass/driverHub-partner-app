@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 import 'package:whatsapp_share/whatsapp_share.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ReceiptPresenter extends Cubit<DHState> {
   ReceiptPresenter() : super(DHInitialState());
@@ -33,7 +34,11 @@ class ReceiptPresenter extends Cubit<DHState> {
       final DateTime now = DateTime.now();
       String fileName =
           "DH-Comprovante-Agendamento-${now.microsecondsSinceEpoch}.png";
-      File file = File.fromRawPath(bytes!);
+
+      final Directory tempDir = await getTemporaryDirectory();
+      File file = File('$tempDir/$fileName');
+      file = await file.writeAsBytes(bytes!);
+
       print(file);
       await WhatsappShare.shareFile(
         phone: "5534991968372",
@@ -42,6 +47,7 @@ class ReceiptPresenter extends Cubit<DHState> {
 
       emit(ImageSharedSuccessful(fileName));
     } catch (e) {
+      print(e);
       emit(DHErrorState());
     }
   }
