@@ -38,6 +38,7 @@ class SaleDetailsData {
   late int? scheduleId;
   late PaymentType? paymentType;
   late SaleDetailsClient client;
+  late SaleDetailPartner partner;
   late List<Services> services;
   late MoneyValue totalAmountPaid;
   late MoneyValue discountValue;
@@ -53,6 +54,7 @@ class SaleDetailsData {
         ? PaymentType.fromString(json['payment_type'])
         : null;
     client = SaleDetailsClient.fromJson(json['client']);
+    partner = SaleDetailPartner.fromJson(json['partner']);
     if (json['services'] != null) {
       services = <Services>[];
       json['services'].forEach((v) {
@@ -87,6 +89,16 @@ class SaleDetailsClient {
     phone = json['phone'];
     vehicle =
         json['vehicle'] != null ? VehicleDto.fromJson(json['vehicle']) : null;
+  }
+}
+
+class SaleDetailPartner {
+  late String name;
+  String? logo;
+
+  SaleDetailPartner.fromJson(Map<String, dynamic> json) {
+    logo = json['logo'];
+    name = json['name'] ?? "";
   }
 }
 

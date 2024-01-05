@@ -13,7 +13,7 @@ import 'package:driver_hub_partner/features/customers/router/customers_router.da
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/sales/presenter/detail/sale_detail_presenter.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/update/update_sale_bottomsheet.dart';
-import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/receipt/receipt_schedule.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/receipt/receipt_sale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
@@ -440,20 +440,20 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                           ElevatedButton(
                             style: const ButtonStyle().noStyle(),
                             onPressed: () {
-                              // showModalBottomSheet(
-                              //     context: context,
-                              //     showDragHandle: true,
-                              //     isScrollControlled: true,
-                              //     builder: (context) => ReceiptViewBottomSheet(
-                              //         customerPhone: PhoneValue(
-                              //             value: presenter
-                              //                 .saleDetailsDto.data.client.phone),
-                              //         whatsMessage:
-                              //             'Olá ${presenter.saleDetailsDto.data.client.name}, aqui está o comprovante do serviço realizado com ${presenter.scheduleDataDto.partner?.name ?? ""}',
-                              //         receiptWdiget: ScheduleReceipt(
-                              //           entity: presenter
-                              //               .getScheduleReceiptEntity(),
-                              //         )));
+                              showModalBottomSheet(
+                                  context: context,
+                                  showDragHandle: true,
+                                  isScrollControlled: true,
+                                  builder: (context) => ReceiptViewBottomSheet(
+                                      customerPhone: PhoneValue(
+                                          value: presenter.saleDetailsDto.data
+                                              .client.phone),
+                                      whatsMessage:
+                                          'Olá ${presenter.saleDetailsDto.data.client.name}, aqui está o comprovante do serviço realizado com ${presenter.saleDetailsDto.data.partner.name}',
+                                      receiptWdiget: SaleReceipt(
+                                        entity:
+                                            presenter.getSaleReceiptEntity(),
+                                      )));
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(

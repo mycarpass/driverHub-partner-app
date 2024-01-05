@@ -197,13 +197,12 @@ class ReceiptViewBottomSheet extends StatelessWidget {
                               color: AppColor.borderColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
-                          child: Column(children: [
-                            Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: WidgetsToImage(
-                                    controller: presenter.controller,
-                                    child: receiptWdiget))
-                          ]))),
+                          child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: SingleChildScrollView(
+                                  child: WidgetsToImage(
+                                      controller: presenter.controller,
+                                      child: receiptWdiget))))),
                 ),
               ));
         }));

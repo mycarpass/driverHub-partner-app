@@ -233,7 +233,7 @@ class _PosSaleDetailsViewState extends State<PosSaleDetailsView> {
                         const Divider(
                           height: 48,
                         ),
-                        Text('Ações de pós-venda').label2_bold(),
+                        const Text('Ações de pós-venda').label2_bold(),
                         const SizedBox(
                           height: 8,
                         ),

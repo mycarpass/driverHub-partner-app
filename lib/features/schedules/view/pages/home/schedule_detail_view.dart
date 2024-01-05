@@ -22,7 +22,6 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/loading/sched
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ScheduleDetailView extends StatelessWidget {
   const ScheduleDetailView({
