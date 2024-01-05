@@ -271,7 +271,7 @@ class ScheduleDataDto {
   String actionText() {
     switch (status) {
       case ScheduleStatus.pending:
-        return "Aceitar";
+        return "Aceitar agendamento";
       case ScheduleStatus.waitingToWork:
         return "Iniciar serviço";
       case ScheduleStatus.inProgress:
@@ -356,15 +356,18 @@ class ItemScheduleServiceDto {
 class ClientScheduleDto {
   late String name;
   late String phone;
+  late int id;
 
   ClientScheduleDto({
     required this.name,
     required this.phone,
+    required this.id,
   });
 
   ClientScheduleDto.fromJson(Map<String, dynamic> json) {
     name = json["name"] ?? "Não carregado";
     phone = json["phone"] ?? "Não carregado";
+    id = json["id"] ?? 0;
   }
 
   String getFirstAndLastName() {
