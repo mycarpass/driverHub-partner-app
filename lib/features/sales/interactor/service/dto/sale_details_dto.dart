@@ -40,7 +40,7 @@ class SaleDetailsData {
   late SaleDetailsClient client;
   late SaleDetailPartner partner;
   late List<Services> services;
-  late MoneyValue totalAmountPaid;
+  MoneyValue totalAmountPaid = MoneyValue(0.00);
   late MoneyValue discountValue;
   late MoneyValue subTotalPaid;
   late String type;
@@ -61,19 +61,17 @@ class SaleDetailsData {
         services.add(Services.fromJson(v));
       });
     }
-    totalAmountPaid = MoneyValue(json['total_amount_paid']);
     discountValue = MoneyValue(json['discount_value']);
-    subTotalPaid = _getSubTotal();
+    subTotalPaid = MoneyValue(json['total_amount_paid']);
+
+    totalAmountPaid = _getSubTotal();
     type = json['type'];
     saleDate = json['sale_date'];
     createdAt = json['created_at'];
   }
 
   MoneyValue _getSubTotal() {
-    MoneyValue total = totalAmountPaid;
-    MoneyValue discount = discountValue;
-    total.sub(discount.price);
-    return total;
+    return MoneyValue(subTotalPaid.price)..sum(discountValue.price);
   }
 }
 

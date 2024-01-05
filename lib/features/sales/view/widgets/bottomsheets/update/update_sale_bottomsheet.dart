@@ -30,11 +30,13 @@ class AlterSaleBottomSheet extends StatefulWidget {
       required this.selectedCustomer,
       required this.paymentType,
       required this.serviceList,
+      required this.discount,
       required this.id});
 
   final DateTime saleDate;
   final PaymentType? paymentType;
   final List<ServiceDto> serviceList;
+  final double discount;
   final int id;
 
   final CustomerDto selectedCustomer;
@@ -79,6 +81,8 @@ class _AlterSaleBottomSheetState extends State<AlterSaleBottomSheet> {
             widget.selectedCustomer.manualBodyTypeSelected!)
         : DoNothingAction();
 
+    presenter.discountController.updateValue(widget.discount);
+    presenter.addInitialDiscount();
     super.initState();
   }
 
@@ -253,7 +257,9 @@ class _AlterSaleBottomSheetState extends State<AlterSaleBottomSheet> {
                         hint: "0,00",
                         icon: (Icons.discount_outlined),
                         controller: presenter.discountController,
-                        onChanged: (_) {},
+                        onChanged: (_) {
+                          presenter.calculateDiscount();
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),

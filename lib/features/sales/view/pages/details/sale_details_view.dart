@@ -54,6 +54,8 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                         context: context,
                         builder: (context) {
                           return AlterSaleBottomSheet(
+                            discount: presenter
+                                .saleDetailsDto.data.discountValue.price,
                             id: presenter.saleDetailsDto.data.id,
                             serviceList:
                                 presenter.saleDetailsDto.toServiceDtoList(),
