@@ -1,4 +1,14 @@
 PODS:
+  - FBAEMKit (14.0.0):
+    - FBSDKCoreKit_Basics (= 14.0.0)
+  - FBSDKCoreKit (14.0.0):
+    - FBAEMKit (= 14.0.0)
+    - FBSDKCoreKit_Basics (= 14.0.0)
+  - FBSDKCoreKit_Basics (14.0.0)
+  - FBSDKLoginKit (14.0.0):
+    - FBSDKCoreKit (= 14.0.0)
+  - FBSDKShareKit (14.0.0):
+    - FBSDKCoreKit (= 14.0.0)
   - Firebase/CoreOnly (10.12.0):
     - FirebaseCore (= 10.12.0)
   - Firebase/Performance (10.12.0):
@@ -53,6 +63,11 @@ PODS:
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.19.0)
   - Flutter (1.0.0)
+  - flutter_share_me (0.0.1):
+    - FBSDKCoreKit (~> 14.0.0)
+    - FBSDKLoginKit (~> 14.0.0)
+    - FBSDKShareKit (~> 14.0.0)
+    - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -167,6 +182,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_performance (from `.symlinks/plugins/firebase_performance/ios`)
   - Flutter (from `Flutter`)
+  - flutter_share_me (from `.symlinks/plugins/flutter_share_me/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
@@ -184,6 +200,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - Firebase
     - FirebaseABTesting
     - FirebaseCore
@@ -214,6 +235,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_performance/ios"
   Flutter:
     :path: Flutter
+  flutter_share_me:
+    :path: ".symlinks/plugins/flutter_share_me/ios"
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker_ios:
@@ -244,6 +267,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  FBAEMKit: d00064597439e75885c70d9adbcb5f3e9ad84f5d
+  FBSDKCoreKit: e5d3acfffe5063a9d0b967ba2ad1f5afc460cf43
+  FBSDKCoreKit_Basics: 1ff46a12e80f0b66e6c00e1ef32d6a5b5b9008a5
+  FBSDKLoginKit: dbe86ef42ab142f3bd0f1c904a21bb33f31c5569
+  FBSDKShareKit: 2f6a6a1445cc1b8ea0f733e60d02d2f7c4ebf8be
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
   firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
   firebase_performance: 9277c037aba44142df6dc5f5b1b184168f36973a
@@ -257,6 +285,7 @@ SPEC CHECKSUMS:
   FirebaseSessions: e5f4caa188dc8bc6142abc974355be75b042215e
   FirebaseSharedSwift: f34eeb7d3ea87a34497629b6ca41657beadef76a
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_share_me: 1fb559741e0dff56a9d2bdeaf4d966b0b47449ae
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
@@ -286,4 +315,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b57f6a303116ecdfa930ff66af6ecbef26fec186
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.12.1

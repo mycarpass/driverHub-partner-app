@@ -1,12 +1,10 @@
-import 'dart:io';
-
 import 'package:dh_state_management/dh_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
-import 'package:whatsapp_share/whatsapp_share.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ReceiptPresenter extends Cubit<DHState> {
   ReceiptPresenter() : super(DHInitialState());
@@ -28,27 +26,33 @@ class ReceiptPresenter extends Cubit<DHState> {
     }
   }
 
-  Future<void> shareWhatsApp(String phone) async {
+  Future<void> shareWhatsApp(String phone, String message) async {
     try {
       bytes = await controller.capture();
       final DateTime now = DateTime.now();
       String fileName =
           "DH-Comprovante-Agendamento-${now.microsecondsSinceEpoch}.png";
+      await ImageGallerySaver.saveImage(bytes!, name: fileName);
 
-      final Directory tempDir = await getTemporaryDirectory();
-      File file = File('$tempDir/$fileName');
-      file = await file.writeAsBytes(bytes!);
-
-      print(file);
-      await WhatsappShare.shareFile(
-        phone: "5534991968372",
-        filePath: [file.path],
-      );
+      FlutterShareMe().shareWhatsAppPersonalMessage(
+          message: message, phoneNumber: "55$phone");
 
       emit(ImageSharedSuccessful(fileName));
     } catch (e) {
-      print(e);
       emit(DHErrorState());
+    }
+  }
+
+  void openUrl(Uri uri) async {
+    await canLaunchUrl(uri) ? _launchInBrowser(uri) : null;
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
     }
   }
 }

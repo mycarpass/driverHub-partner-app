@@ -77,6 +77,7 @@ class ScheduleDataDto {
   late AddressDto? userAddress;
   late PixScheduleDto? pix;
   late VehicleDto? vehicle;
+  late PartnerScheduleDto? partner;
 
   ScheduleDataDto(
       {required this.scheduleId,
@@ -123,6 +124,9 @@ class ScheduleDataDto {
       vehicle =
           json["vehicle"] != null ? VehicleDto.fromJson(json["vehicle"]) : null;
       statusFriendly = _getUserFriendlyStatus(json["status"]);
+      partner = json['partner'] != null
+          ? PartnerScheduleDto.fromJson(json['partner'])
+          : null;
     } catch (e) {
       rethrow;
     }
@@ -390,6 +394,21 @@ class ClientScheduleDto {
 
   String getUserLastName() {
     return name.split(" ").last;
+  }
+}
+
+class PartnerScheduleDto {
+  late String name;
+  String? logo;
+
+  PartnerScheduleDto({
+    required this.name,
+    this.logo,
+  });
+
+  PartnerScheduleDto.fromJson(Map<String, dynamic> json) {
+    name = json["name"] ?? "";
+    logo = json["logo"];
   }
 }
 

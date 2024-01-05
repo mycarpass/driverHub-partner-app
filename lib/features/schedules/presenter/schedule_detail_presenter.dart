@@ -187,7 +187,8 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
 
     ReceiptScheduleEntity entity = ReceiptScheduleEntity(
         customerName: scheduleDataDto.client.name,
-        partnerName: "Box do Jones",
+        partnerName: scheduleDataDto.partner?.name ?? "",
+        partnerLogo: scheduleDataDto.partner?.logo,
         services: services,
         total: MoneyValue(scheduleDataDto.totalAmountPayable ?? "0,00"),
         vehicle: scheduleDataDto.vehicle,

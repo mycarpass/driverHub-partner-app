@@ -6,6 +6,7 @@ import 'package:dh_ui_kit/view/extensions/button_style_extension.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
+import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/receipts/view/recepit_view_bottomsheet.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
@@ -478,10 +479,17 @@ class ScheduleDetailView extends StatelessWidget {
                                         isScrollControlled: true,
                                         builder: (context) =>
                                             ReceiptViewBottomSheet(
+                                                customerPhone: PhoneValue(
+                                                    value: presenter
+                                                        .scheduleDataDto
+                                                        .client
+                                                        .phone),
+                                                whatsMessage:
+                                                    'Olá ${presenter.scheduleDataDto.client.name}, aqui está o comprovante do seu agendamento com ${presenter.scheduleDataDto.partner?.name ?? ""}',
                                                 receiptWdiget: ScheduleReceipt(
-                                              entity: presenter
-                                                  .getScheduleReceiptEntity(),
-                                            )));
+                                                  entity: presenter
+                                                      .getScheduleReceiptEntity(),
+                                                )));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.only(

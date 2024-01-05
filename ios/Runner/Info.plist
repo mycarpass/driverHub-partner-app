@@ -37,6 +37,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	<string>whatsapp</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Precisamos de acesso a câmera, para você tirar fotos do seu estabelecimento.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
