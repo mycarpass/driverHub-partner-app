@@ -22,11 +22,16 @@ class PosSaleDetailsPresenter extends Cubit<DHState> {
 
   Future<void> changeMadeContact(bool isMadeContact, int posSaleId) async {
     try {
-      //emit(DHLoadingState());
+      emit(CheckBoxLoadingState());
       await _posSalesInteractor.changeMadeContact(isMadeContact, posSaleId);
       emit(MadeContactStatusChanged(isMadeContact: isMadeContact));
     } catch (e) {
       emit(DHErrorState());
     }
   }
+}
+
+class CheckBoxLoadingState extends DHLoadingState {
+  @override
+  List<Object?> get props => [];
 }
