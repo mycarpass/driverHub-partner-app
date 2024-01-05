@@ -101,7 +101,7 @@ class _SalesViewState extends State<SalesView>
                                 },
                                 title: "Vendas",
                                 subtitle:
-                                    "${presenter.filteredList.length} cadastradas",
+                                    "${presenter.filteredList.length} realizadas",
                               ),
                             ),
                           ],

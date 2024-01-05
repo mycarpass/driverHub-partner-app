@@ -6,6 +6,7 @@ import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/onboarding_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/daily_numbers_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/link_partner_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/onboarding_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_quantity_chart.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/last_week_earn_chart.dart';
@@ -119,6 +120,12 @@ class _HomeViewState extends State<HomeView>
                         //           ),
                         //         ),
                         //       ),
+                        presenter.homeResponseDto.data.partnerData.link != null
+                            ? LinkPartnerCard(
+                                link: presenter.homeResponseDto.data.partnerData
+                                        .link ??
+                                    "")
+                            : const SizedBox.shrink(),
                         DailyNumbersCard(presenter: presenter),
                         LastWeekEarnChart(
                           data:

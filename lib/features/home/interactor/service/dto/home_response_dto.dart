@@ -32,6 +32,7 @@ class PartnerDataDto {
   late bool isBankAccountCreated;
   late bool isSubscribed;
   late int daysTrialLeft;
+  String? link;
 
   PartnerDataDto(
       {required this.name, required this.email, required this.isPremium});
@@ -43,6 +44,7 @@ class PartnerDataDto {
     isPremium = json['is_premium'];
     phone = json['phone'];
     thumb = json["thumb"];
+    link = json["link"];
     thumbBackground = json["thumb_background"];
     document = json["document"];
     cnpj = json["cnpj"];
