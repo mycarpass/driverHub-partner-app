@@ -1,16 +1,23 @@
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
+import 'package:dh_ui_kit/view/extensions/button_style_extension.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
+import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
+import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/presenter/details/customer_details_presenter.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customer_details_widget.dart';
 import 'package:driver_hub_partner/features/sales/router/sales_router.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/create_sale_bottomsheet.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/create_schedule_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/user_feedback/user_feedback_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 
 class CustomerDetailsView extends StatefulWidget {
   const CustomerDetailsView({
@@ -103,14 +110,6 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomerDetailsWidget(
-                                    onScheduleCreated: () {},
-                                    onSaleCreated: () {
-                                      presenter.load(
-                                        customerDetailParams
-                                            .customerDto.customerId
-                                            .toString(),
-                                      );
-                                    },
                                     customerDetailsParams:
                                         CustomerDetailsParam.fromCustomerDto(
                                             customerDetailParams.customerDto),
@@ -312,34 +311,180 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                     }),
                                   ),
 
-                                  // Align(
-                                  //   alignment: Alignment.centerRight,
-                                  //   child: TextButton(
-                                  //     onPressed: () async {
-                                  //       bool? isScheduleCreated =
-                                  //           await showModalBottomSheet(
-                                  //         context: context,
-                                  //         showDragHandle: true,
-                                  //         isScrollControlled: true,
-                                  //         builder: (context) =>
-                                  //             CreateScheduleBottomSheet(
-                                  //                 selectedCustomer:
-                                  //                     customerDetailParams
-                                  //                         .customerDto),
-                                  //       );
+                                  const Divider(
+                                    height: 48,
+                                  ),
+                                  const Text('Ações com cliente').label2_bold(),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
 
-                                  //       if (isScheduleCreated != null &&
-                                  //           isScheduleCreated) {
-                                  //         // presenter.load();
-                                  //         DHSnackBar().showSnackBar(
-                                  //             "Sucesso!",
-                                  //             "Seu novo agendamento foi criado",
-                                  //             DHSnackBarType.success);
-                                  //       }
-                                  //     },
-                                  //     child: const Text("Criar agendamento"),
-                                  //   ),
-                                  // )
+                                  ElevatedButton(
+                                    style: const ButtonStyle().noStyle(),
+                                    onPressed: () {
+                                      PhoneValue phoneValue = PhoneValue(
+                                          value: presenter
+                                              .customerDetailsDto.data.phone);
+
+                                      FlutterShareMe().shareWhatsAppPersonalMessage(
+                                          message: "",
+                                          phoneNumber:
+                                              "55${phoneValue.withoutSymbolValue}");
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 0,
+                                        top: 16,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text("Falar com o cliente")
+                                                  .body_regular(
+                                                      style: const TextStyle(
+                                                          color: AppColor
+                                                              .textPrimaryColor)),
+                                              const Icon(
+                                                CustomIcons.dhWhatsapp,
+                                                color: AppColor.successColor,
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          Container(
+                                            height: 1,
+                                            color: AppColor.borderColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: const ButtonStyle().noStyle(),
+                                    onPressed: () async {
+                                      bool? isScheduleCreated =
+                                          await showModalBottomSheet(
+                                        context: context,
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        builder: (context) =>
+                                            CreateScheduleBottomSheet(
+                                          selectedCustomer:
+                                              customerDetailParams.customerDto,
+                                        ),
+                                      );
+
+                                      if (isScheduleCreated != null &&
+                                          isScheduleCreated) {
+                                        // presenter.load();
+                                        DHSnackBar().showSnackBar(
+                                            "Sucesso!",
+                                            "Seu novo agendamento foi criado",
+                                            DHSnackBarType.success);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 0,
+                                        top: 16,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text("Novo agendamento")
+                                                  .body_regular(
+                                                      style: const TextStyle(
+                                                          color: AppColor
+                                                              .textPrimaryColor)),
+                                              const Icon(
+                                                Icons.calendar_month_outlined,
+                                                color:
+                                                    AppColor.iconPrimaryColor,
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          Container(
+                                            height: 1,
+                                            color: AppColor.borderColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: const ButtonStyle().noStyle(),
+                                    onPressed: () async {
+                                      bool? isSaleCreated =
+                                          await showModalBottomSheet<bool>(
+                                        context: context,
+                                        showDragHandle: true,
+                                        isScrollControlled: true,
+                                        builder: (context) =>
+                                            CreateSaleBottomSheet(
+                                                selectedCustomer:
+                                                    customerDetailParams
+                                                        .customerDto),
+                                      );
+
+                                      if (isSaleCreated != null &&
+                                          isSaleCreated) {
+                                        DHSnackBar().showSnackBar(
+                                            "Uhuuu",
+                                            "Sua nova venda foi registrada",
+                                            DHSnackBarType.success);
+                                        presenter.load(
+                                          customerDetailParams
+                                              .customerDto.customerId
+                                              .toString(),
+                                        );
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 0,
+                                        top: 16,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text("Nova venda")
+                                                  .body_regular(
+                                                      style: const TextStyle(
+                                                          color: AppColor
+                                                              .textPrimaryColor)),
+                                              const Icon(
+                                                Icons
+                                                    .add_shopping_cart_outlined,
+                                                color:
+                                                    AppColor.iconPrimaryColor,
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          Container(
+                                            height: 1,
+                                            color: AppColor.borderColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
