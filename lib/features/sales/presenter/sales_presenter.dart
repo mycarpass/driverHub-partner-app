@@ -4,6 +4,7 @@ import 'package:driver_hub_partner/features/sales/interactor/sales_interactor.da
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
 import 'package:driver_hub_partner/features/sales/presenter/sales_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notification_center/notification_center.dart';
 
 class SalesPresenter extends Cubit<DHState> {
   SalesPresenter() : super(DHInitialState());
@@ -20,6 +21,13 @@ class SalesPresenter extends Cubit<DHState> {
   Map<DateTime, List<dynamic>> mapListFiltered = {};
 
   Future<void> load() async {
+    NotificationCenter().subscribe('updateSales', reload);
+
+    await _getSales();
+    filterListByDate(DateTime.now());
+  }
+
+  Future<void> reload() async {
     await _getSales();
     filterListByDate(DateTime.now());
   }

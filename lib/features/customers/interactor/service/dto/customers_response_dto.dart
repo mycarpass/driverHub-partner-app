@@ -44,6 +44,7 @@ class CustomerDto {
       this.spentValue,
       this.vehicle,
       this.quantityDoneSales,
+      this.manualBodyTypeSelected,
       this.plate});
 
   String getPlate() {
@@ -55,7 +56,6 @@ class CustomerDto {
   }
 
   bool isVehicleNull() {
-    ///TODO add manual carbodyType
     return customerId != 0 &&
         (vehicle == null ||
             (vehicle?.id == 0 && manualBodyTypeSelected == null));

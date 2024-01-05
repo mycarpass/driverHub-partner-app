@@ -31,6 +31,9 @@ class MoneyValue {
 
   void sub(double value) {
     price = price - value;
+    if (price < 0) {
+      price = 0;
+    }
     priceInReal =
         MoneyMaskedTextController(leftSymbol: "R\$ ", initialValue: price).text;
   }

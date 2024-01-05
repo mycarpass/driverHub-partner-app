@@ -18,16 +18,15 @@ class SaleDetailsDto {
     for (var service in data.services) {
       list.add(
         ServiceDto(
-            serviceId: service.priceId,
+          serviceId: service.priceId,
+          chargedPrice: service.chargedPrice,
 
-            ///TODO adicionar type e category no /sales
-            type: ServiceType.service,
-            category: ServiceCategory.wash,
-            name: service.serviceName,
-            prices: [
-              PriceDto(
-                  service.basePrice, CarBodyType.hatchback, service.priceId)
-            ]),
+          ///TODO adicionar type e category no /sales
+          type: ServiceType.service,
+          category: ServiceCategory.wash,
+          name: service.serviceName,
+          prices: service.pricesList,
+        ),
       );
     }
     return list;
@@ -122,11 +121,20 @@ class Services {
   late String serviceName;
   late MoneyValue basePrice;
   late MoneyValue chargedPrice;
+  late CarBodyType? carBodyType;
+  List<PriceDto> pricesList = [];
 
   Services.fromJson(Map<String, dynamic> json) {
     priceId = json['price_id'];
     serviceName = json['service_name'];
     basePrice = MoneyValue(json['base_price']);
     chargedPrice = MoneyValue(json['charged_price']);
+    for (var price in json["prices"]) {
+      pricesList.add(PriceDto.fromJson(price));
+    }
+    carBodyType = CarBodyType.values
+        .where((element) => element.name.toUpperCase() == json["car_body_type"])
+        .toList()
+        .first;
   }
 }

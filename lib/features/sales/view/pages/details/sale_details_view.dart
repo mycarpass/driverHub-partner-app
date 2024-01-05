@@ -4,7 +4,6 @@ import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
-import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
@@ -40,39 +39,48 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
             appBar: AppBar().modalAppBar(
               title: "Venda",
               showHeaderIcon: false,
-              //TODO Fix null check
-              doneButtonIsEnabled: false,
+              doneButtonIsEnabled: state is DHSuccessState &&
+                  presenter.saleDetailsDto.data.scheduleId == null,
               onDonePressed: state is DHSuccessState &&
-                      presenter.saleDetailsDto.data.scheduleId != null
-                  ? () {
-                      showModalBottomSheet(
+                      presenter.saleDetailsDto.data.scheduleId == null
+                  ? () async {
+                      var result = await showModalBottomSheet(
                         showDragHandle: true,
                         isScrollControlled: true,
                         context: context,
                         builder: (context) {
                           return AlterSaleBottomSheet(
+                            id: presenter.saleDetailsDto.data.id,
                             serviceList:
                                 presenter.saleDetailsDto.toServiceDtoList(),
                             saleDate: DateFormat("dd/mm/yyy").parse(
                               presenter.saleDetailsDto.data.saleDate,
                             ),
                             paymentType:
-                                presenter.saleDetailsDto.data.paymentType ??
-                                    PaymentType.creditCard,
+                                presenter.saleDetailsDto.data.paymentType,
                             selectedCustomer: CustomerDto(
-                              customerId: int.parse(
-                                  presenter.saleDetailsDto.data.client.id),
-                              status: CustomerStatus.verified,
-                              name: presenter.saleDetailsDto.data.client.name,
-                              phone: PhoneValue(
-                                value:
-                                    presenter.saleDetailsDto.data.client.phone,
-                              ),
-                              isSubscribed: true,
-                            ),
+                                customerId: int.parse(
+                                    presenter.saleDetailsDto.data.client.id),
+                                status: CustomerStatus.verified,
+                                name: presenter.saleDetailsDto.data.client.name,
+                                phone: PhoneValue(
+                                  value: presenter
+                                      .saleDetailsDto.data.client.phone,
+                                ),
+                                isSubscribed: true,
+                                manualBodyTypeSelected: presenter.saleDetailsDto
+                                            .data.client.vehicle ==
+                                        null
+                                    ? presenter.saleDetailsDto.data.services
+                                        .first.carBodyType
+                                    : null),
                           );
                         },
                       );
+
+                      if (result ?? false) {
+                        presenter.load(id);
+                      }
                     }
                   : () => DoNothingAction(),
               backButtonsIsVisible: true,

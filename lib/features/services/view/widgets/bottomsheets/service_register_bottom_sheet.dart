@@ -17,7 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // ignore: must_be_immutable
 class ServiceRegisterBottomSheet extends StatelessWidget {
   ServiceRegisterBottomSheet._(
-      {super.key, required this.isCreatingService, this.partnerServiceDto});
+      {required this.isCreatingService, this.partnerServiceDto});
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();

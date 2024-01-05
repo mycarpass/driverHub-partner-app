@@ -8,8 +8,8 @@ import 'package:driver_hub_partner/features/commom_objects/payment_type.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/presenter/cutomer_register_presenter.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
-import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/create_sale_state.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/update/update_sale_presenter.dart';
+import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/update/update_sale_state.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/payment_type_drop_down.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/card_date_read_only.dart';
 import 'package:driver_hub_partner/features/schedules/view/pages/home/ligh_dh_date_picker.dart';
@@ -23,19 +23,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class AlterSaleBottomSheet extends StatelessWidget {
-  AlterSaleBottomSheet({
-    super.key,
-    required this.saleDate,
-    required this.selectedCustomer,
-    required this.paymentType,
-    required this.serviceList,
-  });
+class AlterSaleBottomSheet extends StatefulWidget {
+  const AlterSaleBottomSheet(
+      {super.key,
+      required this.saleDate,
+      required this.selectedCustomer,
+      required this.paymentType,
+      required this.serviceList,
+      required this.id});
 
   final DateTime saleDate;
-  final PaymentType paymentType;
+  final PaymentType? paymentType;
   final List<ServiceDto> serviceList;
+  final int id;
 
+  final CustomerDto selectedCustomer;
+
+  @override
+  State<AlterSaleBottomSheet> createState() => _AlterSaleBottomSheetState();
+}
+
+class _AlterSaleBottomSheetState extends State<AlterSaleBottomSheet> {
   final MaskTextInputFormatter hourFormatter = MaskTextInputFormatter(
     mask: "##:##",
     initialText: "10:00",
@@ -50,7 +58,29 @@ class AlterSaleBottomSheet extends StatelessWidget {
   final CustomerDropDownController customerDropDownController =
       CustomerDropDownController();
 
-  final CustomerDto selectedCustomer;
+  UpdateSalePresenter presenter = UpdateSalePresenter();
+  @override
+  void initState() {
+    presenter.updateServiceDate(widget.saleDate);
+    widget.paymentType != null
+        ? presenter.paymentType = widget.paymentType!
+        : DoNothingAction();
+    for (var service in widget.serviceList) {
+      presenter.addScheduleServiceWithBasePrice(service);
+    }
+
+    if (widget.selectedCustomer.vehicle == null) {
+      widget.selectedCustomer.manualBodyTypeSelected = CarBodyType.hatchback;
+    }
+    presenter.setScheduleCustomer(widget.selectedCustomer);
+
+    widget.selectedCustomer.vehicle == null
+        ? presenter.manualSetOfCarBodyType(
+            widget.selectedCustomer.manualBodyTypeSelected!)
+        : DoNothingAction();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,21 +93,8 @@ class AlterSaleBottomSheet extends StatelessWidget {
         child: Scaffold(
           body: SingleChildScrollView(
             child: BlocProvider(
-              create: (context) => UpdateSalePresenter(),
+              create: (context) => presenter,
               child: Builder(builder: (context) {
-                var presenter = context.read<UpdateSalePresenter>();
-                presenter.updateServiceDate(saleDate);
-                presenter.paymentType = paymentType;
-                for (var service in serviceList) {
-                  presenter.addScheduleService(service);
-                }
-
-                // presenter.set
-
-                // presenter.selectServiceDropDown(customerSelected!);
-                presenter.setScheduleCustomer(selectedCustomer);
-                presenter.recalculateService();
-
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
@@ -114,7 +131,7 @@ class AlterSaleBottomSheet extends StatelessWidget {
                                 "Opss..",
                                 "Não foi possível registrar sua venda, tente novamente mais tarde",
                                 DHSnackBarType.error);
-                          } else if (state is NewSaleCreated) {
+                          } else if (state is SaleUpdatedState) {
                             Navigator.of(context).pop(true);
                           }
                         }, builder: (context, state) {
@@ -123,52 +140,114 @@ class AlterSaleBottomSheet extends StatelessWidget {
                           );
                         }),
                       ),
-                      DropDownPaymentType(
-                        onChanged: (selectedPayment) {
-                          presenter.paymentType = selectedPayment;
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: CustomerDropDownWidget(
-                              controller: customerDropDownController,
-                              onChanged: (customer) {
-                                presenter.setScheduleCustomer(customer);
-                                presenter.recalculateService();
-                              },
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Center(
-                            child: IconButton(
-                              icon: const Icon(Icons.add),
-                              color: AppColor.accentColor,
-                              onPressed: () async {
-                                bool? isCustomerRegistered =
-                                    await showModalBottomSheet<bool?>(
-                                  context: context,
-                                  showDragHandle: true,
-                                  isScrollControlled: true,
-                                  builder: (_) => BlocProvider(
-                                    create: (context) =>
-                                        CustomerRegisterPresenter(),
-                                    child: CustomerRegisterBottomSheet.create(),
+                      BlocBuilder<UpdateSalePresenter, DHState>(
+                        builder: (context, state) =>
+                            presenter.showPaymentTypeDropDown ||
+                                    widget.paymentType == null
+                                ? DropDownPaymentType(
+                                    onChanged: (selectedPayment) {
+                                      presenter.paymentType = selectedPayment;
+                                    },
+                                  )
+                                : Row(
+                                    children: [
+                                      Expanded(
+                                        child: DHTextField(
+                                          hint: widget.paymentType!.value,
+                                          icon: Icons.credit_card,
+                                          onChanged: (_) {},
+                                          title: "MEIO DE PAGAMENTO",
+                                          // disabled: true,
+                                          readOnly: true,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      IconButton(
+                                        onPressed: () =>
+                                            presenter.changePaymentType(),
+                                        icon: const Icon(
+                                          Icons.change_circle_outlined,
+                                          color: AppColor.iconPrimaryColor,
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                );
-
-                                if (isCustomerRegistered != null &&
-                                    isCustomerRegistered) {
-                                  customerDropDownController.load();
-                                }
-                              },
-                            ),
-                          ),
-                        ],
                       ),
+                      BlocBuilder<UpdateSalePresenter, DHState>(
+                          builder: (context, state) {
+                        if (presenter.showCustomerDropDown) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: CustomerDropDownWidget(
+                                  controller: customerDropDownController,
+                                  initalCustomer: widget.selectedCustomer,
+                                  onChanged: (customer) {
+                                    presenter.setScheduleCustomer(customer);
+                                    presenter.recalculateService();
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              ),
+                              Center(
+                                child: IconButton(
+                                  icon: const Icon(Icons.add),
+                                  color: AppColor.accentColor,
+                                  onPressed: () async {
+                                    bool? isCustomerRegistered =
+                                        await showModalBottomSheet<bool?>(
+                                      context: context,
+                                      showDragHandle: true,
+                                      isScrollControlled: true,
+                                      builder: (_) => BlocProvider(
+                                        create: (context) =>
+                                            CustomerRegisterPresenter(),
+                                        child: CustomerRegisterBottomSheet
+                                            .create(),
+                                      ),
+                                    );
+
+                                    if (isCustomerRegistered != null &&
+                                        isCustomerRegistered) {
+                                      customerDropDownController.load();
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: DHTextField(
+                                  hint: widget.selectedCustomer.name.name,
+                                  icon: Icons.person,
+                                  onChanged: (_) {},
+                                  title: "Cliente",
+                                  // disabled: true,
+                                  readOnly: true,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              IconButton(
+                                onPressed: () => presenter.changeCustomer(),
+                                icon: const Icon(
+                                  Icons.change_circle_outlined,
+                                  color: AppColor.iconPrimaryColor,
+                                ),
+                              )
+                            ],
+                          );
+                        }
+                      }),
                       DHTextField(
                         title: "Desconto (Opcional)",
                         hint: "0,00",
@@ -292,9 +371,13 @@ class AlterSaleBottomSheet extends StatelessWidget {
                       }),
                       BlocBuilder<UpdateSalePresenter, DHState>(
                         builder: (context, state) => presenter
-                                .scheduleEntity.services.isNotEmpty
+                                    .scheduleEntity.services.isNotEmpty &&
+                                (state is! ChangeCustomerState &&
+                                    presenter.scheduleEntity.customerDto
+                                            .customerId !=
+                                        0)
                             ? SizedBox(
-                                height: 164,
+                                height: 170,
                                 child: ListView.separated(
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (context, index) => SizedBox(
@@ -408,8 +491,12 @@ class AlterSaleBottomSheet extends StatelessWidget {
                             builder: (context, state) {
                           return AnimatedOpacity(
                               duration: const Duration(milliseconds: 250),
-                              opacity: presenter.scheduleEntity
-                                      .isCustomerAndVehicleAlreadySetted()
+                              opacity: presenter
+                                          .scheduleEntity.services.isNotEmpty &&
+                                      (state is! ChangeCustomerState &&
+                                          presenter.scheduleEntity.customerDto
+                                                  .customerId !=
+                                              0)
                                   ? 1
                                   : 0,
                               child: Row(
@@ -441,7 +528,7 @@ class AlterSaleBottomSheet extends StatelessWidget {
                           builder: (context, state) {
                         return ElevatedButton(
                           onPressed: () => presenter.isEverythingFilled()
-                              ? presenter.sendSale()
+                              ? presenter.update(widget.id)
                               : DHSnackBar().showSnackBar(
                                   "Opss..",
                                   "Preencha todos o dados",
@@ -452,7 +539,7 @@ class AlterSaleBottomSheet extends StatelessWidget {
                             children: [
                               state is DHLoadingState
                                   ? const DHCircularLoading()
-                                  : const Text("Criar"),
+                                  : const Text("Alterar"),
                             ],
                           ),
                         );

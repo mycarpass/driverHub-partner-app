@@ -5,13 +5,14 @@ import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/customers/interactor/customers_interactor.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_states.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/presenter/entities/service_entity.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomerDropDownPresenter extends Cubit<DHState> {
-  CustomerDropDownPresenter() : super(DHInitialState());
+  CustomerDropDownPresenter({this.initalCustomerId}) : super(DHInitialState());
 
   final CustomersInteractor _customersInteractor =
       DHInjector.instance.get<CustomersInteractor>();
@@ -22,6 +23,8 @@ class CustomerDropDownPresenter extends Cubit<DHState> {
       ServiceCategory.wash, ServiceType.service, false);
 
   late CustomerDto selecetedCustomer;
+
+  late int? initalCustomerId;
 
   Future<void> load() async {
     customersResponseDto.customers = [
@@ -48,10 +51,15 @@ class CustomerDropDownPresenter extends Cubit<DHState> {
               phone: PhoneValue(value: ""),
               isSubscribed: false)
         ];
+
         emit(EmptyDropdownState());
       }
 
-      emit(DHSuccessState());
+      initalCustomerId != null
+          ? emit(ListLoadedWithInitialCustomer(
+              customerDto: customersResponseDto.customers.firstWhere(
+                  (element) => element.customerId == (initalCustomerId!))))
+          : emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());
     }

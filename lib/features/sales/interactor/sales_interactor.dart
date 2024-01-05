@@ -1,6 +1,7 @@
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/create_sale_dto.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sale_details_dto.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
+import 'package:driver_hub_partner/features/sales/interactor/service/dto/update_sale_dto.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/sales_service.dart';
 
 class SalesInteractor {
@@ -27,6 +28,14 @@ class SalesInteractor {
   Future<void> saveSale(CreateSaleDto createSaleDto) async {
     try {
       await _salesService.saveSale(createSaleDto);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> updateSale(UpdateSaleDto updateSaleDto) async {
+    try {
+      await _salesService.updateSale(updateSaleDto);
     } catch (e) {
       rethrow;
     }
