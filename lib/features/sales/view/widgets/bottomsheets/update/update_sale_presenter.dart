@@ -61,6 +61,20 @@ class UpdateSalePresenter extends Cubit<DHState> {
     }
   }
 
+  void calculateDiscount() {
+    if (scheduleEntity.services.isEmpty) {
+      return;
+    }
+    if (discountController.numberValue == 0) {
+      moneyController.updateValue(scheduleEntity.value.price);
+    } else {
+      MoneyValue calculatedDiscount = MoneyValue(scheduleEntity.value.price)
+        ..sub(discountController.numberValue);
+      moneyController.updateValue(calculatedDiscount.price);
+    }
+    emit(DiscountApliedState(discountValue: moneyController.numberValue));
+  }
+
   void changePaymentType() {
     showPaymentTypeDropDown = true;
     emit(ChangePaymentTypeState());
@@ -130,9 +144,11 @@ class UpdateSalePresenter extends Cubit<DHState> {
 
   void addScheduleService(ServiceDto serviceDto) {
     scheduleEntity.addService(serviceDto);
-    moneyController.updateValue(
-      scheduleEntity.value.price,
-    );
+    scheduleEntity.services.length == 1
+        ? calculateDiscount()
+        : moneyController.updateValue(
+            scheduleEntity.value.price,
+          );
     emit(ServiceAddeedState(serviceDto));
   }
 
@@ -151,6 +167,14 @@ class UpdateSalePresenter extends Cubit<DHState> {
 
   void setValue(String value) {
     scheduleEntity.value = MoneyValue(value);
+  }
+
+  void addInitialDiscount() {
+    MoneyValue calculatedDiscount = MoneyValue(scheduleEntity.value.price)
+      ..sub(discountController.numberValue);
+    moneyController.updateValue(calculatedDiscount.price);
+
+    emit(DiscountApliedState(discountValue: moneyController.numberValue));
   }
 
   void manualSetOfCarBodyType(CarBodyType carBodyType) {

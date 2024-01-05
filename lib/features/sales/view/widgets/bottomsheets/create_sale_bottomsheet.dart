@@ -164,7 +164,9 @@ class CreateSaleBottomSheet extends StatelessWidget {
                         hint: "0,00",
                         icon: (Icons.discount_outlined),
                         controller: presenter.discountController,
-                        onChanged: (_) {},
+                        onChanged: (_) {
+                          presenter.calculateDiscount();
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
