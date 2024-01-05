@@ -1,18 +1,22 @@
 import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
+import 'package:dh_ui_kit/view/extensions/button_style_extension.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
+import 'package:driver_hub_partner/features/commom_objects/receipts/view/recepit_view_bottomsheet.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/sales/presenter/detail/sale_detail_presenter.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/update/update_sale_bottomsheet.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/receipt/receipt_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:intl/intl.dart';
 
 class SaleDetailsView extends StatefulWidget {
@@ -264,35 +268,47 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                           const SizedBox(
                             height: 16,
                           ),
-                          const Text('Desconto').caption1_regular(),
-                          const SizedBox(
-                            height: 4,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text('Desconto').caption1_regular(),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(presenter.saleDetailsDto.data
+                                          .discountValue.priceInReal)
+                                      .body_regular(),
+                                ],
+                              ),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Sub-total').caption1_regular(),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(presenter.saleDetailsDto.data
+                                            .subTotalPaid.priceInReal)
+                                        .body_regular(),
+                                  ]),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Total').caption1_regular(),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(presenter.saleDetailsDto.data
+                                            .totalAmountPaid.priceInReal)
+                                        .label2_bold(
+                                            style: const TextStyle(
+                                                color: AppColor.accentColor)),
+                                  ])
+                            ],
                           ),
-                          Text(presenter.saleDetailsDto.data.discountValue
-                                  .priceInReal)
-                              .body_regular(),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Text('Sub-total').caption1_regular(),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(presenter
-                                  .saleDetailsDto.data.subTotalPaid.priceInReal)
-                              .body_regular(),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Text('Total').caption1_regular(),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(presenter.saleDetailsDto.data.totalAmountPaid
-                                  .priceInReal)
-                              .label2_bold(
-                                  style: const TextStyle(
-                                      color: AppColor.accentColor)),
                           const SizedBox(
                             height: 16,
                           ),
@@ -367,6 +383,110 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                     ),
                                 itemCount: presenter
                                     .saleDetailsDto.data.services.length),
+                          ),
+                          Divider(
+                            height: 48,
+                          ),
+                          Text('Ações da venda').label2_bold(),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          ElevatedButton(
+                            style: const ButtonStyle().noStyle(),
+                            onPressed: () {
+                              PhoneValue phoneValue = PhoneValue(
+                                  value: presenter
+                                      .saleDetailsDto.data.client.phone);
+
+                              FlutterShareMe().shareWhatsAppPersonalMessage(
+                                  message: "",
+                                  phoneNumber:
+                                      "55${phoneValue.withoutSymbolValue}");
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 0,
+                                top: 16,
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text("Falar com o cliente")
+                                          .body_regular(
+                                              style: const TextStyle(
+                                                  color: AppColor
+                                                      .textPrimaryColor)),
+                                      const Icon(
+                                        CustomIcons.dhWhatsapp,
+                                        color: AppColor.successColor,
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Container(
+                                    height: 1,
+                                    color: AppColor.borderColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          ElevatedButton(
+                            style: const ButtonStyle().noStyle(),
+                            onPressed: () {
+                              // showModalBottomSheet(
+                              //     context: context,
+                              //     showDragHandle: true,
+                              //     isScrollControlled: true,
+                              //     builder: (context) => ReceiptViewBottomSheet(
+                              //         customerPhone: PhoneValue(
+                              //             value: presenter
+                              //                 .saleDetailsDto.data.client.phone),
+                              //         whatsMessage:
+                              //             'Olá ${presenter.saleDetailsDto.data.client.name}, aqui está o comprovante do serviço realizado com ${presenter.scheduleDataDto.partner?.name ?? ""}',
+                              //         receiptWdiget: ScheduleReceipt(
+                              //           entity: presenter
+                              //               .getScheduleReceiptEntity(),
+                              //         )));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 0,
+                                top: 16,
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text("Gerar comprovante")
+                                          .body_regular(
+                                              style: const TextStyle(
+                                                  color: AppColor
+                                                      .textPrimaryColor)),
+                                      const Icon(
+                                        Icons.receipt_long_rounded,
+                                        color: AppColor.iconPrimaryColor,
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  Container(
+                                    height: 1,
+                                    color: AppColor.borderColor,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: 12,
