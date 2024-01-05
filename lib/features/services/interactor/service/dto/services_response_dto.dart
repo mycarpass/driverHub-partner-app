@@ -106,13 +106,15 @@ class ServiceDto {
   // late String id;
   late String description;
   List<PriceDto> prices = [];
+  MoneyValue? chargedPrice;
 
   ServiceDto(
       {required this.serviceId,
       required this.type,
       required this.category,
       required this.name,
-      required this.prices});
+      required this.prices,
+      this.chargedPrice});
 
   ServiceDto.fromEntity(ServiceEntity serviceEntity) {
     serviceId = serviceEntity.id!;

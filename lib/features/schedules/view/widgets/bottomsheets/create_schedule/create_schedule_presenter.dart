@@ -149,7 +149,7 @@ class ScheduleEntity {
   }
 
   bool containsVehicle() {
-    return customerDto.vehicle != null && customerDto.vehicle?.name != "";
+    return customerDto.vehicle != null && customerDto.vehicle?.model != "";
   }
 
   void alterPrice(ServiceDto serviceDto, double newPrice) {
@@ -192,6 +192,12 @@ class ScheduleEntity {
     return customerDto.customerId != 0 && !customerDto.isVehicleNull();
   }
 
+  void addServiceWithBasePrice(ServiceDto serviceDto) {
+    value.sum(serviceDto.chargedPrice?.price ?? 0);
+
+    services.add(serviceDto);
+  }
+
   void addService(ServiceDto serviceDto) {
     if (customerDto.vehicle != null) {
       try {
@@ -217,19 +223,22 @@ class ScheduleEntity {
           .price
           .price);
     } catch (e) {
-      ///Usando o valor do hatch quando não existe preço cadastrado para a carroceria desejada
-      value.sub(serviceDto.prices
-          .where((element) => element.carBodyType == CarBodyType.hatchback)
-          .first
-          .price
-          .price);
+      if (serviceDto.chargedPrice != null) {
+        value.sub(serviceDto.chargedPrice!.price);
+      } else {
+        ///Usando o valor do hatch quando não existe preço cadastrado para a carroceria desejada
+        value.sub(serviceDto.prices
+            .where((element) => element.carBodyType == CarBodyType.hatchback)
+            .first
+            .price
+            .price);
+      }
     }
 
     services.remove(serviceDto);
   }
 
   void recalculatePrices() {
-    value = MoneyValue(0.00);
     if (customerDto.vehicle != null) {
       for (ServiceDto serviceElement in services) {
         try {
@@ -241,14 +250,13 @@ class ScheduleEntity {
               .price);
         } catch (e) {
           value.sum(serviceElement.prices
-              .where((element) => element.carBodyType == CarBodyType.hatchback)
+              .where((element) =>
+                  element.carBodyType == customerDto.manualBodyTypeSelected)
               .first
               .price
               .price);
         }
       }
     }
-
-    // services.add(serviceDto);
   }
 }

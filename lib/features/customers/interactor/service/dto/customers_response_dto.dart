@@ -44,6 +44,7 @@ class CustomerDto {
       this.spentValue,
       this.vehicle,
       this.quantityDoneSales,
+      this.manualBodyTypeSelected,
       this.plate});
 
   String getPlate() {

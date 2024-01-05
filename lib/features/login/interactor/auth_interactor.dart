@@ -2,6 +2,7 @@ import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart
 import 'package:dh_cache_manager/interactor/keys/auth_keys/auth_keys.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:driver_hub_partner/features/login/entities/auth_entity.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/auth_service.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/dto/auth_dto.dart';
 import 'package:driver_hub_partner/features/login/interactor/service/dto/auth_dto_response.dart';
@@ -29,6 +30,7 @@ class AuthInteractor {
           ),
         ),
       );
+      _dhCacheManager.setString(EmailTokenKey(), authEntity.email);
       _dhCacheManager.setString(AuthTokenKey(), authReponse.token);
     } catch (e) {
       rethrow;

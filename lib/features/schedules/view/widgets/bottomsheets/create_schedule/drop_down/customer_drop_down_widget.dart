@@ -4,6 +4,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/customers_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_presenter.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/create_schedule/drop_down/customer_drop_down_states.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,25 +15,31 @@ class CustomerDropDownController {
 
 // ignore: must_be_immutable
 class CustomerDropDownWidget extends StatelessWidget {
-  CustomerDropDownWidget({
-    super.key,
-    required this.onChanged,
-    required this.controller,
-  });
+  CustomerDropDownWidget(
+      {super.key,
+      required this.onChanged,
+      required this.controller,
+      this.initalCustomer});
 
   Function(CustomerDto) onChanged;
   final CustomerDropDownController controller;
+  final CustomerDto? initalCustomer;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => CustomerDropDownPresenter()..load(),
+        create: (context) => CustomerDropDownPresenter(
+            initalCustomerId: initalCustomer?.customerId)
+          ..load(),
         child: Builder(builder: (context) {
           var presenter = context.read<CustomerDropDownPresenter>();
           controller.load = presenter.load;
           return BlocBuilder<CustomerDropDownPresenter, DHState>(
             builder: (context, state) => Builder(builder: (context) {
               return CustomDropdown<CustomerDto>.search(
+                initialItem: state is ListLoadedWithInitialCustomer
+                    ? presenter.customersResponseDto.customers.last
+                    : null,
                 hintText: state is LoadingServicesDropdownState
                     ? 'Aguarde carregando...'
                     : state is EmptyDropdownState

@@ -8,6 +8,7 @@ import 'package:driver_hub_partner/features/customers/router/params/customer_det
 import 'package:driver_hub_partner/features/customers/view/widgets/bottomsheets/customer_register_bottom_sheet.dart';
 import 'package:driver_hub_partner/features/customers/view/widgets/customer_details_widget.dart';
 import 'package:driver_hub_partner/features/sales/router/sales_router.dart';
+import 'package:driver_hub_partner/features/user_feedback/user_feedback_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

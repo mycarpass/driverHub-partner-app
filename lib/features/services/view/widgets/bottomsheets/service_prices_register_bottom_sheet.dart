@@ -15,7 +15,7 @@ import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class ServicePricesBottomSheet extends StatelessWidget {
-  const ServicePricesBottomSheet._({super.key, this.serviceDto});
+  const ServicePricesBottomSheet._({this.serviceDto});
 
   factory ServicePricesBottomSheet.create() {
     return const ServicePricesBottomSheet._();
