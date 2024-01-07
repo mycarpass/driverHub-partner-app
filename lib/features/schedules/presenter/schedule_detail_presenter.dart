@@ -42,11 +42,19 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     emit(NewPhotoCaptured(file: photo));
   }
 
-  void removoPhoto(CheckListPhoto photo) {
-    scheduleDataDto.photoList.removeWhere(
-      (element) => element.id == photo.id,
-    );
-    emit(PhotoRemoved(checkListPhoto: photo));
+  void removePhoto(CheckListPhoto photo) async {
+    try {
+      emit(SchedulePhotoRemoveLoading());
+      await Future.delayed(const Duration(seconds: 2));
+      scheduleDataDto.photoList.removeWhere(
+        (element) => element.id == photo.id,
+      );
+      emit(PhotoRemoved(checkListPhoto: photo));
+    } catch (e) {
+      emit(DHErrorState(
+          error:
+              "Infelizmente não foi possível remover a foto, tente novamente mais tarde"));
+    }
   }
 
   void selectTimeSuggestion(ScheduleTimeSuggestionDto suggestionTime) {

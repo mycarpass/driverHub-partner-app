@@ -46,6 +46,7 @@ class SaleDetailsData {
   late String type;
   late String saleDate;
   late String createdAt;
+  List<CheckListPhoto> photoList = [];
 
   SaleDetailsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];

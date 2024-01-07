@@ -2,6 +2,8 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sales_response_dto.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SalesState extends DHState {}
 
@@ -15,4 +17,26 @@ class SalesFilteredState extends DHState {
   );
   @override
   List<Object?> get props => [sales, map];
+}
+
+class SaleNewPhotoCaptured extends DHState {
+  final XFile file;
+
+  SaleNewPhotoCaptured({required this.file});
+  @override
+  List<Object?> get props => [file];
+}
+
+class SalePhotoRemovindLoading extends DHState {
+  SalePhotoRemovindLoading();
+  @override
+  List<Object?> get props => [];
+}
+
+class SalePhotoRemoved extends DHState {
+  final CheckListPhoto checkListPhoto;
+
+  SalePhotoRemoved({required this.checkListPhoto});
+  @override
+  List<Object?> get props => [checkListPhoto];
 }

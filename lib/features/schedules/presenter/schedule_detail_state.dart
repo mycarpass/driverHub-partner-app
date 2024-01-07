@@ -22,6 +22,8 @@ class NewPhotoCaptured extends DHState {
   List<Object?> get props => [file];
 }
 
+class SchedulePhotoRemoveLoading extends DHState {}
+
 class PhotoRemoved extends DHState {
   final CheckListPhoto checkListPhoto;
 

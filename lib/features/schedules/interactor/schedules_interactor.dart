@@ -24,6 +24,22 @@ class SchedulesInteractor {
     }
   }
 
+  Future<dynamic> removeSchedulePhoto(CheckListPhoto checkListPhoto) async {
+    try {
+      return await _schedulesService.removePhoto(checkListPhoto);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> saveSchedulePhoto(CheckListPhoto checkListPhoto) async {
+    try {
+      return await _schedulesService.savePhoto(checkListPhoto);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> acceptSchedule(
       int scheduleId, ScheduleTimeSuggestionDto timeSuggestion) async {
     try {

@@ -109,4 +109,26 @@ class RestSchedulesService implements SchedulesService {
       rethrow;
     }
   }
+
+  @override
+  Future<void> removePhoto(CheckListPhoto checkListPhoto) async {
+    try {
+      await _httpClient.post(
+        "/partner/new-schedule",
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> savePhoto(CheckListPhoto checkListPhoto) async {
+    try {
+      await _httpClient.post(
+        "/partner/new-schedule",
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

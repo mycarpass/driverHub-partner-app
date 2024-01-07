@@ -6,6 +6,7 @@ import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/button_style_extension.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
+import 'package:dh_ui_kit/view/widgets/loading/dh_circular_loading.dart';
 import 'package:dh_ui_kit/view/widgets/snack_bar/dh_snack_bar.dart';
 import 'package:driver_hub_partner/features/commom_objects/person_name.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
@@ -600,7 +601,7 @@ class ScheduleDetailView extends StatelessWidget {
                                                                 ElevatedButton(
                                                               onPressed: () {
                                                                 presenter
-                                                                    .removoPhoto(
+                                                                    .removePhoto(
                                                                   presenter
                                                                       .scheduleDataDto
                                                                       .photoList[index],
@@ -615,7 +616,12 @@ class ScheduleDetailView extends StatelessWidget {
                                                                       .errorColor,
                                                                 ),
                                                               ),
-                                                              child: Icon(
+                                                              child:
+                                                              
+                                                              state is SchedulePhotoRemoveLoading ? 
+                                                              DHCircularLoading()
+                                                               :
+                                                               Icon(
                                                                 Icons
                                                                     .delete_forever_outlined,
                                                                 size: 24,

@@ -4,6 +4,7 @@ import 'package:dh_ui_kit/view/custom_icons/my_flutter_app_icons.dart';
 import 'package:dh_ui_kit/view/extensions/button_style_extension.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
+import 'package:dh_ui_kit/view/widgets/loading/dh_circular_loading.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/commom_objects/phone_value.dart';
 import 'package:driver_hub_partner/features/commom_objects/receipts/view/recepit_view_bottomsheet.dart';
@@ -12,11 +13,14 @@ import 'package:driver_hub_partner/features/customers/interactor/service/dto/enu
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
 import 'package:driver_hub_partner/features/sales/presenter/detail/sale_detail_presenter.dart';
+import 'package:driver_hub_partner/features/sales/presenter/sales_state.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/bottomsheets/update/update_sale_bottomsheet.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/receipt/receipt_sale.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/checklist/add_checklist_photo_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class SaleDetailsView extends StatefulWidget {
@@ -386,6 +390,111 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                 itemCount: presenter
                                     .saleDetailsDto.data.services.length),
                           ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+
+                          presenter.saleDetailsDto.data.photoList.isNotEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text('Checklist de fotos')
+                                        .caption1_regular(
+                                            style: const TextStyle(
+                                                color: AppColor
+                                                    .textSecondaryColor)),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    BlocBuilder<SaleDetailsPresenter, DHState>(
+                                        builder: (context, state) {
+                                      return SizedBox(
+                                        height: 120,
+                                        child: ListView.separated(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: presenter.saleDetailsDto
+                                              .data.photoList.length,
+                                          separatorBuilder: (context, index) =>
+                                              const SizedBox(
+                                            width: 8,
+                                          ),
+                                          itemBuilder: (context, index) {
+                                            return Stack(
+                                              children: [
+                                                Image.asset(
+                                                  presenter
+                                                      .saleDetailsDto
+                                                      .data
+                                                      .photoList[index]
+                                                      .file
+                                                      .path,
+                                                ),
+                                                Positioned(
+                                                  right: 0,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                          12,
+                                                        ),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                          12,
+                                                        ),
+                                                      ),
+                                                      color: AppColor.errorColor
+                                                          .withOpacity(0.8),
+                                                    ),
+                                                    child: SizedBox(
+                                                      height: 50,
+                                                      width: 50,
+                                                      child: ElevatedButton(
+                                                        onPressed: () {
+                                                          presenter.removePhoto(
+                                                            presenter
+                                                                .saleDetailsDto
+                                                                .data
+                                                                .photoList[index],
+                                                          );
+                                                        },
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all(
+                                                            AppColor.errorColor
+                                                                .withOpacity(
+                                                                    0.8),
+                                                          ),
+                                                        ),
+                                                        child: state
+                                                                is SalePhotoRemovindLoading
+                                                            ? DHCircularLoading()
+                                                            : Icon(
+                                                                Icons
+                                                                    .delete_forever_outlined,
+                                                                size: 24,
+                                                              ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                )
+                              : SizedBox.shrink(),
                           Divider(
                             height: 48,
                           ),
@@ -438,6 +547,61 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                               ),
                             ),
                           ),
+                          true
+
+                              ///TODO uncoment
+                              ?
+                              //  presenter.scheduleDataDto.isPhotoCheckListFull() ?
+                              SizedBox.shrink()
+                              : ElevatedButton(
+                                  style: const ButtonStyle().noStyle(),
+                                  onPressed: () async {
+                                    XFile? photo = await showModalBottomSheet(
+                                      showDragHandle: true,
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (context) {
+                                        return AddChecklisPhotoBottomSheet();
+                                      },
+                                    );
+
+                                    if (photo != null) {
+                                      presenter.addPhotoToCheckList(photo);
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 0,
+                                      top: 16,
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text("Adicionar foto")
+                                                .body_regular(
+                                                    style: const TextStyle(
+                                                        color: AppColor
+                                                            .textPrimaryColor)),
+                                            const Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: AppColor.iconPrimaryColor,
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Container(
+                                          height: 1,
+                                          color: AppColor.borderColor,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
 
                           ElevatedButton(
                             style: const ButtonStyle().noStyle(),

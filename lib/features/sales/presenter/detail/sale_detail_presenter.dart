@@ -3,8 +3,11 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:driver_hub_partner/features/sales/interactor/sales_interactor.dart';
 import 'package:driver_hub_partner/features/sales/interactor/service/dto/sale_details_dto.dart';
+import 'package:driver_hub_partner/features/sales/presenter/sales_state.dart';
 import 'package:driver_hub_partner/features/sales/view/widgets/receipt/receipt_sale_entity.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SaleDetailsPresenter extends Cubit<DHState> {
   SaleDetailsPresenter() : super(DHInitialState());
@@ -20,6 +23,39 @@ class SaleDetailsPresenter extends Cubit<DHState> {
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());
+    }
+  }
+
+  void addPhotoToCheckList(XFile photo) {
+    saleDetailsDto.data.photoList.add(
+      CheckListPhoto(
+        id: "",
+        file: photo,
+      ),
+    );
+    emit(SaleNewPhotoCaptured(file: photo));
+  }
+
+  void removePhoto(CheckListPhoto photo) async {
+    try {
+      emit(SalePhotoRemovindLoading());
+      await Future.delayed(
+        const Duration(
+          seconds: 2,
+        ),
+      );
+      // _salesInteractor.removeSalePhoto(photo);
+      saleDetailsDto.data.photoList.removeWhere(
+        (element) => element.id == photo.id,
+      );
+      emit(SalePhotoRemoved(checkListPhoto: photo));
+    } catch (e) {
+      emit(
+        DHErrorState(
+          error:
+              "Infelizmente não foi possível remover a foto, no momento, tente novamente mais tarde",
+        ),
+      );
     }
   }
 
