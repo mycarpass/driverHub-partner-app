@@ -13,6 +13,7 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/receipt/receipt_schedule_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:notification_center/notification_center.dart';
 
 class ScheduleDetailPresenter extends Cubit<DHState> {
@@ -29,6 +30,23 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
 
   Future<void> load() async {
     await _getScheduleDetail();
+  }
+
+  void addPhotoToCheckList(XFile photo) {
+    scheduleDataDto.photoList.add(
+      CheckListPhoto(
+        id: "",
+        file: photo,
+      ),
+    );
+    emit(NewPhotoCaptured(file: photo));
+  }
+
+  void removoPhoto(CheckListPhoto photo) {
+    scheduleDataDto.photoList.removeWhere(
+      (element) => element.id == photo.id,
+    );
+    emit(PhotoRemoved(checkListPhoto: photo));
   }
 
   void selectTimeSuggestion(ScheduleTimeSuggestionDto suggestionTime) {

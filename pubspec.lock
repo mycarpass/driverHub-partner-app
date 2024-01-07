@@ -300,7 +300,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "3b5f5d94602c901c210b6d3e12e891c67fdf5006"
+      resolved-ref: efcf9dc9887f0f34ee10fbf5d64a10ed130dc5ae
       url: "https://github.com/mycarpass/dh_ui_kit_light"
     source: git
     version: "0.0.1"

@@ -2,6 +2,7 @@
 
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ScheduleDetailState extends DHState {}
 
@@ -11,6 +12,22 @@ class ScheduleTimeSelected extends DHSuccessState {
 
   @override
   List<Object> get props => [timeSuggestionDto];
+}
+
+class NewPhotoCaptured extends DHState {
+  final XFile file;
+
+  NewPhotoCaptured({required this.file});
+  @override
+  List<Object?> get props => [file];
+}
+
+class PhotoRemoved extends DHState {
+  final CheckListPhoto checkListPhoto;
+
+  PhotoRemoved({required this.checkListPhoto});
+  @override
+  List<Object?> get props => [checkListPhoto];
 }
 
 class ScheduleLoadingBody extends DHLoadingState {}

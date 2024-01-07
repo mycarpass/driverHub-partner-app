@@ -14,14 +14,17 @@ import 'package:driver_hub_partner/features/customers/interactor/service/dto/cus
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
+import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/checklist/add_checklist_photo_bottomsheet.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/receipt/receipt_schedule.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/loading/schedules_body_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ScheduleDetailView extends StatelessWidget {
   const ScheduleDetailView({
@@ -521,6 +524,115 @@ class ScheduleDetailView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 12,
+                                ),
+                                presenter.scheduleDataDto.photoList.isNotEmpty
+                                    ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Checklist de fotos')
+                                              .caption1_regular(
+                                                  style: TextStyle(
+                                                      color: AppColor
+                                                          .textSecondaryColor)),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          BlocBuilder<ScheduleDetailPresenter,
+                                                  DHState>(
+                                              builder: (context, state) {
+                                            return SizedBox(
+                                              height: 120,
+                                              child: ListView.separated(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                itemCount: presenter
+                                                    .scheduleDataDto
+                                                    .photoList
+                                                    .length,
+                                                separatorBuilder:
+                                                    (context, index) =>
+                                                        SizedBox(
+                                                  width: 8,
+                                                ),
+                                                itemBuilder: (context, index) {
+                                                  return Stack(
+                                                    children: [
+                                                      Image.asset(
+                                                        presenter
+                                                            .scheduleDataDto
+                                                            .photoList[index]
+                                                            .file
+                                                            .path,
+                                                      ),
+                                                      Positioned(
+                                                        right: 0,
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                12,
+                                                              ),
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                12,
+                                                              ),
+                                                            ),
+                                                            color: AppColor
+                                                                .errorColor,
+                                                          ),
+                                                          child: SizedBox(
+                                                            height: 50,
+                                                            width: 50,
+                                                            child:
+                                                                ElevatedButton(
+                                                              onPressed: () {
+                                                                presenter
+                                                                    .removoPhoto(
+                                                                  presenter
+                                                                      .scheduleDataDto
+                                                                      .photoList[index],
+                                                                );
+                                                              },
+                                                              style:
+                                                                  ButtonStyle(
+                                                                backgroundColor:
+                                                                    MaterialStateProperty
+                                                                        .all(
+                                                                  AppColor
+                                                                      .errorColor,
+                                                                ),
+                                                              ),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .delete_forever_outlined,
+                                                                size: 24,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                        ],
+                                      )
+                                    : SizedBox.shrink(),
 
                                 Divider(
                                   height: 48,
@@ -689,6 +801,65 @@ class ScheduleDetailView extends StatelessWidget {
                                         ),
                                       )
                                     : const SizedBox.shrink(),
+                                true
+
+                                    ///TODO uncoment
+                                    ?
+                                    //  presenter.scheduleDataDto.isPhotoCheckListFull() ?
+                                    SizedBox.shrink()
+                                    : ElevatedButton(
+                                        style: const ButtonStyle().noStyle(),
+                                        onPressed: () async {
+                                          XFile? photo =
+                                              await showModalBottomSheet(
+                                            showDragHandle: true,
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              return AddChecklisPhotoBottomSheet();
+                                            },
+                                          );
+
+                                          if (photo != null) {
+                                            presenter
+                                                .addPhotoToCheckList(photo);
+                                          }
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 0,
+                                            top: 16,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Text("Adicionar foto")
+                                                      .body_regular(
+                                                          style: const TextStyle(
+                                                              color: AppColor
+                                                                  .textPrimaryColor)),
+                                                  const Icon(
+                                                    Icons.camera_alt_outlined,
+                                                    color: AppColor
+                                                        .iconPrimaryColor,
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 16,
+                                              ),
+                                              Container(
+                                                height: 1,
+                                                color: AppColor.borderColor,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                 ElevatedButton(
                                   style: const ButtonStyle().noStyle(),
                                   onPressed: () {

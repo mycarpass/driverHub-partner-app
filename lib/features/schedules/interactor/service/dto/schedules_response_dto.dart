@@ -2,6 +2,7 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enum/schedule_status.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class SchedulesResponseDto {
@@ -58,6 +59,13 @@ class SchedulesData {
   SchedulesData();
 }
 
+class CheckListPhoto {
+  final String id;
+  final XFile file;
+
+  CheckListPhoto({required this.id, required this.file});
+}
+
 class ScheduleDataDto {
   late int scheduleId;
   late ScheduleStatus status;
@@ -78,6 +86,7 @@ class ScheduleDataDto {
   late PixScheduleDto? pix;
   late VehicleDto? vehicle;
   late PartnerScheduleDto? partner;
+  List<CheckListPhoto> photoList = [];
 
   ScheduleDataDto(
       {required this.scheduleId,
@@ -130,6 +139,10 @@ class ScheduleDataDto {
     } catch (e) {
       rethrow;
     }
+  }
+
+  bool isPhotoCheckListFull() {
+    return photoList.length == 10;
   }
 
   IconData getIcon() {
