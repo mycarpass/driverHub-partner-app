@@ -26,19 +26,16 @@ class SaleDetailsPresenter extends Cubit<DHState> {
     }
   }
 
-  void addPhotoToCheckList(XFile photo) {
+  void addPhotoToCheckList(XFile photo, String description, int id) {
     saleDetailsDto.data.photoList.add(
-      CheckListPhoto(
-        id: "",
-        file: photo,
-      ),
+      CheckListPhoto(id: id, file: photo, description: description),
     );
     emit(SaleNewPhotoCaptured(file: photo));
   }
 
   void removePhoto(CheckListPhoto photo) async {
     try {
-      emit(SalePhotoRemovindLoading());
+      emit(SalePhotoRemovindLoading(photo.id));
       await Future.delayed(
         const Duration(
           seconds: 2,

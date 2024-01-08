@@ -32,20 +32,17 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     await _getScheduleDetail();
   }
 
-  void addPhotoToCheckList(XFile photo) {
+  void addPhotoToCheckList(XFile photo, String description, int photoID) {
     scheduleDataDto.photoList.add(
-      CheckListPhoto(
-        id: "",
-        file: photo,
-      ),
+      CheckListPhoto(id: photoID, file: photo, description: description),
     );
     emit(NewPhotoCaptured(file: photo));
   }
 
   void removePhoto(CheckListPhoto photo) async {
     try {
-      emit(SchedulePhotoRemoveLoading());
-      await Future.delayed(const Duration(seconds: 2));
+      emit(SchedulePhotoRemoveLoading(id: photo.id));
+      await _schedulesInteractor.removeSchedulePhoto(photo.id);
       scheduleDataDto.photoList.removeWhere(
         (element) => element.id == photo.id,
       );

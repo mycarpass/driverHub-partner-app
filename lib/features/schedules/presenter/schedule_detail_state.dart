@@ -22,7 +22,14 @@ class NewPhotoCaptured extends DHState {
   List<Object?> get props => [file];
 }
 
-class SchedulePhotoRemoveLoading extends DHState {}
+class SchedulePhotoRemoveLoading extends DHState {
+  final int id;
+
+  SchedulePhotoRemoveLoading({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}
 
 class PhotoRemoved extends DHState {
   final CheckListPhoto checkListPhoto;

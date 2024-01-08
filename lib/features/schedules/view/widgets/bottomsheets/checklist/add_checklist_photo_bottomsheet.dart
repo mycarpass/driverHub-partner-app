@@ -3,15 +3,22 @@ import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/dh_text_field.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_circular_loading.dart';
+import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/checklist/add_checklist_photo_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/checklist/add_checklist_photo_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddChecklisPhotoBottomSheet extends StatelessWidget {
-  const AddChecklisPhotoBottomSheet({
-    super.key,
-  });
+  AddChecklisPhotoBottomSheet(
+      {super.key, required this.id, this.isSavingSchedulePhoto = true});
+
+  final bool isSavingSchedulePhoto;
+
+  final int id;
+
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +46,7 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                         children: [
                           Align(
                             alignment: Alignment.center,
-                            child: const Text("Checlist de fotos").body_bold(),
+                            child: const Text("Checklist de fotos").body_bold(),
                           ),
                           const SizedBox(
                             height: 16,
@@ -57,14 +64,15 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                               if (state is DHLoadingState) {
                                 return const DHCircularLoading();
                               }
-                              if (state is CapturedPhotoState) {
+                              if (state is CapturedPhotoState ||
+                                  state is SavingPhotoState) {
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
                                       height: 180,
-                                      child: Image.asset(state.file.path),
+                                      child: Image.asset(presenter.image!.path),
                                     ),
                                     Container(
                                       decoration: const BoxDecoration(
@@ -108,13 +116,15 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                           ),
                           BlocBuilder<AddChecklistPhotoPresenter, DHState>(
                               builder: (context, state) {
-                            if (state is! CapturedPhotoState) {
+                            if (state is! CapturedPhotoState &&
+                                state is! SavingPhotoState) {
                               return const SizedBox.shrink();
                             }
                             return Column(
                               children: [
                                 DHTextField(
                                   //cursorWidth: 0,
+                                  controller: descriptionController,
                                   minLines: 2,
                                   maxLines: 3,
                                   icon: Icons.description,
@@ -129,20 +139,54 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                                 const SizedBox(
                                   height: 24,
                                 ),
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      try {
+                                        var photoId = 0;
+                                        if (presenter.image != null) {
+                                          if (isSavingSchedulePhoto) {
+                                            photoId = await presenter
+                                                .saveSchedulePhoto(
+                                              CheckListPhoto(
+                                                id: id,
+                                                file: presenter.image!,
+                                                description:
+                                                    descriptionController.text,
+                                              ),
+                                            );
+                                          } else {
+                                            photoId =
+                                                await presenter.saveSalePhoto(
+                                              CheckListPhoto(
+                                                id: id,
+                                                file: presenter.image!,
+                                                description:
+                                                    descriptionController.text,
+                                              ),
+                                            );
+                                          }
+
+                                          Navigator.of(context).pop({
+                                            "photo": presenter.image,
+                                            "description":
+                                                descriptionController.text,
+                                            "photoId": photoId
+                                          });
+                                        }
+                                      } catch (e) {
+                                        rethrow;
+                                      }
+                                    },
+                                    child: state is SavingPhotoState
+                                        ? const DHCircularLoading()
+                                        : const Text("Enviar"),
+                                  ),
+                                )
                               ],
                             );
                           }),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (presenter.image != null) {
-                                  Navigator.of(context).pop(presenter.image);
-                                }
-                              },
-                              child: const Text("Enviar"),
-                            ),
-                          )
                         ],
                       ),
                     ),

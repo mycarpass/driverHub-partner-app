@@ -62,6 +62,9 @@ class SaleDetailsData {
         services.add(Services.fromJson(v));
       });
     }
+    for (var photo in json['checklist_photos']) {
+      photoList.add(CheckListPhoto.fromJson(photo));
+    }
     discountValue = MoneyValue(json['discount_value']);
     subTotalPaid = MoneyValue(json['total_amount_paid']);
 

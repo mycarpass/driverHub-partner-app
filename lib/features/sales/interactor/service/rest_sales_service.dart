@@ -63,7 +63,7 @@ class RestSalesService implements SalesService {
   Future<void> removeSalePhoto(CheckListPhoto checkListPhoto) async {
     try {
       await _httpClient.put(
-        "/partner/sale/${checkListPhoto.id}",
+        "/partner/checklist-photo/${checkListPhoto.id}",
       );
     } catch (e) {
       rethrow;
@@ -71,11 +71,12 @@ class RestSalesService implements SalesService {
   }
 
   @override
-  Future<void> saveSalePhoto(CheckListPhoto checkListPhoto) async {
+  Future<int> saveSalePhoto(CheckListPhoto checkListPhoto) async {
     try {
-      await _httpClient.put(
-        "/partner/sale/${checkListPhoto.id}",
-      );
+      var formData = await checkListPhoto.toSavePhotoMap();
+      Response response = await _httpClient
+          .post("/partner/sale/checklist-photo", body: formData);
+      return response.data["photo_id"];
     } catch (e) {
       rethrow;
     }

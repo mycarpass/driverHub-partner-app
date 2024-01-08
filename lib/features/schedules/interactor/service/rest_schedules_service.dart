@@ -111,10 +111,10 @@ class RestSchedulesService implements SchedulesService {
   }
 
   @override
-  Future<void> removePhoto(CheckListPhoto checkListPhoto) async {
+  Future<void> removePhoto(int photoId) async {
     try {
-      await _httpClient.post(
-        "/partner/new-schedule",
+      await _httpClient.delete(
+        "/partner/checklist-photo/$photoId",
       );
     } catch (e) {
       rethrow;
@@ -124,8 +124,14 @@ class RestSchedulesService implements SchedulesService {
   @override
   Future<void> savePhoto(CheckListPhoto checkListPhoto) async {
     try {
-      await _httpClient.post(
-        "/partner/new-schedule",
+      var formData = FormData.fromMap({
+        "id": checkListPhoto.id,
+        "image": await MultipartFile.fromFile(checkListPhoto.file.path),
+        "description": checkListPhoto.description
+      });
+      return await _httpClient.post(
+        "/partner/schedule/checklist-photo",
+        body: formData,
       );
     } catch (e) {
       rethrow;

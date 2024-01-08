@@ -149,15 +149,16 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                               Row(
                                 children: [
                                   SizedBox(
-                                      height: 50,
-                                      width: 50,
-                                      child: CircleAvatar(
-                                        backgroundColor: AppColor.supportColor,
-                                        child: Text(presenter
-                                                .saleDetailsDto.data.client.name
-                                                .getInitialsName())
-                                            .label2_regular(),
-                                      )),
+                                    height: 50,
+                                    width: 50,
+                                    child: CircleAvatar(
+                                      backgroundColor: AppColor.supportColor,
+                                      child: Text(presenter
+                                              .saleDetailsDto.data.client.name
+                                              .getInitialsName())
+                                          .label2_regular(),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     width: 16,
                                   ),
@@ -415,8 +416,6 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.horizontal,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
                                           itemCount: presenter.saleDetailsDto
                                               .data.photoList.length,
                                           separatorBuilder: (context, index) =>
@@ -426,14 +425,27 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                           itemBuilder: (context, index) {
                                             return Stack(
                                               children: [
-                                                Image.asset(
-                                                  presenter
-                                                      .saleDetailsDto
-                                                      .data
-                                                      .photoList[index]
-                                                      .file
-                                                      .path,
-                                                ),
+                                                presenter
+                                                        .saleDetailsDto
+                                                        .data
+                                                        .photoList[index]
+                                                        .networkPath
+                                                        .isEmpty
+                                                    ? Image.asset(
+                                                        presenter
+                                                            .saleDetailsDto
+                                                            .data
+                                                            .photoList[index]
+                                                            .file
+                                                            .path,
+                                                      )
+                                                    : Image.network(
+                                                        presenter
+                                                            .saleDetailsDto
+                                                            .data
+                                                            .photoList[index]
+                                                            .networkPath,
+                                                      ),
                                                 Positioned(
                                                   right: 0,
                                                   child: Container(
@@ -475,9 +487,16 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                                           ),
                                                         ),
                                                         child: state
-                                                                is SalePhotoRemovindLoading
-                                                            ? DHCircularLoading()
-                                                            : Icon(
+                                                                    is SalePhotoRemovindLoading &&
+                                                                state.id ==
+                                                                    presenter
+                                                                        .saleDetailsDto
+                                                                        .data
+                                                                        .photoList[
+                                                                            index]
+                                                                        .id
+                                                            ? const DHCircularLoading()
+                                                            : const Icon(
                                                                 Icons
                                                                     .delete_forever_outlined,
                                                                 size: 24,
@@ -494,12 +513,12 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                     }),
                                   ],
                                 )
-                              : SizedBox.shrink(),
-                          Divider(
+                              : const SizedBox.shrink(),
+                          const Divider(
                             height: 48,
                           ),
-                          Text('Ações da venda').label2_bold(),
-                          SizedBox(
+                          const Text('Ações da venda').label2_bold(),
+                          const SizedBox(
                             height: 8,
                           ),
                           ElevatedButton(
@@ -547,26 +566,30 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                               ),
                             ),
                           ),
-                          true
 
-                              ///TODO uncoment
-                              ?
-                              //  presenter.scheduleDataDto.isPhotoCheckListFull() ?
-                              SizedBox.shrink()
+                          presenter.saleDetailsDto.data.photoList.length == 10
+                              ? SizedBox.shrink()
                               : ElevatedButton(
                                   style: const ButtonStyle().noStyle(),
                                   onPressed: () async {
-                                    XFile? photo = await showModalBottomSheet(
+                                    Map<String, dynamic>? response =
+                                        await showModalBottomSheet(
                                       showDragHandle: true,
                                       context: context,
                                       isScrollControlled: true,
                                       builder: (context) {
-                                        return AddChecklisPhotoBottomSheet();
+                                        return AddChecklisPhotoBottomSheet(
+                                          id: presenter.saleDetailsDto.data.id,
+                                          isSavingSchedulePhoto: false,
+                                        );
                                       },
                                     );
 
-                                    if (photo != null) {
-                                      presenter.addPhotoToCheckList(photo);
+                                    if (response != null) {
+                                      presenter.addPhotoToCheckList(
+                                          response["photo"],
+                                          response["description"],
+                                          response["photoId"]);
                                     }
                                   },
                                   child: Padding(

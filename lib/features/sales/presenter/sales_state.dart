@@ -28,9 +28,10 @@ class SaleNewPhotoCaptured extends DHState {
 }
 
 class SalePhotoRemovindLoading extends DHState {
-  SalePhotoRemovindLoading();
+  final int id;
+  SalePhotoRemovindLoading(this.id);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [id];
 }
 
 class SalePhotoRemoved extends DHState {

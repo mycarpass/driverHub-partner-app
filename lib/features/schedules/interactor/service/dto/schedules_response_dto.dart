@@ -1,4 +1,5 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:dio/dio.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enum/schedule_status.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:flutter/material.dart';
@@ -60,10 +61,37 @@ class SchedulesData {
 }
 
 class CheckListPhoto {
-  final String id;
-  final XFile file;
+  final int id;
 
-  CheckListPhoto({required this.id, required this.file});
+  final String description;
+  final XFile file;
+  String networkPath = "";
+
+  CheckListPhoto(
+      {required this.id,
+      required this.file,
+      required this.description,
+      this.networkPath = ""});
+
+  Map<String, dynamic> toJson() {
+    return {"id": id, "image": file, "description": description};
+  }
+
+  factory CheckListPhoto.fromJson(Map<String, dynamic> json) {
+    return CheckListPhoto(
+        id: json["id"],
+        description: json["description"] ?? "",
+        file: XFile(""),
+        networkPath: json["image_url"]);
+  }
+
+  Future<FormData> toSavePhotoMap() async {
+    return FormData.fromMap({
+      "id": id,
+      "image": await MultipartFile.fromFile(file.path),
+      "description": description
+    });
+  }
 }
 
 class ScheduleDataDto {
@@ -120,6 +148,10 @@ class ScheduleDataDto {
       timeSuggestions = [];
       for (var time in json['time_suggestions']) {
         timeSuggestions.add(ScheduleTimeSuggestionDto.fromJson(time));
+      }
+
+      for (var photo in json['checklist_photos']) {
+        photoList.add(CheckListPhoto.fromJson(photo));
       }
 
       selectedServices =

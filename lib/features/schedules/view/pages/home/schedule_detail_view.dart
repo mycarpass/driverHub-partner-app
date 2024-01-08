@@ -553,8 +553,6 @@ class ScheduleDetailView extends StatelessWidget {
                                                 shrinkWrap: true,
                                                 scrollDirection:
                                                     Axis.horizontal,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
                                                 itemCount: presenter
                                                     .scheduleDataDto
                                                     .photoList
@@ -567,13 +565,25 @@ class ScheduleDetailView extends StatelessWidget {
                                                 itemBuilder: (context, index) {
                                                   return Stack(
                                                     children: [
-                                                      Image.asset(
-                                                        presenter
-                                                            .scheduleDataDto
-                                                            .photoList[index]
-                                                            .file
-                                                            .path,
-                                                      ),
+                                                      presenter
+                                                              .scheduleDataDto
+                                                              .photoList[index]
+                                                              .networkPath
+                                                              .isEmpty
+                                                          ? Image.asset(
+                                                              presenter
+                                                                  .scheduleDataDto
+                                                                  .photoList[
+                                                                      index]
+                                                                  .file
+                                                                  .path,
+                                                            )
+                                                          : Image.network(
+                                                              presenter
+                                                                  .scheduleDataDto
+                                                                  .photoList[
+                                                                      index]
+                                                                  .networkPath),
                                                       Positioned(
                                                         right: 0,
                                                         child: Container(
@@ -616,16 +626,19 @@ class ScheduleDetailView extends StatelessWidget {
                                                                       .errorColor,
                                                                 ),
                                                               ),
-                                                              child:
-                                                              
-                                                              state is SchedulePhotoRemoveLoading ? 
-                                                              DHCircularLoading()
-                                                               :
-                                                               Icon(
-                                                                Icons
-                                                                    .delete_forever_outlined,
-                                                                size: 24,
-                                                              ),
+                                                              child: state
+                                                                          is SchedulePhotoRemoveLoading &&
+                                                                      state.id ==
+                                                                          presenter
+                                                                              .scheduleDataDto
+                                                                              .photoList[index]
+                                                                              .id
+                                                                  ? DHCircularLoading()
+                                                                  : Icon(
+                                                                      Icons
+                                                                          .delete_forever_outlined,
+                                                                      size: 24,
+                                                                    ),
                                                             ),
                                                           ),
                                                         ),
@@ -807,7 +820,7 @@ class ScheduleDetailView extends StatelessWidget {
                                         ),
                                       )
                                     : const SizedBox.shrink(),
-                                true
+                                false
 
                                     ///TODO uncoment
                                     ?
@@ -816,19 +829,23 @@ class ScheduleDetailView extends StatelessWidget {
                                     : ElevatedButton(
                                         style: const ButtonStyle().noStyle(),
                                         onPressed: () async {
-                                          XFile? photo =
+                                          Map<String, dynamic>? response =
                                               await showModalBottomSheet(
                                             showDragHandle: true,
                                             context: context,
                                             isScrollControlled: true,
                                             builder: (context) {
-                                              return AddChecklisPhotoBottomSheet();
+                                              return AddChecklisPhotoBottomSheet(
+                                                id: presenter.scheduleId,
+                                              );
                                             },
                                           );
 
-                                          if (photo != null) {
-                                            presenter
-                                                .addPhotoToCheckList(photo);
+                                          if (response != null) {
+                                            presenter.addPhotoToCheckList(
+                                                response["photo"],
+                                                response["description"],
+                                                response["photoId"]);
                                           }
                                         },
                                         child: Padding(

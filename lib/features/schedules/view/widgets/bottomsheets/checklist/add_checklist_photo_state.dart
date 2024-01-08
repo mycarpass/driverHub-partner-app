@@ -9,3 +9,12 @@ class CapturedPhotoState extends DHState {
   @override
   List<Object?> get props => [file];
 }
+
+class SavingPhotoState extends DHState {
+  final XFile file;
+
+  SavingPhotoState(this.file);
+
+  @override
+  List<Object?> get props => [file];
+}
