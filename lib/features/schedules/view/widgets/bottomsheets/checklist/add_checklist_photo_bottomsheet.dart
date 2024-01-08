@@ -42,18 +42,19 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Align(
                             alignment: Alignment.center,
-                            child: const Text("Checklist de fotos").body_bold(),
+                            child: const Text("Checklist de Fotos").body_bold(),
                           ),
                           const SizedBox(
                             height: 16,
                           ),
                           const Text(
-                                  "Clique no botão abaixo para adicionar fotos ao seu checklist")
-                              .body_regular(),
+                            "Clique no botão abaixo para \nadicionar fotos ao seu checklist",
+                            textAlign: TextAlign.center,
+                          ).body_regular(),
                           const SizedBox(
                             height: 24,
                           ),
@@ -66,49 +67,70 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                               }
                               if (state is CapturedPhotoState ||
                                   state is SavingPhotoState) {
-                                return Row(
+                                return Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SizedBox(
                                       height: 180,
                                       child: Image.asset(presenter.image!.path),
                                     ),
+                                    SizedBox(
+                                      height: 12,
+                                    ),
                                     Container(
                                       decoration: const BoxDecoration(
                                         color: AppColor.accentColor,
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(999),
-                                          bottomRight: Radius.circular(999),
-                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(100)),
                                       ),
                                       child: ElevatedButton(
                                         style: ButtonStyle(
+                                            elevation:
+                                                const MaterialStatePropertyAll(
+                                                    1),
                                             backgroundColor:
                                                 MaterialStateProperty.all(
-                                                    AppColor.accentColor)),
+                                                    AppColor.backgroundColor)),
                                         onPressed: () {
                                           presenter.renovePhoto();
                                         },
-                                        child: const Icon(
-                                          Icons.change_circle_outlined,
-                                          color: AppColor.iconPrimaryColor,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Icons.change_circle_outlined,
+                                              color:
+                                                  AppColor.iconSecondaryColor,
+                                            ),
+                                            const SizedBox(
+                                              width: 4,
+                                            ),
+                                            const Text('Tirar outra')
+                                                .body_bold()
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ],
                                 );
                               }
-                              return IconButton(
-                                onPressed: () {
-                                  presenter.takePhoto();
-                                },
-                                icon: const Icon(
-                                  Icons.add_a_photo_outlined,
-                                  size: 98,
-                                  color: AppColor.accentColor,
-                                ),
-                              );
+                              return Container(
+                                  decoration: const BoxDecoration(
+                                      color: AppColor.supportColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(100))),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      presenter.takePhoto();
+                                    },
+                                    iconSize: 100,
+                                    icon: const Icon(
+                                      Icons.add_a_photo_outlined,
+                                      size: 48,
+                                      color: AppColor.iconPrimaryColor,
+                                    ),
+                                  ));
                             }),
                           ),
                           const SizedBox(
@@ -121,16 +143,19 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                               return const SizedBox.shrink();
                             }
                             return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const Text('Descrição (opcional)')
+                                    .body_regular(),
                                 DHTextField(
                                   //cursorWidth: 0,
                                   controller: descriptionController,
                                   minLines: 2,
                                   maxLines: 3,
-                                  icon: Icons.description,
+                                  icon: Icons.description_outlined,
                                   // controller: presenter.descriptionController,
                                   hint:
-                                      "Pequeno amassado na lateral dianteira do lado do motorista",
+                                      "Ex: Pequeno amassado na lateral dianteira do lado do motorista",
                                   keyboardType: TextInputType.multiline,
                                   onChanged: (text) {
                                     // presenter.serviceEntity.description = text;
@@ -181,7 +206,7 @@ class AddChecklisPhotoBottomSheet extends StatelessWidget {
                                     },
                                     child: state is SavingPhotoState
                                         ? const DHCircularLoading()
-                                        : const Text("Enviar"),
+                                        : const Text("Enviar foto"),
                                   ),
                                 )
                               ],

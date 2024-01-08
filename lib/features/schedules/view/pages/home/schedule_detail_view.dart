@@ -526,7 +526,7 @@ class ScheduleDetailView extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 12,
+                                  height: 20,
                                 ),
                                 presenter.scheduleDataDto.photoList.isNotEmpty
                                     ? Column(
@@ -535,7 +535,11 @@ class ScheduleDetailView extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text('Checklist de fotos')
+                                          Text('Checklist de fotos').body_bold(
+                                              style: TextStyle(
+                                                  color: AppColor
+                                                      .textPrimaryColor)),
+                                          Text('As fotos são compartilhadas no app do cliente')
                                               .caption1_regular(
                                                   style: TextStyle(
                                                       color: AppColor
@@ -570,20 +574,33 @@ class ScheduleDetailView extends StatelessWidget {
                                                               .photoList[index]
                                                               .networkPath
                                                               .isEmpty
-                                                          ? Image.asset(
-                                                              presenter
-                                                                  .scheduleDataDto
-                                                                  .photoList[
-                                                                      index]
-                                                                  .file
-                                                                  .path,
-                                                            )
-                                                          : Image.network(
-                                                              presenter
-                                                                  .scheduleDataDto
-                                                                  .photoList[
-                                                                      index]
-                                                                  .networkPath),
+                                                          ? SizedBox(
+                                                              width: 120,
+                                                              height: 160,
+                                                              child:
+                                                                  Image.asset(
+                                                                presenter
+                                                                    .scheduleDataDto
+                                                                    .photoList[
+                                                                        index]
+                                                                    .file
+                                                                    .path,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ))
+                                                          : SizedBox(
+                                                              width: 120,
+                                                              height: 160,
+                                                              child:
+                                                                  Image.network(
+                                                                presenter
+                                                                    .scheduleDataDto
+                                                                    .photoList[
+                                                                        index]
+                                                                    .networkPath,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              )),
                                                       Positioned(
                                                         right: 0,
                                                         child: Container(
@@ -605,8 +622,8 @@ class ScheduleDetailView extends StatelessWidget {
                                                                 .errorColor,
                                                           ),
                                                           child: SizedBox(
-                                                            height: 50,
-                                                            width: 50,
+                                                            height: 44,
+                                                            width: 44,
                                                             child:
                                                                 ElevatedButton(
                                                               onPressed: () {
@@ -619,6 +636,9 @@ class ScheduleDetailView extends StatelessWidget {
                                                               },
                                                               style:
                                                                   ButtonStyle(
+                                                                padding: MaterialStatePropertyAll(
+                                                                    EdgeInsets
+                                                                        .zero),
                                                                 backgroundColor:
                                                                     MaterialStateProperty
                                                                         .all(
@@ -631,14 +651,21 @@ class ScheduleDetailView extends StatelessWidget {
                                                                       state.id ==
                                                                           presenter
                                                                               .scheduleDataDto
-                                                                              .photoList[index]
+                                                                              .photoList[
+                                                                                  index]
                                                                               .id
                                                                   ? DHCircularLoading()
-                                                                  : Icon(
-                                                                      Icons
-                                                                          .delete_forever_outlined,
-                                                                      size: 24,
-                                                                    ),
+                                                                  : SizedBox(
+                                                                      height:
+                                                                          44,
+                                                                      width: 44,
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .delete_forever_outlined,
+                                                                        size:
+                                                                            24,
+                                                                      )),
                                                             ),
                                                           ),
                                                         ),
@@ -860,7 +887,8 @@ class ScheduleDetailView extends StatelessWidget {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  const Text("Adicionar foto")
+                                                  const Text(
+                                                          "Adicionar foto ao checklist")
                                                       .body_regular(
                                                           style: const TextStyle(
                                                               color: AppColor

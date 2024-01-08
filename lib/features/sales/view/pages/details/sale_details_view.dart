@@ -400,7 +400,11 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text('Checklist de fotos')
+                                    const Text('Checklist de fotos').body_bold(
+                                        style: const TextStyle(
+                                            color: AppColor.textPrimaryColor)),
+                                    const Text(
+                                            'As fotos são compartilhadas no app do cliente')
                                         .caption1_regular(
                                             style: const TextStyle(
                                                 color: AppColor
@@ -431,21 +435,29 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                                         .photoList[index]
                                                         .networkPath
                                                         .isEmpty
-                                                    ? Image.asset(
-                                                        presenter
-                                                            .saleDetailsDto
-                                                            .data
-                                                            .photoList[index]
-                                                            .file
-                                                            .path,
-                                                      )
-                                                    : Image.network(
-                                                        presenter
-                                                            .saleDetailsDto
-                                                            .data
-                                                            .photoList[index]
-                                                            .networkPath,
-                                                      ),
+                                                    ? SizedBox(
+                                                        width: 120,
+                                                        height: 160,
+                                                        child: Image.asset(
+                                                          presenter
+                                                              .saleDetailsDto
+                                                              .data
+                                                              .photoList[index]
+                                                              .file
+                                                              .path,
+                                                          fit: BoxFit.cover,
+                                                        ))
+                                                    : SizedBox(
+                                                        width: 120,
+                                                        height: 160,
+                                                        child: Image.network(
+                                                          presenter
+                                                              .saleDetailsDto
+                                                              .data
+                                                              .photoList[index]
+                                                              .networkPath,
+                                                          fit: BoxFit.cover,
+                                                        )),
                                                 Positioned(
                                                   right: 0,
                                                   child: Container(
@@ -466,8 +478,8 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                                           .withOpacity(0.8),
                                                     ),
                                                     child: SizedBox(
-                                                      height: 50,
-                                                      width: 50,
+                                                      height: 44,
+                                                      width: 44,
                                                       child: ElevatedButton(
                                                         onPressed: () {
                                                           presenter.removePhoto(
@@ -478,6 +490,10 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                                           );
                                                         },
                                                         style: ButtonStyle(
+                                                          padding:
+                                                              const MaterialStatePropertyAll(
+                                                                  EdgeInsets
+                                                                      .zero),
                                                           backgroundColor:
                                                               MaterialStateProperty
                                                                   .all(
@@ -496,10 +512,13 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                                                             index]
                                                                         .id
                                                             ? const DHCircularLoading()
-                                                            : const Icon(
-                                                                Icons
-                                                                    .delete_forever_outlined,
-                                                                size: 24,
+                                                            : const SizedBox(
+                                                                height: 44,
+                                                                width: 44,
+                                                                child: Icon(
+                                                                    Icons
+                                                                        .delete_forever_outlined,
+                                                                    size: 24),
                                                               ),
                                                       ),
                                                     ),
@@ -603,7 +622,8 @@ class _SaleDetailsViewState extends State<SaleDetailsView> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text("Adicionar foto")
+                                            const Text(
+                                                    "Adicionar foto ao checklist")
                                                 .body_regular(
                                                     style: const TextStyle(
                                                         color: AppColor
