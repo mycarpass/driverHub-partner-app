@@ -14,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
-class ServicePricesBottomSheet extends StatelessWidget {
+class ServicePricesBottomSheet extends StatefulWidget {
   const ServicePricesBottomSheet._({this.serviceDto});
 
   factory ServicePricesBottomSheet.create() {
@@ -30,58 +30,71 @@ class ServicePricesBottomSheet extends StatelessWidget {
   final PartnerServiceDto? serviceDto;
 
   @override
-  Widget build(BuildContext context) {
-    var presenter = context.read<ServicesRegisterPresenter>();
+  State<ServicePricesBottomSheet> createState() =>
+      _ServicePricesBottomSheetState();
+}
 
-    if (serviceDto != null) {
-      presenter.serviceEntity.id = serviceDto!.serviceId;
-      presenter.priceHatchController.text = serviceDto!.prices
+class _ServicePricesBottomSheetState extends State<ServicePricesBottomSheet> {
+  late ServicesRegisterPresenter presenter;
+
+  @override
+  void initState() {
+    presenter = context.read<ServicesRegisterPresenter>();
+
+    if (widget.serviceDto != null) {
+      presenter.serviceEntity.id = widget.serviceDto!.serviceId;
+      presenter.priceHatchController.text = widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.hatchback)
               .isEmpty
           ? "R\$ 0,00"
-          : serviceDto!.prices
+          : widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.hatchback)
               .first
               .price
               .priceInReal;
-      presenter.priceSedanController.text = serviceDto!.prices
+      presenter.priceSedanController.text = widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.sedan)
               .isEmpty
           ? "R\$ 0,00"
-          : serviceDto!.prices
+          : widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.sedan)
               .first
               .price
               .priceInReal;
-      presenter.priceSuvController.text = serviceDto!.prices
+      presenter.priceSuvController.text = widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.suv)
               .isEmpty
           ? "R\$ 0,00"
-          : serviceDto!.prices
+          : widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.suv)
               .first
               .price
               .priceInReal;
-      presenter.pricePickupController.text = serviceDto!.prices
+      presenter.pricePickupController.text = widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.pickup)
               .isEmpty
           ? "R\$ 0,00"
-          : serviceDto!.prices
+          : widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.pickup)
               .first
               .price
               .priceInReal;
 
-      presenter.priceRAMController.text = serviceDto!.prices
+      presenter.priceRAMController.text = widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.ram)
               .isEmpty
           ? "R\$ 0,00"
-          : serviceDto!.prices
+          : widget.serviceDto!.prices
               .where((element) => element.carBodyType == CarBodyType.ram)
               .first
               .price
               .priceInReal;
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -95,7 +108,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                  child: Text(serviceDto != null
+                  child: Text(widget.serviceDto != null
                           ? "Editar preços"
                           : "Cadastrar preços")
                       .label1_bold()),
@@ -539,7 +552,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
                         ? () {}
                         : () {
                             if (presenter.isValideToContinue()) {
-                              serviceDto != null
+                              widget.serviceDto != null
                                   ? presenter.updateService()
                                   : presenter.saveService();
                             } else {
@@ -557,7 +570,7 @@ class ServicePricesBottomSheet extends StatelessWidget {
                               color: AppColor.backgroundColor,
                             ),
                           )
-                        : serviceDto != null
+                        : widget.serviceDto != null
                             ? const Text("Salvar")
                             : const Text("Cadastrar"),
                   ),

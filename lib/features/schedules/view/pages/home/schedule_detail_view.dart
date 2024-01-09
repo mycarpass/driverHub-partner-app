@@ -847,12 +847,9 @@ class ScheduleDetailView extends StatelessWidget {
                                         ),
                                       )
                                     : const SizedBox.shrink(),
-                                false
 
-                                    ///TODO uncoment
-                                    ?
-                                    //  presenter.scheduleDataDto.isPhotoCheckListFull() ?
-                                    SizedBox.shrink()
+                                presenter.scheduleDataDto.isPhotoCheckListFull()
+                                    ? SizedBox.shrink()
                                     : ElevatedButton(
                                         style: const ButtonStyle().noStyle(),
                                         onPressed: () async {

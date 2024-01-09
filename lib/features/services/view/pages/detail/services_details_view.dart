@@ -6,6 +6,7 @@ import 'package:dh_ui_kit/view/widgets/dh_app_bar.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/enum/service_type.dart';
 import 'package:driver_hub_partner/features/services/interactor/service/dto/partner_services_response_dto.dart';
+import 'package:driver_hub_partner/features/services/interactor/service/dto/services_response_dto.dart';
 import 'package:driver_hub_partner/features/services/presenter/details/service_details_presenter.dart';
 import 'package:driver_hub_partner/features/services/presenter/services_register_presenter.dart';
 import 'package:driver_hub_partner/features/services/view/widgets/bottomsheets/service_register_bottom_sheet.dart';
@@ -39,7 +40,8 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
               doneButtonIsEnabled: true,
               backButtonsIsVisible: true,
               onDonePressed: () async {
-                bool? isServiceRegistered = await showModalBottomSheet<bool?>(
+                ServiceDto? isServiceRegistered =
+                    await showModalBottomSheet<ServiceDto?>(
                   context: context,
                   showDragHandle: true,
                   isScrollControlled: true,
@@ -48,9 +50,9 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                     child: ServiceRegisterBottomSheet.update(serviceDto),
                   ),
                 );
-                if (isServiceRegistered != null && isServiceRegistered) {
+                if (isServiceRegistered != null) {
                   // ignore: use_build_context_synchronously
-                  // presenter.load();
+                  presenter.load(serviceDto.serviceId.toString());
                 }
               },
               doneButtonText: 'Editar'),

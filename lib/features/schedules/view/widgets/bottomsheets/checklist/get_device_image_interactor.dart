@@ -7,8 +7,7 @@ class GetDeviceImageInteractor {
 
   Future<XFile?> captureImage() async {
     _image = await _picker.pickImage(
-      ///TODO change to camera
-      source: ImageSource.gallery,
+      source: ImageSource.camera,
     );
     return _image;
     // presenter.inputBackground(image);

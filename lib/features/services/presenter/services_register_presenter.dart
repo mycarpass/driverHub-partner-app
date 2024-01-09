@@ -9,6 +9,7 @@ import 'package:driver_hub_partner/features/services/presenter/services_state.da
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notification_center/notification_center.dart';
 
 class ServicesRegisterPresenter extends Cubit<DHState> {
   ServicesRegisterPresenter() : super(DHInitialState());
@@ -99,7 +100,7 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
       _fillAdditionalWashes();
 
       await _servicesInteractor.saveService(serviceEntity);
-
+      NotificationCenter().notify("updatedService");
       emit(ServiceRegisteredSuccessful());
     } catch (e) {
       emit(DHErrorState());
