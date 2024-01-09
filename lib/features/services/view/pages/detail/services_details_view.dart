@@ -40,8 +40,7 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
               doneButtonIsEnabled: true,
               backButtonsIsVisible: true,
               onDonePressed: () async {
-                ServiceDto? isServiceRegistered =
-                    await showModalBottomSheet<ServiceDto?>(
+                bool? isServiceRegistered = await showModalBottomSheet<bool?>(
                   context: context,
                   showDragHandle: true,
                   isScrollControlled: true,
@@ -52,7 +51,8 @@ class _ServicesDetailsViewState extends State<ServicesDetailsView> {
                 );
                 if (isServiceRegistered != null) {
                   // ignore: use_build_context_synchronously
-                  presenter.load(serviceDto.serviceId.toString());
+                  // Navigator.of(context).pop();
+                  // presenter.load(serviceDto.serviceId.toString());
                 }
               },
               doneButtonText: 'Editar'),

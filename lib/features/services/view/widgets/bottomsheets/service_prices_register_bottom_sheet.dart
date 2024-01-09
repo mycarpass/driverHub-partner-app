@@ -533,6 +533,13 @@ class _ServicePricesBottomSheetState extends State<ServicePricesBottomSheet> {
                   : const SizedBox(height: 24),
               BlocConsumer<ServicesRegisterPresenter, DHState>(
                   listener: (context, state) {
+                if (state is ServiceUpdatededSuccessful) {
+                  Navigator.of(context).pop(true);
+                  Navigator.of(context).pop(true);
+                  Navigator.of(context).pop(true);
+                  DHSnackBar().showSnackBar("Parabéns!",
+                      "Serviço atualizado com sucesso", DHSnackBarType.success);
+                }
                 if (state is ServiceRegisteredSuccessful) {
                   Navigator.of(context).pop(true);
                   Navigator.of(context).pop(true);

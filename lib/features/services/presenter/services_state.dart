@@ -42,4 +42,6 @@ class LoadingServicesDropdownState extends DHLoadingState {}
 
 class ServiceRegisteredSuccessful extends DHSuccessState {}
 
+class ServiceUpdatededSuccessful extends DHSuccessState {}
+
 class EmptyDropdownState extends DHSuccessState {}

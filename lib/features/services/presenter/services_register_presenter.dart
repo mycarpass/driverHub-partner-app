@@ -115,7 +115,7 @@ class ServicesRegisterPresenter extends Cubit<DHState> {
       if (serviceEntity.isAllPricesFilled()) {
         await _servicesInteractor.updateService(serviceEntity);
 
-        emit(ServiceRegisteredSuccessful());
+        emit(ServiceUpdatededSuccessful());
       } else {
         emit(DHErrorState(
             error: "Preencha todos os preços para todas as carrocerias"));
