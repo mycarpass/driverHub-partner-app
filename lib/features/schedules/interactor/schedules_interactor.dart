@@ -92,4 +92,12 @@ class SchedulesInteractor {
       rethrow;
     }
   }
+
+  Future<void> getMonthPayments() async {
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

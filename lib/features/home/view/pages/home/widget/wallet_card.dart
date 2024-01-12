@@ -2,6 +2,7 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
+import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -88,25 +89,39 @@ class WalletCardWidget extends StatelessWidget {
             const SizedBox(
               height: 4,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                !presenter.isVisible
-                    ? Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                          color: AppColor.backgroundSecondary,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        height: 24,
-                        width: 120,
-                      )
-                    : Text(presenter.chartsResponseDto.currentMonthTotalSales
-                            .priceInReal)
-                        .title1_bold(
-                        style: const TextStyle(color: AppColor.accentColor),
-                      ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    !presenter.isVisible
+                        ? Container(
+                            margin: const EdgeInsets.only(top: 4),
+                            decoration: const BoxDecoration(
+                              color: AppColor.backgroundSecondary,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            height: 24,
+                            width: 120,
+                          )
+                        : Text(presenter.chartsResponseDto
+                                .currentMonthTotalSales.priceInReal)
+                            .title1_bold(
+                            style: const TextStyle(color: AppColor.accentColor),
+                          ),
+                  ],
+                ),
+                const Expanded(child: SizedBox.shrink()),
+                // IconButton(
+                //   onPressed: () => Navigator.of(context)
+                //       .pushNamed(SchedulesRoutes.schedulePaymentsView),
+                //   icon: const Icon(
+                //     Icons.arrow_forward_ios,
+                //     size: 14,
+                //   ),
+                // )
               ],
             ),
             const SizedBox(
