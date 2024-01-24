@@ -38,7 +38,9 @@ class _SubscriptionHomeCardState extends State<SubscriptionHomeCard> {
                       ? AppColor.warningColor
                       : AppColor.successColor)),
           onPressed: () async {
-            presenter.openPayWall(context);
+            // if (widget.daysTrialLeft <= 0) {
+            //   presenter.openPayWall(context);
+            // }
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
