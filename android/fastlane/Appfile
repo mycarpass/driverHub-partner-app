@@ -1,0 +1,2 @@
+json_key_file("./private_keys/driverhub-prod-616310a89efb.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.driver_hub_partner") # e.g. com.krausefx.app

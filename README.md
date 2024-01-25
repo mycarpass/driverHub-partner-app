@@ -4,6 +4,17 @@ A new Flutter project.
 
 ## Getting Started
 
+
+## Deploy on Apple Store PROD (Sobe no Testflight, basta ir ao painel e subir em PROD)
+flutter build ipa
+fastlane beta
+
+
+
+## Deploy on Play Store PROD (Sobe direto para avaliação das lojas, basta ir ao painel e adicionar release notes)
+flutter build appbundle
+fastlane supply --aab ../build/app/outputs/bundle/release/app-release.aab
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:

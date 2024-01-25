@@ -18,13 +18,16 @@ migrate_working_dir/
 
 
 
-#IOS sign related
+#IOS FASTLANE sign related
 /ios/fastlane/.env.default
 /ios/fastlane/metadata
 /ios/fastlane/screenshots
 *.p12
 *.cer
 *.certSigningRequest
+
+#ANDROID FASTLANE
+/android/private_keys/*
 
 
 
