@@ -10,6 +10,7 @@ import 'package:driver_hub_partner/features/home/interactor/service/dto/financia
 import 'package:driver_hub_partner/features/home/interactor/service/dto/home_response_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
+import 'package:driver_hub_partner/features/home/presenter/subscription_state.dart';
 import 'package:driver_hub_partner/features/home/view/resources/home_deeplinks.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
 import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
@@ -79,6 +80,10 @@ class HomePresenter extends Cubit<DHState> {
       if (deepLink != null) {
         openDeepLink(deepLink!);
       }
+
+      emit(SubscribedIsUpdated(
+          isSubscribed: homeResponseDto.data.partnerData.isSubscribed ||
+              homeResponseDto.data.partnerData.daysTrialLeft > 0));
     } catch (e) {
       emit(DHErrorState());
     }

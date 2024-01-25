@@ -8,6 +8,7 @@ import 'package:driver_hub_partner/features/home/presenter/subscription_presente
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/daily_numbers_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/link_partner_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/onboarding_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/reveivable_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_quantity_chart.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/last_week_earn_chart.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_value_chart.dart';
@@ -82,6 +83,8 @@ class _HomeViewState extends State<HomeView>
                         Container(
                             margin: const EdgeInsets.only(bottom: 0),
                             child: WalletCardWidget(presenter: presenter)),
+                        //TODO RECEIVABLE WIDGET
+                        // ReceivableCardWidget(),
                         // state is FinancialLoadadedState
                         //     ? Container(
                         //         margin: const EdgeInsets.only(bottom: 4),

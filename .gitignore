@@ -16,6 +16,19 @@ migrate_working_dir/
 *.iws
 .idea/
 
+
+
+#IOS sign related
+/ios/fastlane/.env.default
+/ios/fastlane/metadata
+/ios/fastlane/screenshots
+*.p12
+*.cer
+*.certSigningRequest
+
+
+
+
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
