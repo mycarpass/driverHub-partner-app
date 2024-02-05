@@ -15,7 +15,6 @@ import 'package:driver_hub_partner/features/customers/interactor/service/dto/cus
 import 'package:driver_hub_partner/features/customers/interactor/service/dto/enum/customer_status.dart';
 import 'package:driver_hub_partner/features/customers/router/customers_router.dart';
 import 'package:driver_hub_partner/features/customers/router/params/customer_detail_param.dart';
-import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_presenter.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedule_detail_state.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
@@ -25,7 +24,6 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/loading/sched
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ScheduleDetailView extends StatelessWidget {
   const ScheduleDetailView({
@@ -520,15 +518,17 @@ class ScheduleDetailView extends StatelessWidget {
                                             .includedServices;
 
                                         if (listIncluded.isNotEmpty) {
-                                          includesString = "Adicionais: ";
+                                          includesString = "Incluso: ";
                                           for (var includedService
                                               in listIncluded) {
                                             if (includedService ==
                                                 listIncluded.last) {
-                                              includesString += includedService;
+                                              includesString +=
+                                                  includedService["name"];
                                             } else {
                                               includesString +=
-                                                  includedService + ", ";
+                                                  includedService["name"] +
+                                                      ", ";
                                             }
                                           }
                                         }

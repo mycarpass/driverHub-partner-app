@@ -61,15 +61,15 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
-                        !subscribePresenter.isSubscribed
-                            ? BlocProvider(
-                                create: (context) =>
-                                    SubscriptionPresenter()..start(),
-                                child: SubscriptionHomeCard(
-                                  daysTrialLeft: presenter.homeResponseDto.data
-                                      .partnerData.daysTrialLeft,
-                                ))
-                            : const SizedBox.shrink(),
+                        // !subscribePresenter.isSubscribed
+                        //     ? BlocProvider(
+                        //         create: (context) =>
+                        //             SubscriptionPresenter()..start(),
+                        //         child: SubscriptionHomeCard(
+                        //           daysTrialLeft: presenter.homeResponseDto.data
+                        //               .partnerData.daysTrialLeft,
+                        //         ))
+                        //     : const SizedBox.shrink(),
                         !onboardingPresenter.isAllCompletedOnboarding(
                                 presenter.homeResponseDto.data.partnerData)
                             ? BlocProvider.value(
