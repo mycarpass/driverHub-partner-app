@@ -287,6 +287,7 @@ class ScheduleDetailView extends StatelessWidget {
                                 SizedBox(
                                   height: 8,
                                 ),
+
                                 presenter.scheduleDataDto.canShowSelectedHour()
                                     ? TextButton(
                                         style: ButtonStyle(
@@ -467,6 +468,27 @@ class ScheduleDetailView extends StatelessWidget {
                                 // SizedBox(
                                 //   height: 12,
                                 // ),
+                                presenter.scheduleDataDto.delivery &&
+                                        presenter.scheduleDataDto.userAddress !=
+                                            null
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 12,
+                                          ),
+                                          const Text('Endereço do cliente')
+                                              .caption1_regular(),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            "${presenter.scheduleDataDto.userAddress!.rawMainAddress} - ${presenter.scheduleDataDto.userAddress!.state ?? ''} -  ${presenter.scheduleDataDto.userAddress!.city ?? ''}",
+                                          ).body_bold(),
+                                        ],
+                                      )
+                                    : SizedBox.shrink(),
 
                                 SizedBox(
                                   height: 12,

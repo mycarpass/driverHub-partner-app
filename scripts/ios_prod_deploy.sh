@@ -46,7 +46,9 @@ if [ $? -eq 0 ]; then
         echo -e "${COR_VERDE}Upload do ipa para o Apple Store concluído com sucesso.${COR_PADRAO}"
     else
         echo -e "${COR_VERMELHA}Erro ao realizar o upload do ipa para o Apple Store.${COR_PADRAO}"
+        perl -i -pe 's/^(version:\s+\d+\.\d+\.)(\d+)\+(\d+)$/$1.($2-1)."+".($3-1)/e' ../pubspec.yaml
     fi
 else
     echo -e "${COR_VERMELHA}Erro ao compilar o ipa.${COR_PADRAO}"
+    perl -i -pe 's/^(version:\s+\d+\.\d+\.)(\d+)\+(\d+)$/$1.($2-1)."+".($3-1)/e' ../pubspec.yaml
 fi
