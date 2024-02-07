@@ -4,6 +4,7 @@ import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart
 import 'package:dh_cache_manager/interactor/keys/auth_keys/auth_keys.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/home/interactor/subscription_interactor.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_state.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/bottomsheets/subscription_intro_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,9 @@ class SubscriptionPresenter extends Cubit<DHState> {
 
   final DHCacheManager _dhCacheManager =
       DHInjector.instance.get<DHCacheManager>();
+
+  SubscriptionInteractor subscriptionInteractor =
+      DHInjector.instance.get<SubscriptionInteractor>();
 
   List<StoreProduct> storeProducts = [];
   int indexPlanSelected = 0;
@@ -76,24 +80,27 @@ class SubscriptionPresenter extends Cubit<DHState> {
   }
 
   Future<void> _verifySubscribe() async {
-    bool isSub = await _dhCacheManager.getBool(SubscriptionTokenKey()) ?? false;
-    int daysOfTrial = await _dhCacheManager.getInt(DaysTrialKey()) ?? 0;
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    bool containsActiveSubscription =
-        customerInfo.activeSubscriptions.isNotEmpty;
-    if (isSub != containsActiveSubscription) {
-      _dhCacheManager.setBool(
-          SubscriptionTokenKey(), containsActiveSubscription);
-      isSub = containsActiveSubscription;
-    }
+    // bool isSub = await _dhCacheManager.getBool(SubscriptionTokenKey()) ?? false;
+    // int daysOfTrial = await _dhCacheManager.getInt(DaysTrialKey()) ?? 0;
+    // CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+    // bool containsActiveSubscription =
+    //     customerInfo.activeSubscriptions.isNotEmpty;
+    // if (isSub != containsActiveSubscription) {
+    //   _dhCacheManager.setBool(
+    //       SubscriptionTokenKey(), containsActiveSubscription);
+    //   isSub = containsActiveSubscription;
+    // }
 
-    if (!isSub && daysOfTrial > 0) {
-      isSubscribed = true;
-    } else {
-      isSubscribed = isSub;
-    }
+    // if (!isSub && daysOfTrial > 0) {
+    //   ///TODO UNCOMENT
+    //   isSubscribed = false;
+    // } else {
+    //   isSubscribed = false;
+    // }
 
-    emit(SubscribedIsUpdated(isSubscribed: isSubscribed));
+    var response = await subscriptionInteractor.getReceivable();
+    isSubscribed = response.isSubscriptionActive;
+    emit(SubscribedIsUpdated(isSubscribed: response.isSubscriptionActive));
   }
 
   void openUrl(Uri uri) async {

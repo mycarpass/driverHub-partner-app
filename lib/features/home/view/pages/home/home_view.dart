@@ -8,11 +8,10 @@ import 'package:driver_hub_partner/features/home/presenter/subscription_presente
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/daily_numbers_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/link_partner_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/onboarding_card.dart';
-import 'package:driver_hub_partner/features/home/view/pages/home/widget/reveivable_card.dart';
+import 'package:driver_hub_partner/features/home/view/pages/home/widget/receivable_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_quantity_chart.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/last_week_earn_chart.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/services_value_chart.dart';
-import 'package:driver_hub_partner/features/home/view/pages/home/widget/subscription_home_card.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/wallet_card.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/home_error_widget.dart';
 import 'package:driver_hub_partner/features/home/view/widgets/loading/home_body_loading.dart';
@@ -61,6 +60,7 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
+<<<<<<< HEAD
                         // !subscribePresenter.isSubscribed
                         //     ? BlocProvider(
                         //         create: (context) =>
@@ -70,6 +70,9 @@ class _HomeViewState extends State<HomeView>
                         //               .partnerData.daysTrialLeft,
                         //         ))
                         //     : const SizedBox.shrink(),
+=======
+
+>>>>>>> 8fe8e3a (Add receivable flow)
                         !onboardingPresenter.isAllCompletedOnboarding(
                                 presenter.homeResponseDto.data.partnerData)
                             ? BlocProvider.value(
@@ -83,8 +86,7 @@ class _HomeViewState extends State<HomeView>
                         Container(
                             margin: const EdgeInsets.only(bottom: 0),
                             child: WalletCardWidget(presenter: presenter)),
-                        //TODO RECEIVABLE WIDGET
-                        // ReceivableCardWidget(),
+                        const ReceivableCardWidget(),
                         // state is FinancialLoadadedState
                         //     ? Container(
                         //         margin: const EdgeInsets.only(bottom: 4),

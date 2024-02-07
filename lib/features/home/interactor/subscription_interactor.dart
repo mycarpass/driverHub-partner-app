@@ -1,3 +1,4 @@
+import 'package:driver_hub_partner/features/home/interactor/service/dto/receivable_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/dto/subscription_response_dto.dart';
 import 'package:driver_hub_partner/features/home/interactor/service/subscription_service.dart';
 
@@ -9,6 +10,14 @@ class SubscriptionInteractor {
   Future<SubscriptionResponseDto> getSubscriptions() async {
     try {
       return await _subscriptionService.getSubscriptions();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ReceivableDto> getReceivable() async {
+    try {
+      return await _subscriptionService.getReceivable();
     } catch (e) {
       rethrow;
     }

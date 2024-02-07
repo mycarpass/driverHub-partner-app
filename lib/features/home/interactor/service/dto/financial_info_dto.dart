@@ -1,4 +1,5 @@
 import 'package:dh_ui_kit/view/consts/colors.dart';
+import 'package:driver_hub_partner/features/commom_objects/extensions/date_extensions.dart';
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,11 @@ class FinancialInfoDto {
 class Data {
   late AccountInfo accountInfo;
   List<Transactions>? transactions;
+  String actualMonth = "";
 
   Data.fromJson(Map<String, dynamic> json) {
     accountInfo = AccountInfo.fromJson(json['account_info']);
+    actualMonth = "${DateTime.now().getRawMonthName()}/${DateTime.now().year}";
 
     if (json['transactions'] != null) {
       transactions = <Transactions>[];
@@ -34,6 +37,10 @@ class AccountInfo {
   late MoneyValue volumeThisMonth;
   late MoneyValue volumeLastMonth;
   late int totalActiveSubscriptions;
+  String withHeldValue = "R\$ 0,00";
+  double subscriptionPrice = 0.0;
+  double percentToSubscribe = 0.0;
+  bool isSubscriptionActive = false;
 
   AccountInfo.fromJson(Map<String, dynamic> json) {
     balance = MoneyValue((removeBrl(json['balance'])));
@@ -50,6 +57,8 @@ class AccountInfo {
         ? MoneyValue(removeBrl(json['volume_last_month']))
         : MoneyValue("0,0");
     totalActiveSubscriptions = json['total_active_subscriptions'];
+    // withHeldValue = json["withheld_value"];
+    // subscriptionPrice = json["subscription_price"];
   }
 
   String removeBrl(String value) {
@@ -61,6 +70,16 @@ class AccountInfo {
     }
 
     return value;
+  }
+
+  double getPercentToActive() {
+    var x = (receivableBalance.price * 100) / 59.90;
+    var toDec = (x / 100);
+    return toDec > 1.0 ? 1.0 : toDec;
+  }
+
+  bool _isSubscriptionActive() {
+    return receivableBalance.price >= 59.90;
   }
 }
 
