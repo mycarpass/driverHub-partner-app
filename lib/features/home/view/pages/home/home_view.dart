@@ -60,7 +60,6 @@ class _HomeViewState extends State<HomeView>
                         const SizedBox(
                           height: 24,
                         ),
-<<<<<<< HEAD
                         // !subscribePresenter.isSubscribed
                         //     ? BlocProvider(
                         //         create: (context) =>
@@ -70,9 +69,6 @@ class _HomeViewState extends State<HomeView>
                         //               .partnerData.daysTrialLeft,
                         //         ))
                         //     : const SizedBox.shrink(),
-=======
-
->>>>>>> 8fe8e3a (Add receivable flow)
                         !onboardingPresenter.isAllCompletedOnboarding(
                                 presenter.homeResponseDto.data.partnerData)
                             ? BlocProvider.value(

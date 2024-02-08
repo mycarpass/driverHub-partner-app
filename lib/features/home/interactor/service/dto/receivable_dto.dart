@@ -5,30 +5,56 @@ class ReceivableDto {
   late MoneyValue totalAmountEarned;
   late MoneyValue totalAmountWithheld;
   late bool isSubscriptionActive;
-  late double partnerPlanPrice;
+
+  late String status;
+  late MoneyValue partnerPlanPrice;
   late List<ReceivableHistoric> historic;
   String actualMonth = "";
 
   ReceivableDto.fromJson(Map<String, dynamic> json) {
-    totalAmountEarned = MoneyValue(json["data"]['total_amount_earned']);
-    totalAmountWithheld = MoneyValue(json["data"]['total_amount_withheld']);
-    isSubscriptionActive =
-        json["data"]['partner_subscription_status'] == "ACTIVE";
-    partnerPlanPrice = json["data"]['partner_plan_price'];
-    if (json["data"]['historic'] != null) {
-      historic = <ReceivableHistoric>[];
-      json["data"]['historic'].forEach((v) {
-        historic.add(ReceivableHistoric.fromJson(v));
-      });
-    }
+    try {
+      actualMonth =
+          "${DateTime.now().getRawMonthName()}/${DateTime.now().year}";
+      totalAmountEarned = MoneyValue(json["data"]['total_amount_earned']);
+      totalAmountWithheld = MoneyValue(json["data"]['total_amount_withheld']);
+      status = _getAccountStatus(json["data"]['partner_subscription_status']);
 
-    actualMonth = "${DateTime.now().getRawMonthName()}/${DateTime.now().year}";
+      isSubscriptionActive =
+          json["data"]['partner_subscription_status'] == "ACTIVE";
+      partnerPlanPrice = MoneyValue(json["data"]['partner_plan_price']);
+      if (json["data"]['historic'] != null) {
+        historic = <ReceivableHistoric>[];
+        json["data"]['historic'].forEach((v) {
+          historic.add(ReceivableHistoric.fromJson(v));
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  String getPercentToUI() {
+    var x = (totalAmountWithheld.price * 100) / partnerPlanPrice.price;
+    return "${x.round()}%";
   }
 
   double getPercentToActive() {
-    var x = (totalAmountEarned.price * 100) / partnerPlanPrice;
+    var x = (totalAmountWithheld.price * 100) / partnerPlanPrice.price;
     var toDec = (x / 100);
     return toDec > 1.0 ? 1.0 : toDec;
+  }
+
+  String _getAccountStatus(String status) {
+    switch (status) {
+      case "ACTIVE":
+        return "Ativa";
+      case "PENDING":
+        return "Pendente";
+      case "BLOCKED":
+        return "Inativa";
+      default:
+        return "Inativa";
+    }
   }
 }
 
@@ -48,4 +74,17 @@ class ReceivableHistoric {
     amountWithheldForSignatureCents =
         MoneyValue(json['amount_withheld_for_signature_cents']);
   }
+
+  bool isOnlyDebitOperation() {
+    return amountEarnedFromScheduleCents.price == 0 &&
+        amountWithheldForSignatureCents.price > 0;
+  }
+
+  bool isOnlyCreditOperation() =>
+      amountWithheldForSignatureCents.price == 0 &&
+      amountEarnedFromScheduleCents.price > 0;
+
+  bool isCreditAndDebitOperation() =>
+      amountWithheldForSignatureCents.price > 0 &&
+      amountEarnedFromScheduleCents.price > 0;
 }

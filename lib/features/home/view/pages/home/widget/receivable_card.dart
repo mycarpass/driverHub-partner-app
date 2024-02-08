@@ -51,7 +51,7 @@ class _ReceivableCardWidgetState extends State<ReceivableCardWidget> {
                 children: [
                   Row(children: [
                     const Icon(
-                      Icons.call_received,
+                      Icons.monetization_on_outlined,
                       color: AppColor.iconSecondaryColor,
                       size: 20,
                     ),
@@ -59,62 +59,113 @@ class _ReceivableCardWidgetState extends State<ReceivableCardWidget> {
                       width: 8,
                     ),
                     const Text("Recebíveis").body_bold(),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Tooltip(
+                      margin: const EdgeInsets.symmetric(horizontal: 32),
+                      message:
+                          "Os valores contabilizados abaixo são somente agendamentos que vem pelo app da DriverHub e que foram finalizados no últimos trinta dias",
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(
+                            0.75,
+                          ),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: const Icon(
+                        Icons.info_outline,
+                        color: AppColor.blackColor,
+                        size: 16,
+                      ),
+                    ),
                     const Expanded(child: SizedBox.shrink()),
                     TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                              HomeRoutes.receivableHistoric,
-                              arguments: presenter.receivableDto.historic);
-                        },
-                        child: const Text("ver todos"))
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                            HomeRoutes.receivableHistoric,
+                            arguments: presenter.receivableDto.historic);
+                      },
+                      child: const Text("ver todos"),
+                    )
                   ]),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
-                  Text(presenter.receivableDto.actualMonth).body_regular(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    height: 20,
-                    width: double.infinity,
-                    child: LinearPercentIndicator(
-                      animation: true,
-                      percent: presenter.receivableDto.isSubscriptionActive
-                          ? 1
-                          : presenter.receivableDto.getPercentToActive(),
-                      progressColor: AppColor.accentColor,
-                      lineHeight: 50,
-                      barRadius: const Radius.circular(12),
-                      center: Text(presenter.receivableDto.isSubscriptionActive
-                              ? "Acesso Completo ativado"
-                              : "50%")
-                          .caption1_bold(
-                              style:
-                                  const TextStyle(color: AppColor.whiteColor)),
-                    ),
+                  Row(
+                    children: [
+                      const Text("Sua conta está ").body_regular(),
+                      Text(presenter.receivableDto.status).body_bold(),
+                      const Spacer(),
+                      Text(presenter.receivableDto.actualMonth).body_regular(),
+                    ],
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 8,
                   ),
                   presenter.receivableDto.isSubscriptionActive
-                      ? Center(
-                          child: const Text(
-                                  "Acesso completo liberado até o fim do mês")
-                              .caption1_regular())
+                      ? const SizedBox.shrink()
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("Retido para liberar Acesso Completo")
+                            const Text("Retido para Ativar Conta")
                                 .body_regular(),
                             Text(presenter.receivableDto.totalAmountWithheld
                                     .priceInReal)
-                                .title3_bold()
+                                .title3_regular()
                           ],
                         ),
                   const SizedBox(
-                    height: 24,
+                    height: 8,
                   ),
+                  presenter.receivableDto.isSubscriptionActive
+                      ? const SizedBox.shrink()
+                      : Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: SizedBox(
+                            height: 20,
+                            width: double.infinity,
+                            child: LinearPercentIndicator(
+                                animation: true,
+                                padding: EdgeInsets.zero,
+                                percent:
+                                    presenter.receivableDto.isSubscriptionActive
+                                        ? 1
+                                        : presenter.receivableDto
+                                            .getPercentToActive(),
+                                progressColor: AppColor.accentColor,
+                                lineHeight: 50,
+                                barRadius: const Radius.circular(12),
+                                // leading:
+
+                                center: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Spacer(),
+                                    SizedBox(
+                                      width: 74,
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text(presenter.receivableDto
+                                                    .isSubscriptionActive
+                                                ? "Acesso Completo ativado"
+                                                : presenter.receivableDto
+                                                    .getPercentToUI())
+                                            .caption1_bold(
+                                                style: const TextStyle(
+                                                    color:
+                                                        AppColor.whiteColor)),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(presenter.receivableDto
+                                            .partnerPlanPrice.priceInReal)
+                                        .caption1_regular(),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                  ],
+                                )),
+                          ),
+                        ),
                   Row(
                     children: [
                       const Text("À receber da DriverHub").body_regular(),

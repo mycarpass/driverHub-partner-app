@@ -38,6 +38,13 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ).title2_bold(),
                         const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          "Para ter acesso a todos os benefícios basta realizar serviços pelo App ou pelo link do parceiro e automaticamente iremos ativar sua conta. Após a ativação você tera acesso a:",
+                          textAlign: TextAlign.center,
+                        ).body_regular(),
+                        const SizedBox(
                           height: 32,
                         ),
                         const _SubscriptionBenefitWidget(
@@ -101,16 +108,6 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                           height: 24,
                         ),
                         const _SubscriptionBenefitWidget(
-                          icon: Icons.discount_outlined,
-                          backgroundIconColor: AppColor.supportColor,
-                          serviceName: "Taxa pela metade",
-                          serviceDescription:
-                              "Os clientes que vierem pelo app da DriverHub, a taxa é de 10% por serviço e não mais 20%",
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        const _SubscriptionBenefitWidget(
                           icon: Icons.sms_outlined,
                           backgroundIconColor: AppColor.supportColor,
                           serviceName: "Comunicação com clientes",
@@ -120,136 +117,132 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                         const SizedBox(
                           height: 36,
                         ),
-                        const Text("Cancele quando quiser. Sem taxa, sem multa")
-                            .body_regular(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        BlocBuilder<SubscriptionPresenter, DHState>(
-                            builder: (context, state) => ListView.separated(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: storeProducts.length,
-                                  padding: const EdgeInsets.only(bottom: 20),
-                                  shrinkWrap: true,
-                                  separatorBuilder: (context, index) =>
-                                      const SizedBox(
-                                    height: 12,
-                                  ),
-                                  itemBuilder: (context, index) {
-                                    return TextButton(
-                                        style: ButtonStyle(
-                                            tapTargetSize: MaterialTapTargetSize
-                                                .shrinkWrap,
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16))),
-                                            padding:
-                                                const MaterialStatePropertyAll(
-                                                    EdgeInsets.zero)),
-                                        onPressed: () async {
-                                          await presenter.selectPlan(index);
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          padding: const EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(16)),
-                                              border: Border.all(
-                                                  color: presenter
-                                                              .indexPlanSelected ==
-                                                          index
-                                                      ? AppColor.accentColor
-                                                      : AppColor.borderColor)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(presenter
-                                                                  .indexPlanSelected ==
-                                                              index
-                                                          ? Icons.check_circle
-                                                          : Icons
-                                                              .circle_outlined),
-                                                      const SizedBox(
-                                                        width: 4,
-                                                      ),
-                                                      Text(storeProducts[index]
-                                                              .title
-                                                              .split(" ")[0])
-                                                          .body_bold()
-                                                    ],
-                                                  ),
-                                                  index == 1
-                                                      ? Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(6,
-                                                                  4, 6, 4),
-                                                          decoration: const BoxDecoration(
-                                                              color: AppColor
-                                                                  .supportColor,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .all(Radius
-                                                                          .circular(
-                                                                              8))),
-                                                          child: const Text(
-                                                                  'Mais comprado')
-                                                              .caption2_bold())
-                                                      : const SizedBox.shrink()
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 4,
-                                              ),
-                                              Text(storeProducts[index]
-                                                      .description)
-                                                  .body_regular(),
-                                              const SizedBox(
-                                                height: 4,
-                                              ),
-                                              Row(children: [
-                                                Text(storeProducts[index]
-                                                        .priceString)
-                                                    .label1_regular(),
-                                                const SizedBox(
-                                                  width: 4,
-                                                ),
-                                                Text(storeProducts[index]
-                                                                .title
-                                                                .split(
-                                                                    " ")[0] ==
-                                                            "Mensal"
-                                                        ? '/ mês'
-                                                        : '/ ano')
-                                                    .body_regular()
-                                              ])
-                                            ],
-                                          ),
-                                        ));
-                                  },
-                                )),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              presenter.purchase(
-                                  storeProducts[presenter.indexPlanSelected]);
-                            },
-                            child: const Text("Assinar agora"),
-                          ),
-                        ),
+
+                        // BlocBuilder<SubscriptionPresenter, DHState>(
+                        //     builder: (context, state) => ListView.separated(
+                        //           physics: const NeverScrollableScrollPhysics(),
+                        //           itemCount: storeProducts.length,
+                        //           padding: const EdgeInsets.only(bottom: 20),
+                        //           shrinkWrap: true,
+                        //           separatorBuilder: (context, index) =>
+                        //               const SizedBox(
+                        //             height: 12,
+                        //           ),
+                        //           itemBuilder: (context, index) {
+                        //             return TextButton(
+                        //                 style: ButtonStyle(
+                        //                     tapTargetSize: MaterialTapTargetSize
+                        //                         .shrinkWrap,
+                        //                     shape: MaterialStateProperty.all(
+                        //                         RoundedRectangleBorder(
+                        //                             borderRadius:
+                        //                                 BorderRadius.circular(
+                        //                                     16))),
+                        //                     padding:
+                        //                         const MaterialStatePropertyAll(
+                        //                             EdgeInsets.zero)),
+                        //                 onPressed: () async {
+                        //                   await presenter.selectPlan(index);
+                        //                 },
+                        //                 child: Container(
+                        //                   width: double.infinity,
+                        //                   padding: const EdgeInsets.all(20),
+                        //                   decoration: BoxDecoration(
+                        //                       borderRadius:
+                        //                           const BorderRadius.all(
+                        //                               Radius.circular(16)),
+                        //                       border: Border.all(
+                        //                           color: presenter
+                        //                                       .indexPlanSelected ==
+                        //                                   index
+                        //                               ? AppColor.accentColor
+                        //                               : AppColor.borderColor)),
+                        //                   child: Column(
+                        //                     crossAxisAlignment:
+                        //                         CrossAxisAlignment.start,
+                        //                     children: [
+                        //                       Row(
+                        //                         mainAxisAlignment:
+                        //                             MainAxisAlignment
+                        //                                 .spaceBetween,
+                        //                         children: [
+                        //                           Row(
+                        //                             children: [
+                        //                               Icon(presenter
+                        //                                           .indexPlanSelected ==
+                        //                                       index
+                        //                                   ? Icons.check_circle
+                        //                                   : Icons
+                        //                                       .circle_outlined),
+                        //                               const SizedBox(
+                        //                                 width: 4,
+                        //                               ),
+                        //                               Text(storeProducts[index]
+                        //                                       .title
+                        //                                       .split(" ")[0])
+                        //                                   .body_bold()
+                        //                             ],
+                        //                           ),
+                        //                           index == 1
+                        //                               ? Container(
+                        //                                   padding:
+                        //                                       const EdgeInsets
+                        //                                           .fromLTRB(6,
+                        //                                           4, 6, 4),
+                        //                                   decoration: const BoxDecoration(
+                        //                                       color: AppColor
+                        //                                           .supportColor,
+                        //                                       borderRadius:
+                        //                                           BorderRadius
+                        //                                               .all(Radius
+                        //                                                   .circular(
+                        //                                                       8))),
+                        //                                   child: const Text(
+                        //                                           'Mais comprado')
+                        //                                       .caption2_bold())
+                        //                               : const SizedBox.shrink()
+                        //                         ],
+                        //                       ),
+                        //                       const SizedBox(
+                        //                         height: 4,
+                        //                       ),
+                        //                       Text(storeProducts[index]
+                        //                               .description)
+                        //                           .body_regular(),
+                        //                       const SizedBox(
+                        //                         height: 4,
+                        //                       ),
+                        //                       Row(children: [
+                        //                         Text(storeProducts[index]
+                        //                                 .priceString)
+                        //                             .label1_regular(),
+                        //                         const SizedBox(
+                        //                           width: 4,
+                        //                         ),
+                        //                         Text(storeProducts[index]
+                        //                                         .title
+                        //                                         .split(
+                        //                                             " ")[0] ==
+                        //                                     "Mensal"
+                        //                                 ? '/ mês'
+                        //                                 : '/ ano')
+                        //                             .body_regular()
+                        //                       ])
+                        //                     ],
+                        //                   ),
+                        //                 ));
+                        //           },
+                        //         )),
+                        // SizedBox(
+                        //   width: double.infinity,
+                        //   child: ElevatedButton(
+                        //     onPressed: () {
+                        //       presenter.purchase(
+                        //           storeProducts[presenter.indexPlanSelected]);
+                        //     },
+                        //     child: const Text("Assinar agora"),
+                        //   ),
+                        // ),
                         const SizedBox(
                           height: 16,
                         ),
@@ -296,18 +289,18 @@ class SubscriptionIntroBottomSheet extends StatelessWidget {
                                                 AppColor.textSecondaryColor))),
                           ],
                         ),
-                        TextButton(
-                            style: const ButtonStyle(
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                padding:
-                                    MaterialStatePropertyAll(EdgeInsets.zero)),
-                            onPressed: () {
-                              presenter.restorePurchase();
-                            },
-                            child: const Text('Restaurar compra')
-                                .caption1_regular(
-                                    style: const TextStyle(
-                                        color: AppColor.textSecondaryColor))),
+                        // TextButton(
+                        //     style: const ButtonStyle(
+                        //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        //         padding:
+                        //             MaterialStatePropertyAll(EdgeInsets.zero)),
+                        //     onPressed: () {
+                        //       presenter.restorePurchase();
+                        //     },
+                        //     child: const Text('Restaurar compra')
+                        //         .caption1_regular(
+                        //             style: const TextStyle(
+                        //                 color: AppColor.textSecondaryColor))),
                         const SizedBox(
                           height: 24,
                         ),

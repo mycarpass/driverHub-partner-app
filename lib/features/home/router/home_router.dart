@@ -28,6 +28,6 @@ abstract class HomeRoutesMap {
           ],
           child: const CustomerHomeTabsWidget(),
         ),
-    "/home/receivable-historic": (context) => ReceivableHistoricView()
+    "/home/receivable-historic": (context) => const ReceivableHistoricView()
   };
 }

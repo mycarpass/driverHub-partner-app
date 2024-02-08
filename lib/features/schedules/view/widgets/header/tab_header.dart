@@ -74,7 +74,7 @@ class TabViewHeader extends StatelessWidget {
                                   const TextStyle(color: AppColor.accentColor)),
                         ],
                       )
-                    : const Text("Assinar plano").label1_bold(
+                    : const Text("Conta inativa").label1_bold(
                         style: const TextStyle(color: AppColor.accentColor)),
               )
             : const SizedBox.shrink()

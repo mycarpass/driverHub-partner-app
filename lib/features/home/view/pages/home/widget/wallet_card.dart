@@ -35,6 +35,24 @@ class WalletCardWidget extends StatelessWidget {
                 width: 8,
               ),
               const Text("Resumo financeiro").body_bold(),
+              const SizedBox(
+                width: 8,
+              ),
+              Tooltip(
+                margin: const EdgeInsets.symmetric(horizontal: 32),
+                message:
+                    "Os valores abaixo são a soma das vendas cadastradas manualmente e as que vem a partir do app da DriverHub",
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(
+                      0.75,
+                    ),
+                    borderRadius: BorderRadius.circular(12)),
+                child: const Icon(
+                  Icons.info_outline,
+                  color: AppColor.blackColor,
+                  size: 16,
+                ),
+              ),
               const Expanded(child: SizedBox.shrink()),
               BlocBuilder<HomePresenter, DHState>(
                 builder: (context, state) => IconButton(
@@ -83,7 +101,9 @@ class WalletCardWidget extends StatelessWidget {
             Row(
               children: [
                 const Text("Total de vendas este mês").body_regular(),
-                const Expanded(child: SizedBox.shrink()),
+                const SizedBox(
+                  width: 8,
+                ),
               ],
             ),
             const SizedBox(
@@ -124,42 +144,42 @@ class WalletCardWidget extends StatelessWidget {
                 // )
               ],
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: [
-                const Text("À receber da DriverHub").body_regular(),
-                const Expanded(child: SizedBox.shrink()),
-              ],
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                !presenter.isVisible
-                    ? Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                          color: AppColor.backgroundSecondary,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        height: 24,
-                        width: 120,
-                      )
-                    : Text(presenter.financialInfoDto != null
-                            ? presenter.financialInfoDto!.data.accountInfo
-                                .volumeThisMonth.priceInReal
-                            : "R\$ 0,00")
-                        .title2_bold(
-                        style:
-                            const TextStyle(color: AppColor.textSecondaryColor),
-                      ),
-              ],
-            ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
+            // Row(
+            //   children: [
+            //     const Text("À receber da DriverHub").body_regular(),
+            //     const Expanded(child: SizedBox.shrink()),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   height: 4,
+            // ),
+            // Column(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     !presenter.isVisible
+            //         ? Container(
+            //             margin: const EdgeInsets.only(top: 4),
+            //             decoration: const BoxDecoration(
+            //               color: AppColor.backgroundSecondary,
+            //               borderRadius: BorderRadius.all(Radius.circular(8)),
+            //             ),
+            //             height: 24,
+            //             width: 120,
+            //           )
+            //         : Text(presenter.financialInfoDto != null
+            //                 ? presenter.financialInfoDto!.data.accountInfo
+            //                     .volumeThisMonth.priceInReal
+            //                 : "R\$ 0,00")
+            //             .title2_bold(
+            //             style:
+            //                 const TextStyle(color: AppColor.textSecondaryColor),
+            //           ),
+            //   ],
+            // ),
             const SizedBox(
               height: 8,
             ),
