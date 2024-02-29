@@ -12,6 +12,7 @@ import 'package:driver_hub_partner/features/home/presenter/home_state.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_presenter.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_state.dart';
 import 'package:driver_hub_partner/features/home/view/resources/home_deeplinks.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/schedules/router/params/schedule_detail_param.dart';
 import 'package:driver_hub_partner/features/schedules/router/schedules_router.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,8 @@ class HomePresenter extends Cubit<DHState> {
 
   Future<void> load() async {
     await _getHomeInfo();
-    if (homeResponseDto.data.partnerData.isBankAccountCreated) {
+    if (homeResponseDto.data.partnerData.isBankAccountCreated &&
+        !await isServiceProvider()) {
       await _getFinancialInfo();
     }
   }
@@ -69,10 +71,14 @@ class HomePresenter extends Cubit<DHState> {
     try {
       emit(DHLoadingState());
       homeResponseDto = await _homeInteractor.getHomeInfo();
-      chartsResponseDto = await _homeInteractor.getCharts();
+
+      if (!await isServiceProvider()) {
+        chartsResponseDto = await _homeInteractor.getCharts();
+      }
+
       emit(HomeLoaded(homeResponseDto));
 
-      await _configureRevenueCat();
+      //await _configureRevenueCat();
       _configurePush();
       _dhCacheManager.setInt(
           DaysTrialKey(), homeResponseDto.data.partnerData.daysTrialLeft);
@@ -123,5 +129,10 @@ class HomePresenter extends Cubit<DHState> {
           SchedulesRoutes.scheduleDetail,
           arguments: ScheduleDetailParams(scheduleId: int.parse(scheduleId)));
     }
+  }
+
+  Future<bool> isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }

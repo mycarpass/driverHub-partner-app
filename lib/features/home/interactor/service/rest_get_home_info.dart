@@ -12,10 +12,12 @@ class RestGetHomeInfo implements GetHomeInfoService {
   final _httpClient = DHInjector.instance.get<DHHttpClient>();
   final DHCacheManager _dhCacheManager =
       DHInjector.instance.get<DHCacheManager>();
+
   @override
   Future<HomeResponseDto> getHomeInfe() async {
     try {
-      Response response = await _httpClient.get("/partner/me");
+      Response response = await _httpClient.get(
+          await isServiceProvider() ? "/service-provider/me" : "/partner/me");
       var homeResponse = HomeResponseDto.fromJson(response.data);
       _dhCacheManager.setString(
           NameTokenKey(), homeResponse.data.partnerData.name);
@@ -50,5 +52,10 @@ class RestGetHomeInfo implements GetHomeInfoService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<bool> isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }

@@ -1,6 +1,8 @@
+import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/commom_objects/money_value.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/schedules_interactor.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/enum/schedule_status.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
@@ -22,11 +24,16 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
   final SchedulesInteractor _schedulesInteractor =
       DHInjector.instance.get<SchedulesInteractor>();
 
+  final DHCacheManager _dhCacheManager =
+      DHInjector.instance.get<DHCacheManager>();
+
   final int scheduleId;
 
   late ScheduleDataDto scheduleDataDto;
 
   late ScheduleTimeSuggestionDto timeSuggestionSelected;
+
+  bool isServProvider = false;
 
   Future<void> load() async {
     await _getScheduleDetail();
@@ -65,6 +72,7 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
       scheduleDataDto =
           await _schedulesInteractor.getScheduleDetail(scheduleId);
       timeSuggestionSelected = scheduleDataDto.fetchInitialTimeSuggestion();
+      isServProvider = await _isServiceProvider();
       emit(DHSuccessState());
     } catch (e) {
       emit(DHErrorState());
@@ -217,5 +225,10 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
         vehicle: scheduleDataDto.vehicle,
         scheduleDate: scheduleDate);
     return entity;
+  }
+
+  Future<bool> _isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }

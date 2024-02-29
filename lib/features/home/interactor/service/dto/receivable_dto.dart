@@ -5,6 +5,7 @@ class ReceivableDto {
   late MoneyValue totalAmountEarned;
   late MoneyValue totalAmountWithheld;
   late bool isSubscriptionActive;
+  late bool isSubscriptionEnabled;
 
   late String status;
   late MoneyValue partnerPlanPrice;
@@ -19,8 +20,10 @@ class ReceivableDto {
       totalAmountWithheld = MoneyValue(json["data"]['total_amount_withheld']);
       status = _getAccountStatus(json["data"]['partner_subscription_status']);
 
-      isSubscriptionActive =
-          json["data"]['partner_subscription_status'] == "ACTIVE";
+      String rawStatus = json["data"]['partner_subscription_status'];
+
+      isSubscriptionActive = rawStatus == "ACTIVE";
+      isSubscriptionEnabled = rawStatus == "ACTIVE" || rawStatus == "PENDING";
       partnerPlanPrice = MoneyValue(json["data"]['partner_plan_price']);
       if (json["data"]['historic'] != null) {
         historic = <ReceivableHistoric>[];

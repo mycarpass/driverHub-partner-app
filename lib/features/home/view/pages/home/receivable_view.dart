@@ -121,16 +121,22 @@ class MovimentationDebitRow extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 8,
+              height: 4,
             ),
             Row(
               children: [
-                const Icon(CustomIcons.dhLeftRowFilled),
-                const SizedBox(
-                  width: 8,
+                const Icon(
+                  CustomIcons.dhLeftRowFilled,
+                  size: 16,
                 ),
-                const Text("Débito").body_regular(),
+                const SizedBox(
+                  width: 4,
+                ),
+                const Text("Débito").caption1_regular(),
               ],
+            ),
+            const SizedBox(
+              height: 4,
             ),
             const Text("Retenção de mensalidade").body_regular(),
             const SizedBox(
@@ -174,19 +180,23 @@ class MovimentationCreditRow extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 8,
+              height: 4,
             ),
             Row(
               children: [
                 const Icon(
                   CustomIcons.dhRightRowFilled,
                   color: AppColor.accentColor,
+                  size: 16,
                 ),
                 const SizedBox(
-                  width: 8,
+                  width: 4,
                 ),
-                const Text("Crédito").body_regular(),
+                const Text("Crédito").caption1_regular(),
               ],
+            ),
+            const SizedBox(
+              height: 4,
             ),
             Row(
               children: [

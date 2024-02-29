@@ -209,46 +209,50 @@ class ScheduleDetailView extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pushNamed(
-                                            CustomerRoutes.detail,
-                                            arguments: CustomerDetailParams(
-                                              customerDto: CustomerDto(
-                                                  vehicle: presenter
-                                                      .scheduleDataDto.vehicle,
-                                                  customerId: presenter
-                                                      .scheduleDataDto
-                                                      .client
-                                                      .id,
-                                                  phone: PhoneValue(
-                                                      value: presenter
+                                    presenter.isServProvider
+                                        ? SizedBox.shrink()
+                                        : TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pushNamed(
+                                                CustomerRoutes.detail,
+                                                arguments: CustomerDetailParams(
+                                                  customerDto: CustomerDto(
+                                                      vehicle: presenter
+                                                          .scheduleDataDto
+                                                          .vehicle,
+                                                      customerId: presenter
                                                           .scheduleDataDto
                                                           .client
-                                                          .phone),
-                                                  status:
-                                                      CustomerStatus.verified,
-                                                  isSubscribed: false,
-                                                  name: PersonName(presenter
-                                                      .scheduleDataDto
-                                                      .client
-                                                      .name)),
-                                            ),
-                                          );
-                                        },
-                                        child: Row(children: [
-                                          const Text('Ver cliente')
-                                              .caption1_regular(
-                                                  style: const TextStyle(
-                                                      color: AppColor
-                                                          .textSecondaryColor)),
-                                          const SizedBox(
-                                            width: 4,
-                                          ),
-                                          const Icon(Icons.open_in_new,
-                                              color: AppColor.iconPrimaryColor,
-                                              size: 16),
-                                        ]))
+                                                          .id,
+                                                      phone: PhoneValue(
+                                                          value: presenter
+                                                              .scheduleDataDto
+                                                              .client
+                                                              .phone),
+                                                      status: CustomerStatus
+                                                          .verified,
+                                                      isSubscribed: false,
+                                                      name: PersonName(presenter
+                                                          .scheduleDataDto
+                                                          .client
+                                                          .name)),
+                                                ),
+                                              );
+                                            },
+                                            child: Row(children: [
+                                              const Text('Ver cliente')
+                                                  .caption1_regular(
+                                                      style: const TextStyle(
+                                                          color: AppColor
+                                                              .textSecondaryColor)),
+                                              const SizedBox(
+                                                width: 4,
+                                              ),
+                                              const Icon(Icons.open_in_new,
+                                                  color:
+                                                      AppColor.iconPrimaryColor,
+                                                  size: 16),
+                                            ]))
                                   ],
                                 ),
                                 const SizedBox(
@@ -930,61 +934,67 @@ class ScheduleDetailView extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                ElevatedButton(
-                                  style: const ButtonStyle().noStyle(),
-                                  onPressed: () {
-                                    //Navigator.pop(context, AddressActionOption.workset);
-                                    showModalBottomSheet(
-                                        context: context,
-                                        showDragHandle: true,
-                                        isScrollControlled: true,
-                                        builder: (context) =>
-                                            ReceiptViewBottomSheet(
-                                                customerPhone: PhoneValue(
-                                                    value: presenter
-                                                        .scheduleDataDto
-                                                        .client
-                                                        .phone),
-                                                whatsMessage:
-                                                    'Olá ${presenter.scheduleDataDto.client.name}, aqui está o comprovante do seu agendamento com ${presenter.scheduleDataDto.partner?.name ?? ""}',
-                                                receiptWdiget: ScheduleReceipt(
-                                                  entity: presenter
-                                                      .getScheduleReceiptEntity(),
-                                                )));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 0,
-                                      top: 16,
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text("Gerar comprovante")
-                                                .body_regular(
-                                                    style: const TextStyle(
-                                                        color: AppColor
-                                                            .textPrimaryColor)),
-                                            const Icon(
-                                              Icons.receipt_long_rounded,
-                                              color: AppColor.iconPrimaryColor,
-                                            )
-                                          ],
+                                presenter.isServProvider
+                                    ? SizedBox.shrink()
+                                    : ElevatedButton(
+                                        style: const ButtonStyle().noStyle(),
+                                        onPressed: () {
+                                          //Navigator.pop(context, AddressActionOption.workset);
+                                          showModalBottomSheet(
+                                              context: context,
+                                              showDragHandle: true,
+                                              isScrollControlled: true,
+                                              builder: (context) =>
+                                                  ReceiptViewBottomSheet(
+                                                      customerPhone: PhoneValue(
+                                                          value: presenter
+                                                              .scheduleDataDto
+                                                              .client
+                                                              .phone),
+                                                      whatsMessage:
+                                                          'Olá ${presenter.scheduleDataDto.client.name}, aqui está o comprovante do seu agendamento com ${presenter.scheduleDataDto.partner?.name ?? ""}',
+                                                      receiptWdiget:
+                                                          ScheduleReceipt(
+                                                        entity: presenter
+                                                            .getScheduleReceiptEntity(),
+                                                      )));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 0,
+                                            top: 16,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Text(
+                                                          "Gerar comprovante")
+                                                      .body_regular(
+                                                          style: const TextStyle(
+                                                              color: AppColor
+                                                                  .textPrimaryColor)),
+                                                  const Icon(
+                                                    Icons.receipt_long_rounded,
+                                                    color: AppColor
+                                                        .iconPrimaryColor,
+                                                  )
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 16,
+                                              ),
+                                              Container(
+                                                height: 1,
+                                                color: AppColor.borderColor,
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        Container(
-                                          height: 1,
-                                          color: AppColor.borderColor,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                      ),
 
                                 (presenter.scheduleDataDto.paymentType ==
                                                 null ||

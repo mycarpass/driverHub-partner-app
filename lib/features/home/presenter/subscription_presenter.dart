@@ -7,6 +7,7 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/home/interactor/subscription_interactor.dart';
 import 'package:driver_hub_partner/features/home/presenter/subscription_state.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/widget/bottomsheets/subscription_intro_bottom_sheet.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -97,10 +98,14 @@ class SubscriptionPresenter extends Cubit<DHState> {
     // } else {
     //   isSubscribed = false;
     // }
+    if (await isServiceProvider()) {
+      isSubscribed = false;
+    } else {
+      var response = await subscriptionInteractor.getReceivable();
+      isSubscribed = response.isSubscriptionEnabled;
+    }
 
-    var response = await subscriptionInteractor.getReceivable();
-    isSubscribed = response.isSubscriptionActive;
-    emit(SubscribedIsUpdated(isSubscribed: response.isSubscriptionActive));
+    emit(SubscribedIsUpdated(isSubscribed: isSubscribed));
   }
 
   void openUrl(Uri uri) async {
@@ -115,6 +120,11 @@ class SubscriptionPresenter extends Cubit<DHState> {
     )) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  Future<bool> isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }
 

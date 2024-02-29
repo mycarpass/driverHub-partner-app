@@ -2,6 +2,7 @@ import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
 import 'package:driver_hub_partner/features/home/interactor/home_interactor.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/profile/presenter/profile_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -81,5 +82,10 @@ class ProfilePresenter extends Cubit<DHState> {
     OneSignal.logout();
 
     emit(LogoutSuccessState());
+  }
+
+  Future<bool> isServiceProvider() async {
+    String? role = await _cacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }

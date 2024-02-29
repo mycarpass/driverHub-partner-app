@@ -103,6 +103,7 @@ class _SchedulesViewState extends State<SchedulesView>
                                     .read<SubscriptionPresenter>()
                                     .isSubscribed,
                                 title: "Agenda",
+                                allButtonsIsVisible: !presenter.isServProvider,
                                 subtitle:
                                     "${presenter.filteredList.length} agendamentos",
                               ),

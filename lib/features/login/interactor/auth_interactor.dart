@@ -31,6 +31,7 @@ class AuthInteractor {
         ),
       );
       _dhCacheManager.setString(EmailTokenKey(), authEntity.email);
+      _dhCacheManager.setString(RoleTokenKey(), authReponse.role);
       _dhCacheManager.setString(AuthTokenKey(), authReponse.token);
     } catch (e) {
       rethrow;

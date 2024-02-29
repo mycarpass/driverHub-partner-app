@@ -1,5 +1,7 @@
+import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_state_management/dh_state.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/schedules_interactor.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/presenter/schedules_state.dart';
@@ -12,15 +14,20 @@ class SchedulesPresenter extends Cubit<DHState> {
   final SchedulesInteractor _schedulesInteractor =
       DHInjector.instance.get<SchedulesInteractor>();
 
+  final DHCacheManager _dhCacheManager =
+      DHInjector.instance.get<DHCacheManager>();
+
   SchedulesResponseDto schedulesResponseDto = SchedulesResponseDto();
 
   List<ScheduleDataDto> filteredList = [];
   DateTime selectedMonth = DateTime.now();
   Map<DateTime, List<dynamic>> mapListFiltered = {};
+  bool isServProvider = false;
 
   Future<void> initialize() async {
     NotificationCenter().subscribe('updateSchedules', load);
     await load();
+    isServProvider = await _isServiceProvider();
   }
 
   Future<void> load() async {
@@ -64,5 +71,10 @@ class SchedulesPresenter extends Cubit<DHState> {
     }
 
     mapListFiltered = map;
+  }
+
+  Future<bool> _isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }

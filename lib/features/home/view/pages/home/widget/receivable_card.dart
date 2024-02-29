@@ -2,7 +2,6 @@ import 'package:dh_state_management/dh_state.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/widgets/loading/dh_skeleton.dart';
-import 'package:driver_hub_partner/features/home/interactor/service/dto/receivable_dto.dart';
 import 'package:driver_hub_partner/features/home/presenter/receivable_presenter.dart';
 import 'package:driver_hub_partner/features/home/router/home_router.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,8 @@ class _ReceivableCardWidgetState extends State<ReceivableCardWidget> {
                             HomeRoutes.receivableHistoric,
                             arguments: presenter.receivableDto.historic);
                       },
-                      child: const Text("ver todos"),
+                      child: const Text("ver todos").body_bold(
+                          style: const TextStyle(color: AppColor.accentColor)),
                     )
                   ]),
                   const SizedBox(
@@ -110,7 +110,7 @@ class _ReceivableCardWidgetState extends State<ReceivableCardWidget> {
                                 .body_regular(),
                             Text(presenter.receivableDto.totalAmountWithheld
                                     .priceInReal)
-                                .title3_regular()
+                                .label2_bold()
                           ],
                         ),
                   const SizedBox(
@@ -133,7 +133,7 @@ class _ReceivableCardWidgetState extends State<ReceivableCardWidget> {
                                             .getPercentToActive(),
                                 progressColor: AppColor.accentColor,
                                 lineHeight: 50,
-                                barRadius: const Radius.circular(12),
+                                barRadius: const Radius.circular(8),
                                 // leading:
 
                                 center: Row(

@@ -112,24 +112,24 @@ class _HomeProfileViewState extends State<HomeProfileView>
                           const SizedBox(
                             width: 12,
                           ),
-                          Container(
-                            height: 20,
-                            decoration: const BoxDecoration(
-                                color: AppColor.accentColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4))),
-                            padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
-                            child: Center(
-                              child: const Text(
-                                "Novo",
-                                textAlign: TextAlign.center,
-                              ).caption1_bold(
-                                style: const TextStyle(
-                                    fontSize: 11,
-                                    color: AppColor.backgroundColor),
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   height: 20,
+                          //   decoration: const BoxDecoration(
+                          //       color: AppColor.accentColor,
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(4))),
+                          //   padding: const EdgeInsets.fromLTRB(4, 2, 4, 2),
+                          //   child: Center(
+                          //     child: const Text(
+                          //       "Novo",
+                          //       textAlign: TextAlign.center,
+                          //     ).caption1_bold(
+                          //       style: const TextStyle(
+                          //           fontSize: 11,
+                          //           color: AppColor.backgroundColor),
+                          //     ),
+                          //   ),
+                          // ),
                         ]),
                         onPressed: () {
                           presenter.requestAppReview();

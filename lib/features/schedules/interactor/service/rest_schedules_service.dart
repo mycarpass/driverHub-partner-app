@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
 import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_http_client/interactor/service/fz_http_client.dart';
 import 'package:dio/dio.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/request_new_hours_suggest.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/dto/schedules_response_dto.dart';
 import 'package:driver_hub_partner/features/schedules/interactor/service/schedules_service.dart';
@@ -10,11 +12,15 @@ import 'package:driver_hub_partner/features/schedules/view/widgets/bottomsheets/
 
 class RestSchedulesService implements SchedulesService {
   final _httpClient = DHInjector.instance.get<DHHttpClient>();
+  final DHCacheManager _dhCacheManager =
+      DHInjector.instance.get<DHCacheManager>();
 
   @override
   Future<SchedulesResponseDto> getSchedules() async {
     try {
-      Response response = await _httpClient.get("/partner/schedules");
+      Response response = await _httpClient.get(await isServiceProvider()
+          ? "/service-provider/schedules"
+          : "/partner/schedules");
 
       return SchedulesResponseDto.fromJson(response.data);
     } catch (e) {
@@ -25,8 +31,9 @@ class RestSchedulesService implements SchedulesService {
   @override
   Future<ScheduleDataDto> getScheduleDetail(int scheduleId) async {
     try {
-      Response response =
-          await _httpClient.get("/partner/schedules/$scheduleId");
+      Response response = await _httpClient.get(await isServiceProvider()
+          ? "/service-provider/schedules/$scheduleId"
+          : "/partner/schedules/$scheduleId");
 
       return ScheduleDataDto.fromJson(response.data["data"]);
     } catch (e) {
@@ -51,8 +58,9 @@ class RestSchedulesService implements SchedulesService {
   @override
   Future<dynamic> startSchedule(int scheduleId) async {
     try {
-      Response response =
-          await _httpClient.put("/partner/start-service-schedule/$scheduleId");
+      Response response = await _httpClient.put(await isServiceProvider()
+          ? "/service-provider/start-service-schedule/$scheduleId"
+          : "/partner/start-service-schedule/$scheduleId");
 
       return response.data;
     } catch (e) {
@@ -65,8 +73,11 @@ class RestSchedulesService implements SchedulesService {
     try {
       Map<String, dynamic> body = {"code": "", "payment_type": paymentType};
 
-      Response response = await _httpClient
-          .put("/partner/finish-schedule/$scheduleId", body: body);
+      Response response = await _httpClient.put(
+          await isServiceProvider()
+              ? "/service-provider/finish-schedule/$scheduleId"
+              : "/partner/finish-schedule/$scheduleId",
+          body: body);
 
       return response.data;
     } catch (e) {
@@ -114,7 +125,9 @@ class RestSchedulesService implements SchedulesService {
   Future<void> removePhoto(int photoId) async {
     try {
       await _httpClient.delete(
-        "/partner/checklist-photo/$photoId",
+        await isServiceProvider()
+            ? "/service-provider/checklist-photo/$photoId"
+            : "/partner/checklist-photo/$photoId",
       );
     } catch (e) {
       rethrow;
@@ -130,11 +143,18 @@ class RestSchedulesService implements SchedulesService {
         "description": checkListPhoto.description
       });
       return await _httpClient.post(
-        "/partner/schedule/checklist-photo",
+        await isServiceProvider()
+            ? "/service-provider/schedule/checklist-photo"
+            : "/partner/schedule/checklist-photo",
         body: formData,
       );
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<bool> isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
   }
 }

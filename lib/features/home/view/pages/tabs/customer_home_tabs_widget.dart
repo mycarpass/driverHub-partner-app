@@ -1,9 +1,12 @@
 // import 'package:driver_hub_partner/config/colors.dart';
+import 'package:dh_cache_manager/interactor/infrastructure/dh_cache_manager.dart';
+import 'package:dh_dependency_injection/dh_dependecy_injector.dart';
 import 'package:dh_ui_kit/view/extensions/text_extension.dart';
 import 'package:dh_ui_kit/view/consts/colors.dart';
 import 'package:driver_hub_partner/features/customers/view/pages/home/customers_view.dart';
 import 'package:driver_hub_partner/features/home/presenter/home_presenter.dart';
 import 'package:driver_hub_partner/features/home/view/pages/home/home_view.dart';
+import 'package:driver_hub_partner/features/login/interactor/cache_key/email_key.dart';
 import 'package:driver_hub_partner/features/pos_sales/view/pages/home/pos_sales_view.dart';
 import 'package:driver_hub_partner/features/profile/view/pages/profile_view.dart';
 import 'package:driver_hub_partner/features/sales/view/pages/home/sales_view.dart';
@@ -22,25 +25,41 @@ class CustomerHomeTabsWidget extends StatefulWidget {
 
 class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
     with TickerProviderStateMixin {
+  final DHCacheManager _dhCacheManager =
+      DHInjector.instance.get<DHCacheManager>();
+  bool isServProvider = false;
+
   @override
   void initState() {
     context.read<HomePresenter>().load();
-
     tabController = TabController(
-      length: 7,
+      length: isServProvider ? 2 : 7,
       vsync: this,
     );
     super.initState();
   }
 
+  Future<bool> isServiceProvider() async {
+    String? role = await _dhCacheManager.getString(RoleTokenKey());
+    return role != null && role == "SERVICE_PROVIDER";
+  }
+
   @override
-  void didChangeDependencies() {
-    // var preselectedIndex = ModalRoute.of(context)!.settings.arguments as int?;
-    // _index = preselectedIndex ?? 0;
+  void didChangeDependencies() async {
+    isServProvider = await isServiceProvider();
+
+    tabController = TabController(
+      length: isServProvider ? 2 : 7,
+      vsync: this,
+    );
+    setState(() {});
+
+    // ignore: use_build_context_synchronously
     dynamic args = ModalRoute.of(context)?.settings.arguments;
     if (args != null) {
       //    var preselectedIndex = args as int?;
       if (args['deeplink'] != null) {
+        // ignore: use_build_context_synchronously
         context.read<HomePresenter>().deepLink = args['deeplink'].toString();
       }
     }
@@ -61,36 +80,47 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
               isScrollable: true,
               indicatorColor: AppColor.accentColor,
               padding: const EdgeInsets.only(left: 16),
-              tabs: const [
-                TabBarWidget(
-                  icon: Icons.home_outlined,
-                  title: "Home",
-                ),
-                TabBarWidget(
-                  icon: Icons.calendar_month_outlined,
-                  title: "Agenda",
-                ),
-                TabBarWidget(
-                  icon: Icons.monetization_on_outlined,
-                  title: "Vendas",
-                ),
-                TabBarWidget(
-                  icon: Icons.group_outlined,
-                  title: "Clientes",
-                ),
-                TabBarWidget(
-                  icon: Icons.mode_of_travel_outlined,
-                  title: "Pós-vendas",
-                ),
-                TabBarWidget(
-                  icon: Icons.miscellaneous_services,
-                  title: "Serviços",
-                ),
-                TabBarWidget(
-                  icon: Icons.account_box_outlined,
-                  title: "Conta",
-                ),
-              ],
+              tabs: isServProvider
+                  ? const [
+                      TabBarWidget(
+                        icon: Icons.calendar_month_outlined,
+                        title: "Agenda",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.account_box_outlined,
+                        title: "Conta",
+                      ),
+                    ]
+                  : const [
+                      TabBarWidget(
+                        icon: Icons.home_outlined,
+                        title: "Home",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.calendar_month_outlined,
+                        title: "Agenda",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.monetization_on_outlined,
+                        title: "Vendas",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.group_outlined,
+                        title: "Clientes",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.mode_of_travel_outlined,
+                        title: "Pós-vendas",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.miscellaneous_services,
+                        title: "Serviços",
+                      ),
+                      TabBarWidget(
+                        icon: Icons.account_box_outlined,
+                        title: "Conta",
+                      ),
+                    ],
             )),
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -149,15 +179,20 @@ class _CustomerHomeTabsWidgetState extends State<CustomerHomeTabsWidget>
       // ),
       body: TabBarView(
         controller: tabController,
-        children: const [
-          HomeView(),
-          SchedulesView(),
-          SalesView(),
-          CustomersView(),
-          PosSalesView(),
-          ServicesView(),
-          HomeProfileView(),
-        ],
+        children: isServProvider
+            ? const [
+                SchedulesView(),
+                HomeProfileView(),
+              ]
+            : const [
+                HomeView(),
+                SchedulesView(),
+                SalesView(),
+                CustomersView(),
+                PosSalesView(),
+                ServicesView(),
+                HomeProfileView(),
+              ],
       ),
 
       //     SafeArea(

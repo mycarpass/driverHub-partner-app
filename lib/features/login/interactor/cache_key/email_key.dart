@@ -9,3 +9,8 @@ class NameTokenKey implements CacheKey {
   @override
   String get key => "name";
 }
+
+class RoleTokenKey implements CacheKey {
+  @override
+  String get key => "role";
+}

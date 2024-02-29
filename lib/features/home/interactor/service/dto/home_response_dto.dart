@@ -41,12 +41,12 @@ class PartnerDataDto {
     name = json['name'];
     id = json['id'];
     email = json['email'];
-    isPremium = json['is_premium'];
+    isPremium = json['is_premium'] ?? false;
     phone = json['phone'];
-    thumb = json["thumb"];
+    thumb = json["thumb"] ?? "";
     link = json["link"];
-    thumbBackground = json["thumb_background"];
-    document = json["document"];
+    thumbBackground = json["thumb_background"] ?? "";
+    document = json["document"] ?? "";
     cnpj = json["cnpj"];
     address =
         json["address"] != null ? AddressDto.fromJson(json["address"]) : null;
