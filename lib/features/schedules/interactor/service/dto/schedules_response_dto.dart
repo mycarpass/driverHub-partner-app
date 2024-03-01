@@ -115,6 +115,7 @@ class ScheduleDataDto {
   late VehicleDto? vehicle;
   late PartnerScheduleDto? partner;
   List<CheckListPhoto> photoList = [];
+  late String? message;
 
   ScheduleDataDto(
       {required this.scheduleId,
@@ -168,6 +169,7 @@ class ScheduleDataDto {
       partner = json['partner'] != null
           ? PartnerScheduleDto.fromJson(json['partner'])
           : null;
+      message = json['message'];
     } catch (e) {
       rethrow;
     }

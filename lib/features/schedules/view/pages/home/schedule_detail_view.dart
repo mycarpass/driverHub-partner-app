@@ -552,6 +552,34 @@ class ScheduleDetailView extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(
+                                  height:
+                                      presenter.scheduleDataDto.message != null
+                                          ? 12
+                                          : 0,
+                                ),
+                                presenter.scheduleDataDto.message != null &&
+                                        presenter
+                                            .scheduleDataDto.message!.isNotEmpty
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 12,
+                                          ),
+                                          const Text('Mensagem do cliente')
+                                              .caption1_regular(),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            presenter.scheduleDataDto.message ??
+                                                "",
+                                          ).body_regular(),
+                                        ],
+                                      )
+                                    : SizedBox.shrink(),
+                                SizedBox(
                                   height: 20,
                                 ),
                                 presenter.scheduleDataDto.photoList.isNotEmpty
