@@ -9,6 +9,7 @@ abstract class SchedulesService {
       int scheduleId, ScheduleTimeSuggestionDto timeSuggestion);
   Future<dynamic> startSchedule(int scheduleId);
   Future<dynamic> finishSchedule(int scheduleId, int? paymentType);
+  Future<dynamic> validateCheckIn(int scheduleId);
   Future<dynamic> suggestNewHoursSchedule(
       int scheduleId, RequestNewHoursSuggest request);
   Future<void> createNewSchedule(ScheduleEntity scheduleEntity);

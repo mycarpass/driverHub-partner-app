@@ -93,14 +93,14 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
     }
   }
 
-  Future startSchedule() async {
+  Future validateCheckIn() async {
     try {
       emit(ScheduleLoadingButton());
-      await _schedulesInteractor.startSchedule(scheduleId);
+      await _schedulesInteractor.validateCheckIn(scheduleId);
       await _getScheduleDetail();
       emit(ScheduleStartedSuccess());
     } catch (e) {
-      emit(DHErrorState());
+      emit(CheckInNotConfirmed());
     }
   }
 
@@ -124,11 +124,12 @@ class ScheduleDetailPresenter extends Cubit<DHState> {
         // ignore: use_build_context_synchronously
         dynamic isConfirmed = await showModalBottomSheet<bool>(
             context: context,
+            isScrollControlled: true,
             builder: (BuildContext context) {
               return const ConfirmStartScheduleWidget();
             });
         if (isConfirmed != null && isConfirmed) {
-          await startSchedule();
+          await validateCheckIn();
           NotificationCenter().notify('updateSchedules');
         }
 

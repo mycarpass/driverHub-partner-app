@@ -52,3 +52,5 @@ class ScheduleFinishedSuccess extends DHSuccessState {}
 class ScheduleSuggestedSuccess extends DHSuccessState {}
 
 class ScheduleDeletedSuccess extends DHSuccessState {}
+
+class CheckInNotConfirmed extends DHState {}

@@ -82,7 +82,7 @@ class _HomeViewState extends State<HomeView>
                         Container(
                             margin: const EdgeInsets.only(bottom: 0),
                             child: WalletCardWidget(presenter: presenter)),
-                        const ReceivableCardWidget(),
+                        // const ReceivableCardWidget(),
                         // state is FinancialLoadadedState
                         //     ? Container(
                         //         margin: const EdgeInsets.only(bottom: 4),
@@ -121,12 +121,12 @@ class _HomeViewState extends State<HomeView>
                         //           ),
                         //         ),
                         //       ),
-                        presenter.homeResponseDto.data.partnerData.link != null
-                            ? LinkPartnerCard(
-                                link: presenter.homeResponseDto.data.partnerData
-                                        .link ??
-                                    "")
-                            : const SizedBox.shrink(),
+                        // presenter.homeResponseDto.data.partnerData.link != null
+                        //     ? LinkPartnerCard(
+                        //         link: presenter.homeResponseDto.data.partnerData
+                        //                 .link ??
+                        //             "")
+                        //     : const SizedBox.shrink(),
                         DailyNumbersCard(presenter: presenter),
                         LastWeekEarnChart(
                           data:

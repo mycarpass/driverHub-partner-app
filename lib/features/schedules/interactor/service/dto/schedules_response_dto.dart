@@ -269,6 +269,8 @@ class ScheduleDataDto {
         return "Aguardando pagamento";
       case "NEW_DATE_REQUESTED":
         return "Aguardando cliente";
+      case "READY_TO_CHECK_IN":
+        return "Aguardando check-in do cliente";
       default:
         return "Status desconhecido";
     }

@@ -47,6 +47,12 @@ class ScheduleDetailView extends StatelessWidget {
             }),
             body: BlocConsumer<ScheduleDetailPresenter, DHState>(
                 listener: (context, state) {
+              if (state is CheckInNotConfirmed) {
+                DHSnackBar().showSnackBar(
+                    "Ops...",
+                    "O cliente ainda não fez o Check-In pelo App",
+                    DHSnackBarType.warning);
+              }
               if (state is ScheduleAcceptedSuccess) {
                 DHSnackBar().showSnackBar(
                     "Sucesso!",

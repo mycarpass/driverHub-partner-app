@@ -65,6 +65,14 @@ class SchedulesInteractor {
     }
   }
 
+  Future<dynamic> validateCheckIn(int scheduleId) async {
+    try {
+      return await _schedulesService.validateCheckIn(scheduleId);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> deleteSchedule(int scheduleId) async {
     try {
       return await _schedulesService.deleteSchedule(scheduleId);

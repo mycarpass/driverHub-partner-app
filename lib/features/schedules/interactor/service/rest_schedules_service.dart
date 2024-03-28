@@ -157,4 +157,13 @@ class RestSchedulesService implements SchedulesService {
     String? role = await _dhCacheManager.getString(RoleTokenKey());
     return role != null && role == "SERVICE_PROVIDER";
   }
+
+  @override
+  Future validateCheckIn(int scheduleId) async {
+    try {
+      await _httpClient.get("validate-check-in");
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
